@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 import { PARTIAL_TYPE } from '../types/partials';
 export default class Partial {
     
@@ -7,11 +8,11 @@ export default class Partial {
     content: string
     varList?: Object[]
 
-    constructor( path: string, type:PARTIAL_TYPE, varList?: Object[] ){
-        this.path = path;
+    constructor( _path: string, type:PARTIAL_TYPE, varList?: Object[] ){
+        this.path = _path;
         this.type = type;
         this.varList = varList;
-        this.content = fs.readFileSync( this.path ).toString( 'utf-8' );
+        this.content = fs.readFileSync( path.resolve( process.cwd(), this.path  ) ).toString( 'utf-8' );
     }
 
     parseVars(){
@@ -19,7 +20,7 @@ export default class Partial {
     }
 
     asBuffer(){
-        return fs.readFileSync( this.path );
+        return fs.readFileSync( path.resolve( process.cwd(), this.path  ) );
     }
 
     asObject(){

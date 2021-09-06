@@ -2,9 +2,9 @@ interface ConfigOptions{
     templateDirectory: string,
     staticGeneration: boolean,
     staticOutput?: string,
-    staticEndpointPath?: string
+    staticPaths?: string
 }
 interface Config {
-    root: string,
+    ctx: string,
     options: ConfigOptions
 }
