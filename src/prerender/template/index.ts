@@ -5,17 +5,17 @@ export default class Template {
     partials: Partial[]
     mode: Mode
     constructor( partials: Partial[], mode: Mode) {
-        this.partials = partials;
+        this.partials = [...new Set(partials) ];
         this.mode = mode;
     }
 
-    asObject(){
+    asObject() {
         return {'partials':this.partials, mode: this.mode };
     }
-    render(){
+    render() {
         let out = '';
         this.partials.forEach( part =>{
-            console.log( part.asObject() );
+           // console.log( part.asObject() );
             out += part.content;
         } );
 
