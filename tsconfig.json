@@ -4,14 +4,17 @@
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "target": "es6",
+        "allowJs": true,
         "noImplicitAny": true,
         "moduleResolution": "node",
         "sourceMap": true,
         "outDir": "dist",
-        "baseUrl": "."
+        "baseUrl": "./src"
     },
     "include": [
-        "src/**/*"
+        "src/index.ts"
     ],
-    "exclude":["tests/**/*"]
+    "exclude":[
+        "tests/**/*"
+    ]
 }

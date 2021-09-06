@@ -16,7 +16,9 @@ export default class Partial {
     }
 
     parseVars(){
-        console.log( this.varList );
+        //console.log( this.varList );
+        const _vr = `<--<${this.varList[0]}>-->`;
+        console.log( _vr );
     }
 
     asBuffer(){
