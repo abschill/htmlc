@@ -16,9 +16,10 @@ export default class Partial {
         this.path = path;
         this.type = type;
     }
-    
-    render(){
-        console.log( fs.readFileSync(this.path).toString( 'utf-8' ) );
-        console.log( this.type );
+    asObject(){
+        return {
+            type: this.type, 
+            html: fs.readFileSync( this.path ).toString( 'utf-8' )
+        };
     }
 }
