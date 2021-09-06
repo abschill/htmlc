@@ -1,25 +1,30 @@
 import fs from 'fs';
 export enum PARTIAL_TYPE {
-    header = 0,
-    heading = 1,
-    content = 2,
-    footer = 4,
-    scripts = 5,
-    lazy = 6
+    '<head>' = 0,
+    '<header>' = 1,
+    '<main>' = 2,
+    '<footer>' = 3,
+    '<script>' = 5,
 }
 export default class Partial {
     
     path: string
-    type: PARTIAL_TYPE
-    
-    constructor( path: string, type:PARTIAL_TYPE ){
+    type: string
+    content: string
+
+    constructor( path: string, typeName:PARTIAL_TYPE ){
         this.path = path;
-        this.type = type;
+        this.type = PARTIAL_TYPE[typeName];
+        this.content = fs.readFileSync( this.path ).toString( 'utf-8' );
+    }
+    asBuffer(){
+        return fs.readFileSync( this.path );
     }
     asObject(){
+        console.log( this.type );
         return {
             type: this.type, 
-            html: fs.readFileSync( this.path ).toString( 'utf-8' )
+            html: this.content
         };
     }
 }
