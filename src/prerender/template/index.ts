@@ -9,6 +9,9 @@ export default class Template {
         this.mode = mode;
     }
 
+    asObject(){
+        return {'partials':this.partials, mode: this.mode };
+    }
     render(){
         let out = '';
         this.partials.forEach( part =>{
