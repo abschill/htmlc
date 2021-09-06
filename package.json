@@ -1,0 +1,20 @@
+{
+  "name": "ssr_html",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jsdom": "^17.0.0"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^16.2.13",
+    "ts-loader": "^9.2.5",
+    "typescript": "^4.4.2"
+  }
+}
