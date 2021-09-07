@@ -17,9 +17,8 @@ export default class Parser {
             //@ts-ignore
             this.segment.partials.forEach( part => {
                 if( part.varList ){
-                    // console.log( part.varList );
                     const final = renderVars( part.content, part.varList );
-                    //console.log( final );
+                    console.log( final );
                 }
                 else {
 

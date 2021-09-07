@@ -15,11 +15,6 @@ export default class Partial {
         this.content = fs.readFileSync( path.resolve( process.cwd(), this.path  ) ).toString( 'utf-8' );
     }
 
-    parseVars(){
-        //console.log( this.varList );
-        const _vr = `<--<${this.varList[0]}>-->`;
-        console.log( _vr );
-    }
 
     asBuffer(){
         return fs.readFileSync( path.resolve( process.cwd(), this.path  ) );
