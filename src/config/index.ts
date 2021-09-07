@@ -1,5 +1,4 @@
 //overwrite with hp.config.js
-
 export default {
     "_internals":{
         "delimiter":"hp"
