@@ -1,8 +1,8 @@
 {
-  "name": "html-chunk-loader",
+  "name": "hyperplane",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
+  "description": "Node Template Engine using HTML Comments & Configurable Delimiter",
+  "main": "./dist/index.js",
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
@@ -12,8 +12,15 @@
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+      "template",
+      "engine",
+      "parser",
+      "ssr",
+      "ssg",
+      "rendering"
+  ],
+  "author": "abschill",
   "license": "ISC",
   "dependencies": {
     "chalk": "^4.1.2",
