@@ -1,4 +1,4 @@
-import Partial from "../partials";
+import Partial from "../partial";
 import Template from '../template';
 import config from '../config/index';
 export function getType( seg:Partial|Template ){

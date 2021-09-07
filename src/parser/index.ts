@@ -1,11 +1,12 @@
 //
-import Partial from "../partials";
+import Partial from "../partial";
 import Template from '../template';
 import { getType, renderVars } from './util';
 export default class Parser {
 
     segment: Partial|Template
     type: string
+    varList?:Object[]
     _parsedSegment?: string
 
     constructor( segment: Partial|Template ){
@@ -25,7 +26,8 @@ export default class Parser {
             });
         }
         else {
-            console.log( this.segment );
+            console.log( this.type );
+            
         }
         
     }

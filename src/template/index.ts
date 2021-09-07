@@ -1,4 +1,4 @@
-import Partial from '../partials';
+import Partial from '../partial';
 import { Mode } from '../types/template';
 export default class Template {
 
@@ -15,11 +15,10 @@ export default class Template {
     render() {
         let out = '';
         this.partials.forEach( part =>{
-           // console.log( part.asObject() );
             out += part.content;
         } );
 
-        console.log( out );
+        return out;
     }
 
 }
