@@ -14,7 +14,8 @@ const config = () => {
         }
     }
     else {
-        return fs.readFileSync( path.join( process.cwd(), 'hp.config.js' ) );
+        const conf = require( path.join( process.cwd(), 'hp.config.js' ) );
+        return conf;
     }
     
 }
