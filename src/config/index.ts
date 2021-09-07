@@ -14,7 +14,7 @@ const config = () => {
         }
     }
     else {
-        console.log( 'config parser not enabled yet' );
+        return fs.readFileSync( path.join( process.cwd(), 'hp.config.js' ) );
     }
     
 }
