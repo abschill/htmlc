@@ -1,4 +1,4 @@
-import Partial from '../src/partials';
+import Partial from '../src/partial';
 import Template from '../src/template';
 import Parser from '../src/parser';
 const p0 = new Partial( 'views/layout/head.html', { order:0 } )
