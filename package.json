@@ -7,7 +7,10 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "test": "jest",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "postinstall": "husky install",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable"
   },
   "keywords": [],
   "author": "",

@@ -23,7 +23,7 @@ export default class Partial {
     asObject(){
         return {
             type: this.type, 
-            html: this.content
+            content: this.content
         };
     }
 }

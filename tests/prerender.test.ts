@@ -7,13 +7,13 @@ const t = new Template( [p1], 'ssr' );
 
 describe( 'Partial Checks', () => {
     it( 'Partial Exists', () => {
-        expect( p0.asObject() ).toBeTruthy();
+        expect( Object.keys( p0.asObject() ) ).toContain( 'content' );
     } );
 
 } );
 describe( 'Template Checks', () => {
     it( 'Template Exists', () => {
-        expect(t.asObject()).toBeTruthy();
+        expect( Object.keys( t.asObject() ) ).toContain( 'partials' );
     } );
 } );
 
@@ -21,6 +21,6 @@ describe( 'Parser Checks', () => {
     it( 'Parses Partial', () => {
         const parser = new Parser( t );
         parser.run()
-        expect(p1.content).toBeTruthy();
+        expect( Object.keys( p1 ) ).toContain( 'content' );
     } );
 } );
