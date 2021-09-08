@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import Parser from '../parser';
 import Config from '../config';
 import replaceVar from '../util/replaceVar';
 export default class Partial {
