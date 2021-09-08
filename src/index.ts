@@ -7,7 +7,7 @@ import Config from './config'
 // const t = new Template( [p, p0] , 'ssr' );
 // const parser = new Parser( t );
 const c = new Config();
-console.log( c._config );
+console.log( c.toObject() );
 // parser.run()
 
 // console.log( p.content );

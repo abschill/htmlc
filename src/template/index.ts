@@ -1,24 +1,26 @@
 import Partial from '../partial';
 import { Mode } from '../types/template';
+import fs from 'fs';
 export default class Template{
 
-    partials: Partial[]
-    mode: Mode
-    constructor( partials: Partial[], mode: Mode) {
-        this.partials = [...new Set(partials) ];
-        this.mode = mode;
+    name: string
+    path: string
+    raw: string
+    constructor( name:string, path:string) {
+        // this.partials = [...new Set(partials) ];
+        this.name = name;
+        this.path = path;
+        this.raw = fs.readFileSync( path ).toString( 'utf-8' ); 
     }
 
-    asObject() {
-        return {'partials':this.partials, mode: this.mode };
-    }
+ 
     render() {
-        let out = '';
-        this.partials.forEach( part =>{
-            out += part.content;
-        } );
+        // let out = '';
+        // this.partials.forEach( part =>{
+        //     out += part.content;
+        // } );
 
-        return out;
+        // return out;
     }
 
 }
