@@ -76,4 +76,5 @@ export default class Config {
             partials: this.partials
         }
     }
+
 }

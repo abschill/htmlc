@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import Parser from '../parser';
 import Config from '../config';
+import replaceVar from '../util/replaceVar';
 export default class Partial {
     
     config: Config
@@ -26,13 +27,7 @@ export default class Partial {
     parse( _varList:Object[] ) {
         if( this.raw.includes(`${this.config._config._internals.delimiter}=` ) ){
             let _copy = this.raw;
-            const out = _varList.map( item => Object.entries( item ) );
-            const _vrs:Array<string>[] = out.flat();
-            _vrs.forEach( vr => {
-                const _replace = `<!--$${this.config._config._internals.delimiter}=${vr[0]}-->`;
-                _copy = _copy.replace( _replace , vr[1])
-            });
-            this.parsed = _copy;
+            this.parsed = replaceVar( this.config, _copy, _varList );
         }
         else {
             return;

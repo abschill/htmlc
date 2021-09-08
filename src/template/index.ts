@@ -2,29 +2,42 @@ import Partial from '../partial';
 import { Mode } from '../types/template';
 import fs from 'fs';
 import Config from '../config';
+import replaceVar from '../util/replaceVar';
 export default class Template{
     config: Config;
     name: string
     path: string
     raw: string
+    parsed?: string;
     constructor( config:Config, name:string, path:string) {
         // this.partials = [...new Set(partials) ];
         this.config = config;
         this.name = name;
         this.path = path;
         this.raw = fs.readFileSync( path ).toString( 'utf-8' ); 
+        this.parsed = null;
     }
     parse( _varList:Object[] ) {
-        console.log( this.raw.indexOf( `${this.config._config._internals.delimiter}=` ) );
-    }
- 
-    render() {
-        // let out = '';
-        // this.partials.forEach( part =>{
-        //     out += part.content;
-        // } );
-
-        // return out;
+        let _copy = this.raw;
+        if ( _copy.indexOf( `$${this.config._config._internals.delimiter}-partial=` ) ) {
+            //has partials to load
+            this.config.getPartials().forEach( p => {
+                
+                const qry = `<!--$${this.config._config._internals.delimiter}-partial=${p.name}-->`;
+                if( _copy.indexOf( qry ) ) {
+                   // console.log( '================================' );
+                   console.log( p.config.getPartials().forEach( part => {}) );
+                    _copy = _copy.replace( qry, p.parsed );
+          
+                }
+            } );
+            console.log( _copy );
+            this.parsed = replaceVar( this.config, _copy, _varList );
+            // console.log( __copy );
+        }
+        
+        //check for regular variables
+        
     }
 
 }

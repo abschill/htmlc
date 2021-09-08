@@ -1,24 +1,26 @@
-// import Template from './template';
-// import Partial from "./partial";
-// import Parser from './parser';
-import Config from './config'
-// const p = new Partial( './views/layout/head.html', { order:0 }, [{ title:'Test Title', desc: 'This is a description' }] )
-// const p0 = new Partial( './views/layout/footer.html', { order: 1 } );
-// const t = new Template( [p, p0] , 'ssr' );
-// const parser = new Parser( t );
-const c = new Config();
-c.getPartials().forEach( p => {
-    switch( p.name ){
-        case 'head':
-            p.parse([ { title: 'This is a Test' }, {desc: 'This is a Description'} ] );
-            console.log( p.asObject() );
-        default:
-            break;
-    }
-    
-});
-// parser.run()
 
-// console.log( p.content );
-//console.log( parser._meta() );
-//t.render()
+import Config from './config'
+const c = new Config();
+
+console.log( c.getPartials() );
+
+console.log( c.getTemplates() );
+
+// c.getPartials().forEach( p => {
+//     switch( p.name ){
+//         case 'head':
+//             p.parse(
+//                 [ 
+//                     { title: 'This is a Test' }, 
+//                     { desc: 'This is a Description' } ,
+//                     { footerTitle: 'This is a Footer Title' }
+//                 ] 
+//                 );
+//         default:
+//             break;
+//     }
+// });
+// c.getTemplates().forEach( t => {
+//     t.parse( [{ content: 'Body Content'}])
+//     console.log( t.parsed );
+// } );
