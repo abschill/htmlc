@@ -1,6 +1,6 @@
 import Partial from "../partial";
 import Template from '../template';
-import config from '../config/index';
+import Config from '../config/index';
 export function getType( seg:Partial|Template ){
     if( seg instanceof Partial){
         return 'partial';
@@ -11,7 +11,7 @@ export function getType( seg:Partial|Template ){
 }
 
 export function renderVars ( pt: string, varList: Object[] ){
-    const _config = config();
+    const { _config } = new Config();
     let _copy = pt;
     const out = varList.map( item => Object.entries( item ) );
     const _vrs:Array<string>[] = out.flat();

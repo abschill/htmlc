@@ -1,6 +1,6 @@
 import Partial from '../partial';
 import { Mode } from '../types/template';
-export default class Template {
+export default class Template{
 
     partials: Partial[]
     mode: Mode
