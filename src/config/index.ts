@@ -44,8 +44,6 @@ export default class Config {
 
                     const templates_ = path.join( root_dir, this._config.templateDir )
                     const partials_ = path.join( root_dir, this._config.partialDir );
-                    this.hasTemplates = fs.existsSync( templates_ );
-                    this.hasParts = fs.existsSync( partials_ );
 
                     fs.readdirSync( templates_ ).forEach( _template => {
                         return this.templates.push( new Template( this, _template.split( '.html')[0], path.join( templates_, _template ) ) );
@@ -56,6 +54,7 @@ export default class Config {
                      } );
                 }
                 else {
+                    throw new Error( 'Directory not configured' );
                 }
 
         }

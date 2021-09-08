@@ -28,13 +28,13 @@ export default class Partial {
         if( this.raw.includes(`${this.config._config._internals.delimiter}=` ) ){
             let _copy = this.raw;
             this.parsed = replaceVar( this.config, _copy, _varList );
+            this.isParsed = true;
         }
         else {
             return;
         }
         
     }
-
 
     asObject() {
         return {
