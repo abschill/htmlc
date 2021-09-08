@@ -10,7 +10,7 @@ describe( 'Check required config options', () => {
     } );
 
     it( 'Has Template Base', () => {
-        expect( keyMap ).toContain( 'partialDir' );
+        expect( keyMap ).toContain( 'templateDir' );
     } );
     
     it( 'Has Partial Base', () => {

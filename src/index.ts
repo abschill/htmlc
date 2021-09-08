@@ -7,7 +7,16 @@ import Config from './config'
 // const t = new Template( [p, p0] , 'ssr' );
 // const parser = new Parser( t );
 const c = new Config();
-console.log( c.toObject() );
+c.getPartials().forEach( p => {
+    switch( p.name ){
+        case 'head':
+            p.parse([ { title: 'This is a Test' }, {desc: 'This is a Description'} ] );
+            console.log( p.asObject() );
+        default:
+            break;
+    }
+    
+});
 // parser.run()
 
 // console.log( p.content );

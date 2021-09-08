@@ -48,11 +48,11 @@ export default class Config {
                     this.hasParts = fs.existsSync( partials_ );
 
                     fs.readdirSync( templates_ ).forEach( _template => {
-                        return this.templates.push( new Template( _template.split( '.html')[0], path.join( templates_, _template ) ) );
+                        return this.templates.push( new Template( this, _template.split( '.html')[0], path.join( templates_, _template ) ) );
                     } );
 
                      fs.readdirSync( partials_ ).forEach( _partial => {
-                         return this.partials.push( new Partial(  _partial.split( '.html')[0], path.join(partials_, _partial ) ) ) 
+                         return this.partials.push( new Partial(  this, _partial.split( '.html')[0], path.join(partials_, _partial ) ) ) 
                      } );
                 }
                 else {
@@ -60,7 +60,7 @@ export default class Config {
 
         }
     }
-    
+
     getTemplates() {
         return this.templates;
     }
