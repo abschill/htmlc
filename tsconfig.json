@@ -9,10 +9,10 @@
         "moduleResolution": "node",
         "sourceMap": true,
         "outDir": "dist",
-        "baseUrl": "./src"
+        "baseUrl": "lib"
     },
     "include": [
-        "src/index.ts"
+        "lib/index.ts"
     ],
     "exclude":[
         "tests/**/*"

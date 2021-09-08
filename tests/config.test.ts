@@ -1,5 +1,5 @@
 
-import Config from '../src/config';
+import Config from '../lib/config';
 const conf0 = new Config();
 const { _config } = conf0;
 const keyMap = Object.keys( _config );
@@ -30,27 +30,3 @@ describe( 'Check required config options', () => {
     } );
 
 } );
-// describe( 'Template Checks', () => {
-//     it( 'Template Exists', () => {
-//         expect( Object.keys( t.asObject() ) ).toContain( 'partials' );
-//     } );
-// } );
-
-// describe( 'Parser Checks', () => {
-//     const parser = new Parser( t );
-    
-//     it( 'Parses Partial', () => {
-//         expect( Object.keys( p1 ) ).toContain( 'content' );
-//     } );
-//     it( 'Has unparsed variables', () => {
-//         const { content } = p1;
-//         const hasMatchers = content.includes( '$hp=' );
-//         expect( hasMatchers ).toBeTruthy();
-//     });
-//     it( 'Parses Variables in Partial', () => {
-//         parser.run()
-//         const { content } = p1;
-//         const hasMatchers = content.includes( '$hp=' );
-//         expect( hasMatchers ).toBeFalsy();
-//     })
-// } );
