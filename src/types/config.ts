@@ -1,4 +1,4 @@
-export interface ConfigOptions{
+export interface ConfigOptions {
     _internals: {
         delimiter: string
     },
