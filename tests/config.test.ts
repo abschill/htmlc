@@ -29,4 +29,15 @@ describe( 'Check required config options', () => {
         expect( conf0.hasParts );
     } );
 
+    it( 'Can Load Partials', () => {
+        conf0.getPartials().forEach( part => {
+            expect( part ).toHaveProperty( 'raw' );
+        } );
+    } );
+
+    it( 'Can Load Templates', () => {
+        conf0.getTemplates().forEach( template => {
+            expect( template ).toHaveProperty( 'raw' )
+        } );
+    } );
 } );
