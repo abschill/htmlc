@@ -20,6 +20,10 @@
     "ssg",
     "rendering"
   ],
+  "repository":{
+      "type":"git", 
+      "url":"https://github.com/abschill/hyperplane"
+    },
   "author": "abschill",
   "license": "ISC",
   "dependencies": {
