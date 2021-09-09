@@ -1,5 +1,5 @@
 {
-  "name": "hyperplane",
+  "name": "html-chunk-loader",
   "version": "0.0.1",
   "description": "Node Template Engine using HTML Comments & Configurable Delimiter",
   "main": "./dist/index.js",
@@ -20,10 +20,10 @@
     "ssg",
     "rendering"
   ],
-  "repository":{
-      "type":"git", 
-      "url":"https://github.com/abschill/hyperplane"
-    },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abschill/html-chunk-loader"
+  },
   "author": "abschill",
   "license": "ISC",
   "dependencies": {
