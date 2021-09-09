@@ -5,7 +5,7 @@ import Partial from '../partial';
 import Template from '../template';
 import { ConfigOptions } from '../types/config';
 
-export default class Config {
+export default class Controller {
 
     _config:ConfigOptions
     hasTemplates: boolean
