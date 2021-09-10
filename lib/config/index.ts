@@ -16,7 +16,7 @@ export default class Controller {
     constructor() {
         this._config = {
                         "_internals":{
-                            "delimiter":"hp"
+                            "delimiter":"stml"
                         },
                         "rootDir":"views",
                         "templateDir":"page",
@@ -31,7 +31,7 @@ export default class Controller {
   
     }
     _configure() {
-        const config_path = path.join( process.cwd(), 'hp.config.js' );
+        const config_path = path.join( process.cwd(), `${this._config._internals.delimiter}.config.js` );
         const root_dir = path.join( process.cwd(), this._config.rootDir );
 
         if( fs.existsSync( config_path ) ) {
