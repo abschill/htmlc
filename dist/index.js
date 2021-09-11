@@ -22,30 +22,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Template = exports.Partial = exports.Controller = void 0;
-// c.getPartials().forEach( p => {
-//     switch( p.name ){
-//         case 'head':
-//             p.parse(
-//                 [ 
-//                     { title: 'This is a Test' }, 
-//                     { desc: 'This is a Description' }
-//                 ] 
-//                 );
-//                 break;
-//         case 'footer':
-//             p.parse(
-//                 [
-//                     { footerTitle: 'Hello World' }
-//                 ]
-//             )
-//         default:
-//             break;
-//     }
-// });
-// c.getTemplates().forEach( t => {
-//     t.parse( [{ content: 'Body Content'}])
-// } );
-// console.log( c.getTemplates()[0].parsed );
 exports.Controller = __importStar(require("./config"));
 exports.Partial = __importStar(require("./partial"));
 exports.Template = __importStar(require("./template"));

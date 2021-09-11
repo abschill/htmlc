@@ -36,13 +36,13 @@ Create a directory called views/ and inside it create layout/ and page/ insert y
         default:
             break;
     }
-});
+    });
 
-c.getTemplates().forEach( t => {
-    t.parse( [{ content: 'Body Content'}])
-} );
-console.log( c.getTemplates()[0].parsed );
-The Commented Section Represents how to initialize your variables into your server side templates. 
+    c.getTemplates().forEach( t => {
+        t.parse( [{ content: 'Body Content'}])
+    } );
+    // load into Template String on Server Side
+    console.log( c.getTemplates()[0].parsed );
 
 ### More Info
 [NPM Package](https://www.npmjs.com/package/html-chunk-loader)
