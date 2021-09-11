@@ -14,3 +14,6 @@ Create a directory called views/ and inside it create layout/ and page/ insert y
 [Example](https://github.com/abschill/html-chunk-loader/blob/master/lib/index.ts)
 
 The Commented Section Represents how to initialize your variables into your server side templates. 
+
+### More Info
+[NPM Package](https://www.npmjs.com/package/html-chunk-loader)
