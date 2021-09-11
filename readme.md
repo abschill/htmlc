@@ -16,7 +16,32 @@ Create a directory called views/ and inside it create layout/ and page/ insert y
 
     const c = new Controller.default();
 
-    console.log( c.asObject() )
+    c.getPartials().forEach( p => {
+   
+    switch( p.name ){
+        case 'head':
+            p.parse(
+                [ 
+                    { title: 'This is a Test' }, 
+                    { desc: 'This is a Description' }
+                ] 
+                );
+                break;
+        case 'footer':
+            p.parse(
+                [
+                    { footerTitle: 'Hello World' }
+                ]
+            )
+        default:
+            break;
+    }
+});
+
+c.getTemplates().forEach( t => {
+    t.parse( [{ content: 'Body Content'}])
+} );
+console.log( c.getTemplates()[0].parsed );
 The Commented Section Represents how to initialize your variables into your server side templates. 
 
 ### More Info
