@@ -1,6 +1,4 @@
 "use strict";
-// import Config from './config'
-// const c = new Config();
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -20,9 +18,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Template = exports.Partial = exports.Controller = void 0;
+// import Config from './config'
+// const c = new Config();
+const config_1 = __importDefault(require("./config"));
 exports.Controller = __importStar(require("./config"));
 exports.Partial = __importStar(require("./partial"));
 exports.Template = __importStar(require("./template"));
+exports.default = config_1.default;
 //# sourceMappingURL=index.js.map

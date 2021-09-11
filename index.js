@@ -1,4 +1,4 @@
-const Controller = require( './dist/config' ).default;
+const Controller  = require( './dist' ).default;
 
 const c = new Controller();
 c.getPartials().forEach( p => {

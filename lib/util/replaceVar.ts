@@ -1,6 +1,5 @@
-import { copy } from 'fs-extra';
-import Config from '../config';
-export default function replaceVar( config:Config, raw: string, _varList: Object[] ){
+import  Controller  from '../config';
+export default function replaceVar( config:Controller, raw: string, _varList: Object[] ){
     let _copy = raw;
     const out = _varList.map( item => Object.entries( item ) );
             const _vrs:Array<string>[] = out.flat();

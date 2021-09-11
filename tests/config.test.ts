@@ -1,6 +1,6 @@
 
-import Config from '../lib/config';
-const conf0 = new Config();
+import Controller from '../dist';
+const conf0 = new Controller();
 const { _config } = conf0;
 const keyMap = Object.keys( _config );
 describe( 'Check required config options', () => {
