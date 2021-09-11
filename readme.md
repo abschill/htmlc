@@ -11,8 +11,12 @@ Create a directory called views/ and inside it create layout/ and page/ insert y
 
 ### Usage
 
-[Example](https://github.com/abschill/html-chunk-loader/blob/master/lib/index.ts)
+    const { Controller } = require( 'html-chunk-loader' );
 
+
+    const c = new Controller.default();
+
+    console.log( c.asObject() )
 The Commented Section Represents how to initialize your variables into your server side templates. 
 
 ### More Info
