@@ -1,6 +1,6 @@
 {
   "name": "html-chunk-loader",
-  "version": "0.0.133",
+  "version": "0.0.134",
   "description": "Node Template Engine using HTML Comments & Configurable Delimiter",
   "main": "./dist/index.js",
   "scripts": {
