@@ -1,6 +1,6 @@
 {
   "name": "html-chunk-loader",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Node Template Engine using HTML Comments & Configurable Delimiter",
   "main": "./dist/index.js",
   "scripts": {
@@ -12,6 +12,9 @@
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable"
   },
+  "files": [
+    "./dist/**/*"
+  ],
   "keywords": [
     "template",
     "engine",
