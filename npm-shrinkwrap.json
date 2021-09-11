@@ -1,6 +1,6 @@
 {
-  "name": "hyperplane",
-  "version": "0.0.1",
+  "name": "html-chunk-loader",
+  "version": "0.0.13",
   "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
