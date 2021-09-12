@@ -52,10 +52,15 @@ The partials match up to the @render-partial=partial_name directives in the view
 head.html
 
     <head>
-    <title><!--@render=title--></title>
-    <meta name="description" content="<!--@render=desc-->"/>
+        <title><!--@render=title--></title>
+        <meta name="description" content="<!--@render=desc-->"/>
     </head>
 
-This template takes the variables in the case of 'head'
+This template takes the variables in the case of 'head' and outputs the following into the template from the partial
+
+    <head>
+        <title>This is a Test</title>
+        <meta name="description" content="This is a Description"/>
+    </head>
 ### More Info
 [NPM Package](https://www.npmjs.com/package/html-chunk-loader)
