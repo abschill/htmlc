@@ -49,5 +49,13 @@ Check index.js for this example in a localized path format
 These variables match up to the @render=variable_name directives in the /views/layout partials
 The partials match up to the @render-partial=partial_name directives in the views/page templates
 
+head.html
+
+    <head>
+    <title><!--@render=title--></title>
+    <meta name="description" content="<!--@render=desc-->"/>
+    </head>
+
+This template takes the variables in the case of 'head'
 ### More Info
 [NPM Package](https://www.npmjs.com/package/html-chunk-loader)
