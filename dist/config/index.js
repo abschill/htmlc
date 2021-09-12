@@ -15,8 +15,8 @@ class Controller {
                 "delimiter": "stml"
             },
             "rootDir": "views",
-            "templateDir": "page",
-            "partialDir": "layout",
+            "templateDir": "pages",
+            "partialDir": "partials",
             "staticGeneration": false,
         };
         this.hasTemplates = false;

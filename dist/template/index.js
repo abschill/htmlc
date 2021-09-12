@@ -22,7 +22,7 @@ class Template {
                     _copy = _copy.replace(qry, p.parsed);
                 }
             });
-            this.parsed = (0, replaceVar_1.default)(this.config, _copy, _varList);
+            this.parsed = (0, replaceVar_1.default)(_copy, _varList);
         }
     }
 }

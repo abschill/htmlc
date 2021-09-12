@@ -14,7 +14,7 @@ export default class Partial {
     constructor( config: Config, name:string, path:string, varList?: Object[] ) {
         this.config = config;
         this.name = name;
-        this.path= path;
+        this.path = path;
         this.varList = varList;
         this.raw = fs.readFileSync( path ).toString( 'utf-8' ); 
         this.isParsed = false;
@@ -23,9 +23,9 @@ export default class Partial {
     }
 
     parse( _varList:Object[] ) {
-        if( this.raw.includes(`@render=` ) ){
+        if( this.raw.includes(`@render=` ) ) {
             let _copy = this.raw;
-            this.parsed = replaceVar( this.config, _copy, _varList );
+            this.parsed = replaceVar( _copy, _varList );
             this.isParsed = true;
         }
         else {

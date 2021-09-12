@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-function replaceVar(config, raw, _varList) {
+function replaceVar(raw, _varList) {
     let _copy = raw;
     const out = _varList.map(item => Object.entries(item));
     const _vrs = out.flat();

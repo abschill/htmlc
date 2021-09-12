@@ -11,7 +11,7 @@ export default class Template {
     raw: string
     parsed?: string;
     
-    constructor( config:Config, name:string, path:string) {
+    constructor( config:Config, name:string, path:string ) {
         this.config = config;
         this.name = name;
         this.path = path;
@@ -28,7 +28,7 @@ export default class Template {
           
                 }
             } );
-            this.parsed = replaceVar( this.config, _copy, _varList );  
+            this.parsed = replaceVar( _copy, _varList );  
             
         }
 
