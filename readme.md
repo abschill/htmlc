@@ -6,7 +6,7 @@
 
     npm i html-chunk-loader
 
-Create a directory called views/ and inside it create layout/ and page/ insert your chunks into these folders. Check the views directory in our github repository for an example setup. You can also create an stml.config.js file in the root directory to override the default values. This is a work in progress, so don't expect much yet in it's current state beyond proof of concept.  
+Create a directory called views/ and inside it create layout/ and page/ insert your chunks into these folders. Check the views directory in our github repository for an example setup. You can also create an render.config.js file in the root directory to override the default values. This is a work in progress, so don't expect much yet in it's current state beyond proof of concept.  
 
 
 ### Usage
@@ -45,6 +45,9 @@ Create a directory called views/ and inside it create layout/ and page/ insert y
     console.log( c.getTemplates()[0].parsed );
     
 Check index.js for this example in a localized path format
+
+These variables match up to the @render=variable_name directives in the /views/layout partials
+The partials match up to the @render-partial=partial_name directives in the views/page templates
 
 ### More Info
 [NPM Package](https://www.npmjs.com/package/html-chunk-loader)

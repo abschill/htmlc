@@ -16,7 +16,7 @@ class Partial {
         this.parsed = null;
     }
     parse(_varList) {
-        if (this.raw.includes(`${this.config._config._internals.delimiter}=`)) {
+        if (this.raw.includes(`@render=`)) {
             let _copy = this.raw;
             this.parsed = (0, replaceVar_1.default)(this.config, _copy, _varList);
             this.isParsed = true;

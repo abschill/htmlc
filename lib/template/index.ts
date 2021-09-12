@@ -20,9 +20,9 @@ export default class Template {
     }
     parse( _varList:Object[] ) {
         let _copy = this.raw;
-        if ( _copy.indexOf( `$${this.config._config._internals.delimiter}-partial=` ) ) {
+        if ( _copy.indexOf( `@render-partial=` ) ) {
             this.config.getPartials().forEach( p => {
-                const qry = `<!--$${this.config._config._internals.delimiter}-partial=${p.name}-->`;
+                const qry = `<!--@render-partial=${p.name}-->`;
                 if( _copy.includes( qry ) ) {
                    _copy = _copy.replace( qry, p.parsed  );
           

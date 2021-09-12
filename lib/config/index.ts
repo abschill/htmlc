@@ -31,7 +31,7 @@ export default class Controller {
   
     }
     _configure() {
-        const config_path = path.join( process.cwd(), `stml.config.js` );
+        const config_path = path.join( process.cwd(), `render.config.js` );
         const root_dir = path.join( process.cwd(), this._config.rootDir );
 
         if( fs.existsSync( config_path ) ) {

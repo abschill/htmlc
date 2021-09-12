@@ -4,7 +4,7 @@ export default function replaceVar( config:Controller, raw: string, _varList: Ob
     const out = _varList.map( item => Object.entries( item ) );
             const _vrs:Array<string>[] = out.flat();
             _vrs.forEach( vr => {
-                const _replace = `<!--$${config._config._internals.delimiter}=${vr[0]}-->`;
+                const _replace = `<!--@render=${vr[0]}-->`;
                 _copy = _copy.replace( _replace , vr[1])
             });
     return _copy;

@@ -1,5 +1,4 @@
 import fs from 'fs';
-import path from 'path';
 import Config from '../config';
 import replaceVar from '../util/replaceVar';
 export default class Partial {
@@ -24,7 +23,7 @@ export default class Partial {
     }
 
     parse( _varList:Object[] ) {
-        if( this.raw.includes(`${this.config._config._internals.delimiter}=` ) ){
+        if( this.raw.includes(`@render=` ) ){
             let _copy = this.raw;
             this.parsed = replaceVar( this.config, _copy, _varList );
             this.isParsed = true;

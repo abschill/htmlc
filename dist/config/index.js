@@ -26,7 +26,7 @@ class Controller {
         this._configure();
     }
     _configure() {
-        const config_path = path_1.default.join(process.cwd(), `stml.config.js`);
+        const config_path = path_1.default.join(process.cwd(), `render.config.js`);
         const root_dir = path_1.default.join(process.cwd(), this._config.rootDir);
         if (fs_extra_1.default.existsSync(config_path)) {
             this._config = require(config_path);
