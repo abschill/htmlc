@@ -15,9 +15,6 @@ export default class Controller {
 
     constructor() {
         this._config = {
-                        "_internals":{
-                            "delimiter":"stml"
-                        },
                         "rootDir":"views",
                         "templateDir":"pages",
                         "partialDir":"partials",

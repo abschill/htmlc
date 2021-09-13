@@ -17,10 +17,6 @@ describe( 'Check required config options', () => {
         expect( keyMap ).toContain( 'partialDir' );
     } );
 
-    it( 'Has Delimiter', () => {
-        expect( Object.keys( _config._internals ) ).toContain( 'delimiter' );
-    } );
-
     it( 'Successfully scanned Template Dir', () => {
         expect( conf0.hasTemplates );
     } );

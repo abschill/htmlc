@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
-const replaceVar_1 = __importDefault(require("../util/replaceVar"));
+const parse_1 = __importDefault(require("../util/parse"));
 class Template {
     constructor(config, name, path) {
         this.config = config;
@@ -22,7 +22,7 @@ class Template {
                     _copy = _copy.replace(qry, p.parsed);
                 }
             });
-            this.parsed = (0, replaceVar_1.default)(_copy, _varList);
+            this.parsed = (0, parse_1.default)(_copy, _varList);
         }
     }
 }

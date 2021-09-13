@@ -1,8 +1,6 @@
-import Partial from '../partial';
-import { Mode } from '../types/template';
 import fs from 'fs';
 import Config from '../config';
-import replaceVar from '../util/replaceVar';
+import parse from '../util/parse';
 export default class Template {
 
     config: Config;
@@ -28,7 +26,7 @@ export default class Template {
           
                 }
             } );
-            this.parsed = replaceVar( _copy, _varList );  
+            this.parsed = parse( _copy, _varList );  
             
         }
 

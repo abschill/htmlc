@@ -11,9 +11,6 @@ const template_1 = __importDefault(require("../template"));
 class Controller {
     constructor() {
         this._config = {
-            "_internals": {
-                "delimiter": "stml"
-            },
             "rootDir": "views",
             "templateDir": "pages",
             "partialDir": "partials",

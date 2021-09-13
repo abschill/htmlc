@@ -1,6 +1,6 @@
 import fs from 'fs';
 import Config from '../config';
-import replaceVar from '../util/replaceVar';
+import replaceVar from '../util/parse';
 export default class Partial {
     
     config: Config
@@ -8,14 +8,14 @@ export default class Partial {
     path: string
     raw: string
     parsed: string|null
-    varList?: Object[]
+    toInsert?: Object[]
     isParsed: boolean
 
-    constructor( config: Config, name:string, path:string, varList?: Object[] ) {
+    constructor( config: Config, name:string, path:string, toInsert?: Object[] ) {
         this.config = config;
         this.name = name;
         this.path = path;
-        this.varList = varList;
+        this.toInsert = toInsert;
         this.raw = fs.readFileSync( path ).toString( 'utf-8' ); 
         this.isParsed = false;
         this.parsed = null;
@@ -39,7 +39,7 @@ export default class Partial {
           //  type: this.type, 
             name: this.name,
             path: this.path,
-            args : this.varList,
+            args : this.toInsert,
             raw: this.raw,
             parsed: this.parsed
         };
