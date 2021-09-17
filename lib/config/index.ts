@@ -5,7 +5,7 @@ import Partial from '../partial';
 import Template from '../template';
 import { ConfigOptions } from '../types/config';
 
-export default class Controller {
+export default class Loader {
 
     _config:ConfigOptions
     hasTemplates: boolean
@@ -71,6 +71,18 @@ export default class Controller {
             templates: this.templates,
             partials: this.partials
         }
+    }
+
+    getTemplate( name, ...content ) {
+        const target = this.templates.filter( _ => _.name === name )[0];
+        if( !target.parsed ) {
+            target.parse( content );
+            return target.parsed;
+        }
+        else {
+            throw new Error( 'Template Failed to Parse' );
+        }
+        
     }
 
 }

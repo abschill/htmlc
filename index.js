@@ -1,8 +1,6 @@
 const Controller  = require( './dist' ).default;
-
-const c = new Controller();
-c.getPartials().forEach( p => {
-   
+const templateHandler = new Controller();
+templateHandler.getPartials().forEach( p => {
     switch( p.name ){
         case 'head':
             p.parse(
@@ -22,10 +20,7 @@ c.getPartials().forEach( p => {
             break;
     }
 });
-
-c.getTemplates().forEach( t => {
-    t.parse( [{ content: 'Body Content'}])
-} );
-console.log( c.getTemplates()[0].parsed );
+//render page to template string
+console.log( templateHandler.getTemplate( 'home', { content: 'Body Content' } ) );
 
 

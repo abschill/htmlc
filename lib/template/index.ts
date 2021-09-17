@@ -1,15 +1,15 @@
 import fs from 'fs';
-import Config from '../config';
+import Controller from '../config';
 import parse from '../util/parse';
 export default class Template {
 
-    config: Config;
+    config: Controller;
     name: string
     path: string
     raw: string
     parsed?: string;
     
-    constructor( config:Config, name:string, path:string ) {
+    constructor( config:Controller, name:string, path:string ) {
         this.config = config;
         this.name = name;
         this.path = path;
@@ -29,8 +29,6 @@ export default class Template {
             this.parsed = parse( _copy, _varList );  
             
         }
-
-        
     }
 
 }

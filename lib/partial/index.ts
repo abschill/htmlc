@@ -1,9 +1,9 @@
 import fs from 'fs';
-import Config from '../config';
+import Controller  from '../config';
 import replaceVar from '../util/parse';
 export default class Partial {
     
-    config: Config
+    config: Controller
     name: string
     path: string
     raw: string
@@ -11,7 +11,7 @@ export default class Partial {
     toInsert?: Object[]
     isParsed: boolean
 
-    constructor( config: Config, name:string, path:string, toInsert?: Object[] ) {
+    constructor( config: Controller, name:string, path:string, toInsert?: Object[] ) {
         this.config = config;
         this.name = name;
         this.path = path;

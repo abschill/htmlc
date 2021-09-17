@@ -1,37 +1,29 @@
 # Usage
 
-    const Controller  = require( 'html-chunk-loader' ).default;
-
-
-    const c = new Controller();
-
-    c.getPartials().forEach( p => {
-   
-    switch( p.name ){
-        case 'head':
-            p.parse(
-                [ 
-                    { title: 'This is a Test' }, 
-                    { desc: 'This is a Description' }
-                ] 
-                );
+    const Controller  = require( './dist' ).default;
+    const templateHandler = new Controller();
+    templateHandler.getPartials().forEach( p => {
+        switch( p.name ){
+            case 'head':
+                p.parse(
+                    [ 
+                        { title: 'This is a Test' }, 
+                        { desc: 'This is a Description' }
+                    ] 
+                    );
+                    break;
+            case 'footer':
+                p.parse(
+                    [
+                        { footerTitle: 'Hello World' }
+                    ]
+                )
+            default:
                 break;
-        case 'footer':
-            p.parse(
-                [
-                    { footerTitle: 'Hello World' }
-                ]
-            )
-        default:
-            break;
-    }
+        }
     });
-
-    c.getTemplates().forEach( t => {
-        t.parse( [{ content: 'Body Content'}])
-    } );
-    // load into Template String on Server Side
-    console.log( c.getTemplates()[0].parsed );
+    //render page to template string
+    console.log( templateHandler.getTemplate( 'home', { content: 'Body Content' } ) );
     
 Check index.js for this example in a localized path format
 

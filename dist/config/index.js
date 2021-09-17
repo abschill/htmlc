@@ -8,7 +8,7 @@ const fs_extra_1 = __importDefault(require("fs-extra"));
 const path_1 = __importDefault(require("path"));
 const partial_1 = __importDefault(require("../partial"));
 const template_1 = __importDefault(require("../template"));
-class Controller {
+class Loader {
     constructor() {
         this._config = {
             "rootDir": "views",
@@ -58,6 +58,16 @@ class Controller {
             partials: this.partials
         };
     }
+    getTemplate(name, ...content) {
+        const target = this.templates.filter(_ => _.name === name)[0];
+        if (!target.parsed) {
+            target.parse(content);
+            return target.parsed;
+        }
+        else {
+            throw new Error('Template Failed to Parse');
+        }
+    }
 }
-exports.default = Controller;
+exports.default = Loader;
 //# sourceMappingURL=index.js.map
