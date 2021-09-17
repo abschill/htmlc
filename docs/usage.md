@@ -1,6 +1,6 @@
 # Usage
 
-    const Controller  = require( './dist' ).default;
+    const Controller  = require( './dist' );
     const templateHandler = new Controller();
     templateHandler.getPartials().forEach( p => {
         switch( p.name ){
