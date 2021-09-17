@@ -1,3 +1,3 @@
-import Controller from './config';
-export default Controller;
+import Loader from './config';
+module.exports = Loader;
 
