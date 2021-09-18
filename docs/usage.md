@@ -1,29 +1,18 @@
 # Usage
 
-    const Controller  = require( './dist' );
-    const templateHandler = new Controller();
-    templateHandler.getPartials().forEach( p => {
-        switch( p.name ){
-            case 'head':
-                p.parse(
-                    [ 
-                        { title: 'This is a Test' }, 
-                        { desc: 'This is a Description' }
-                    ] 
-                    );
-                    break;
-            case 'footer':
-                p.parse(
-                    [
-                        { footerTitle: 'Hello World' }
-                    ]
-                )
-            default:
-                break;
-        }
+    const Loader  = require( './dist' );
+    const Handler = new Loader({
+     root: 'views',
+     templates: 'pages',
+     partials: 'partials',
+     _partialInput: {
+        title: 'Hello World',
+        desc: 'Cool Description Bro',
+        footer_label: 'Hello from Footer' 
+     }
     });
-    //render page to template string
-    console.log( templateHandler.getTemplate( 'home', { content: 'Body Content' } ) );
+
+    console.log( Handler.getTemplate( 'home', { content: 'Body Content' } ) );
     
 Check index.js for this example in a localized path format
 
@@ -37,9 +26,29 @@ head.html
         <meta name="description" content="<!--@render=desc-->"/>
     </head>
 
-This template takes the variables in the case of 'head' and outputs the following into the template from the partial
+home.html
+
+    <!--@render-partial=head-->
+        <main>
+        <h1><!--@render=content--></h1>
+    </main>
+    <!--@render-partial=footer-->
+
+footer.html
+
+    <footer>
+        <h5><!--@render=footer_label--></h5>
+    </footer>
+
+This template takes the template, parses each partial, and outputs the following into the template from the code above
 
     <head>
-        <title>This is a Test</title>
-        <meta name="description" content="This is a Description"/>
+    <title>Hello World</title>
+    <meta name="description" content="Cool Description Bro"/>
     </head>
+    <main>
+        <h1>Body Content</h1>
+    </main>
+    <footer>
+        <h5>Hello from Footer</h5>
+    </footer>

@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
-const parse_1 = __importDefault(require("../util/parse"));
 class Partial {
     constructor(config, name, path, toInsert) {
         this.config = config;
@@ -16,18 +15,29 @@ class Partial {
         this.parsed = null;
     }
     parse(_varList) {
-        if (this.raw.includes(`@render=`)) {
+        if (!this.isParsed) {
             let _copy = this.raw;
-            this.parsed = (0, parse_1.default)(_copy, _varList);
-            this.isParsed = true;
+            if (this.raw.includes(`@render=`) && _varList) {
+                Object.entries(_varList).forEach(vr => {
+                    const _replace = `<!--@render=${vr[0]}-->`;
+                    if (_copy.indexOf(_replace) !== -1) {
+                        _copy = _copy.replace(_replace, vr[1]);
+                    }
+                });
+                this.parsed = _copy;
+                this.isParsed = true;
+                return this;
+            }
+            else {
+                console.log('no var list');
+            }
         }
         else {
-            return;
+            return this.parsed;
         }
     }
     asObject() {
         return {
-            //  type: this.type, 
             name: this.name,
             path: this.path,
             args: this.toInsert,

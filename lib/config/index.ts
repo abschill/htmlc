@@ -4,43 +4,44 @@ import path from 'path';
 import Partial from '../partial';
 import Template from '../template';
 import { ConfigOptions } from '../types/config';
-
 export default class Loader {
 
-    _config:ConfigOptions
-    hasTemplates: boolean
-    hasParts: boolean
-    templates: Template[]
-    partials: Partial[]
+    _config:ConfigOptions;
+    hasTemplates: boolean;
+    hasParts: boolean;
+    templates: Template[];
+    partials: Partial[];
+    _partialInput: Object;
 
-    constructor() {
+    constructor( {...opts} ) {
+
         this._config = {
-                        "rootDir":"views",
-                        "templateDir":"pages",
-                        "partialDir":"partials",
-                        "staticGeneration":false,
-                    }
+            pathRoot:opts.pathRoot || 'views',
+            templates: opts.templates || 'pages',
+            partials: opts.partials || 'partials',
+            static:opts.static || false
+        }
+        this._partialInput = opts._partialInput;
         this.hasTemplates = false;
         this.hasParts = false;
         this.partials = [];
         this.templates = [];
         this._configure();
-  
     }
     _configure() {
         const config_path = path.join( process.cwd(), `render.config.js` );
-        const root_dir = path.join( process.cwd(), this._config.rootDir );
+        const root_dir = path.join( process.cwd(), this._config.pathRoot );
 
         if( fs.existsSync( config_path ) ) {
             this._config = require( config_path );
         }
         if( fs.pathExistsSync( root_dir ) ) {
 
-            if( fs.pathExistsSync( path.join( root_dir, this._config.templateDir ) ) 
-                && fs.pathExistsSync( path.join( root_dir, this._config.partialDir )) ) {
+            if( fs.pathExistsSync( path.join( root_dir, this._config.templates ) ) 
+                && fs.pathExistsSync( path.join( root_dir, this._config.partials )) ) {
 
-                    const templates_ = path.join( root_dir, this._config.templateDir )
-                    const partials_ = path.join( root_dir, this._config.partialDir );
+                    const templates_ = path.join( root_dir, this._config.templates )
+                    const partials_ = path.join( root_dir, this._config.partials );
 
                     fs.readdirSync( templates_ ).forEach( _template => {
                         return this.templates.push( new Template( this, _template.split( '.html')[0], path.join( templates_, _template ) ) );
@@ -55,17 +56,34 @@ export default class Loader {
                 }
 
         }
+        this._partials_process();
+    }
+    _partials_process() {
+        if( this._partialInput ) {
+            //@ts-ignore
+            this.partials = this.getPartials().map( _ => _.parse(  this._partialInput ) )
+        }
+        
     }
 
-    getTemplates() {
-        return this.templates;
+
+    getTemplates( mode ) {
+        switch( mode ) {
+            case 'preload':
+                //@ts-ignore
+                const _ = this.templates.map( _ => _._preload());
+                return _;
+            default:
+                return this.templates;
+        }
     }
 
-    getPartials() {
+    getPartials( ) {
         return this.partials;
+        
     }
 
-    toObject() {
+    _asObject() {
         return {
             config: this._config,
             templates: this.templates,
@@ -73,14 +91,13 @@ export default class Loader {
         }
     }
 
-    getTemplate( name, ...content ) {
+    getTemplate( name, {...content } ) {
         const target = this.templates.filter( _ => _.name === name )[0];
-        if( !target.parsed ) {
-            target.parse( content );
-            return target.parsed;
-        }
+        if( Object.keys( content ).length > 0 ) {
+            return target.render( [ content ] );
+        } 
         else {
-            throw new Error( 'Template Failed to Parse' );
+          return target.render( [] );
         }
         
     }

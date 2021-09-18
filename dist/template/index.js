@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
-const parse_1 = __importDefault(require("../util/parse"));
 class Template {
     constructor(config, name, path) {
         this.config = config;
@@ -12,17 +11,44 @@ class Template {
         this.path = path;
         this.raw = fs_1.default.readFileSync(path).toString('utf-8');
         this.parsed = null;
+        this.preload = null;
+        this._preload();
     }
-    parse(_varList) {
+    _preload() {
         let _copy = this.raw;
-        if (_copy.indexOf(`@render-partial=`)) {
-            this.config.getPartials().forEach(p => {
-                const qry = `<!--@render-partial=${p.name}-->`;
-                if (_copy.includes(qry)) {
-                    _copy = _copy.replace(qry, p.parsed);
-                }
+        this.config.partials.forEach(p => {
+            const qry = `<!--@render-partial=${p.name}-->`;
+            if (_copy.includes(qry)) {
+                _copy = _copy.replace(qry, p.raw);
+            }
+            else {
+                console.log('no match');
+            }
+        });
+        this.preload = _copy;
+        return _copy;
+    }
+    _hasPartial(lbl) {
+        const qry = `<!--@render-partial=${lbl}-->`;
+        const _existsRaw = this.raw.indexOf(qry) !== -1;
+        const _existsPre = this.preload.indexOf(qry) !== -1;
+        return { _existsRaw, _existsPre };
+    }
+    render(_varList) {
+        let _copy = this._preload();
+        Object.entries(this.config._partialInput).forEach(i => _copy = _copy.replace(`<!--@render=${i[0]}-->`, i[1]));
+        if (_varList) {
+            _varList.forEach(_ => {
+                const _e = Object.entries(_);
+                const e = _e.flat();
+                //@ts-ignore
+                _copy = _copy.replace(`<!--@render=${e[0]}-->`, e[1]);
             });
-            this.parsed = (0, parse_1.default)(_copy, _varList);
+            this.parsed = _copy;
+            return this.parsed;
+        }
+        else {
+            return this.preload;
         }
     }
 }

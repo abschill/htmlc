@@ -1,8 +1,8 @@
 export interface ConfigOptions {
-    rootDir: string,
-    templateDir: string,
-    partialDir: string,
-    staticGeneration: boolean,
-    staticOutput?: string,
+    pathRoot: string,
+    templates: string,
+    partials: string,
+    static: boolean,
+    staticRoot?: string,
     staticPaths?: string,
 }
