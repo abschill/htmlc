@@ -11,5 +11,7 @@ Create a directory called views/ and inside it create pages/ and partials/ inser
 
 ### Docs
 [Usage](https://github.com/abschill/html-chunk-loader/blob/master/docs/usage.md)
+
+[Examples](https://github.com/abschill/html-chunk-loader/tree/master/examples)
 ### More Info
 [NPM Package](https://www.npmjs.com/package/html-chunk-loader)

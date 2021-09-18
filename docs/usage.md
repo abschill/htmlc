@@ -14,7 +14,7 @@
 
     console.log( Handler.getTemplate( 'home', { content: 'Body Content' } ) );
     
-Check the examples directory of the repository for an examples with an express backend
+[Click here](https://github.com/abschill/html-chunk-loader/tree/master/examples) to see example integrations with the server
 
 These variables match up to the @render=variable_name directives in the /views/layout partials
 The partials match up to the @render-partial=partial_name directives in the views/page templates
