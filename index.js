@@ -9,6 +9,6 @@ const Handler = new Loader({
         footer_label: 'Hello from Footer' 
      }
 });
-
+console.log( Handler.getPartials().map( asObject ) );
 console.log( Handler.getTemplate( 'home', { content: 'Body Content' } ) );
 
