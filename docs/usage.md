@@ -14,7 +14,7 @@
 
     console.log( Handler.getTemplate( 'home', { content: 'Body Content' } ) );
     
-Check index.js for this example in a localized path format
+Check the examples directory of the repository for an examples with an express backend
 
 These variables match up to the @render=variable_name directives in the /views/layout partials
 The partials match up to the @render-partial=partial_name directives in the views/page templates

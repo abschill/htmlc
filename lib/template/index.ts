@@ -1,16 +1,16 @@
 import fs from 'fs';
-import Controller from '../config';
+import Loader from '../loader';
 
 export default class Template {
 
-    config: Controller;
+    config: Loader;
     name: string;
     path: string;
     raw: string;
     preload?: string;
     parsed?: string;
     
-    constructor( config:Controller, name:string, path:string ) {
+    constructor( config:Loader, name:string, path:string ) {
         this.config = config;
         this.name = name;
         this.path = path;

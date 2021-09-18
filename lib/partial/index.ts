@@ -1,5 +1,5 @@
 import fs from 'fs';
-import Controller  from '../config';
+import Loader  from '../loader';
 interface partialObject {
     name: string,
     path: string,
@@ -9,7 +9,7 @@ interface partialObject {
 }
 export default class Partial {
     
-    config: Controller;
+    config: Loader;
     name: string;
     path: string;
     raw: string;
@@ -17,7 +17,7 @@ export default class Partial {
     toInsert?: Object[];
     isParsed: boolean;
 
-    constructor( config: Controller, name:string, path:string, toInsert?: Object[] ) {
+    constructor( config: Loader, name:string, path:string, toInsert?: Object[] ) {
         this.config = config;
         this.name = name;
         this.path = path;

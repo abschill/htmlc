@@ -3,10 +3,10 @@ import fs from 'fs-extra';
 import path from 'path';
 import Partial from '../partial';
 import Template from '../template';
-import { ConfigOptions } from '../types/config';
+import { LoaderOptions } from '../types/config';
 export default class Loader {
 
-    _config:ConfigOptions;
+    _config:LoaderOptions;
     hasTemplates: boolean;
     hasParts: boolean;
     templates: Template[];

@@ -1,12 +1,12 @@
 {
   "name": "html-chunk-loader",
-  "version": "0.0.16",
+  "version": "0.0.161",
   "description": "Node Template Engine using HTML Comments",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "test": "jest",
+    "test": "yarn build && jest",
     "prepare": "husky install",
     "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
