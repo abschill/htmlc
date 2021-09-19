@@ -2,18 +2,17 @@
 import Loader from '../dist';
 const l0 = new Loader();
 const { _config } = l0;
-const keyMap = Object.keys( _config );
-describe( 'Check required config options', () => {
-    it( 'Has Directory Base', () => {
-        expect( keyMap ).toContain( 'pathRoot' );
+describe( 'Blank config options', () => {
+    it( 'Sets Partial Dir', () => {
+        expect( _config.partials ).toBe( 'partials' );
     } );
 
-    it( 'Has Template Base', () => {
-        expect( keyMap ).toContain( 'templates' );
+    it( 'Sets Template Dir', () => {
+        expect( _config.templates).toBe( 'pages' );
     } );
     
-    it( 'Has Partial Base', () => {
-        expect( keyMap ).toContain( 'partials' );
+    it( 'Sets Root Dir', () => {
+        expect( _config.pathRoot ).toBe( 'views' );
     } );
 
     it( 'Successfully scanned Template Dir', () => {

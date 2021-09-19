@@ -1,12 +1,6 @@
 import fs from 'fs';
 import Loader  from '../loader';
-interface partialObject {
-    name: string,
-    path: string,
-    args: Object[],
-    raw: string,
-    parsed: string | null
-}
+import partialObject from '../types/partial';
 export default class Partial {
     
     config: Loader;
@@ -45,15 +39,15 @@ export default class Partial {
             }
             else {
                 console.log( 'no var list' );
+                return this.raw;
             }
         }
         else {
             return this.parsed;
-        }
-        
+        } 
     }
 
-    asObject():partialObject {
+    _asObject():partialObject {
         return {
             name: this.name,
             path: this.path,

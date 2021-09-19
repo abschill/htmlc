@@ -30,13 +30,14 @@ class Partial {
             }
             else {
                 console.log('no var list');
+                return this.raw;
             }
         }
         else {
             return this.parsed;
         }
     }
-    asObject() {
+    _asObject() {
         return {
             name: this.name,
             path: this.path,
