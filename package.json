@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "test": "yarn build && jest",
+    "test": "npm run build && jest",
     "prepare": "husky install",
     "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
@@ -35,7 +35,6 @@
   "devDependencies": {
     "@types/fs-extra": "^9.0.12",
     "@types/jest": "^27.0.1",
-    "@types/jsdom": "^16.2.13",
     "husky": "^7.0.2",
     "jest": "^27.1.0",
     "pinst": "^2.1.6",

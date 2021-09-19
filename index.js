@@ -9,7 +9,5 @@ const Handler = new Loader({
         footer_label: 'Hello from Footer' 
      }
 });
-
-Handler.getPartials().forEach(_ => console.log( _.parsed ))
-// console.log( Handler.getTemplate( 'home', { content: 'Body Content' } ) );
+console.log( Handler.getTemplate( 'home', { content: 'Body Content' } ) );
 
