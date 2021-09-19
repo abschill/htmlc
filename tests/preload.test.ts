@@ -32,6 +32,6 @@ describe( 'Custom Config Options', () => {
     it( 'preloads partial variables from loader', () => {
         l0.getPartials().forEach( _ => {
              expect( _.parsed ).toBeDefined();
-        })
+        });
     } );
 });
