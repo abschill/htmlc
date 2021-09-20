@@ -36,11 +36,7 @@ class Loader {
         this._configure();
     }
     _configure() {
-        const config_path = path_1.default.join(process.cwd(), `render.config.js`);
         const root_dir = path_1.default.join(process.cwd(), this._config.pathRoot);
-        if (fs_extra_1.default.existsSync(config_path)) {
-            this._config = require(config_path);
-        }
         if (fs_extra_1.default.pathExistsSync(root_dir)) {
             if (fs_extra_1.default.pathExistsSync(path_1.default.join(root_dir, this._config.templates))
                 && fs_extra_1.default.pathExistsSync(path_1.default.join(root_dir, this._config.partials))) {
