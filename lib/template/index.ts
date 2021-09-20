@@ -26,9 +26,6 @@ export default class Template {
             if( _copy.includes( qry ) ) {
                 _copy = _copy.replace( qry, p.raw  );
             }
-            else {
-                console.log( 'no match' );
-            }
         } );
         this.preload = _copy;
         return _copy;

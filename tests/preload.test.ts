@@ -1,23 +1,8 @@
 
 import Loader from '../dist';
-
-const path_test = 'views';
-const path_templates = 'pages';
-const path_partials = 'partials';
-const test_title = 'Hello World';
-const test_desc = 'Cool Description Bro';
-const test_footer = 'Hello From Footer';
-const l0 = new Loader({
-    root: path_test,
-    templates: path_templates,
-    partials: path_partials,
-    _partialInput: {
-       title: test_title,
-       desc: test_desc,
-       footer_label: test_footer 
-    }
-});
-
+import testData from './setup';
+import { path_test, path_templates, path_partials } from './setup';
+const l0 = new Loader( testData )
 describe( 'Custom Config Options', () => {
 
     it( 'sets custom directory base', () => {

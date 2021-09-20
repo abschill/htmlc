@@ -29,12 +29,7 @@ export default class Loader {
         this._configure();
     }
     _configure() {
-        const config_path = path.join( process.cwd(), `render.config.js` );
         const root_dir = path.join( process.cwd(), this._config.pathRoot );
-
-        if( fs.existsSync( config_path ) ) {
-            this._config = require( config_path );
-        }
         if( fs.pathExistsSync( root_dir ) ) {
 
             if( fs.pathExistsSync( path.join( root_dir, this._config.templates ) ) 

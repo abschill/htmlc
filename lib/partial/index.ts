@@ -38,7 +38,6 @@ export default class Partial {
                 return this;
             }
             else {
-                console.log( 'no var list' );
                 return this.raw;
             }
         }
