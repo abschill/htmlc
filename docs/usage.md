@@ -1,23 +1,23 @@
 # Usage
 
-const Loader  = require( './dist' );
-const Handler = new Loader({
-     root: 'views',
-     templates: 'pages',
-     partials: 'partials',
-     _partialInput: {
-         //in the head template, the title and desc variables will be available
-         head: {
-            title: 'Hello World',
-            desc: 'Cool Description Bro',
-        },
-        //object-based template variables allow for duplicate names between templates
-        footer: {
-            title: 'Hello From Footer'
+    const Loader  = require( './dist' );
+    const Handler = new Loader({
+        root: 'views',
+        templates: 'pages',
+        partials: 'partials',
+        _partialInput: {
+            //in the head template, the title and desc variables will be available
+            head: {
+                title: 'Hello World',
+                desc: 'Cool Description Bro',
+            },
+            //object-based template variables allow for duplicate names between templates
+            footer: {
+                title: 'Hello From Footer'
+            }
         }
-     }
-});
-console.log( Handler.getTemplate( 'home', { content: 'Body Content' } ) );
+    });
+    console.log( Handler.getTemplate( 'home', { content: 'Body Content' } ) );
     
 [Click here](https://github.com/abschill/html-chunk-loader/tree/master/examples) to see example integrations with the server
 
