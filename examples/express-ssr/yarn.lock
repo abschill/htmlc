@@ -168,10 +168,10 @@ graceful-fs@^4.1.6, graceful-fs@^4.2.0:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.8.tgz#e412b8d33f5e006593cbd3cee6df9f2cebbe802a"
   integrity sha512-qkIilPUYcNhJpd33n0GBXTB1MMPp14TxEsEs0pTrsSVucApsYzW5V+Q8Qxhik6KU3evy+qkAAowTByymK0avdg==
 
-html-chunk-loader@^0.0.16:
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/html-chunk-loader/-/html-chunk-loader-0.0.16.tgz#efeffc28c4d18409d57ad6dbc353e40c4b3e8853"
-  integrity sha512-Ez3MyKqdEOcftrP6Ev6QjYHCYZqEASnZfWyKHGtUrkXBZHzXTBkPoCdVowBV2ilwqzxVbgxEtiwBqzY9u8OqWw==
+html-chunk-loader@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/html-chunk-loader/-/html-chunk-loader-0.0.2.tgz#bcc39994cd67d94baf89f7dbf9024ece0ad6ed50"
+  integrity sha512-2BcpD9yiFE/mr8JuRZOm6Qw7X41UlIl/J4vkvWYzjnIc7x+a4u5zXEcl+ryVAZwXbP+5GYlvgVBXZg8VsKNdwA==
   dependencies:
     fs-extra "^10.0.0"
 
