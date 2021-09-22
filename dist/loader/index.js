@@ -21,12 +21,13 @@ const partial_1 = __importDefault(require("../partial"));
 const template_1 = __importDefault(require("../template"));
 class Loader {
     constructor(_a) {
+        var _b, _c, _d, _e;
         var opts = __rest(_a, []);
         this._config = {
-            pathRoot: opts.pathRoot || 'views',
-            templates: opts.templates || 'pages',
-            partials: opts.partials || 'partials',
-            static: opts.static || false
+            pathRoot: (_b = opts.pathRoot) !== null && _b !== void 0 ? _b : 'views',
+            templates: (_c = opts.templates) !== null && _c !== void 0 ? _c : 'pages',
+            partials: (_d = opts.partials) !== null && _d !== void 0 ? _d : 'partials',
+            static: (_e = opts.static) !== null && _e !== void 0 ? _e : false
         };
         this._partialInput = opts._partialInput;
         this.hasTemplates = false;
@@ -46,7 +47,9 @@ class Loader {
                     return this.templates.push(new template_1.default(this, _template.split('.html')[0], path_1.default.join(templates_, _template)));
                 });
                 fs_extra_1.default.readdirSync(partials_).forEach(_partial => {
-                    return this.partials.push(new partial_1.default(this, _partial.split('.html')[0], path_1.default.join(partials_, _partial)));
+                    var _a;
+                    const name = _partial.split('.html')[0];
+                    return this.partials.push(new partial_1.default(name, path_1.default.join(partials_, _partial), (_a = Object.entries(this === null || this === void 0 ? void 0 : this._partialInput)) === null || _a === void 0 ? void 0 : _a.filter(_ => _[0] === name)[0][1]));
                 });
             }
             else {
@@ -56,10 +59,7 @@ class Loader {
         this._partials_process();
     }
     _partials_process() {
-        if (this._partialInput) {
-            //@ts-ignore
-            this.partials = this.getPartials().map(_ => _.parse(this._partialInput));
-        }
+        this.partials.forEach(_ => _.parse());
     }
     getTemplates(mode) {
         switch (mode) {
@@ -70,9 +70,6 @@ class Loader {
             default:
                 return this.templates;
         }
-    }
-    getPartials() {
-        return this.partials;
     }
     _asObject() {
         return {
@@ -85,7 +82,7 @@ class Loader {
         var content = __rest(_a, []);
         const target = this.templates.filter(_ => _.name === name)[0];
         if (Object.keys(content).length > 0) {
-            return target.render([content]);
+            return target.render(content);
         }
         else {
             return target.render([]);

@@ -16,10 +16,10 @@ export default class Loader {
     constructor( {...opts} ) {
 
         this._config = {
-            pathRoot:opts.pathRoot || 'views',
-            templates: opts.templates || 'pages',
-            partials: opts.partials || 'partials',
-            static:opts.static || false
+            pathRoot:opts.pathRoot ?? 'views',
+            templates: opts.templates ?? 'pages',
+            partials: opts.partials ?? 'partials',
+            static:opts.static ?? false
         }
         this._partialInput = opts._partialInput;
         this.hasTemplates = false;
@@ -41,9 +41,9 @@ export default class Loader {
                     fs.readdirSync( templates_ ).forEach( _template => {
                         return this.templates.push( new Template( this, _template.split( '.html')[0], path.join( templates_, _template ) ) );
                     } );
-
                      fs.readdirSync( partials_ ).forEach( _partial => {
-                         return this.partials.push( new Partial(  this, _partial.split( '.html')[0], path.join(partials_, _partial ) ) ) 
+                         const name = _partial.split( '.html')[0];
+                         return this.partials.push( new Partial( name, path.join(partials_, _partial ), Object.entries( this?._partialInput )?.filter( _ => _[0]=== name )[0][1] ) ) 
                      } );
                 }
                 else {
@@ -54,11 +54,7 @@ export default class Loader {
         this._partials_process();
     }
     _partials_process() {
-        if( this._partialInput ) {
-            //@ts-ignore
-            this.partials = this.getPartials().map( _ => _.parse(  this._partialInput ) )
-        }
-        
+        this.partials.forEach( _ => _.parse() )
     }
 
 
@@ -73,10 +69,6 @@ export default class Loader {
         }
     }
 
-    getPartials( ) {
-        return this.partials;
-        
-    }
 
     _asObject() {
         return {
@@ -89,7 +81,7 @@ export default class Loader {
     getTemplate( name, {...content } ) {
         const target = this.templates.filter( _ => _.name === name )[0];
         if( Object.keys( content ).length > 0 ) {
-            return target.render( [ content ] );
+            return target.render( content );
         } 
         else {
           return target.render( [] );

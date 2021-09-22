@@ -4,9 +4,13 @@ const Handler = new Loader({
      templates: 'pages',
      partials: 'partials',
      _partialInput: {
-        title: 'Hello World',
-        desc: 'Cool Description Bro',
-        footer_label: 'Hello from Footer' 
+         head: {
+            title: 'Hello World',
+            desc: 'Cool Description Bro',
+        },
+        footer: {
+            title: 'Hello From Footer'
+        }
      }
 });
 console.log( Handler.getTemplate( 'home', { content: 'Body Content' } ) );

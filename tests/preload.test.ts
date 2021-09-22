@@ -14,9 +14,5 @@ describe( 'Custom Config Options', () => {
     it( 'sets custom partial dir', () => {
         expect( l0._config.partials ).toBe( path_partials );
     } );
-    it( 'preloads partial variables from loader', () => {
-        l0.getPartials().forEach( _ => {
-             expect( _.parsed ).toBeDefined();
-        });
-    } );
+    
 });

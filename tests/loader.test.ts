@@ -1,6 +1,16 @@
 
 import Loader from '../dist';
-const l0 = new Loader();
+const l0 = new Loader({
+    _partialInput: {
+        head: {
+            title: 'Hello World',
+            desc: 'Cool Description Bro',
+        },
+        footer: {
+            title: 'Hello From Footer'
+        }
+    }
+});
 const { _config } = l0;
 describe( 'Blank config options', () => {
     it( 'Sets Partials', () => {
@@ -24,21 +34,17 @@ describe( 'Blank config options', () => {
     } );
 
     it( 'Can Load Partials', () => {
-        l0.getPartials().forEach( part => {
+        l0.partials.forEach( part => {
             expect( part.raw ).toBeDefined();
         } );
     } );
 
     it( 'Can Load Templates', () => {
-        l0.getTemplates().forEach( template => {
+        l0.templates.forEach( template => {
             expect( template.raw ).toBeDefined();
         } );
     } );
 
-    it( 'Has not Loaded partial vars', () => {
-        l0.getPartials().forEach( partial => {
-            expect( partial.parsed ).toBeNull();
-        })
-    } );
+
 
 } );

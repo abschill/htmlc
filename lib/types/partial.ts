@@ -1,7 +1,6 @@
 export default interface partialObject {
     name: string,
-    path: string,
-    args: Object[],
+    args: Object,
     raw: string,
     parsed: string | null
 }

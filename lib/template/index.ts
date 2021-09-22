@@ -22,10 +22,7 @@ export default class Template {
     _preload() {
         let _copy = this.raw;
         this.config.partials.forEach( p => {
-            const qry = `<!--@render-partial=${p.name}-->`;
-            if( _copy.includes( qry ) ) {
-                _copy = _copy.replace( qry, p.raw  );
-            }
+            _copy = _copy.replace( `<!--@render-partial=${p.name}-->`, p.parsed );
         } );
         this.preload = _copy;
         return _copy;
@@ -38,13 +35,14 @@ export default class Template {
         return { _existsRaw, _existsPre };
     }
 
-    render( _varList:Object[] ) {
-        let _copy = this._preload();
-        Object.entries( this.config._partialInput ).forEach( i => _copy = _copy.replace( `<!--@render=${i[0]}-->`, i[1] ));
+    render( _varList:Object ) {
+        let _copy = this.preload ?? this.raw;
+        this.config.partials.forEach( p => {
+            _copy = _copy.replace( `<!--@render-partial=${p.name}-->`, p.parsed );
+        } );
         if( _varList ) {
-            _varList.forEach( _ => {
-                const _e = Object.entries( _ );
-                const e = _e.flat();
+            Object.entries( _varList ).forEach( _ => {
+                const e = _.flat();
                 //@ts-ignore
                  _copy = _copy.replace( `<!--@render=${e[0]}-->`, e[1]);
             } );

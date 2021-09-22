@@ -9,8 +9,12 @@ export default {
     templates: path_templates,
     partials: path_partials,
     _partialInput: {
-       title: test_title,
-       desc: test_desc,
-       footer_label: test_footer 
+        head: {
+            title: 'Hello World',
+            desc: 'Cool Description Bro',
+        },
+        footer: {
+            title: 'Hello From Footer'
+        }
     }
 };

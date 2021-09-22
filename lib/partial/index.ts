@@ -3,54 +3,51 @@ import Loader  from '../loader';
 import partialObject from '../types/partial';
 export default class Partial {
     
-    config: Loader;
     name: string;
-    path: string;
     raw: string;
     parsed: string|null;
-    toInsert?: Object[];
+    _toInsert?: Object;
     isParsed: boolean;
 
-    constructor( config: Loader, name:string, path:string, toInsert?: Object[] ) {
-        this.config = config;
+    constructor(  name:string, path:string, toInsert: Object ) {
         this.name = name;
-        this.path = path;
-        this.toInsert = toInsert;
+        this._toInsert = toInsert;
         this.raw = fs.readFileSync( path ).toString( 'utf-8' ); 
         this.isParsed = false;
         this.parsed = null;
-    }
-
-    parse( _varList:Object ) {
+        if( this._toInsert ) {
+            this.parse();
+        }
         
-        if( !this.isParsed ) {
-            let _copy = this.raw;
-            if( this.raw.includes( `@render=` ) && _varList ) {
-                Object.entries( _varList ).forEach( vr => {
-                    const _replace = `<!--@render=${vr[0]}-->`;
-                    if( _copy.indexOf( _replace ) !== -1 ) {
-                        _copy = _copy.replace( _replace , vr[1])
-                    }
-                     
+    }
+    
+    parse(  ) {
+        if( !this.isParsed && this._toInsert ) {
+            try{
+                let _copy = this.raw;
+                Object.entries( this?._toInsert ).forEach( arg => {
+                    _copy = _copy.replace( `<!--@render=${arg[0]}-->`, arg[1] );
+        
                 } );
-                this.parsed = _copy;
                 this.isParsed = true;
-                return this;
+                this.parsed = _copy;
+                return _copy;
             }
-            else {
-                return this.raw;
+            catch( e ) {
+                throw e;
             }
+           
         }
         else {
             return this.parsed;
-        } 
+        }
+        
     }
 
     _asObject():partialObject {
         return {
             name: this.name,
-            path: this.path,
-            args : this.toInsert,
+            args : this._toInsert,
             raw: this.raw,
             parsed: this.parsed
         };
