@@ -94,3 +94,5 @@ This template takes the template, parses each partial, and outputs the following
     <footer>
         <h5>Hello From Footer</h5>
     </footer>
+
+The {_} Directive in the @for loop represents the raw array item, so it works if your array only returns values into the template. If you're working with an array of objects, you can just use {propertyName} of the iterator to put that property in that segment. 
