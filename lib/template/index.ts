@@ -93,7 +93,6 @@ export default class Template {
                 } );
                 function iterateObj( segment, entries ) {
                     let shallow = segment;
-                    // console.log( segment );
                     Object.entries( entries ).map( ent => {
                         shallow = shallow.replace( `{${ent[0]}}`, ent[1] );
                     } );
@@ -103,7 +102,6 @@ export default class Template {
                 let outObj = [];
                 _parser.forEach( ( p, idx ) => {
                     const _iterator = iterators[idx - 1];
-                    // console.log( _iterator );
                     const match = Object.entries( _varList )[ idx ];
                     if( p && p.includes( 'render' ) ) {
                         _copy = _copy.replace( p, match[1] );
@@ -112,15 +110,12 @@ export default class Template {
                         if( p && p.includes( 'for' ) ) {
                             const _hLen = `<!--@for(${match[0]}){`;
                             const _tLen = '}-->';
-                            // console.log( match[1] );
-                            
                             match[1].forEach( matcher => {
                                 let newIterator = _iterator;
                                 //loop each submitted array item and create new element
                                 newIterator = newIterator.replace( _hLen, '' );
                                 newIterator = newIterator.replace( _tLen, '' );
                                 const _el = newIterator.trim();
-                                //  console.log( _el );
                                 if( typeof( matcher ) === 'string' ) {
                                     outVal.push( { 'child': _el.replace( '{_}', matcher ), parent: _iterator } );
                                 }
