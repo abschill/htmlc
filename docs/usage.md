@@ -2,22 +2,28 @@
 
     const Loader  = require( './dist' );
     const Handler = new Loader({
-        root: 'views',
-        templates: 'pages',
-        partials: 'partials',
-        _partialInput: {
-            //in the head template, the title and desc variables will be available
-            head: {
-                title: 'Hello World',
-                desc: 'Cool Description Bro',
-            },
-            //object-based template variables allow for duplicate names between templates
-            footer: {
-                title: 'Hello From Footer'
-            }
+     root: 'views',
+     templates: 'pages',
+     partials: 'partials',
+     _partialInput: {
+         head: {
+            title: 'Hello World',
+            desc: 'Cool Description Bro',
+        },
+        footer: {
+            title: 'Hello From Footer'
         }
+     }
     });
-    console.log( Handler.getTemplate( 'home', { content: 'Body Content' } ) );
+    console.log( Handler.getTemplate( 'home', { 
+        content: 'Body Content', 
+        items: [ 'foo', 'bar' ], 
+        items2: [ 
+            { title: 'item 1', desc: 'this is item 1' }, 
+            { title: 'item 2', desc: 'this is item 2' } 
+        ] 
+    } 
+    ) );
     
 [Click here](https://github.com/abschill/html-chunk-loader/tree/master/examples) to see example integrations with the server
 
@@ -34,8 +40,23 @@ head.html
 home.html
 
     <!--@render-partial=head-->
-        <main>
+    <main>
         <h1><!--@render=content--></h1>
+        <ul>
+            <!--@for(items){
+                <li class="test">{_}</li>    
+            }-->
+        </ul>
+        <ul>
+            <!--@for(items2){
+            <li>
+                <a href="https://google.com">
+                    {title}
+                </a>
+                <p>{desc}</p>
+            </li>
+        }-->
+    </ul>
     </main>
     <!--@render-partial=footer-->
 
@@ -53,7 +74,23 @@ This template takes the template, parses each partial, and outputs the following
     </head>
     <main>
         <h1>Body Content</h1>
+        <ul>
+            <li class="test">foo</li><li class="test">bar</li>
+        </ul>
+        <ul>
+            <li>
+                <a href="https://google.com">      
+                    item 1
+                </a>
+                <p>this is item 1</p>
+            </li><li>
+                <a href="https://google.com">      
+                    item 2
+                </a>
+                <p>this is item 2</p>
+            </li>
+    </ul>
     </main>
     <footer>
-        <h5>Hello from Footer</h5>
+        <h5>Hello From Footer</h5>
     </footer>

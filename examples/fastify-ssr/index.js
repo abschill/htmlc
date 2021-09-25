@@ -16,7 +16,15 @@ const Handler = new Loader({
 });
 fastify.get('/', async (request, reply) => {
     reply.header( 'content-type', 'text/html' );
-    reply.send( Handler.getTemplate( 'home', { content: 'Body Content' } ) );
+    reply.send( Handler.getTemplate( 'home', { 
+        content: 'Body Content', 
+        items: [ 'foo', 'bar' ], 
+        items2: [ 
+            { title: 'item 1', desc: 'this is item 1' }, 
+            { title: 'item 2', desc: 'this is item 2' } 
+        ] 
+    } 
+    ) );
 })
 const start = async () => {
   try {

@@ -18,7 +18,15 @@ const Handler = new Loader({
 
 
 app.get( '/', ( req, res ) => {
-    res.send( Handler.getTemplate( 'home', {content: 'Body Content' } ) );
+    res.send( Handler.getTemplate( 'home', { 
+        content: 'Body Content', 
+        items: [ 'foo', 'bar' ], 
+        items2: [ 
+            { title: 'item 1', desc: 'this is item 1' }, 
+            { title: 'item 2', desc: 'this is item 2' } 
+        ] 
+    } 
+    ) );
 } );
 
 app.listen( 3000 );

@@ -1,5 +1,20 @@
 <!--@render-partial=head-->
 <main>
     <h1><!--@render=content--></h1>
+    <ul>
+        <!--@for(items){
+            <li class="test">{_}</li>    
+        }-->
+    </ul>
+    <ul>
+        <!--@for(items2){
+           <li>
+               <a href="https://google.com">
+                   {title}
+               </a>
+               <p>{desc}</p>
+           </li>
+       }-->
+   </ul>
 </main>
 <!--@render-partial=footer-->
