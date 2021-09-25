@@ -1,6 +1,6 @@
 # Usage
 
-    const Loader  = require( './dist' );
+    const Loader  = require( 'html-chunk-loader' );
     const Handler = new Loader({
      root: 'views',
      templates: 'pages',
