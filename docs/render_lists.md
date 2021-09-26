@@ -1,4 +1,4 @@
-# Usage
+# Rendering Lists
 
     const Loader  = require( './dist' );
     const Handler = new Loader({
@@ -25,8 +25,6 @@
         ] 
     } 
     ) );
-    //Simple Static Pages
-    console.log( Handler.getTemplate( 'about' ) );
     
 [Click here](https://github.com/abschill/html-chunk-loader/tree/master/examples) to see example integrations with the server
 

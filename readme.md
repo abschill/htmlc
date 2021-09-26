@@ -10,7 +10,7 @@ Create a directory called views/ and inside it create pages/ and partials/ inser
 
 
 ### Docs
-[Usage](https://github.com/abschill/html-chunk-loader/blob/master/docs/usage.md)
+[Usage](https://github.com/abschill/html-chunk-loader/blob/master/docs/simple_static.md)
 
 [Examples](https://github.com/abschill/html-chunk-loader/tree/master/examples)
 ### More Info
