@@ -13,6 +13,7 @@ const Handler = new Loader({
         }
      }
 });
+//Server Side Rendering
 console.log( Handler.getTemplate( 'home', { 
     content: 'Body Content', 
     items: [ 'foo', 'bar' ], 
@@ -22,4 +23,8 @@ console.log( Handler.getTemplate( 'home', {
     ] 
 } 
 ) );
+console.log('\n' );
+
+//Simple Static Pages
+console.log( Handler.getTemplate( 'about' ) );
 

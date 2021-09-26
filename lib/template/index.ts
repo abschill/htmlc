@@ -77,7 +77,7 @@ export default class Template {
             const _iterable_map = iterable_map.filter( _ => _ === true );
             const num_iterables = _iterable_map.length;
             const iterators = this._getIterator( _copy );
-            if( num_iterables === iterators.length ) {
+            if( num_iterables === iterators?.length ) {
                 //input matches declarations
                 const _dom = _copy;
                 const _parser = Object.keys( _varList ).map( x => {
@@ -128,6 +128,7 @@ export default class Template {
                 } );
                 const elArr = outVal.map( x => x.child ).join( '' );
                 const valArr = outObj.map( x => x.child ).join( '' );
+                
                 outVal.forEach( ( _out ) => _copy = _copy.replace( _out.parent, elArr ) );
                 outObj.forEach( _out  => _copy = _copy.replace( _out.parent, valArr ) );
             }

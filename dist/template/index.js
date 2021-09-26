@@ -71,7 +71,7 @@ class Template {
             const _iterable_map = iterable_map.filter(_ => _ === true);
             const num_iterables = _iterable_map.length;
             const iterators = this._getIterator(_copy);
-            if (num_iterables === iterators.length) {
+            if (num_iterables === (iterators === null || iterators === void 0 ? void 0 : iterators.length)) {
                 //input matches declarations
                 const _dom = _copy;
                 const _parser = Object.keys(_varList).map(x => {

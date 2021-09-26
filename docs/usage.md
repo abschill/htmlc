@@ -1,20 +1,21 @@
 # Usage
 
-    const Loader  = require( 'html-chunk-loader' );
+    const Loader  = require( './dist' );
     const Handler = new Loader({
-     root: 'views',
-     templates: 'pages',
-     partials: 'partials',
-     _partialInput: {
-         head: {
-            title: 'Hello World',
-            desc: 'Cool Description Bro',
-        },
-        footer: {
-            title: 'Hello From Footer'
+        root: 'views',
+        templates: 'pages',
+        partials: 'partials',
+        _partialInput: {
+            head: {
+                title: 'Hello World',
+                desc: 'Cool Description Bro',
+            },
+            footer: {
+                title: 'Hello From Footer'
+            }
         }
-     }
     });
+    //Server Side Rendering
     console.log( Handler.getTemplate( 'home', { 
         content: 'Body Content', 
         items: [ 'foo', 'bar' ], 
@@ -24,6 +25,8 @@
         ] 
     } 
     ) );
+    //Simple Static Pages
+    console.log( Handler.getTemplate( 'about' ) );
     
 [Click here](https://github.com/abschill/html-chunk-loader/tree/master/examples) to see example integrations with the server
 
