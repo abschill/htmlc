@@ -18,7 +18,7 @@ const Handler = new Loader({
 
 
 app.get( '/', ( req, res ) => {
-    res.send( Handler.getTemplate( 'home', { 
+    const page = Handler.getTemplate( 'home', { 
         content: 'Body Content', 
         items: [ 'foo', 'bar' ], 
         items2: [ 
@@ -26,7 +26,9 @@ app.get( '/', ( req, res ) => {
             { title: 'item 2', desc: 'this is item 2' } 
         ] 
     } 
-    ) );
+    );
+    console.log( page )
+    res.send( page );
 } );
 
 app.listen( 3000 );

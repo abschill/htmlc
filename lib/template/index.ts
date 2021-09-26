@@ -76,11 +76,11 @@ export default class Template {
         this.config.partials.forEach( p => {
             _copy = _copy.replace( `<!--@render-partial=${p.name}-->`, p.parsed );
         } );
+        
         if( _varList ) {
-           
             const iterable_map = Object.values( _varList ).map( Array.isArray );
             const _iterable_map = iterable_map.filter( _ => _ === true );
-            const num_iterables = _iterable_map.length;
+            const num_iterables = _iterable_map?.length;
             const iterators = this._getIterator( _copy );
             if( num_iterables === iterators?.length ) {
                 //input matches declarations
