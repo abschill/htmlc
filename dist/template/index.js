@@ -17,7 +17,12 @@ class Template {
     _preload() {
         let _copy = this.raw;
         this.config.partials.forEach(p => {
-            _copy = _copy.replace(`<!--@render-partial=${p.name}-->`, p.parsed);
+            if (p.isParsed) {
+                _copy = p.parsed;
+            }
+            else {
+                _copy = _copy.replace(`<!--@render-partial=${p.name}-->`, p.parse());
+            }
         });
         this.preload = _copy;
         return _copy;

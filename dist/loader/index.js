@@ -47,9 +47,9 @@ class Loader {
                     return this.templates.push(new template_1.default(this, _template.split('.html')[0], path_1.default.join(templates_, _template)));
                 });
                 fs_extra_1.default.readdirSync(partials_).forEach(_partial => {
-                    var _a;
+                    var _a, _b, _c;
                     const name = _partial.split('.html')[0];
-                    return this.partials.push(new partial_1.default(name, path_1.default.join(partials_, _partial), (_a = Object.entries(this === null || this === void 0 ? void 0 : this._partialInput)) === null || _a === void 0 ? void 0 : _a.filter(_ => _[0] === name)[0][1]));
+                    return this.partials.push(new partial_1.default(name, path_1.default.join(partials_, _partial), (_c = (_b = (_a = Object.entries(this === null || this === void 0 ? void 0 : this._partialInput)) === null || _a === void 0 ? void 0 : _a.filter(_ => _[0] === name)) === null || _b === void 0 ? void 0 : _b['0']) === null || _c === void 0 ? void 0 : _c['1']));
                 });
             }
             else {

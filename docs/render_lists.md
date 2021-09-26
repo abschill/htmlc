@@ -41,6 +41,7 @@ head.html
 home.html
 
     <!--@render-partial=head-->
+    <!--@render-partial=nav-->
     <main>
         <h1><!--@render=content--></h1>
         <ul>

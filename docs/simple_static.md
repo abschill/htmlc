@@ -3,6 +3,7 @@
 about.html
 
     <!--@render-partial=head-->
+    <!--@render-partial=nav-->
     <main>
         About Page
     </main>
@@ -33,6 +34,12 @@ If we want to load partials and a simple static template page, we can call the c
     <title>Hello World</title>
     <meta name="description" content="Cool Description Bro"/>
     </head>
+    <nav>
+        <ul>
+            <li>Home</li>
+            <li>About</li>
+        </ul>
+    </nav>
     <main>
         About Page
     </main>

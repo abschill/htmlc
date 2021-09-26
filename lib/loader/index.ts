@@ -43,7 +43,7 @@ export default class Loader {
                     } );
                      fs.readdirSync( partials_ ).forEach( _partial => {
                          const name = _partial.split( '.html')[0];
-                         return this.partials.push( new Partial( name, path.join(partials_, _partial ), Object.entries( this?._partialInput )?.filter( _ => _[0]=== name )[0][1] ) ) 
+                         return this.partials.push( new Partial( name, path.join(partials_, _partial ), Object.entries( this?._partialInput )?.filter( _ => _[0]=== name )?.['0']?.['1'] ) ) 
                      } );
                 }
                 else {
