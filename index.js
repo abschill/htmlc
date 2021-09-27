@@ -13,7 +13,9 @@ const Handler = new Loader({
         }
      }
 });
-//Server Side Rendering
+
+// console.log( Handler );
+// Server Side Rendering
 console.log( Handler.getTemplate( 'home', { 
     content: 'Body Content', 
     items: [ 'foo', 'bar' ], 

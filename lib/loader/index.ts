@@ -13,7 +13,7 @@ export default class Loader {
     partials: Partial[];
     _partialInput: Object;
 
-    constructor( {...opts} ) {
+    constructor( { ...opts } ) {
 
         this._config = {
             pathRoot:opts.pathRoot ?? 'views',
@@ -21,7 +21,7 @@ export default class Loader {
             partials: opts.partials ?? 'partials',
             static:opts.static ?? false
         }
-        this._partialInput = opts._partialInput;
+        this._partialInput = opts._partialInput ?? {};
         this.hasTemplates = false;
         this.hasParts = false;
         this.partials = [];
@@ -53,7 +53,7 @@ export default class Loader {
         }
     }
 
-    getTemplate( name, {...content } ) {
+    getTemplate( name: string, {...content } ) {
         const target = this.templates.filter( _ => _.name === name )[0];
         if( Object.keys( content ).length > 0 ) {
             return target.render( content );

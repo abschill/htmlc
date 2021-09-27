@@ -7,19 +7,17 @@ export default class Partial {
     raw: string;
     parsed: string|null;
     _toInsert?: Object;
-    isParsed: boolean;
 
     constructor(  name:string, path:string, toInsert: Object ) {
         this.name = name;
         this._toInsert = toInsert;
         this.raw = fs.readFileSync( path ).toString( 'utf-8' ); 
-        this.isParsed = false;
         this.parsed = null;
         this.parse();
     }
     
-    parse(  ) {
-        if( !this.isParsed ) {
+    parse() {
+        if( !this.parsed ) {
             if( this._toInsert ) {
                 try{
                     let _copy = this.raw;
@@ -27,7 +25,6 @@ export default class Partial {
                         _copy = _copy.replace( `<!--@render=${arg[0]}-->`, arg[1] );
             
                     } );
-                    this.isParsed = true;
                     this.parsed = _copy;
                     return _copy;
                 }
@@ -37,11 +34,8 @@ export default class Partial {
             }
             else {
                 this.parsed = this.raw;
-                this.isParsed = true;
                 return this.raw;
             }
-            
-           
         }
         else {
             return this.parsed;

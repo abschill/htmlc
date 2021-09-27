@@ -21,7 +21,7 @@ const partial_1 = __importDefault(require("../partial"));
 const template_1 = __importDefault(require("../template"));
 class Loader {
     constructor(_a) {
-        var _b, _c, _d, _e;
+        var _b, _c, _d, _e, _f;
         var opts = __rest(_a, []);
         this._config = {
             pathRoot: (_b = opts.pathRoot) !== null && _b !== void 0 ? _b : 'views',
@@ -29,7 +29,7 @@ class Loader {
             partials: (_d = opts.partials) !== null && _d !== void 0 ? _d : 'partials',
             static: (_e = opts.static) !== null && _e !== void 0 ? _e : false
         };
-        this._partialInput = opts._partialInput;
+        this._partialInput = (_f = opts._partialInput) !== null && _f !== void 0 ? _f : {};
         this.hasTemplates = false;
         this.hasParts = false;
         this.partials = [];
@@ -56,11 +56,7 @@ class Loader {
                 throw new Error(`Directory "${this._config.pathRoot}"" not found in ${process.cwd()}`);
             }
         }
-        //this._partials_process();
     }
-    // _partials_process() {
-    //     this.partials.forEach( _ => _.parse() )
-    // }
     getTemplate(name, _a) {
         var content = __rest(_a, []);
         const target = this.templates.filter(_ => _.name === name)[0];

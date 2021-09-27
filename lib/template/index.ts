@@ -6,7 +6,6 @@ export default class Template {
     name: string;
     path: string;
     raw: string;
-    preload?: string;
     parsed?: string;
     
     constructor( config:Loader, name:string, path:string ) {
@@ -15,28 +14,6 @@ export default class Template {
         this.path = path;
         this.raw = fs.readFileSync( path ).toString( 'utf-8' ); 
         this.parsed = null;
-        this.preload = null;
-        this._preload();
-    }
-    _preload() {
-        let _copy = this.raw;
-        this.config.partials.forEach( p => {
-            if( p.isParsed ) {
-                _copy = p.parsed;
-            }
-            else {
-                _copy = _copy.replace( `<!--@render-partial=${p.name}-->`, p.parse() );
-            }
-        } );
-        this.preload = _copy;
-        return _copy;
-    }
-
-    _hasPartial( lbl ) {
-        const qry = `<!--@render-partial=${lbl}-->`;
-        const _existsRaw = this.raw.indexOf( qry ) !== -1;
-        const _existsPre = this.preload.indexOf( qry ) !== -1;
-        return { _existsRaw, _existsPre };
     }
     _getIterator ( txt ) {
         const _reggie = /<!--@for\(\w+\){([\s|\w|<|=|"|:|/|\.({})>]+)-->/gi;
@@ -113,7 +90,7 @@ export default class Template {
              return this.parsed;
         }
         else {
-            return this.preload
+            return this.raw;
         }
 
     }
