@@ -1,8 +1,9 @@
-name: Run Tests prerelease
+name: Run Tests Postcommit
 
-on:
-  release:
-    types: [created]
+on: 
+  push:
+    branches:
+      - master
 
 jobs:
   build:

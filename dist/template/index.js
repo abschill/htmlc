@@ -100,7 +100,7 @@ class Template {
                 const elArr = outVal.map(x => x.child).join('');
                 const valArr = outObj.map(x => x.child).join('');
                 outVal.forEach((_out) => _copy = _copy.replace(_out.parent, elArr));
-                outObj.forEach(_out => _copy = _copy.replace(_out.parent, valArr));
+                outObj.forEach((_out) => _copy = _copy.replace(_out.parent, valArr));
             }
             this.parsed = _copy;
             return this.parsed;
