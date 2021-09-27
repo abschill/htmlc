@@ -39,14 +39,6 @@ class Partial {
             return this.parsed;
         }
     }
-    _asObject() {
-        return {
-            name: this.name,
-            args: this._toInsert,
-            raw: this.raw,
-            parsed: this.parsed
-        };
-    }
 }
 exports.default = Partial;
 //# sourceMappingURL=index.js.map

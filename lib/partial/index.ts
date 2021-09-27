@@ -48,13 +48,4 @@ export default class Partial {
         }
         
     }
-
-    _asObject():partialObject {
-        return {
-            name: this.name,
-            args : this._toInsert,
-            raw: this.raw,
-            parsed: this.parsed
-        };
-    }
 }

@@ -37,34 +37,6 @@ class Template {
         const _reggie = /<!--@for\(\w+\){([\s|\w|<|=|"|:|/|\.({})>]+)-->/gi;
         return txt.match(_reggie);
     }
-    _getIteratorBase(txt) {
-        const _reggie = /<!--@for\(\w+\){\s+<(\w+)>{(\w+)}<\/\w+>\s+}-->/gi;
-        return txt.match(_reggie);
-    }
-    _getIteratorDetail(txt) {
-        const _i = /<!--@for\(\w+\){\s+<.+>{(\w+)}<\/\w+>\s+}-->/gi;
-        return txt.match(_i);
-    }
-    _getAttrKeys(txt) {
-        const _keys = /(\b\w+)=/g;
-        return txt.match(_keys);
-    }
-    _getAttr(txt) {
-        const _attr = /<[\s|\w|<|=|"|:|/|\.({})>]+>/g;
-        return txt.match(_attr);
-    }
-    _getAttrValues(txt) {
-        const _attr = /\"([^"]*)\"/g;
-        return txt.match(_attr);
-    }
-    _getElementCopies(txt) {
-        const _elements = /<.+>/g;
-        return txt.match(_elements);
-    }
-    _parseTemplate(txt) {
-        const _input = /{(\w+)}/gi;
-        return txt.match(_input);
-    }
     render(_varList) {
         var _a;
         let _copy = (_a = this.parsed) !== null && _a !== void 0 ? _a : this.raw;

@@ -27,4 +27,3 @@ console.log('\n' );
 
 //Simple Static Pages
 console.log( Handler.getTemplate( 'about' ) );
-

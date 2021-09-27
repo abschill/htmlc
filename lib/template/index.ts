@@ -42,34 +42,6 @@ export default class Template {
         const _reggie = /<!--@for\(\w+\){([\s|\w|<|=|"|:|/|\.({})>]+)-->/gi;
         return txt.match( _reggie );
     }
-    _getIteratorBase ( txt ) {
-        const _reggie = /<!--@for\(\w+\){\s+<(\w+)>{(\w+)}<\/\w+>\s+}-->/gi;
-        return txt.match( _reggie );
-    }
-    _getIteratorDetail ( txt ) {
-        const _i = /<!--@for\(\w+\){\s+<.+>{(\w+)}<\/\w+>\s+}-->/gi;
-        return txt.match( _i );
-    }
-    _getAttrKeys( txt ) {
-        const _keys = /(\b\w+)=/g;
-        return txt.match( _keys ); 
-    }
-    _getAttr( txt ) {
-        const _attr = /<[\s|\w|<|=|"|:|/|\.({})>]+>/g;
-        return txt.match( _attr );
-    }
-    _getAttrValues( txt ) {
-        const _attr = /\"([^"]*)\"/g;
-        return txt.match( _attr );
-    }
-    _getElementCopies ( txt ) {
-        const _elements = /<.+>/g;
-        return txt.match( _elements );
-    }
-    _parseTemplate( txt ) {
-        const _input = /{(\w+)}/gi;
-        return txt.match( _input );
-    }
 
     render( _varList:Object ) {
         let _copy = this.parsed ?? this.raw;
@@ -88,7 +60,7 @@ export default class Template {
                 const _parser = Object.keys( _varList ).map( x => {
                     const render_val = `<!--@render=${x}-->`;
                     const loop_val = `<!--@for(${x}){`;
-                    if( _dom.includes( render_val )) {
+                    if( _dom.includes( render_val ) ) {
                         return render_val;
                     }
                     if( _dom.includes( loop_val ) ) {
@@ -135,7 +107,7 @@ export default class Template {
                 const valArr = outObj.map( x => x.child ).join( '' );
                 
                 outVal.forEach( ( _out ) => _copy = _copy.replace( _out.parent, elArr ) );
-                outObj.forEach( _out  => _copy = _copy.replace( _out.parent, valArr ) );
+                outObj.forEach( ( _out ) => _copy = _copy.replace( _out.parent, valArr ) );
             }
              this.parsed = _copy;
              return this.parsed;
