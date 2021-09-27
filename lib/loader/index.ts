@@ -47,34 +47,9 @@ export default class Loader {
                      } );
                 }
                 else {
-                    throw new Error( 'Directory not configured' );
+                    throw new Error( `Directory "${this._config.pathRoot}"" not found in ${process.cwd()}` );
                 }
 
-        }
-        this._partials_process();
-    }
-    _partials_process() {
-        this.partials.forEach( _ => _.parse() )
-    }
-
-
-    getTemplates( mode ) {
-        switch( mode ) {
-            case 'preload':
-                //@ts-ignore
-                const _ = this.templates.map( _ => _._preload());
-                return _;
-            default:
-                return this.templates;
-        }
-    }
-
-
-    _asObject() {
-        return {
-            config: this._config,
-            templates: this.templates,
-            partials: this.partials
         }
     }
 

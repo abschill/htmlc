@@ -1,6 +1,6 @@
 # Rendering Lists
 
-    const Loader  = require( './dist' );
+    const Loader  = require( 'html-chunk-loader' );
     const Handler = new Loader({
         root: 'views',
         templates: 'pages',
@@ -28,7 +28,7 @@
     
 [Click here](https://github.com/abschill/html-chunk-loader/tree/master/examples) to see example integrations with the server
 
-These variables match up to the @render=variable_name directives in the /views/layout partials
+These variables match up to the @render=variable_name directives in the views/partials segments
 The partials match up to the @render-partial=partial_name directives in the views/page templates
 
 head.html
