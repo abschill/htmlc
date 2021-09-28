@@ -1,5 +1,5 @@
 //overwrite with stml.config.js
-import fs from 'fs-extra';
+import fs from 'fs';
 import path from 'path';
 import Partial from '../partial';
 import Template from '../template';
@@ -30,10 +30,10 @@ export default class Loader {
     }
     _configure() {
         const root_dir = path.join( process.cwd(), this._config.pathRoot );
-        if( fs.pathExistsSync( root_dir ) ) {
+        if( fs.existsSync( root_dir ) ) {
 
-            if( fs.pathExistsSync( path.join( root_dir, this._config.templates ) ) 
-                && fs.pathExistsSync( path.join( root_dir, this._config.partials )) ) {
+            if( fs.existsSync( path.join( root_dir, this._config.templates ) ) 
+                && fs.existsSync( path.join( root_dir, this._config.partials )) ) {
 
                     const templates_ = path.join( root_dir, this._config.templates )
                     const partials_ = path.join( root_dir, this._config.partials );

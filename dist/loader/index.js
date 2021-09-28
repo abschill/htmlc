@@ -15,7 +15,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 //overwrite with stml.config.js
-const fs_extra_1 = __importDefault(require("fs-extra"));
+const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const partial_1 = __importDefault(require("../partial"));
 const template_1 = __importDefault(require("../template"));
@@ -38,15 +38,15 @@ class Loader {
     }
     _configure() {
         const root_dir = path_1.default.join(process.cwd(), this._config.pathRoot);
-        if (fs_extra_1.default.pathExistsSync(root_dir)) {
-            if (fs_extra_1.default.pathExistsSync(path_1.default.join(root_dir, this._config.templates))
-                && fs_extra_1.default.pathExistsSync(path_1.default.join(root_dir, this._config.partials))) {
+        if (fs_1.default.existsSync(root_dir)) {
+            if (fs_1.default.existsSync(path_1.default.join(root_dir, this._config.templates))
+                && fs_1.default.existsSync(path_1.default.join(root_dir, this._config.partials))) {
                 const templates_ = path_1.default.join(root_dir, this._config.templates);
                 const partials_ = path_1.default.join(root_dir, this._config.partials);
-                fs_extra_1.default.readdirSync(templates_).forEach(_template => {
+                fs_1.default.readdirSync(templates_).forEach(_template => {
                     return this.templates.push(new template_1.default(this, _template.split('.html')[0], path_1.default.join(templates_, _template)));
                 });
-                fs_extra_1.default.readdirSync(partials_).forEach(_partial => {
+                fs_1.default.readdirSync(partials_).forEach(_partial => {
                     var _a, _b, _c;
                     const name = _partial.split('.html')[0];
                     return this.partials.push(new partial_1.default(name, path_1.default.join(partials_, _partial), (_c = (_b = (_a = Object.entries(this === null || this === void 0 ? void 0 : this._partialInput)) === null || _a === void 0 ? void 0 : _a.filter(_ => _[0] === name)) === null || _b === void 0 ? void 0 : _b['0']) === null || _c === void 0 ? void 0 : _c['1']));

@@ -1,6 +1,6 @@
 {
   "name": "html-chunk-loader",
-  "version": "0.0.29",
+  "version": "0.0.3",
   "description": "Node Template Engine using HTML Comments",
   "main": "dist/index.js",
   "scripts": {
@@ -29,9 +29,7 @@
   },
   "author": "abschill",
   "license": "ISC",
-  "dependencies": {
-    "fs-extra": "^10.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/fs-extra": "^9.0.12",
     "@types/jest": "^27.0.1",

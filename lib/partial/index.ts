@@ -1,6 +1,4 @@
 import fs from 'fs';
-import Loader  from '../loader';
-import partialObject from '../types/partial';
 export default class Partial {
     
     name: string;
