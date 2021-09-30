@@ -5,7 +5,7 @@ module.exports = ( {...conf}, [...args] ) => {
     
     const _ctx = conf._static_config
     if( _ctx ) {
-        _ctx.current = __dirname; //process.cwd() undefined from npx 
+        _ctx.current = process.cwd();
         const _tree0 = path.join( _ctx.current, _ctx.root );
         const _rootCheck = fs.existsSync( _tree0 );
         const _partialsCheck = fs.existsSync( path.join( _tree0, _ctx.partials ) );

@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
 const fs = require( 'fs' );
+const path = require( 'path' );
 const ssg = require( './ssg' );
-const conf = JSON.parse( fs.readFileSync( 'package.json' ).toString( 'utf-8' ) );
+const conf = JSON.parse( fs.readFileSync( path.resolve( process.cwd(), 'package.json' ) ).toString( 'utf-8' ) );
 const args = process.argv.slice( 2, process.argv.length ) || [];
 if( !conf ) {
     console.log( 'No package.json found at ' + process.cwd() );
