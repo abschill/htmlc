@@ -10,6 +10,8 @@ module.exports = ( {...conf}, [...args] ) => {
         const _rootCheck = fs.existsSync( _tree0 );
         const _partialsCheck = fs.existsSync( path.join( _tree0, _ctx.partials ) );
         const _templatesCheck = fs.existsSync( path.join( _tree0, _ctx.templates ) );
+        console.log( 'Your Config: \n' );
+        console.log( _ctx );
         if ( _rootCheck && _partialsCheck && _templatesCheck ) {
             //parse static config info
             console.log( 'Your Config: \n' );
