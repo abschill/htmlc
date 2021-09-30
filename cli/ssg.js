@@ -2,6 +2,7 @@ const path = require( 'path' );
 const fs = require( 'fs' );
 // const { _parseCtx } = require( './util' );
 module.exports = ( {...conf}, [...args] ) => {
+    
     const _ctx = conf._static_config
     if( _ctx ) {
         _ctx.current = __dirname; //process.cwd() undefined from npx 
@@ -16,7 +17,9 @@ module.exports = ( {...conf}, [...args] ) => {
             console.log( 'feature still under construction' );
         }
         else {
-            throw new Error( `Directory tree not configured properly` );
+            console.log( conf );
+            console.log( args );
+            // throw new Error( `Directory tree not configured properly` );
         }
     }
     else {
