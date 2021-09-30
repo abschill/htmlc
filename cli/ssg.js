@@ -1,8 +1,9 @@
 const path = require( 'path' );
 const fs = require( 'fs' );
-// const { _parseCtx } = require( './util' );
+ const { _mode } = require( './util' );
 module.exports = ( {...conf}, [...args] ) => {
-    
+    console.log( `Initiating ${_mode( args )} build...` );
+    console.log();
     const _ctx = conf._static_config
     if( _ctx ) {
         _ctx.current = process.cwd();
