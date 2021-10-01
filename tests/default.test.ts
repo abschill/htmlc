@@ -1,6 +1,6 @@
 
 import Loader from '../dist';
-import defaults from '../config.json';
+import defaults from '../config';
 const l1 = new Loader();
 const { _config } = l1;
 describe( 'Automatically fills in constructor', () => {

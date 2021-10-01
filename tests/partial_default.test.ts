@@ -1,6 +1,6 @@
 
 import Loader from '../dist';
-import defaults from '../config.json';
+import defaults from '../config';
 const l1 = new Loader({
     _partialInput: defaults._partial_data
 });

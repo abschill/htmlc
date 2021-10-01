@@ -1,6 +1,6 @@
 const path = require( 'path' );
 const fs = require( 'fs' );
-const defaults = require( '../config.json' );
+const defaults = require( '../config' );
 const { _mode, filterFiles } = require( './util' );
 const StaticLoader = require( './static-loader' );
 let ctx = {
@@ -28,7 +28,6 @@ module.exports = async ( {...conf}, [...args] ) => {
             console.log( 'Finding Templates..' );
             const files = processTemplates( path.join( _tree0, _ctx.templates ) );
             const Loader = new StaticLoader( _ctx, files );
-            Loader.genTemplates();
         }
         else {
             console.log( 's0f1' );

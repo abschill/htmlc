@@ -1,4 +1,4 @@
-{
+module.exports = {
     "_publishDefault": "dist",
     "rootDefault": "views",
     "partialDefault": "partials",
@@ -31,4 +31,5 @@
             { "title": "item 2", "desc": "this is item 2" }
         ]
     }
-}
+};
+//# sourceMappingURL=config.js.map

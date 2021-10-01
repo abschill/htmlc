@@ -10,6 +10,8 @@ module.exports = class StaticLoader {
         this.ctx = ctx;
         this.templates = [];
         this.printCtx();
+        this.genTemplates();
+
     }
 
     printCtx() {
@@ -18,11 +20,12 @@ module.exports = class StaticLoader {
     }
 
     async genTemplates( ) {
-        for await( const path of this.files ) {
+        for await( const chunk of this.files ) {
             console.log( '\n' );
-            const filename = path.match( /\w+.html$/gi )[0];
-            console.log( filename.split( '.html' )[0] );
-            console.log( fs.readFileSync( path ).toString( 'utf-8' ) );
+            const _filename = chunk.match( /\w+.html$/gi )[0];
+            const rawContent =  fs.readFileSync( chunk ).toString( 'utf-8' );
+            const fileName = _filename.split( '.html' )[0];
+            console.log( { rawContent, fileName } );
         }
     }
 }

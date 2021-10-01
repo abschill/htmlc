@@ -4,7 +4,7 @@ import path from 'path';
 import Partial from '../partial';
 import Template from '../template';
 import { LoaderOptions } from '../types/config';
-import defaults from '../../config.json';
+import defaults from '../../config';
 export default class Loader {
 
     _config:LoaderOptions;

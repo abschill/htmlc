@@ -1,6 +1,6 @@
 const Loader  = require( './dist' );
 const partialData = require( './package.json' )._partial_data;
-const packagedData = require( './config.json' )._template_data;
+const packagedData = require( './config' )._template_data;
 const Handler = new Loader({
      _partialInput: partialData
 });

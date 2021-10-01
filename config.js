@@ -1,4 +1,4 @@
-{
+module.exports = {
     "_publishDefault":"dist",
     "rootDefault":"views",
     "partialDefault":"partials",
