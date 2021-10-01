@@ -1,17 +1,19 @@
 const path = require( 'path' );
 const fs = require( 'fs' );
+const defaults = require( '../config.json' );
 const { _mode, filterFiles } = require( './util' );
+const StaticLoader = require( './static-loader' );
 let ctx = {
-    "root": "views",
-    "partials": "partials",
-    "templates": "pages",
-    "outPath": "public"
+    "root": defaults.rootDefault,
+    "partials": defaults.partialDefault,
+    "templates": defaults.templateDefault,
+    "outPath": defaults.outDefault
 }
+
 const processTemplates = ( path ) => filterFiles( path );
 
 module.exports = async ( {...conf}, [...args] ) => {
     const mode = _mode( args );
-    
     if( mode ) {
         console.log( `Initiating ${_mode( args )} build...` );
         const _ctx = conf?._static_config ?? ctx;
@@ -20,21 +22,13 @@ module.exports = async ( {...conf}, [...args] ) => {
         const _rootCheck = fs.existsSync( _tree0 );
         const _partialsCheck = fs.existsSync( path.join( _tree0, _ctx.partials ) );
         const _templatesCheck = fs.existsSync( path.join( _tree0, _ctx.templates ) );
-        console.log( 'Your Config: \n' );
-        console.log( _ctx );
+        
         if ( _rootCheck && _partialsCheck && _templatesCheck ) {
             //parse static config info
-            console.log( 'Your Config: \n' );
-            console.log( _ctx );
             console.log( 'Finding Templates..' );
             const files = processTemplates( path.join( _tree0, _ctx.templates ) );
-            for await( const path of files ) {
-                console.log( '\n' );
-                const filename = path.match( /\w+.html$/gi )[0];
-                console.log( filename.split( '.html' )[0] );
-                console.log( fs.readFileSync( path ).toString( 'utf-8' ) );
-            }
-            
+            const Loader = new StaticLoader( _ctx, files );
+            Loader.genTemplates();
         }
         else {
             console.log( 's0f1' );
@@ -42,7 +36,7 @@ module.exports = async ( {...conf}, [...args] ) => {
   
     }
     else {
-        console.log('No Mode Configured, exiting...' )
+        console.log( 'No Mode Configured, exiting...' )
     }
 
 }

@@ -19,14 +19,15 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const partial_1 = __importDefault(require("../partial"));
 const template_1 = __importDefault(require("../template"));
+const config_json_1 = __importDefault(require("../../config.json"));
 class Loader {
     constructor(_a) {
         var _b, _c, _d, _e;
         var opts = __rest(_a, []);
         this._config = {
-            pathRoot: (_b = opts.pathRoot) !== null && _b !== void 0 ? _b : 'views',
-            templates: (_c = opts.templates) !== null && _c !== void 0 ? _c : 'pages',
-            partials: (_d = opts.partials) !== null && _d !== void 0 ? _d : 'partials'
+            pathRoot: (_b = opts.pathRoot) !== null && _b !== void 0 ? _b : config_json_1.default.rootDefault,
+            templates: (_c = opts.templates) !== null && _c !== void 0 ? _c : config_json_1.default.templateDefault,
+            partials: (_d = opts.partials) !== null && _d !== void 0 ? _d : config_json_1.default.partialDefault
         };
         this._partialInput = (_e = opts._partialInput) !== null && _e !== void 0 ? _e : {};
         this.hasTemplates = false;

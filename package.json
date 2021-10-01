@@ -39,5 +39,17 @@
     "pinst": "^2.1.6",
     "ts-jest": "^27.0.5",
     "typescript": "^4.4.2"
+  },
+  "_template_data":{
+    "template_data": { 
+        "content": "Body Content", 
+        "items": [ 
+            "foo", "bar"
+         ], 
+        "items2": [ 
+            { "title": "item 1", "desc": "this is item 1" }, 
+            { "title": "item 2", "desc": "this is item 2" } 
+        ] 
+    }
   }
 }

@@ -1,0 +1,7 @@
+{
+    "publishDir": "dist",
+    "rootDefault": "views",
+    "partialDefault": "partials",
+    "templateDefault": "pages",
+    "outDefault": "public"
+}

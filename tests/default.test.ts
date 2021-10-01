@@ -1,18 +1,19 @@
 
 import Loader from '../dist';
+import defaults from '../config.json';
 const l1 = new Loader();
 const { _config } = l1;
 describe( 'Automatically fills in constructor', () => {
     it( 'Sets Partials', () => {
-        expect( _config.partials ).toBe( 'partials' );
+        expect( _config.partials ).toBe( defaults.partialDefault );
     } );
 
     it( 'Sets Templates', () => {
-        expect( _config.templates ).toBe( 'pages' );
+        expect( _config.templates ).toBe( defaults.templateDefault );
     } );
     
     it( 'Sets Root Dir', () => {
-        expect( _config.pathRoot ).toBe( 'views' );
+        expect( _config.pathRoot ).toBe( defaults.rootDefault );
     } );
 
     it( 'Scan Templates', () => {

@@ -18,9 +18,4 @@ const test_custom = {
         }
     }
 };
-const test1 = {
-
-}
-
-
 export default test_custom;

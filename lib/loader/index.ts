@@ -4,6 +4,7 @@ import path from 'path';
 import Partial from '../partial';
 import Template from '../template';
 import { LoaderOptions } from '../types/config';
+import defaults from '../../config.json';
 export default class Loader {
 
     _config:LoaderOptions;
@@ -16,10 +17,9 @@ export default class Loader {
     constructor( { ...opts } ) {
 
         this._config = {
-            pathRoot:opts.pathRoot ?? 'views',
-            templates: opts.templates ?? 'pages',
-            partials: opts.partials ?? 'partials',
-            static:opts.static ?? false
+            pathRoot:opts.pathRoot ?? defaults.rootDefault,
+            templates: opts.templates ?? defaults.templateDefault,
+            partials: opts.partials ?? defaults.partialDefault
         }
         this._partialInput = opts._partialInput ?? {};
         this.hasTemplates = false;
@@ -61,7 +61,6 @@ export default class Loader {
         else {
           return target.render( [] );
         }
-        
     }
 
 }
