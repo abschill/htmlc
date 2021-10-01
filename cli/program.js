@@ -7,12 +7,9 @@ let ctx = {
     "templates": "pages",
     "outPath": "public"
 }
-async function processTemplates( path ) {
-    console.log( filterFiles( path ) );
-}
+const processTemplates = ( path ) => filterFiles( path );
 
-
-module.exports = ( {...conf}, [...args] ) => {
+module.exports = async ( {...conf}, [...args] ) => {
     const mode = _mode( args );
     
     if( mode ) {
@@ -29,8 +26,14 @@ module.exports = ( {...conf}, [...args] ) => {
             //parse static config info
             console.log( 'Your Config: \n' );
             console.log( _ctx );
-            console.log( 'Building Templates..' );
-            processTemplates( path.join( _tree0, _ctx.templates ) );
+            console.log( 'Finding Templates..' );
+            const files = processTemplates( path.join( _tree0, _ctx.templates ) );
+            for await( const path of files ) {
+                console.log( '\n' );
+                const filename = path.match( /\w+.html$/gi )[0];
+                console.log( filename.split( '.html' )[0] );
+                console.log( fs.readFileSync( path ).toString( 'utf-8' ) );
+            }
             
         }
         else {
