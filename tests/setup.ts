@@ -1,3 +1,4 @@
+
 export const path_test = 'views';
 export const path_templates = 'pages2';
 export const path_partials = 'layout';

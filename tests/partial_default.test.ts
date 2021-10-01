@@ -2,15 +2,7 @@
 import Loader from '../dist';
 import defaults from '../config.json';
 const l1 = new Loader({
-    _partialInput: {
-        head: {
-            title: 'Hello World',
-            desc: 'Cool Description Bro',
-        },
-        footer: {
-            title: 'Hello From Footer'
-        }
-    }
+    _partialInput: defaults._partial_data
 });
 const { _config } = l1;
 describe( 'Blank config options', () => {
@@ -54,19 +46,30 @@ describe( 'Blank config options', () => {
     } );
 
     it( 'Loads Iterables', () => {
-        const _tester = l1.getTemplate( 'home', { 
-            content: 'Body Content', 
-            items: [ 'foo', 'bar' ], 
-            items2: [ 
-                { title: 'item 1', desc: 'this is item 1' }, 
-                { title: 'item 2', desc: 'this is item 2' } 
-            ] 
-        } );
-        expect( _tester ).toContain( 'foo' ); 
-        expect( _tester ).toContain( 'bar' ); 
-
-        expect( _tester ).toContain( 'this is item 1' ); 
-        expect( _tester ).toContain( 'this is item 2' ); 
+        const _tester = l1.getTemplate( 'home', defaults._template_data );
+        Object.values( defaults._template_data ).forEach( input => {
+            if( typeof( input ) !== 'string' ) {
+                //is array
+                //@ts-ignore
+                input.forEach( entry => {
+                    if( typeof( entry ) !== 'object' ) {
+                        //entry is value
+                        expect( _tester ).toContain( entry ); 
+                       
+                    }
+                    else {
+                        //entry is obj
+                        Object.values( entry ).forEach( val => {
+                            expect( _tester ).toContain( val );
+                        } );
+                    }
+                } );
+            }
+            else {
+                //is value map
+                expect( _tester ).toContain( input );
+            }
+        } );    
     } );
 
 } );
