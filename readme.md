@@ -13,14 +13,16 @@ Create a directory called views/ and inside it create pages/ and partials/ inser
 
 ### Handlebars Size Comparison
 
-### Us
+### html-chunk-loader
 
 ![html-chunk-loader](https://github.com/abschill/html-chunk-loader/blob/master/docs/img/hcl.PNG?raw=true)
 
-### Them
+### Handlebars
 
 ![Handlebars](https://github.com/abschill/html-chunk-loader/blob/master/docs/img/hbs.PNG?raw=true) 
 
+### EJS
+![EJS](https://github.com/abschill/html-chunk-loader/blob/master/docs/img/ejs.PNG?raw=true)
 ### Docs
 [Usage](https://github.com/abschill/html-chunk-loader/blob/master/docs/simple_static.md)
 
