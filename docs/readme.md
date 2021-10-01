@@ -5,3 +5,4 @@
 [Click Here](https://github.com/abschill/html-chunk-loader/blob/master/docs/render_lists.md)
 
 ## Static Site Generation
+[Click Here](https://github.com/abschill/html-chunk-loader/blob/master/docs/cli.md)

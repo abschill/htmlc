@@ -13,9 +13,6 @@ If we want to load partials and a simple static template page, we can call the c
 
     const Loader  = require( 'html-chunk-loader' );
     const Handler = new Loader({
-        root: 'views',
-        templates: 'pages',
-        partials: 'partials',
         _partialInput: {
             head: {
                 title: 'Hello World',
@@ -48,5 +45,6 @@ If we want to load partials and a simple static template page, we can call the c
     </footer>
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+By default, the base directory is called views, the partials directory partials, and the templates directory defaults to pages. You can configure these in the constructor, but if you don't they will be set as those.
 
 To see how to parse template variables, [click here](https://github.com/abschill/html-chunk-loader/blob/master/docs/render_lists.md)
