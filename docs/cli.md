@@ -12,8 +12,11 @@
 In your package.json, you can define the paths for your input & exports like so. If you don't define one, this is what will be created for you in this format.
 
 
+## Running the CLI
+
+
     npx html-chunk-loader --mode=ssg
 
-Base Command to begin the SSG interface.
+Base Command to begin the SSG interface. 
 
 ## UNDER CONSTRUCTION
