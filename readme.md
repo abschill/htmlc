@@ -17,6 +17,10 @@ Create a directory called views/ and inside it create pages/ and partials/ inser
 
 ![html-chunk-loader](https://github.com/abschill/html-chunk-loader/blob/master/docs/img/hcl.PNG?raw=true)
 
+### Pug
+
+![Pug](https://github.com/abschill/html-chunk-loader/blob/master/docs/img/pug.PNG?raw=true)
+
 ### Handlebars
 
 ![Handlebars](https://github.com/abschill/html-chunk-loader/blob/master/docs/img/hbs.PNG?raw=true) 
