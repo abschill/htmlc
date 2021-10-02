@@ -19,16 +19,17 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const partial_1 = __importDefault(require("../partial"));
 const template_1 = __importDefault(require("../template"));
+const default_1 = __importDefault(require("../default"));
 class Loader {
     constructor(_a) {
         var _b, _c, _d, _e;
         var opts = __rest(_a, []);
         this._config = {
-            pathRoot: (_b = opts.pathRoot) !== null && _b !== void 0 ? _b : 'views',
-            templates: (_c = opts.templates) !== null && _c !== void 0 ? _c : 'pages',
-            partials: (_d = opts.partials) !== null && _d !== void 0 ? _d : 'partials'
+            pathRoot: (_b = opts === null || opts === void 0 ? void 0 : opts.pathRoot) !== null && _b !== void 0 ? _b : default_1.default.rootDefault,
+            templates: (_c = opts === null || opts === void 0 ? void 0 : opts.templates) !== null && _c !== void 0 ? _c : default_1.default.templateDefault,
+            partials: (_d = opts === null || opts === void 0 ? void 0 : opts.partials) !== null && _d !== void 0 ? _d : default_1.default.partialDefault
         };
-        this._partialInput = (_e = opts._partialInput) !== null && _e !== void 0 ? _e : {};
+        this._partialInput = (_e = opts === null || opts === void 0 ? void 0 : opts._partialInput) !== null && _e !== void 0 ? _e : {};
         this.hasTemplates = false;
         this.hasParts = false;
         this.partials = [];
@@ -38,8 +39,8 @@ class Loader {
     _configure() {
         const root_dir = path_1.default.join(process.cwd(), this._config.pathRoot);
         if (fs_1.default.existsSync(root_dir)) {
-            if (fs_1.default.existsSync(path_1.default.join(root_dir, this._config.templates))
-                && fs_1.default.existsSync(path_1.default.join(root_dir, this._config.partials))) {
+            const tde = fs_1.default.existsSync(path_1.default.join(root_dir, this._config.templates));
+            if (tde && fs_1.default.existsSync(path_1.default.join(root_dir, this._config.partials))) {
                 const templates_ = path_1.default.join(root_dir, this._config.templates);
                 const partials_ = path_1.default.join(root_dir, this._config.partials);
                 fs_1.default.readdirSync(templates_).forEach(_template => {
@@ -52,8 +53,16 @@ class Loader {
                 });
             }
             else {
-                throw new Error(`Directory "${this._config.pathRoot}"" not found in ${process.cwd()}`);
+                if (tde) {
+                    throw new Error(`Partial directory "${this._config.partials}" not found in ${process.cwd()}`);
+                }
+                else {
+                    throw new Error(`Template directory "${this._config.templates}" not found in ${process.cwd()}`);
+                }
             }
+        }
+        else {
+            throw new Error(`Directory "${this._config.pathRoot}" not found in ${process.cwd()}`);
         }
     }
     getTemplate(name, _a) {

@@ -14,7 +14,7 @@
     "postpublish": "pinst --enable"
   },
   "files": [
-    "dist/**/*",
+    "dist/index.js",
     "cli/**/*",
     "config.js"
   ],

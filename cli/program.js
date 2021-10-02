@@ -1,6 +1,6 @@
 const path = require( 'path' );
 const fs = require( 'fs' );
-const defaults = require( '../config' );
+const defaults = require( '../dist/config' );
 const { _mode, filterFiles } = require( './util' );
 const StaticLoader = require( './static-loader' );
 let ctx = {
@@ -10,7 +10,7 @@ let ctx = {
     "outPath": defaults.outDefault
 }
 
-const processTemplates = ( path ) => filterFiles( path );
+const processDir = ( path ) => filterFiles( path );
 
 module.exports = async ( {...conf}, [...args] ) => {
     const mode = _mode( args );
@@ -26,8 +26,9 @@ module.exports = async ( {...conf}, [...args] ) => {
         if ( _rootCheck && _partialsCheck && _templatesCheck ) {
             //parse static config info
             console.log( 'Finding Templates..' );
-            const files = processTemplates( path.join( _tree0, _ctx.templates ) );
-            const Loader = new StaticLoader( _ctx, files );
+            const partials = processDir( path.join( _tree0, _ctx.partials ) );
+            const templates = processDir( path.join( _tree0, _ctx.templates ) );
+            const Loader = new StaticLoader( _ctx, { partials, templates } );
         }
         else {
             console.log( 's0f1' );

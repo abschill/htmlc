@@ -4,7 +4,7 @@ import path from 'path';
 import Partial from '../partial';
 import Template from '../template';
 import { LoaderOptions } from '../types/config';
-import defaults from '../../config';
+import defaults from '../default';
 export default class Loader {
 
     _config:LoaderOptions;
@@ -15,29 +15,26 @@ export default class Loader {
     _partialInput: Object;
 
     constructor( { ...opts } ) {
-
         this._config = {
-            pathRoot:opts.pathRoot ?? defaults.rootDefault,
-            templates: opts.templates ?? defaults.templateDefault,
-            partials: opts.partials ?? defaults.partialDefault
+            pathRoot:opts?.pathRoot ?? defaults.rootDefault,
+            templates: opts?.templates ?? defaults.templateDefault,
+            partials: opts?.partials ?? defaults.partialDefault
         }
-        this._partialInput = opts._partialInput ?? {};
+        this._partialInput = opts?._partialInput ?? {};
         this.hasTemplates = false;
         this.hasParts = false;
         this.partials = [];
         this.templates = [];
         this._configure();
     }
+    
     _configure() {
         const root_dir = path.join( process.cwd(), this._config.pathRoot );
         if( fs.existsSync( root_dir ) ) {
-
-            if( fs.existsSync( path.join( root_dir, this._config.templates ) ) 
-                && fs.existsSync( path.join( root_dir, this._config.partials )) ) {
-
+            const tde = fs.existsSync( path.join( root_dir, this._config.templates ) );
+            if( tde && fs.existsSync( path.join( root_dir, this._config.partials ) ) ) {
                     const templates_ = path.join( root_dir, this._config.templates )
                     const partials_ = path.join( root_dir, this._config.partials );
-
                     fs.readdirSync( templates_ ).forEach( _template => {
                         return this.templates.push( new Template( this, _template.split( '.html')[0], path.join( templates_, _template ) ) );
                     } );
@@ -47,9 +44,16 @@ export default class Loader {
                      } );
                 }
                 else {
-                    throw new Error( `Directory "${this._config.pathRoot}"" not found in ${process.cwd()}` );
+                    if( tde ) {
+                        throw new Error( `Partial directory "${this._config.partials}" not found in ${process.cwd()}` );
+                    }
+                    else {
+                        throw new Error( `Template directory "${this._config.templates}" not found in ${process.cwd()}` );
+                    } 
                 }
-
+        }
+        else {
+            throw new Error( `Directory "${this._config.pathRoot}" not found in ${process.cwd()}` );
         }
     }
 

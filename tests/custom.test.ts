@@ -1,7 +1,7 @@
 
 import Loader from '../dist';
 import mainTest from './setup';
-import { _custom_template_test } from '../config'
+import { _custom_template_test } from '../dist/config'
 import { path_test, path_templates, path_partials } from './setup';
 const l0 = new Loader( mainTest )
 describe( 'Custom Config Options', () => {
