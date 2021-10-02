@@ -1,5 +1,6 @@
 const fastify = require( 'fastify' )()
 const Loader = require( 'html-chunk-loader' );
+const templateData = require( './template' );
 const Handler = new Loader( {
      root: 'views',
      templates: 'pages',
@@ -16,15 +17,7 @@ const Handler = new Loader( {
 } );
 fastify.get('/', async ( request, reply ) => {
     reply.header( 'content-type', 'text/html' );
-    reply.send( Handler.getTemplate( 'home', { 
-        content: 'Body Content', 
-        items: [ 'foo', 'bar' ], 
-        items2: [ 
-            { title: 'item 1', desc: 'this is item 1' }, 
-            { title: 'item 2', desc: 'this is item 2' } 
-        ] 
-    } 
-    ) );
+    reply.send( Handler.getTemplate( 'home', templateData() ) );
 })
 const start = async () => {
   try {
