@@ -23,7 +23,23 @@ module.exports = class StaticLoader {
             const _filename = part.match( /\w+.html$/gi )[0];
             const rawContent =  fs.readFileSync( part ).toString( 'utf-8' );
             const fileName = _filename.split( '.html' )[0];
-            this.partials.push( { name: fileName, path: part, raw: rawContent } );
+            let renderedContent = rawContent;
+            Object.entries( this.partial_data ).forEach( arr => {
+                if( fileName === arr[0] ) {
+                    //is  the right set of vars
+                    const _i = Object.entries( arr[1] );
+                    //[[title, 'hello world'], ['desc', '']...]
+                    _i.forEach( dbo => {
+                        const _match = `<!--@render=${dbo[0]}-->`;
+                        const _replace = dbo[1];
+                        if( rawContent.includes( _match ) ) {
+                            renderedContent = renderedContent.replace( _match, _replace )
+                        }
+                    } );
+                }
+                
+            } );  
+            this.partials.push( { name: fileName, path: part, raw: rawContent, parsed: renderedContent } );
         } );
     }
     _configureTemplates() {
@@ -38,6 +54,6 @@ module.exports = class StaticLoader {
         console.log( 'Your Config: \n' );
         console.log( this.ctx );
         console.log( this.partials );
-        console.log( this.templates );
+       // console.log( this.templates );
     }
 }
