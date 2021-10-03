@@ -1,5 +1,6 @@
 const fs = require( 'fs' );
 const path = require( 'path' );
+const { filterFiles } = require( './util' );
 module.exports = class StaticLoader {
 
     constructor( ctx, { partials, templates } ) {
@@ -9,12 +10,39 @@ module.exports = class StaticLoader {
         this.templates_inp = templates;
         this.partials = [];
         this.templates = [];
+        this.outDir = path.join( process.cwd(), this.ctx.outPath ) ?? path.join( process.cwd(), 'public' );
         this._configure(); 
     }
     _configure () {
         this._configurePartials();
         this._configureTemplates();
         this.printCtx();
+        const e = this._configureOutPath();
+
+        console.log( `Directory Setup ${e?'Success':'Failed' } `);
+    }
+    _clearDirFiles( files ) {
+        for( const file of files ) fs.unlinkSync( file );
+    }
+    _configureOutPath() {
+        let dirFiles;
+        if ( !fs.existsSync( this.outDir ) ) {
+            const e = fs.mkdirSync( this.outDir );
+            //write files here
+            if( fs.existsSync( this.outDir ) ) {
+                dirFiles = filterFiles( this.outDir );
+                if( this.ctx.cleanup ) this._clearDirFiles( dirFiles );
+                return true;
+            }
+            else {
+                throw new Error( 'Error: output path not configured correctly' );
+            }
+        }
+        else {
+            dirFiles = filterFiles( _outPath );
+            if( this.ctx.cleanup ) this._clearDirFiles( dirFiles );
+            return true;
+        }
     }
     _configurePartials() {
         // console.log( this.partial_data );

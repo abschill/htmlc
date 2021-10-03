@@ -6,10 +6,11 @@
         "root": "views",
         "partials": "partials",
         "templates": "pages",
-        "outPath": "public"
+        "outPath": "public",
+        "cleanup":true
     }
 
-In your package.json, you can define the paths for your input & exports like so. If you don't define one, this is what will be created for you in this format. If you haven't changed any defaults, you can omit this declaration. 
+In your package.json, you can define the paths for your input & exports like so. If you don't define one, this is what will be created for you in this format. If you haven't changed any defaults, you can omit this declaration (apart from outPath). The cleanup property decides whether or not to clear the target outDir on build or not. If you have anything important in that folder DO NOT set this to true, or you will have to restore from recycle bin. 
 
     "_partial_data": {
     "head": {

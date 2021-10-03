@@ -41,6 +41,13 @@
     "ts-jest": "^27.0.5",
     "typescript": "^4.4.2"
   },
+  "_static_config": {
+    "root": "views",
+    "partials": "partials",
+    "templates": "pages",
+    "outPath": "public",
+    "cleanup":true
+},
   "_partial_data": {
     "head": {
       "title": "Hello World",
