@@ -14,6 +14,14 @@ module.exports = {
             { "title": "item 2", "desc": "this is item 2" }
         ]
     },
+    "_static_config": {
+        "root": "views",
+        "partials": "partials",
+        "templates": "pages",
+        "outPath": "public",
+        "loaderFile": "loader.js",
+        "cleanup": true
+    },
     "_partial_data": {
         "head": {
             "title": "Hello World",

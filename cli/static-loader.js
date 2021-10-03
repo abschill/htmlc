@@ -20,10 +20,11 @@ module.exports = class StaticLoader {
     _configure () {
         this._configurePartials();
         this._configureTemplates();
-        this.printCtx();
+        
         const e = this._configureOutPath();
 
         console.log( `Directory Setup ${e?'Success':'Failed' } `);
+        this.printCtx();
     }
     _clearDirFiles( files ) {
         for( const file of files ) fs.unlinkSync( file );
@@ -47,6 +48,10 @@ module.exports = class StaticLoader {
             if( this.ctx.cleanup ) this._clearDirFiles( dirFiles );
             return true;
         }
+    }
+    _getIterator ( txt ) {
+        const _reggie = /<!--@for\(\w+\){([\s|\w|<|=|"|:|/|\.({})>]+)-->/gi;
+        return txt.match( _reggie );
     }
     _configurePartials() {
         // console.log( this.partial_data );
@@ -75,18 +80,91 @@ module.exports = class StaticLoader {
         } );
     }
     _configureTemplates() {
-        console.log( this.loaderFile );
+        //console.log( this.loaderFile );
+         console.log( this.templates_inp );
         this.templates_inp.forEach( part => {
             const _filename = part.match( /\w+.html$/gi )[0];
             const rawContent =  fs.readFileSync( part ).toString( 'utf-8' );
+            let _copy = rawContent;
             const fileName = _filename.split( '.html' )[0];
-            this.templates.push( { path: part,  rawName: _filename, name: fileName, raw: rawContent } );
+            const iterable_map = Object.values( this.loaderFile ).map( Array.isArray );
+            const _iterable_map = iterable_map.filter( _ => _ === true );
+            const num_iterables = _iterable_map?.length;
+            const iterators = this._getIterator( rawContent );
+            if( num_iterables === iterators?.length ) {
+                console.log( 'foo' );
+                //input matches declarations
+                const _dom = _copy;
+                const _parser = Object.keys( this.loaderFile ).map( x => {
+                    const render_val = `<!--@render=${x}-->`;
+                    const loop_val = `<!--@for(${x}){`;
+                    if( _dom.includes( render_val ) ) {
+                        return render_val;
+                    }
+                    if( _dom.includes( loop_val ) ) {
+                        return loop_val;
+                    }
+                    return false;
+                } );
+                function iterateObj( segment, entries ) {
+                    let shallow = segment;
+                    Object.entries( entries ).map( ent => {
+                        shallow = shallow.replace( `{${ent[0]}}`, ent[1] );
+                    } );
+                    return shallow;
+                }
+                let outVal = [];
+                let outObj = [];
+                _parser.forEach( ( p, idx ) => {
+                    const _iterator = iterators[idx - 1];
+                    const match = Object.entries( this.loaderFile )[ idx ];
+                    if( p && p.includes( 'render' ) ) {
+                        _copy = _copy.replace( p, match[1] );
+                    }
+                    else{ 
+                        if( p && p.includes( 'for' ) ) {
+                            const _hLen = `<!--@for(${match[0]}){`;
+                            const _tLen = '}-->';
+                            match[1].forEach( matcher => {
+                                let newIterator = _iterator;
+                                //loop each submitted array item and create new element
+                                newIterator = newIterator.replace( _hLen, '' );
+                                newIterator = newIterator.replace( _tLen, '' );
+                                const _el = newIterator.trim();
+                                if( typeof( matcher ) === 'string' ) {
+                                    outVal.push( { 'child': _el.replace( '{_}', matcher ), parent: _iterator } );
+                                }
+                                else {
+                                    outObj.push( { 'child': iterateObj( _el, matcher ), parent: _iterator } );
+                                } 
+                            } );
+                        }
+                    }
+                } );
+                const elArr = outVal.map( x => x.child ).join( '' );
+                const valArr = outObj.map( x => x.child ).join( '' );
+                
+                outVal.forEach( ( _out ) => _copy = _copy.replace( _out.parent, elArr ) );
+                outObj.forEach( ( _out ) => _copy = _copy.replace( _out.parent, valArr ) );
+                this.partials.forEach( _ => {
+                    _copy = _copy.replace( `<!--@render-partial=${_.name}-->`, _.parsed );
+                } );
+            }
+            else {
+                this.partials.forEach( _ => {
+                    _copy = _copy.replace( `<!--@render-partial=${_.name}-->`, _.parsed );
+                } );
+            }
+            this.templates.push( { path: part,  rawName: _filename, name: fileName, raw: rawContent, parsed: _copy } );
         } );
     }
     printCtx() {
         console.log( 'Your Config: \n' );
         console.log( this.ctx );
-        //console.log( this.partials );
-       // console.log( this.templates );
+        this.templates.forEach( template => {
+            console.log( template );
+            console.log( path.resolve( this.outDir, template.rawName ) );
+            fs.writeFileSync( path.resolve( this.outDir, template.rawName ), template.parsed );
+        } );
     }
 }
