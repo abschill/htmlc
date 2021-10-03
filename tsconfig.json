@@ -9,10 +9,12 @@
         "moduleResolution": "node",
         "sourceMap": true,
         "outDir": "dist",
-        "baseUrl":"lib",
-        "resolveJsonModule": true
+        "baseUrl": "lib"
     },
-    "files": [
+    "include": [
         "lib/index.ts"
+    ],
+    "exclude":[
+        "tests/**/*"
     ]
 }
