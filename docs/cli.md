@@ -29,6 +29,5 @@ You will want to declare your partials in package.json as well, in this format p
 
     npx html-chunk-loader --mode=ssg
 
-Base Command to begin the SSG interface. 
+Base Command to build your SSG Templates. Please report any bugs you encounter, this is still in early stages. 
 
-## UNDER CONSTRUCTION
