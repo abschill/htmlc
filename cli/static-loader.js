@@ -80,8 +80,7 @@ module.exports = class StaticLoader {
         } );
     }
     _configureTemplates() {
-        //console.log( this.loaderFile );
-         console.log( this.templates_inp );
+        
         this.templates_inp.forEach( part => {
             const _filename = part.match( /\w+.html$/gi )[0];
             const rawContent =  fs.readFileSync( part ).toString( 'utf-8' );
@@ -92,7 +91,6 @@ module.exports = class StaticLoader {
             const num_iterables = _iterable_map?.length;
             const iterators = this._getIterator( rawContent );
             if( num_iterables === iterators?.length ) {
-                console.log( 'foo' );
                 //input matches declarations
                 const _dom = _copy;
                 const _parser = Object.keys( this.loaderFile ).map( x => {
@@ -162,8 +160,6 @@ module.exports = class StaticLoader {
         console.log( 'Your Config: \n' );
         console.log( this.ctx );
         this.templates.forEach( template => {
-            console.log( template );
-            console.log( path.resolve( this.outDir, template.rawName ) );
             fs.writeFileSync( path.resolve( this.outDir, template.rawName ), template.parsed );
         } );
     }
