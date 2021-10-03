@@ -5,11 +5,15 @@ module.exports = class StaticLoader {
 
     constructor( ctx, { partials, templates } ) {
         this.ctx = ctx;
-        this.partial_data = JSON.parse( fs.readFileSync( path.resolve( process.cwd(), 'package.json' ) ).toString( 'utf-8' ) )._partial_data;
+        this.partial_data = require( path.resolve( process.cwd(), 'package.json' ) )._partial_data;
         this.partials_inp = partials;
         this.templates_inp = templates;
         this.partials = [];
         this.templates = [];
+        //set default for these eventually from config
+        this.loaderFile = require( path.join( process.cwd(), this.ctx.loaderFile ) ) ?? 
+        require( path.join( process.cwd(), 'loader.js' ) );
+        this.loaderFile = this.loaderFile();
         this.outDir = path.join( process.cwd(), this.ctx.outPath ) ?? path.join( process.cwd(), 'public' );
         this._configure(); 
     }
@@ -39,7 +43,7 @@ module.exports = class StaticLoader {
             }
         }
         else {
-            dirFiles = filterFiles( _outPath );
+            dirFiles = filterFiles( this.outDir );
             if( this.ctx.cleanup ) this._clearDirFiles( dirFiles );
             return true;
         }
@@ -71,17 +75,18 @@ module.exports = class StaticLoader {
         } );
     }
     _configureTemplates() {
+        console.log( this.loaderFile );
         this.templates_inp.forEach( part => {
             const _filename = part.match( /\w+.html$/gi )[0];
             const rawContent =  fs.readFileSync( part ).toString( 'utf-8' );
             const fileName = _filename.split( '.html' )[0];
-            this.templates.push( { name: fileName, path: part, raw: rawContent } );
+            this.templates.push( { path: part,  rawName: _filename, name: fileName, raw: rawContent } );
         } );
     }
     printCtx() {
         console.log( 'Your Config: \n' );
         console.log( this.ctx );
-        console.log( this.partials );
+        //console.log( this.partials );
        // console.log( this.templates );
     }
 }

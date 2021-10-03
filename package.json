@@ -46,6 +46,7 @@
     "partials": "partials",
     "templates": "pages",
     "outPath": "public",
+    "loaderFile":"loader.js",
     "cleanup":true
 },
   "_partial_data": {
