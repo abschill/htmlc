@@ -25,7 +25,7 @@ module.exports = {
     "_partial_data": {
         "head": {
             "title": "Hello World",
-            "desc": "Cool Description Bro"
+            "desc": "Cool Description"
         },
         "footer": {
             "title": "Hello From Footer"
