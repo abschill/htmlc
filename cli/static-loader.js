@@ -11,9 +11,8 @@ module.exports = class StaticLoader {
         this.partials = [];
         this.templates = [];
         //set default for these eventually from config
-        const data  = require( path.resolve( process.cwd(), this.ctx.loaderFile ) ) ?? 
+        this.loaderFile = require( path.resolve( process.cwd(), this.ctx.loaderFile ) ) ?? 
         require( path.resolve( process.cwd(), 'loader.js' ) );
-        this.loaderFile = data();
         console.log( 'Loader File: ' );
         console.log( this.loaderFile );
         this.outDir = path.join( process.cwd(), this.ctx.outPath ) ?? path.join( process.cwd(), 'public' );
@@ -84,18 +83,19 @@ module.exports = class StaticLoader {
     _configureTemplates() {
         
         this.templates_inp.forEach( part => {
+            const loaderFile = this.loaderFile();
             const _filename = part.match( /\w+.html$/gi )[0];
             const rawContent =  fs.readFileSync( part ).toString( 'utf-8' );
             let _copy = rawContent;
             const fileName = _filename.split( '.html' )[0];
-            const iterable_map = Object.values( this.loaderFile ).map( Array.isArray );
+            const iterable_map = Object.values( loaderFile ).map( Array.isArray );
             const _iterable_map = iterable_map.filter( _ => _ === true );
             const num_iterables = _iterable_map?.length;
             const iterators = this._getIterator( rawContent );
             if( num_iterables === iterators?.length ) {
                 //input matches declarations
                 const _dom = _copy;
-                const _parser = Object.keys( this.loaderFile ).map( x => {
+                const _parser = Object.keys( loaderFile ).map( x => {
                     const render_val = `<!--@render=${x}-->`;
                     const loop_val = `<!--@for(${x}){`;
                     if( _dom.includes( render_val ) ) {
@@ -117,7 +117,7 @@ module.exports = class StaticLoader {
                 let outObj = [];
                 _parser.forEach( ( p, idx ) => {
                     const _iterator = iterators[idx - 1];
-                    const match = Object.entries( this.loaderFile )[ idx ];
+                    const match = Object.entries( loaderFile )[ idx ];
                     if( p && p.includes( 'render' ) ) {
                         _copy = _copy.replace( p, match[1] );
                     }
