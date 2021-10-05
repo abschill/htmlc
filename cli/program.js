@@ -7,7 +7,8 @@ let ctx = {
     "root": defaults.rootDefault,
     "partials": defaults.partialDefault,
     "templates": defaults.templateDefault,
-    "outPath": defaults.outDefault
+    "outPath": defaults.outDefault,
+    "loaderFile": "loader.js",
 }
 
 const processDir = ( path ) => filterFiles( path );
