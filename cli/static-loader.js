@@ -11,9 +11,9 @@ module.exports = class StaticLoader {
         this.partials = [];
         this.templates = [];
         //set default for these eventually from config
-        this.loaderFile = require( path.join( process.cwd(), this.ctx.loaderFile ) ) ?? 
+        const data  = require( path.join( process.cwd(), this.ctx.loaderFile ) ) ?? 
         require( path.join( process.cwd(), 'loader.js' ) );
-        this.loaderFile = this.loaderFile();
+        this.loaderFile = data();
         this.outDir = path.join( process.cwd(), this.ctx.outPath ) ?? path.join( process.cwd(), 'public' );
         this._configure(); 
     }
