@@ -9,7 +9,7 @@ const Handler = new Loader({
      _partialInput: {
          head: {
             title: 'Hello World',
-            desc: 'Cool Description Bro',
+            desc: 'Cool Description',
         },
         footer: {
             title: 'Hello From Footer'
