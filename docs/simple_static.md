@@ -16,7 +16,7 @@ If we want to load partials and a simple static template page, we can call the c
         _partialInput: {
             head: {
                 title: 'Hello World',
-                desc: 'Cool Description Bro',
+                desc: 'Cool Description',
             },
             footer: {
                 title: 'Hello From Footer'
@@ -29,7 +29,7 @@ If we want to load partials and a simple static template page, we can call the c
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     <head>
     <title>Hello World</title>
-    <meta name="description" content="Cool Description Bro"/>
+    <meta name="description" content="Cool Description"/>
     </head>
     <nav>
         <ul>

@@ -8,7 +8,7 @@
         _partialInput: {
             head: {
                 title: 'Hello World',
-                desc: 'Cool Description Bro',
+                desc: 'Cool Description',
             },
             footer: {
                 title: 'Hello From Footer'
@@ -72,7 +72,7 @@ This template takes the template, parses each partial, and outputs the following
 
     <head>
     <title>Hello World</title>
-    <meta name="description" content="Cool Description Bro"/>
+    <meta name="description" content="Cool Description"/>
     </head>
     <main>
         <h1>Body Content</h1>

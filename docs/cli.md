@@ -15,7 +15,7 @@ In your package.json, you can define the paths for your input & exports like so.
     "_partial_data": {
     "head": {
       "title": "Hello World",
-      "desc": "Cool Description Bro"
+      "desc": "Cool Description"
     },
     "footer": {
       "title": "Hello From Footer"
