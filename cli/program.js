@@ -1,6 +1,6 @@
 const path = require( 'path' );
 const fs = require( 'fs' );
-const defaults = require( '../dist/config' );
+const defaults = require( '../dist/default' );
 const { _mode, filterFiles } = require( './util' );
 const StaticLoader = require( './static-loader' );
 let ctx = {
