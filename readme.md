@@ -1,16 +1,30 @@
 # HTML Chunk Loader
+## Configurable Template Engine for Node
 
-## Node SSR/SSG Configurable Template Engine
+html-chunk-loader is a lightweight 0 dependency template engine for Node. It has support for ssr/ssg depending on what your goal is.
 
-html-chunk-loader is a lightweight 0 dependency template engine for Node. 
+[![npm version](https://img.shields.io/npm/v/react.svg?style=flat)](https://www.npmjs.com/package/html-chunk-loader)
+[![Firefox 75.0+](https://img.shields.io/badge/Firefox-75.0+-brightgreen?logo=firefox%20browser&logoColor=white)](https://www.mozilla.org/en-US/exp/firefox/new/)
+[![Chromium 82.0+](https://img.shields.io/badge/Chromium-82.0+-brightgreen?logo=google%20chrome&logoColor=white)](https://www.chromium.org/)
+[![Safari 14.1+](https://img.shields.io/badge/Safari-14.1+-brightgreen?logo=safari&logoColor=white)](https://www.apple.com/safari/)
+
 
 ### Installation
 
     npm i html-chunk-loader
 
-Create a directory called views/ and inside it create pages/ and partials/ insert your chunks into these folders. Check the [examples](https://github.com/abschill/html-chunk-loader/tree/master/examples) directory in the github repository for an example SSR setup.
+    ~ or ~
 
+    yarn add html-chunk-loader
 
+Create a directory called views/ and inside it create pages/ and partials/ insert your chunks into these folders. Check the  directory in the github repository for an example SSR setup.
+
+### Docs
+
+### [Tutorial](https://github.com/abschill/html-chunk-loader/blob/master/docs/simple_static.md)
+### [Server Side Rendering](https://github.com/abschill/html-chunk-loader/blob/master/docs/render_lists.md)
+### [Static Site Generation](https://github.com/abschill/html-chunk-loader/blob/master/docs/cli.md)
+### [Examples](https://github.com/abschill/html-chunk-loader/tree/master/examples)
 ### Size Comparison
 
 ### html-chunk-loader
@@ -27,9 +41,3 @@ Create a directory called views/ and inside it create pages/ and partials/ inser
 
 ### EJS
 ![EJS](https://github.com/abschill/html-chunk-loader/blob/master/docs/img/ejs.PNG?raw=true)
-### Docs
-[Usage](https://github.com/abschill/html-chunk-loader/blob/master/docs/simple_static.md)
-
-[Examples](https://github.com/abschill/html-chunk-loader/tree/master/examples)
-### More Info
-[NPM Package](https://www.npmjs.com/package/html-chunk-loader)

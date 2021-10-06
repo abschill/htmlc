@@ -1,4 +1,17 @@
 # Simple Static Template Loading
+head.html
+
+    <head>
+        <title><!--@render=title--></title>
+        <meta name="description" content="<!--@render=desc-->"/>
+    </head>
+
+footer.html
+
+    <footer>
+        <h5><!--@render=title--></h5>
+    </footer>
+
 
 about.html
 
@@ -47,4 +60,4 @@ If we want to load partials and a simple static template page, we can call the c
 
 By default, the base directory is called views, the partials directory partials, and the templates directory defaults to pages. You can configure these in the constructor, but if you don't they will be set as those.
 
-To see how to parse template variables, [click here](https://github.com/abschill/html-chunk-loader/blob/master/docs/render_lists.md)
+To see how to parse template variables or iterate over list items, [click here](https://github.com/abschill/html-chunk-loader/blob/master/docs/render_lists.md)
