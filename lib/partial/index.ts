@@ -11,17 +11,16 @@ export default class Partial {
         this._toInsert = toInsert;
         this.raw = fs.readFileSync( path ).toString( 'utf-8' ); 
         this.parsed = null;
-        this.parse();
+        this.render();
     }
     
-    parse() {
+    render() {
         if( !this.parsed ) {
             if( this._toInsert ) {
                 try{
                     let _copy = this.raw;
                     Object.entries( this._toInsert ).forEach( arg => {
                         _copy = _copy.replace( `<!--@render=${arg[0]}-->`, arg[1] );
-            
                     } );
                     this.parsed = _copy;
                     return _copy;

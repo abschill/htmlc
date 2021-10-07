@@ -1,9 +1,8 @@
-//overwrite with stml.config.js
 import fs from 'fs';
 import path from 'path';
 import Partial from '../partial';
 import Template from '../template';
-import { LoaderOptions } from '../types/config';
+import { LoaderOptions } from './options';
 import defaults from '../default';
 export default class Loader {
 
@@ -63,7 +62,7 @@ export default class Loader {
             return target.render( content );
         } 
         else {
-          return target.render( [] );
+          return target.render( {} );
         }
     }
 

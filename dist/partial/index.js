@@ -10,9 +10,9 @@ class Partial {
         this._toInsert = toInsert;
         this.raw = fs_1.default.readFileSync(path).toString('utf-8');
         this.parsed = null;
-        this.parse();
+        this.render();
     }
-    parse() {
+    render() {
         if (!this.parsed) {
             if (this._toInsert) {
                 try {

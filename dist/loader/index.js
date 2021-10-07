@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-//overwrite with stml.config.js
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const partial_1 = __importDefault(require("../partial"));
@@ -72,7 +71,7 @@ class Loader {
             return target.render(content);
         }
         else {
-            return target.render([]);
+            return target.render({});
         }
     }
 }

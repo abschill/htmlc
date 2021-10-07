@@ -1,0 +1,1 @@
+rm -rf $1 && node cli/entry.js --mode=ssg
