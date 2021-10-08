@@ -4,36 +4,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const iterator_1 = __importDefault(require("../util/iterator"));
+const iterate_object_1 = __importDefault(require("../util/iterate_object"));
+const config_partial_1 = __importDefault(require("../util/config_partial"));
+const create_itr_map_1 = __importDefault(require("../util/create_itr_map"));
+const parsable_1 = __importDefault(require("../util/parsable"));
 function render(_varList, inp, config) {
     let _copy = inp;
-    config.partials.forEach(p => {
-        _copy = _copy.replace(`<!--@render-partial=${p.name}-->`, p.parsed);
-    });
+    _copy = (0, config_partial_1.default)(config, _copy);
     if (Object.keys(_varList).length > 0) {
-        const iterable_map = Object.values(_varList).map(Array.isArray);
-        const _iterable_map = iterable_map.filter(_ => _ === true);
-        const num_iterables = _iterable_map === null || _iterable_map === void 0 ? void 0 : _iterable_map.length;
+        const num_iterables = (0, create_itr_map_1.default)(_varList);
         const iterators = (0, iterator_1.default)(_copy);
         if (num_iterables === (iterators === null || iterators === void 0 ? void 0 : iterators.length)) {
             const _dom = _copy;
-            const _parser = Object.keys(_varList).map(x => {
-                const render_val = `<!--@render=${x}-->`;
-                const loop_val = `<!--@for(${x}){`;
-                if (_dom.includes(render_val)) {
-                    return render_val;
-                }
-                if (_dom.includes(loop_val)) {
-                    return loop_val;
-                }
-                return false;
-            });
-            function iterateObj(segment, entries) {
-                let shallow = segment;
-                Object.entries(entries).map(ent => {
-                    shallow = shallow.replace(`{${ent[0]}}`, ent[1]);
-                });
-                return shallow;
-            }
+            const _parser = (0, parsable_1.default)(_varList, _dom);
             let outVal = [];
             let outObj = [];
             _parser.forEach((p, idx) => {
@@ -56,7 +39,7 @@ function render(_varList, inp, config) {
                                 outVal.push({ 'child': _el.replace('{_}', matcher), parent: _iterator });
                             }
                             else {
-                                outObj.push({ 'child': iterateObj(_el, matcher), parent: _iterator });
+                                outObj.push({ 'child': (0, iterate_object_1.default)(_el, matcher), parent: _iterator });
                             }
                         });
                     }

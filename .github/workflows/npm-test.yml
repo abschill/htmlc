@@ -1,4 +1,4 @@
-name: Run Tests Postcommit
+name: Tests
 
 on: 
   push:
