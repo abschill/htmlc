@@ -1,5 +1,8 @@
 language: node_js
 
+os:
+  - linux
+
 script:
-  - yarn install
-  - yarn test
+  - npm install
+  - npm run test
