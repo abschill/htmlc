@@ -1,3 +1,5 @@
 language: node_js
 
-rvm: 
+script:
+  - yarn install
+  - yarn test
