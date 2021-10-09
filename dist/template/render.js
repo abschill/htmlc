@@ -20,10 +20,6 @@ function render(_varList, inp, config) {
             const _parser = (0, parsable_1.default)(_varList, _dom);
             let outVal = [];
             let outObj = [];
-            // console.log( 'parser: ' )
-            // console.log( _parser );
-            // console.log( iterators );
-            // const { outVal, outObj } = parse( _parser, iterators, _copy, _varList );
             _parser.forEach((p, idx) => {
                 const _iterator = iterators[idx - 1];
                 const match = Object.entries(_varList)[idx];
@@ -35,7 +31,6 @@ function render(_varList, inp, config) {
                         const _hLen = `<!--@for(${match[0]}){`;
                         const _tLen = '}-->';
                         match[1].forEach(matcher => {
-                            // console.log( matcher );
                             let newIterator = _iterator;
                             //loop each submitted array item and create new element
                             newIterator = newIterator.replace(_hLen, '');
