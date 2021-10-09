@@ -1,4 +1,5 @@
 import fs from 'fs';
+import iterateObj from '../util/iterate_object';
 export default class Partial {
     
     name: string;
