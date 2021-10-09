@@ -4,6 +4,7 @@ import iterateObj from '../util/iterate_object';
 import configPartials from '../util/config_partial';
 import countItr from '../util/create_itr_map';
 import parsable from '../util/parsable';
+import insertValue from '../util/insert';
 export default function render( _varList:Object, inp: string, config: Loader ) {
     let _copy = inp;
     _copy = configPartials( config, _copy );
@@ -19,7 +20,7 @@ export default function render( _varList:Object, inp: string, config: Loader ) {
                 const _iterator = iterators[idx - 1];
                 const match = Object.entries( _varList )[ idx ];
                 if( p && p.includes( 'render' ) ) {
-                    _copy = _copy.replace( p, match[1] );
+                    _copy = insertValue( _copy, p, match[1] );
                 }
                 else{ 
                     if( p && p.includes( 'for' ) ) {
@@ -43,8 +44,8 @@ export default function render( _varList:Object, inp: string, config: Loader ) {
             } );
             const elArr = outVal.map( x => x.child ).join( '' );
             const valArr = outObj.map( x => x.child ).join( '' );
-            outVal.forEach( ( _out ) => _copy = _copy.replace( _out.parent, elArr ) );
-            outObj.forEach( ( _out ) => _copy = _copy.replace( _out.parent, valArr ) );
+            outVal.forEach( ( _out ) => _copy = insertValue( _copy,  _out.parent, elArr ) );
+            outObj.forEach( ( _out ) => _copy = insertValue( _copy,  _out.parent, valArr ) );
         }
     }
     return _copy;

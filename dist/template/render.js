@@ -8,6 +8,7 @@ const iterate_object_1 = __importDefault(require("../util/iterate_object"));
 const config_partial_1 = __importDefault(require("../util/config_partial"));
 const create_itr_map_1 = __importDefault(require("../util/create_itr_map"));
 const parsable_1 = __importDefault(require("../util/parsable"));
+const insert_1 = __importDefault(require("../util/insert"));
 function render(_varList, inp, config) {
     let _copy = inp;
     _copy = (0, config_partial_1.default)(config, _copy);
@@ -19,17 +20,22 @@ function render(_varList, inp, config) {
             const _parser = (0, parsable_1.default)(_varList, _dom);
             let outVal = [];
             let outObj = [];
+            // console.log( 'parser: ' )
+            // console.log( _parser );
+            // console.log( iterators );
+            // const { outVal, outObj } = parse( _parser, iterators, _copy, _varList );
             _parser.forEach((p, idx) => {
                 const _iterator = iterators[idx - 1];
                 const match = Object.entries(_varList)[idx];
                 if (p && p.includes('render')) {
-                    _copy = _copy.replace(p, match[1]);
+                    _copy = (0, insert_1.default)(_copy, p, match[1]);
                 }
                 else {
                     if (p && p.includes('for')) {
                         const _hLen = `<!--@for(${match[0]}){`;
                         const _tLen = '}-->';
                         match[1].forEach(matcher => {
+                            // console.log( matcher );
                             let newIterator = _iterator;
                             //loop each submitted array item and create new element
                             newIterator = newIterator.replace(_hLen, '');
@@ -47,8 +53,8 @@ function render(_varList, inp, config) {
             });
             const elArr = outVal.map(x => x.child).join('');
             const valArr = outObj.map(x => x.child).join('');
-            outVal.forEach((_out) => _copy = _copy.replace(_out.parent, elArr));
-            outObj.forEach((_out) => _copy = _copy.replace(_out.parent, valArr));
+            outVal.forEach((_out) => _copy = (0, insert_1.default)(_copy, _out.parent, elArr));
+            outObj.forEach((_out) => _copy = (0, insert_1.default)(_copy, _out.parent, valArr));
         }
     }
     return _copy;
