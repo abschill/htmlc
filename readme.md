@@ -21,7 +21,7 @@ Create a directory called views/ and inside it create pages/ and partials/ inser
 
 ### Docs
 
-### [Tutorial](https://github.com/abschill/html-chunk-loader/blob/master/docs/simple_static.md)
+### [Tutorial](https://github.com/abschill/html-chunk-loader/blob/master/docs/readme.md)
 ### [Server Side Rendering](https://github.com/abschill/html-chunk-loader/blob/master/docs/render_lists.md)
 ### [Static Site Generation](https://github.com/abschill/html-chunk-loader/blob/master/docs/cli.md)
 ### [Examples](https://github.com/abschill/html-chunk-loader/tree/master/examples)
