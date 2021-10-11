@@ -11,27 +11,27 @@ There are 2 ways to render these chunks, either [Server Side Rendering](https://
 Imagine we have the following files in our project
 
 
-head.html
-<img src="https://github.com/abschill/html-chunk-loader/tree/master/docs/img/example/head_html.png?raw=true">
+## head.html
 
-nav.html
+![](img/example/head_html.png)
 
-<img src="https://github.com/abschill/html-chunk-loader/tree/master/docs/img/example/nav_html.png?raw=true">
+## nav.html
 
-footer.html
+![](img/example/nav_html.png)
+## footer.html
 
-<img src="https://github.com/abschill/html-chunk-loader/tree/master/docs/img/example/footer_html.png?raw=true">
+![](img/example/footer_html.png)
 
+## about.html
 
-about.html
-<img src="https://github.com/abschill/html-chunk-loader/tree/master/docs/img/example/about_html.png?raw=true">
+![](img/example/about_html.png)
 
 In our "template" file, which will be defined by the directory it's in relative to your configuration, we can use the @render-partial expression followed by the name of the partial file, all of which will reside in the respective folder. Let's take a look at an example configuration.
 
-<img src="https://github.com/abschill/html-chunk-loader/tree/master/docs/img/example/simple_code.png?raw=true">
+![](/img/example/simple_code.png)
 
 
-<img src="https://github.com/abschill/html-chunk-loader/tree/master/docs/img/example/about_html_render.png?raw=true">
+![](/img/example/about_html_render.png)
 
 
 By default, the base directory is called views, the partials directory partials, and the templates directory defaults to pages. You can configure these in the constructor, but if you don't they will be set to those.
