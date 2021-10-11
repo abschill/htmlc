@@ -70,6 +70,8 @@ export default class Loader {
         if( this.verbose ) { 
             console.log( 'To Load: \n' );
             console.log( content );
+            console.log( 'Into Template: \n' );
+            console.log( name );
         }
         const target = this.templates.filter( _ => _.name === name )[0];
         if( Object.keys( content ).length > 0 ) {
