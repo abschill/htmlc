@@ -1,7 +1,5 @@
 # Configuration
 
-# Configuration
-
 ### _static_config
 
 This property in package.json allows you to set up a configuration for the static site generation utility contained in the CLI via NPX. 
