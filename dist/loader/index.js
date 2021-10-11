@@ -21,24 +21,31 @@ const template_1 = __importDefault(require("../template"));
 const default_1 = __importDefault(require("../default"));
 class Loader {
     constructor(_a) {
-        var _b, _c, _d, _e;
+        var _b, _c, _d, _e, _f, _g, _h;
         var opts = __rest(_a, []);
         this._config = {
             pathRoot: (_b = opts === null || opts === void 0 ? void 0 : opts.pathRoot) !== null && _b !== void 0 ? _b : default_1.default.rootDefault,
             templates: (_c = opts === null || opts === void 0 ? void 0 : opts.templates) !== null && _c !== void 0 ? _c : default_1.default.templateDefault,
             partials: (_d = opts === null || opts === void 0 ? void 0 : opts.partials) !== null && _d !== void 0 ? _d : default_1.default.partialDefault
         };
-        this._partialInput = (_e = opts === null || opts === void 0 ? void 0 : opts._partialInput) !== null && _e !== void 0 ? _e : {};
+        this._partialInput = (_g = (_e = opts === null || opts === void 0 ? void 0 : opts._partialInput) !== null && _e !== void 0 ? _e : (_f = require(path_1.default.join(process.cwd(), 'package.json'))) === null || _f === void 0 ? void 0 : _f._partial_data) !== null && _g !== void 0 ? _g : {};
         this.hasTemplates = false;
         this.hasParts = false;
         this.partials = [];
         this.templates = [];
+        this.verbose = (_h = opts === null || opts === void 0 ? void 0 : opts.debug) !== null && _h !== void 0 ? _h : false;
         this._configure();
     }
     _configure() {
         const root_dir = path_1.default.join(process.cwd(), this._config.pathRoot);
         if (fs_1.default.existsSync(root_dir)) {
+            if (this.verbose) {
+                console.log(`Root Directory found at ${root_dir}`);
+            }
             const tde = fs_1.default.existsSync(path_1.default.join(root_dir, this._config.templates));
+            if (this.verbose && tde) {
+                console.log(`Template Directory found`);
+            }
             if (tde && fs_1.default.existsSync(path_1.default.join(root_dir, this._config.partials))) {
                 const templates_ = path_1.default.join(root_dir, this._config.templates);
                 const partials_ = path_1.default.join(root_dir, this._config.partials);
@@ -66,6 +73,10 @@ class Loader {
     }
     getTemplate(name, _a) {
         var content = __rest(_a, []);
+        if (this.verbose) {
+            console.log('To Load: \n');
+            console.log(content);
+        }
         const target = this.templates.filter(_ => _.name === name)[0];
         if (Object.keys(content).length > 0) {
             return target.render(content);

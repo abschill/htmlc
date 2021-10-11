@@ -12,6 +12,7 @@ export default class Loader {
     templates: Template[];
     partials: Partial[];
     _partialInput: Object;
+    verbose: boolean;
 
     constructor( { ...opts } ) {
         this._config = {
@@ -19,18 +20,27 @@ export default class Loader {
             templates: opts?.templates ?? defaults.templateDefault,
             partials: opts?.partials ?? defaults.partialDefault
         }
-        this._partialInput = opts?._partialInput ?? {};
+        this._partialInput = opts?._partialInput ?? require( path.join( process.cwd(), 'package.json' ) )?._partial_data ?? {};
         this.hasTemplates = false;
         this.hasParts = false;
         this.partials = [];
         this.templates = [];
+        this.verbose = opts?.debug ?? false;
         this._configure();
     }
     
     _configure() {
         const root_dir = path.join( process.cwd(), this._config.pathRoot );
         if( fs.existsSync( root_dir ) ) {
+            if( this.verbose ) {
+                console.log( `Root Directory found at ${root_dir}` );
+            }
             const tde = fs.existsSync( path.join( root_dir, this._config.templates ) );
+
+            if( this.verbose && tde ) {
+                console.log( `Template Directory found` );
+            }
+
             if( tde && fs.existsSync( path.join( root_dir, this._config.partials ) ) ) {
                     const templates_ = path.join( root_dir, this._config.templates )
                     const partials_ = path.join( root_dir, this._config.partials );
@@ -57,6 +67,10 @@ export default class Loader {
     }
 
     getTemplate( name: string, {...content } ) {
+        if( this.verbose ) { 
+            console.log( 'To Load: \n' );
+            console.log( content );
+        }
         const target = this.templates.filter( _ => _.name === name )[0];
         if( Object.keys( content ).length > 0 ) {
             return target.render( content );
