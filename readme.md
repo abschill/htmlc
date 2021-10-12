@@ -11,11 +11,7 @@ html-chunk-loader is a lightweight 0 dependency template engine for Node. It has
 
 ### Installation
 
-    npm i html-chunk-loader
-
-    ~ or ~
-
-    yarn add html-chunk-loader
+![](docs/img/example/install.png)
 
 Create a directory called views/ and inside it create pages/ and partials/ insert your chunks into these folders. Check the  directory in the github repository for an example SSR setup.
 
