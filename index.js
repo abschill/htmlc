@@ -1,13 +1,21 @@
 const Loader  = require( './dist' );
-// const partialData = require( './package.json' )._partial_data;
-const packagedData = require( './dist/default' )._template_data;
+const packagedData = require( './loader.js' );
 const Handler = new Loader({
+    _partialInput: {
+        "head": {
+            "title": "Hello World",
+            "desc": "Cool Description"
+          },
+        "footer": {
+            "title": "Hello From Footer"
+        }
+    },
      partials: 'layout',
      verbose: true
 });
 
 // Server Side Rendering
-console.log( Handler.getTemplate( 'home', packagedData ) )
+console.log( Handler.getTemplate( 'home', packagedData() ) )
 
 console.log( '\n' );
 
