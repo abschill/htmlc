@@ -1,12 +1,9 @@
 # Getting Started
 
-## Problem to Solve
-
 You've probably written HTML pages before, and found yourself regularly copying the same segments of code into the same template and repeating that process every time you update the layout components. Instead of using a UI framework or a clunky template engine with a whole new AST to figure out the kinks of, I wanted to create a package for minimalists like me to render semantic html in chunks on the server side with optional data loading. Enter html-chunk-loader, my pet project for this purpose. You can render anything you want in the chunks themselves, whether it be web components, or any bundled code in your SSR'd script tags. 
 
 There are 2 ways to render these chunks, either [Server Side Rendering](https://github.com/abschill/html-chunk-loader/blob/master/docs/render_lists.md) or [Static Building](https://github.com/abschill/html-chunk-loader/blob/master/docs/cli.md)
 
-## Getting Started
 
 Imagine we have the following files in our project
 
