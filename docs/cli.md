@@ -13,7 +13,7 @@ You will want to declare your partials in package.json as well, in this format p
 
 ## Building your templates
 
-    npx html-chunk-loader --mode=ssg
+![](img/example/ssg.png)
 
 Base Command to build your SSG Templates with all your configs. 
 
