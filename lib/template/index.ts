@@ -15,7 +15,7 @@ export default class Template {
         this.parsed = null;
     }
     render( _varList:Object ) {
-        let _copy = this.parsed ?? this.raw;
+        let _copy:string = this.parsed ?? this.raw;
         this.parsed = render( _varList, _copy, this.config );
         return this.parsed;
     }

@@ -32,7 +32,6 @@ function render(_varList, inp, config) {
                         const _tLen = '}-->';
                         match[1].forEach(matcher => {
                             let newIterator = _iterator;
-                            //loop each submitted array item and create new element
                             newIterator = newIterator.replace(_hLen, '');
                             newIterator = newIterator.replace(_tLen, '');
                             const _el = newIterator.trim();

@@ -66,6 +66,12 @@ class Loader {
                     throw new Error(`Template directory "${this._config.templates}" not found in ${process.cwd()}`);
                 }
             }
+            if (this.verbose) {
+                console.log('Partials: \n');
+                console.log(this.partials);
+                console.log('Templates: \n');
+                console.log(this.templates);
+            }
         }
         else {
             throw new Error(`Directory "${this._config.pathRoot}" not found in ${process.cwd()}`);

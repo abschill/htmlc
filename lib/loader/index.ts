@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import Partial from '../partial';
 import Template from '../template';
-import { LoaderOptions } from './options';
+import { LoaderOptions, } from '../../';
 import defaults from '../default';
 export default class Loader {
 
@@ -59,6 +59,12 @@ export default class Loader {
                     else {
                         throw new Error( `Template directory "${this._config.templates}" not found in ${process.cwd()}` );
                     } 
+                }
+                if( this.verbose ) {
+                    console.log( 'Partials: \n' );
+                    console.log( this.partials );
+                    console.log( 'Templates: \n' );
+                    console.log( this.templates );
                 }
         }
         else {

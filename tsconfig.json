@@ -9,8 +9,9 @@
         "noImplicitAny": false,
         "moduleResolution": "node",
         "sourceMap": true,
-        "outDir": "dist",
-        "baseUrl": "lib"
+        "outDir": "./dist",
+        "rootDir": "./lib",
+        "removeComments":true
     },
     "include": [
         "lib/index.ts"

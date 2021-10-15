@@ -8,6 +8,7 @@ class Partial {
     constructor(name, path, toInsert) {
         this.name = name;
         this._toInsert = toInsert;
+        this.path = path;
         this.raw = fs_1.default.readFileSync(path).toString('utf-8');
         this.parsed = null;
         this.render();

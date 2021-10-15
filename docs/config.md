@@ -27,6 +27,32 @@ Runs in debug mode
 ### _static_config
 
 This property in package.json allows you to set up a configuration for the static site generation utility contained in the CLI via NPX. 
+#### Allowed Arguments
+
+- root
+
+Tells the cli where to start the directory tree (default views)
+
+- partials
+
+Tells the cli where to get the partials from (default partials)
+
+- templates
+
+Tells the cli where to get the templates from (default pages)
+
+- outPath
+
+Tells the cli where to build the pages
+
+- loaderFile
+
+Tells the cli where your file to load data for your templates
+
+- cleanup
+
+Tells the cli whether or not you want to clean the folder before building
+
 
 ### _partial_data 
 

@@ -1,4 +1,4 @@
-export default function parsable( _varList, _dom ) {
+export default function parsable( _varList:object, _dom: string ) {
     return Object.keys( _varList ).map( x => {
         const render_val = `<!--@render=${x}-->`;
         const loop_val = `<!--@for(${x}){`;

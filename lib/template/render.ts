@@ -42,8 +42,8 @@ export default function render( _varList:Object, inp: string, config: Loader ) {
                     }
                 }
             } );
-            const elArr = outVal.map( x => x.child ).join( '' );
-            const valArr = outObj.map( x => x.child ).join( '' );
+            const elArr:string = outVal.map( x => x.child ).join( '' );
+            const valArr:string = outObj.map( x => x.child ).join( '' );
             outVal.forEach( ( _out ) => _copy = insertValue( _copy,  _out.parent, elArr ) );
             outObj.forEach( ( _out ) => _copy = insertValue( _copy,  _out.parent, valArr ) );
         }
