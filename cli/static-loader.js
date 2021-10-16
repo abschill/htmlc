@@ -14,7 +14,7 @@ module.exports = class StaticLoader {
         this.loaderFile = require( path.resolve( process.cwd(), this.ctx.loaderFile ) )() ?? 
         require( path.resolve( process.cwd(), 'loader.js' ) )();
         console.log( 'Loader File: ' );
-        console.log( this.loaderFile);
+        console.log( this.loaderFile );
         this.outDir = path.join( process.cwd(), this.ctx.outPath ) ?? path.join( process.cwd(), 'public' );
         this._configure(); 
     }
