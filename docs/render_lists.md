@@ -25,6 +25,9 @@ The partials match up to the @render-partial=partial_name directives in the view
 
 ![](img/example/home_html.png)
 
+## about.html
+![](img/example/about_html2.png)
+
 ## footer.html
 
 ![](img/example/footer_html.png)
