@@ -65,6 +65,21 @@ export default function render( _varList:Object, inp: string, config: Loader ) {
             }
             outVal.forEach( ( _out ) => _copy = insertValue( _copy,  _out.parent, elArr ) );
             outObj.forEach( ( _out ) => _copy = insertValue( _copy,  _out.parent, valArr ) );
+        } else if( iterators.length === 0 ) {
+            const _dom = _copy;
+            const _parser = parsable( _varList, _dom );
+            _parser.forEach( ( p, idx ) => {
+                const match = Object.entries( _varList )[ idx ];
+                if( p && p.includes( 'render' ) ) {
+                    if( config.verbose ) {
+                        console.log( 'To Insert: \n' );
+                        console.log( match[1] );
+                        console.log( '\nAt:' );
+                        console.log( p );
+                    }
+                    _copy = insertValue( _copy, p, match[1] );
+                }
+            });
         }
     }
     return _copy;
