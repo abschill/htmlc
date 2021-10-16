@@ -7,9 +7,14 @@ module.exports = loadStaticFiles = ( ctx ) => {
     console.log( 'Loader File: ' );
     console.log( loaderFile );
     console.log( outDir );
-
+    console.log( ctx );
+    
     if ( !fs.existsSync( outDir ) ) fs.mkdirSync( outDir );
-    const static_loader = new Loader();
+    const static_loader = new Loader({
+        root: ctx.root ?? 'views',
+        partials: ctx.partials ?? 'partials',
+        templates: ctx.templates ?? 'pages'
+    });
     static_loader.templates.forEach( template => {
         console.log( loaderFile[template.name] );
         if( loaderFile[template.name] ) {
