@@ -15,6 +15,9 @@ module.exports = loadStaticFiles = ( ctx ) => {
         if( loaderFile[template.name] ) {
             fs.writeFileSync( path.join( outDir, `${template.name}.html`), template.render( loaderFile[template.name] ) );
         }
+        else {
+            fs.writeFileSync( path.join( outDir, `${template.name}.html`), template.render( {} ) );
+        }
         
     } );
 }
