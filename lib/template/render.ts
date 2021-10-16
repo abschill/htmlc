@@ -1,10 +1,11 @@
 import Loader from '../loader';
 import iterator from '../util/iterator';
-import iterateObj from '../util/iterate_object';
 import configPartials from '../util/config_partial';
 import countItr from '../util/create_itr_map';
 import parsable from '../util/parsable';
 import insertValue from '../util/insert';
+import renderVals from '../util/render_vals';
+import renderItr from '../util/render_itr';
 export default function render( _varList:Object, inp: string, config: Loader ) {
     let _copy = inp;
     _copy = configPartials( config, _copy );
@@ -30,21 +31,7 @@ export default function render( _varList:Object, inp: string, config: Loader ) {
                 }
                 else{ 
                     if( p && p.includes( 'for' ) ) {
-                        const _hLen = `<!--@for(${match[0]}){`;
-                        const _tLen = '}-->';
-                        match[1].forEach( matcher => {
-                            let newIterator = _iterator;
-                            //loop each submitted array item and create new element
-                            newIterator = newIterator.replace( _hLen, '' );
-                            newIterator = newIterator.replace( _tLen, '' );
-                            const _el = newIterator.trim();
-                            if( typeof( matcher ) === 'string' ) {
-                                outVal.push( { 'child': _el.replace( '{_}', matcher ), parent: _iterator } );
-                            }
-                            else {
-                                outObj.push( { 'child': iterateObj( _el, matcher ), parent: _iterator } );
-                            } 
-                        } );
+                        renderItr( _copy, match, _iterator, outVal, outObj );
                     }
                 }
             } );
@@ -66,20 +53,7 @@ export default function render( _varList:Object, inp: string, config: Loader ) {
             outVal.forEach( ( _out ) => _copy = insertValue( _copy,  _out.parent, elArr ) );
             outObj.forEach( ( _out ) => _copy = insertValue( _copy,  _out.parent, valArr ) );
         } else if( iterators?.length === ( 0 || null || undefined) ) {
-            const _dom = _copy;
-            const _parser = parsable( _varList, _dom );
-            _parser.forEach( ( p, idx ) => {
-                const match = Object.entries( _varList )[ idx ];
-                if( p && p.includes( 'render' ) ) {
-                    if( config.verbose ) {
-                        console.log( 'To Insert: \n' );
-                        console.log( match[1] );
-                        console.log( '\nAt:' );
-                        console.log( p );
-                    }
-                    _copy = insertValue( _copy, p, match[1] );
-                }
-            });
+            _copy = renderVals( _copy, _varList, config );
         }
     }
     return _copy;

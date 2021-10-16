@@ -20,4 +20,4 @@ console.log( Handler.getTemplate( 'home', packagedData() ) )
 console.log( '\n' );
 
 //Simple Hard-Coded Pages
-console.log( Handler.getTemplate( 'about' ) );
+console.log( Handler.getTemplate( 'about', { content: 'This is the about page' } ) );

@@ -37,10 +37,12 @@ describe( 'Automatically fills in constructor', () => {
     } );
 
     it( 'Loads Static Template', () => {
-        const _t = l1.getTemplate( 'about' );
+        const msg = 'This is the about page';
+        const _t = l1.getTemplate( 'about', {content: msg } );
         expect( _t ).toContain( '<head>' );
         expect( _t ).toContain( '<main>' );
         expect( _t ).toContain( '<footer>');
+        expect( _t ).toContain( msg );
     } );
 
     it( 'Loads Iterables', () => {
