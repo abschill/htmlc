@@ -14,26 +14,21 @@ class Partial {
         this.render();
     }
     render() {
-        if (!this.parsed) {
-            if (this._toInsert) {
-                try {
-                    let _copy = this.raw;
-                    Object.entries(this._toInsert).forEach(arg => {
-                        _copy = _copy.replace(`<!--@render=${arg[0]}-->`, arg[1]);
-                    });
-                    this.parsed = _copy;
-                    return _copy;
-                }
-                catch (e) {
-                    throw e;
-                }
+        if (this._toInsert) {
+            try {
+                let _copy = this.raw;
+                Object.entries(this._toInsert).forEach(arg => {
+                    _copy = _copy.replace(`<!--@render=${arg[0]}-->`, arg[1]);
+                });
+                this.parsed = _copy;
+                return _copy;
             }
-            else {
-                this.parsed = this.raw;
-                return this.raw;
+            catch (e) {
+                throw e;
             }
         }
         else {
+            this.parsed = this.raw;
             return this.parsed;
         }
     }

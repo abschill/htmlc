@@ -15,9 +15,10 @@ const Handler = new Loader({
 });
 
 // Server Side Rendering
-console.log( Handler.getTemplate( 'home', packagedData() ) )
+console.log( Handler.getTemplate( 'home', packagedData().home ) )
 
 console.log( '\n' );
 
 //Simple Hard-Coded Pages
-console.log( Handler.getTemplate( 'about', { content: 'This is the about page' } ) );
+console.log( Handler.getTemplate( 'about', packagedData().about ) );
+Handler.getTemplates();

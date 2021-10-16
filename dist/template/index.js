@@ -14,8 +14,7 @@ class Template {
         this.parsed = null;
     }
     render(_varList) {
-        var _a;
-        let _copy = (_a = this.parsed) !== null && _a !== void 0 ? _a : this.raw;
+        let _copy = this.raw;
         this.parsed = (0, render_1.default)(_varList, _copy, this.config);
         return this.parsed;
     }

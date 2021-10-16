@@ -46,8 +46,8 @@ describe( 'Blank config options', () => {
     } );
 
     it( 'Loads Iterables', () => {
-        const _tester = l1.getTemplate( 'home', defaults._template_data );
-        Object.values( defaults._template_data ).forEach( input => {
+        const _tester = l1.getTemplate( 'home', defaults._template_data.home );
+        Object.values( defaults._template_data.home ).forEach( input => {
             if( typeof( input ) !== 'string' ) {
                 //is array
                 //@ts-ignore
