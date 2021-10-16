@@ -11,6 +11,10 @@ module.exports = loadStaticFiles = ( ctx ) => {
     if ( !fs.existsSync( outDir ) ) fs.mkdirSync( outDir );
     const static_loader = new Loader();
     static_loader.templates.forEach( template => {
-        fs.writeFileSync( path.join( outDir, `${template.name}.html`), template.render( loaderFile[template.name] ) );
+        console.log( loaderFile[template.name] );
+        if( loaderFile[template.name] ) {
+            fs.writeFileSync( path.join( outDir, `${template.name}.html`), template.render( loaderFile[template.name] ) );
+        }
+        
     } );
 }
