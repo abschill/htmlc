@@ -73,13 +73,14 @@ export default class Loader {
     }
 
     getTemplate( name: string, {...content } ) {
+        
+        const target = this.templates.filter( _ => _.name === name )[0];
         if( this.verbose ) { 
             console.log( 'To Load: \n' );
             console.log( content );
             console.log( 'Into Template: \n' );
-            console.log( name );
+            console.log( target );
         }
-        const target = this.templates.filter( _ => _.name === name )[0];
         if( Object.keys( content ).length > 0 ) {
             return target.render( content );
         } 
