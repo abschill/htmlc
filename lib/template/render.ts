@@ -65,7 +65,7 @@ export default function render( _varList:Object, inp: string, config: Loader ) {
             }
             outVal.forEach( ( _out ) => _copy = insertValue( _copy,  _out.parent, elArr ) );
             outObj.forEach( ( _out ) => _copy = insertValue( _copy,  _out.parent, valArr ) );
-        } else if( iterators.length === 0 ) {
+        } else if( iterators?.length === ( 0 || null || undefined) ) {
             const _dom = _copy;
             const _parser = parsable( _varList, _dom );
             _parser.forEach( ( p, idx ) => {
