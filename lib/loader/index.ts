@@ -82,7 +82,12 @@ export default class Loader {
             console.log( target );
         }
         if( Object.keys( content ).length > 0 ) {
-            return target.render( content );
+            const rendered = target.render( content );
+            if( this.verbose ) {
+                console.log( 'Rendered: \n' );
+                console.log( rendered );
+            }
+            return rendered;
         } 
         else {
           return target.render( {} );
