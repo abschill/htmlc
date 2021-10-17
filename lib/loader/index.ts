@@ -7,8 +7,6 @@ import defaults from '../default';
 export default class Loader {
 
     _config:LoaderOptions;
-    hasTemplates: boolean;
-    hasParts: boolean;
     templates: Template[];
     partials: Partial[];
     _partialInput: Object;
@@ -21,8 +19,6 @@ export default class Loader {
             partials: opts?.partials ?? defaults.partialDefault
         }
         this._partialInput = opts?._partialInput ?? require( path.join( process.cwd(), 'package.json' ) )?._partial_data ?? {};
-        this.hasTemplates = false;
-        this.hasParts = false;
         this.partials = [];
         this.templates = [];
         this.verbose = opts?.debug ?? false;
@@ -49,7 +45,7 @@ export default class Loader {
                     } );
                      fs.readdirSync( partials_ ).forEach( _partial => {
                          const name = _partial.split( '.html')[0];
-                         return this.partials.push( new Partial( name, path.join(partials_, _partial ), Object.entries( this?._partialInput )?.filter( _ => _[0]=== name )?.['0']?.['1'] ) ) 
+                         return this.partials.push( new Partial( name, path.join(partials_, _partial ), Object.entries( this?._partialInput )?.filter( _ => _[0]=== name )?.['0']?.['1'], this ) ) 
                      } );
                 }
                 else {

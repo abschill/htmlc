@@ -27,22 +27,38 @@ module.exports = {
         "loaderFile": "loader.js",
         "cleanup": true
     },
-    "_partial_data": {
+    "_partialInput": {
         "head": {
             "title": "Hello World",
-            "desc": "Cool Description"
+            "desc": "Cool Description",
+            "styles": [
+                "https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css",
+                "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+            ]
         },
         "footer": {
             "title": "Hello From Footer"
+        },
+        "nav": {
+            "navItems": [
+                { label: 'foo', url: '/foo' },
+                { label: 'bar', url: '/bar' }
+            ],
+            "navTitle": "hello world"
         }
     },
     "_custom_template_test": {
-        "content": "Body Content",
-        "items": ["foo", "bar"],
-        "items2": [
-            { "title": "item 1", "desc": "this is item 1" },
-            { "title": "item 2", "desc": "this is item 2" }
-        ]
+        "home": {
+            "content": "Home Content",
+            "items": ["foo", "bar"],
+            "items2": [
+                { "title": "item 1", "desc": "this is item 1" },
+                { "title": "item 2", "desc": "this is item 2" }
+            ]
+        },
+        "about": {
+            "content": "About Content"
+        }
     }
 };
 //# sourceMappingURL=default.js.map

@@ -154,10 +154,10 @@ fresh@0.5.2:
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
   integrity sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=
 
-html-chunk-loader@^0.0.39:
-  version "0.0.39"
-  resolved "https://registry.yarnpkg.com/html-chunk-loader/-/html-chunk-loader-0.0.39.tgz#3d5c76de67c149584cdb2659818fa3cdd01e2191"
-  integrity sha512-5DNaMqd/YLZWxIusJLxggZ3hatPxyj4NmE4XvqGYDq4r5JzZWZuoNE0OqzhECHDI8OPF5ASaEiQ5d4eByiI80Q==
+html-chunk-loader@^0.1.0:
+  version "0.0.95"
+  resolved "https://registry.yarnpkg.com/html-chunk-loader/-/html-chunk-loader-0.0.95.tgz#b261f9c1d309ec8eeb764447ccfbe4fc8290db82"
+  integrity sha512-5n+Corvj9rz76Fvmjx/iKtgbjBf3V/51NYXlKLkmYmgVTsiFWqt8pHnMkTN9bURErnwRdZ8XXNLfY3jeMStxQA==
 
 http-errors@1.7.2:
   version "1.7.2"

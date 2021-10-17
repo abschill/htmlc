@@ -11,7 +11,7 @@ function renderVals(_copy, _varList, config) {
     _parser.forEach((p, idx) => {
         const match = Object.entries(_varList)[idx];
         if (p && p.includes('render')) {
-            if (config.verbose) {
+            if (config && config.verbose) {
                 console.log('To Insert: \n');
                 console.log(match[1]);
                 console.log('\nAt:');

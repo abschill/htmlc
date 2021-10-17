@@ -29,8 +29,6 @@ class Loader {
             partials: (_d = opts === null || opts === void 0 ? void 0 : opts.partials) !== null && _d !== void 0 ? _d : default_1.default.partialDefault
         };
         this._partialInput = (_g = (_e = opts === null || opts === void 0 ? void 0 : opts._partialInput) !== null && _e !== void 0 ? _e : (_f = require(path_1.default.join(process.cwd(), 'package.json'))) === null || _f === void 0 ? void 0 : _f._partial_data) !== null && _g !== void 0 ? _g : {};
-        this.hasTemplates = false;
-        this.hasParts = false;
         this.partials = [];
         this.templates = [];
         this.verbose = (_h = opts === null || opts === void 0 ? void 0 : opts.debug) !== null && _h !== void 0 ? _h : false;
@@ -55,7 +53,8 @@ class Loader {
                 fs_1.default.readdirSync(partials_).forEach(_partial => {
                     var _a, _b, _c;
                     const name = _partial.split('.html')[0];
-                    return this.partials.push(new partial_1.default(name, path_1.default.join(partials_, _partial), (_c = (_b = (_a = Object.entries(this === null || this === void 0 ? void 0 : this._partialInput)) === null || _a === void 0 ? void 0 : _a.filter(_ => _[0] === name)) === null || _b === void 0 ? void 0 : _b['0']) === null || _c === void 0 ? void 0 : _c['1']));
+                    console.log(this._partialInput);
+                    return this.partials.push(new partial_1.default(name, path_1.default.join(partials_, _partial), (_c = (_b = (_a = Object.entries(this === null || this === void 0 ? void 0 : this._partialInput)) === null || _a === void 0 ? void 0 : _a.filter(_ => _[0] === name)) === null || _b === void 0 ? void 0 : _b['0']) === null || _c === void 0 ? void 0 : _c['1'], this));
                 });
             }
             else {

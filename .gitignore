@@ -2,3 +2,4 @@ node_modules
 lib/parser
 examples/**/node_modules
 public
+index.js

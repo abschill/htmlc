@@ -1,7 +1,5 @@
-const path = require( 'path' );
-const fs = require( 'fs' );
 const defaults = require( '../dist/default' );
-const { _mode, filterFiles } = require( './util' );
+const { _mode } = require( './util' );
 const loadStaticFiles = require( './static-loader' );
 let ctx = {
     "root": defaults.rootDefault,
@@ -15,7 +13,7 @@ module.exports = ( {...conf}, [...args] ) => {
     if( mode === 'ssg' ) {
         console.log( `Initiating ${_mode( args )} build...` );
         const _ctx = conf?._static_config ?? ctx;
-        loadStaticFiles( _ctx);
+        loadStaticFiles( _ctx, conf?._partialInput ?? {} );
     }
     else {
         console.log( 'No Mode Configured, exiting...' )

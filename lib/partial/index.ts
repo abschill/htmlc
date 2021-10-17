@@ -1,37 +1,35 @@
 import fs from 'fs';
+import render from './render';
+import Loader from '../loader';
 export default class Partial {
     
     name: string;
     raw: string;
     path: string;
-    parsed: string|null;
+    parsed?: string;
     _toInsert?: object;
-    constructor(  name:string, path:string, toInsert: object ) {
+    config: Loader;
+    constructor(  name:string, path:string, toInsert: object, config: Loader ) {
         this.name = name;
         this._toInsert = toInsert;
         this.path = path;
         this.raw = fs.readFileSync( path ).toString( 'utf-8' ); 
-        this.parsed = null;
-        this.render();
+        this.parsed = this.render();
+        this.config = config;
     }
-    
     render() {
         if( this._toInsert ) {
             try {
-                let _copy = this.raw;
-                Object.entries( this._toInsert ).forEach( arg => {
-                    _copy = _copy.replace( `<!--@render=${arg[0]}-->`, arg[1] );
-                } );
-                this.parsed = _copy;
-                return _copy;
+                let copy = this.raw;
+                this.parsed = render( this._toInsert, copy );
+                return this.parsed;
             }
             catch( e ) {
                 throw e;
             }
         }
         else {
-            this.parsed = this.raw;
-            return this.parsed;
-        } 
+            return this.raw;
+        }
     }
 }

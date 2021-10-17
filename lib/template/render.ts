@@ -52,9 +52,10 @@ export default function render( _varList:Object, inp: string, config: Loader ) {
             }
             outVal.forEach( ( _out ) => _copy = insertValue( _copy,  _out.parent, elArr ) );
             outObj.forEach( ( _out ) => _copy = insertValue( _copy,  _out.parent, valArr ) );
-        } else if( iterators?.length === ( 0 || null || undefined) ) {
+        } else if( iterators?.length === ( 0 || null || undefined ) ) {
             _copy = renderVals( _copy, _varList, config );
         }
     }
     return _copy;
 }
+

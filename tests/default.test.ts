@@ -1,7 +1,10 @@
 
 import Loader from '../dist';
 import defaults from '../dist/default';
-const l1 = new Loader();
+import { testInp } from './fn';
+const l1 = new Loader({
+    _partialInput: defaults._partialInput
+});
 const { _config } = l1;
 describe( 'Automatically fills in constructor', () => {
     it( 'Sets Partials', () => {
@@ -27,6 +30,7 @@ describe( 'Automatically fills in constructor', () => {
     it( 'Can Load Partials', () => {
         l1.partials.forEach( part => {
             expect( part.raw ).toBeDefined();
+            expect( part.parsed ).toBeDefined();
         } );
     } );
 
@@ -38,37 +42,16 @@ describe( 'Automatically fills in constructor', () => {
 
     it( 'Loads Static Template', () => {
         const msg = 'This is the about page';
-        const _t = l1.getTemplate( 'about', {content: msg } );
+        const _t = l1.getTemplate( 'about', { content: msg } );
         expect( _t ).toContain( '<head>' );
         expect( _t ).toContain( '<main>' );
         expect( _t ).toContain( '<footer>');
         expect( _t ).toContain( msg );
     } );
-
     it( 'Loads Iterables', () => {
         const _tester = l1.getTemplate( 'home', defaults._template_data.home );
         Object.values( defaults._template_data.home ).forEach( input => {
-            if( typeof( input ) !== 'string' ) {
-                //is array
-                //@ts-ignore
-                input.forEach( entry => {
-                    if( typeof( entry ) !== 'object' ) {
-                        //entry is value
-                        expect( _tester ).toContain( entry ); 
-                       
-                    }
-                    else {
-                        //entry is obj
-                        Object.values( entry ).forEach( val => {
-                            expect( _tester ).toContain( val );
-                        } );
-                    }
-                } );
-            }
-            else {
-                //is value map
-                expect( _tester ).toContain( input );
-            }
+            testInp( _tester, input );
         } );    
     } );
 } );
