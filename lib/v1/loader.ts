@@ -1,9 +1,9 @@
 import engine from './util/engine';
-import { LoaderOptions } from '../..';
+import { LoaderOptions, Loader } from '../..';
 import { statusObj } from './util/logger';
 import render from './util/internal/ast/render';
 
-const loader = ( { ...config }: LoaderOptions ) => {
+const loader = ( { ...config }: LoaderOptions ): Loader => {
     if( config.debug ) {
         statusObj( 'Initial Args: ', config );
     }

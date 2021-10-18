@@ -1,4 +1,4 @@
-import { LoaderOptions } from '../../..';
+import { LoaderOptions, LoaderEngine } from '../../..';
 import defaults from '../default';
 import { statusObj } from './logger';
 import { resolvePartials, resolveTemplates } from './dirTree';
@@ -8,7 +8,7 @@ import path from 'path';
  * @param { LoaderOptions } config configuration file for engine
  * @returns context for engine
  */
-const engine = ( config: LoaderOptions ) => {
+const engine = ( config: LoaderOptions ): LoaderEngine => {
     const verbose = config?.debug ?? false;
     if( verbose ) {
         statusObj( 'Config: ', config );
