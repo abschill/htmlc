@@ -104,15 +104,20 @@ const template = ( declaredPartials, rawFile: string, insertMap: object ) => {
             matchPartials.forEach( partial => {
                 const renderMap = genRenderMap( partial.rawFile );
                 const resolved = resolveRender( partial.rawFile, renderMap, insertMap['partialInput'][p_name] );
-                console.log( 'Partial: ');
-                console.log( partial );
-                console.log( 'Resolved: ')
-               console.log( resolved.render );
+                // console.log( 'Partial: ');
+                // console.log( partial );
+            //     console.log( 'Resolved: ')
+            //    console.log( resolved );
+            //    console.log( 'Insert into: ' );
+            //    console.log( rootCopy );
+               rootCopy = rootCopy.replace( partialSeg, resolved.render );
+            //    console.log( partialSeg );
             } );
             
         }
         // console.log( p_name );
     } );
+    console.log( rootCopy );
     const keys = Object.keys( insertMap );
     const values = Object.values( insertMap );
 
