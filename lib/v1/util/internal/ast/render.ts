@@ -34,8 +34,8 @@ const handleXDIterable = ( clone, insert ) => {
 
 const resolveRender = ( file, renderMap, insertionMap ) => {
     let copy = file;
-    const outVal = [];
-    const outObj = [];
+    let outVal = [];
+    let outObj = [];
     // console.log( insertionMap )
     Object.entries( renderMap ).forEach( ( render: [key: string, value: any], itr )  => {
         // console.log( itr );
@@ -53,18 +53,17 @@ const resolveRender = ( file, renderMap, insertionMap ) => {
                         const loopName = r.split( '(' )[1].split( ')' )[0];
                         const toInsert = insertionMap[ loopName ];
                         //console.log( `Loop: ${loopName}` );
-                        let elChild = r;
-                        elChild = elChild.replace( FOR_H( loopName ), '' ).replace( FOR_T(), '' )
-                                .trimStart().replace( /\s\s+/gi, '');
+                        let elChild = r.replace( FOR_H( loopName ), '' ).replace( FOR_T(), '' )
+                                        .trimStart().replace( /\s\s+/gi, '');
                         toInsert.forEach( insertion => {
                             if( typeof( insertion ) === 'string' ) {
                                 //1d array
                                 // console.log()
-                                outVal.push( handle1DIterable( elChild, insertion ) )
+                                outVal.push( { replacer: r, insertion: handle1DIterable( elChild, insertion ) } );
                             }
                             else if( typeof( insertion ) === 'object' ) {
                                 //key/val
-                                outObj.push( handleXDIterable( elChild, Object.entries( insertion ) ) );
+                                outObj.push( { replacer: r, insertion: handleXDIterable( elChild, Object.entries( insertion ) ) } );
                             }
                             
                         } );
@@ -76,10 +75,14 @@ const resolveRender = ( file, renderMap, insertionMap ) => {
                         break;
                 }
             } );
-            console.log( '~~~~~~~~~~~~~~~~~')
-            console.log( outVal );
-            console.log( outObj );
-            // console.log( copy );
+            console.log( '~~~~~~~~~~~~~~~~~' )
+            // console.log( outVal );
+            // console.log( outObj );
+            const valStr = outVal.map( val => val.insertion ).join( '' );
+            const objStr = outObj.map( obj => obj.insertion ).join( '' );
+            outVal.forEach( ( _out ) => copy = copy.replace( _out.replacer, valStr ) );
+            outObj.forEach( ( _out ) => copy = copy.replace( _out.replacer, objStr ) );
+            console.log( copy );
            // console.log( { key: render[0], value: render[1] } );
         }
     } );

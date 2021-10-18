@@ -36,8 +36,8 @@ const handleXDIterable = (clone, insert) => {
 };
 const resolveRender = (file, renderMap, insertionMap) => {
     let copy = file;
-    const outVal = [];
-    const outObj = [];
+    let outVal = [];
+    let outObj = [];
     Object.entries(renderMap).forEach((render, itr) => {
         if (render[1]) {
             render[1].forEach(r => {
@@ -50,15 +50,14 @@ const resolveRender = (file, renderMap, insertionMap) => {
                     case 'todo_loops':
                         const loopName = r.split('(')[1].split(')')[0];
                         const toInsert = insertionMap[loopName];
-                        let elChild = r;
-                        elChild = elChild.replace((0, words_2.FOR_H)(loopName), '').replace((0, words_2.FOR_T)(), '')
+                        let elChild = r.replace((0, words_2.FOR_H)(loopName), '').replace((0, words_2.FOR_T)(), '')
                             .trimStart().replace(/\s\s+/gi, '');
                         toInsert.forEach(insertion => {
                             if (typeof (insertion) === 'string') {
-                                outVal.push(handle1DIterable(elChild, insertion));
+                                outVal.push({ replacer: r, insertion: handle1DIterable(elChild, insertion) });
                             }
                             else if (typeof (insertion) === 'object') {
-                                outObj.push(handleXDIterable(elChild, Object.entries(insertion)));
+                                outObj.push({ replacer: r, insertion: handleXDIterable(elChild, Object.entries(insertion)) });
                             }
                         });
                         break;
@@ -69,8 +68,11 @@ const resolveRender = (file, renderMap, insertionMap) => {
                 }
             });
             console.log('~~~~~~~~~~~~~~~~~');
-            console.log(outVal);
-            console.log(outObj);
+            const valStr = outVal.map(val => val.insertion).join('');
+            const objStr = outObj.map(obj => obj.insertion).join('');
+            outVal.forEach((_out) => copy = copy.replace(_out.replacer, valStr));
+            outObj.forEach((_out) => copy = copy.replace(_out.replacer, objStr));
+            console.log(copy);
         }
     });
     return { raw: file, renderMap, insertionMap, render: copy };
