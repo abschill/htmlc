@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const words_1 = __importDefault(require("./words"));
 const words_2 = require("./words");
-const _1 = require(".");
 const genRenderMap = (rawFile) => {
     let todo_partials;
     let todo_keys;
@@ -27,8 +26,18 @@ const genRenderMap = (rawFile) => {
     });
     return { todo_partials, todo_keys, todo_loops };
 };
+const handle1DIterable = (clone, insert) => clone.replace('{_}', insert);
+const handleXDIterable = (clone, insert) => {
+    let copy = clone;
+    insert.forEach(insertion => {
+        copy = copy.replace(`{${insertion[0]}}`, insertion[1]);
+    });
+    return copy;
+};
 const resolveRender = (file, renderMap, insertionMap) => {
     let copy = file;
+    const outVal = [];
+    const outObj = [];
     Object.entries(renderMap).forEach((render, itr) => {
         if (render[1]) {
             render[1].forEach(r => {
@@ -44,13 +53,12 @@ const resolveRender = (file, renderMap, insertionMap) => {
                         let elChild = r;
                         elChild = elChild.replace((0, words_2.FOR_H)(loopName), '').replace((0, words_2.FOR_T)(), '')
                             .trimStart().replace(/\s\s+/gi, '');
-                        (0, _1.getKeysInElement)(elChild);
                         toInsert.forEach(insertion => {
                             if (typeof (insertion) === 'string') {
-                                console.log(insertion);
+                                outVal.push(handle1DIterable(elChild, insertion));
                             }
                             else if (typeof (insertion) === 'object') {
-                                console.log(Object.entries(insertion));
+                                outObj.push(handleXDIterable(elChild, Object.entries(insertion)));
                             }
                         });
                         break;
@@ -61,6 +69,8 @@ const resolveRender = (file, renderMap, insertionMap) => {
                 }
             });
             console.log('~~~~~~~~~~~~~~~~~');
+            console.log(outVal);
+            console.log(outObj);
         }
     });
     return { raw: file, renderMap, insertionMap, render: copy };

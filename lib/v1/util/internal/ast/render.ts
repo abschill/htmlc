@@ -1,6 +1,5 @@
 import RESERVED_WORDS from './words';
 import { FOR_H, FOR_T } from './words';
-import { getKeysInElement } from '.';
 const genRenderMap = ( rawFile: string ) => {
     let todo_partials: string[];
     let todo_keys: string[];
@@ -22,8 +21,21 @@ const genRenderMap = ( rawFile: string ) => {
     } );
     return { todo_partials, todo_keys, todo_loops };
 }
+const handle1DIterable = ( clone, insert ) => clone.replace( '{_}', insert );
+
+const handleXDIterable = ( clone, insert ) => {
+    let copy = clone;
+    insert.forEach( insertion => {
+        copy = copy.replace( `{${insertion[0]}}`, insertion[1] );
+    } );
+    return copy;
+}
+
+
 const resolveRender = ( file, renderMap, insertionMap ) => {
     let copy = file;
+    const outVal = [];
+    const outObj = [];
     // console.log( insertionMap )
     Object.entries( renderMap ).forEach( ( render: [key: string, value: any], itr )  => {
         // console.log( itr );
@@ -44,15 +56,15 @@ const resolveRender = ( file, renderMap, insertionMap ) => {
                         let elChild = r;
                         elChild = elChild.replace( FOR_H( loopName ), '' ).replace( FOR_T(), '' )
                                 .trimStart().replace( /\s\s+/gi, '');
-                        getKeysInElement( elChild );
                         toInsert.forEach( insertion => {
                             if( typeof( insertion ) === 'string' ) {
                                 //1d array
-                                console.log( insertion );
+                                // console.log()
+                                outVal.push( handle1DIterable( elChild, insertion ) )
                             }
                             else if( typeof( insertion ) === 'object' ) {
                                 //key/val
-                                console.log( Object.entries( insertion ) );
+                                outObj.push( handleXDIterable( elChild, Object.entries( insertion ) ) );
                             }
                             
                         } );
@@ -65,6 +77,8 @@ const resolveRender = ( file, renderMap, insertionMap ) => {
                 }
             } );
             console.log( '~~~~~~~~~~~~~~~~~')
+            console.log( outVal );
+            console.log( outObj );
             // console.log( copy );
            // console.log( { key: render[0], value: render[1] } );
         }

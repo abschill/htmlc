@@ -60,8 +60,3 @@ export const matchPartial = ( target: string ) => {
     const _reggie = /<!--@render-partial=.*-->/gi;
     return target.match( _reggie );
 }
-
-
-export const getKeysInElement = ( el ) => {
-    console.log( el );
-};
