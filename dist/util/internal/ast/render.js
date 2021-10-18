@@ -62,19 +62,18 @@ const resolveRender = (file, renderMap, insertionMap) => {
                         });
                         break;
                     case 'todo_partials':
+                        console.log(r);
                         break;
                     default:
                         break;
                 }
             });
-            console.log('~~~~~~~~~~~~~~~~~');
-            const valStr = outVal.map(val => val.insertion).join('');
-            const objStr = outObj.map(obj => obj.insertion).join('');
-            outVal.forEach((_out) => copy = copy.replace(_out.replacer, valStr));
-            outObj.forEach((_out) => copy = copy.replace(_out.replacer, objStr));
-            console.log(copy);
         }
     });
+    const valStr = outVal.map(val => val.insertion).join('');
+    const objStr = outObj.map(obj => obj.insertion).join('');
+    outVal.forEach((_out) => copy = copy.replace(_out.replacer, valStr));
+    outObj.forEach((_out) => copy = copy.replace(_out.replacer, objStr));
     return { raw: file, renderMap, insertionMap, render: copy };
 };
 const template = (declaredPartials, rawFile, insertMap) => {
@@ -87,6 +86,10 @@ const template = (declaredPartials, rawFile, insertMap) => {
             matchPartials.forEach(partial => {
                 const renderMap = genRenderMap(partial.rawFile);
                 const resolved = resolveRender(partial.rawFile, renderMap, insertMap['partialInput'][p_name]);
+                console.log('Partial: ');
+                console.log(partial);
+                console.log('Resolved: ');
+                console.log(resolved);
             });
         }
     });

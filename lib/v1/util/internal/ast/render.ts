@@ -43,6 +43,7 @@ const resolveRender = ( file, renderMap, insertionMap ) => {
         if ( render[1] ) {
             // console.log( render[1] );
             render[1].forEach( r => {
+                // console.log( render[0] );
                 switch( render[0] ) {
                     case 'todo_keys':
                         const name = r.split( 'render=' )[1].split( '-->')[0];
@@ -69,23 +70,23 @@ const resolveRender = ( file, renderMap, insertionMap ) => {
                         } );
                         break;
                     case 'todo_partials':
-                        // console.log( r );
+                         console.log( r );
                         break;
                     default:
                         break;
                 }
             } );
-            console.log( '~~~~~~~~~~~~~~~~~' )
+            // console.log( '~~~~~~~~~~~~~~~~~' )
             // console.log( outVal );
             // console.log( outObj );
-            const valStr = outVal.map( val => val.insertion ).join( '' );
-            const objStr = outObj.map( obj => obj.insertion ).join( '' );
-            outVal.forEach( ( _out ) => copy = copy.replace( _out.replacer, valStr ) );
-            outObj.forEach( ( _out ) => copy = copy.replace( _out.replacer, objStr ) );
-            console.log( copy );
+           
            // console.log( { key: render[0], value: render[1] } );
         }
     } );
+    const valStr = outVal.map( val => val.insertion ).join( '' );
+    const objStr = outObj.map( obj => obj.insertion ).join( '' );
+    outVal.forEach( ( _out ) => copy = copy.replace( _out.replacer, valStr ) );
+    outObj.forEach( ( _out ) => copy = copy.replace( _out.replacer, objStr ) );
     return { raw: file, renderMap, insertionMap, render: copy };
 }
 
@@ -103,9 +104,10 @@ const template = ( declaredPartials, rawFile: string, insertMap: object ) => {
             matchPartials.forEach( partial => {
                 const renderMap = genRenderMap( partial.rawFile );
                 const resolved = resolveRender( partial.rawFile, renderMap, insertMap['partialInput'][p_name] );
-                // console.log( 'Partial: ');
-                // console.log( partial );
-               // console.log( resolved );
+                console.log( 'Partial: ');
+                console.log( partial );
+                console.log( 'Resolved: ')
+               console.log( resolved.render );
             } );
             
         }
