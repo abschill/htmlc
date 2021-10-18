@@ -22,9 +22,6 @@ const loader = ( { ...config }: LoaderOptions ) => {
         const out = render( conf.ctx.partials, rawFile, spreadInsertions );
         return out;
     }   
-    //console.log( loadTemplate( 'home' ) );
-    
-    // console.log( RESERVED_WORDS );
 
     return {
         loadTemplate

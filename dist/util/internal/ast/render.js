@@ -85,19 +85,18 @@ const template = (declaredPartials, rawFile, insertMap) => {
         if (matchPartials.length > 0) {
             matchPartials.forEach(partial => {
                 const renderMap = genRenderMap(partial.rawFile);
-                const resolved = resolveRender(partial.rawFile, renderMap, insertMap['partialInput'][p_name]);
+                const insertion = insertMap['partialInput'][p_name];
+                const resolved = resolveRender(partial.rawFile, renderMap, insertion);
                 rootCopy = rootCopy.replace(partialSeg, resolved.render);
             });
         }
     });
     todo_keys.forEach(keySeg => {
-        const k_name = keySeg.split('@render=')[1].split('-->')[0];
-        const k_val = insertMap[k_name];
-        rootCopy = rootCopy.replace(keySeg, k_val);
+        const renderMap = genRenderMap(rootCopy);
+        const resolved = resolveRender(rootCopy, renderMap, insertMap);
+        rootCopy = resolved.render;
     });
     console.log(rootCopy);
-    const keys = Object.keys(insertMap);
-    const values = Object.values(insertMap);
 };
 exports.default = template;
 //# sourceMappingURL=render.js.map

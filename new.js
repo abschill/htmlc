@@ -45,4 +45,4 @@ const myLoader = loader( {
 } );
 
 myLoader.loadTemplate( 'home', { page_title: 'Home Page' } )
-myLoader.loadTemplate( 'about' )
+myLoader.loadTemplate( 'about', { page_title: 'About Page', list: ['foo', 'bar'] } )
