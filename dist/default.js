@@ -1,8 +1,8 @@
 module.exports = {
     "_publishDefault": "dist",
-    "rootDefault": "views",
-    "partialDefault": "partials",
-    "templateDefault": "pages",
+    "pathRoot": "views",
+    "partials": "partials",
+    "templates": "pages",
     "outDefault": "public",
     "_template_data": {
         "home": {
