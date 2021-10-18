@@ -117,6 +117,14 @@ const template = ( declaredPartials, rawFile: string, insertMap: object ) => {
         }
         // console.log( p_name );
     } );
+    todo_keys.forEach ( key => {
+        const { todo_keys } = genRenderMap( rootCopy );
+        todo_keys.forEach( keySeg => {
+            console.log( insertMap );
+            console.log( keySeg );
+        } );
+        
+    } ); 
     console.log( rootCopy );
     const keys = Object.keys( insertMap );
     const values = Object.values( insertMap );
