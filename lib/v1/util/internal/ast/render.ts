@@ -104,29 +104,16 @@ const template = ( declaredPartials, rawFile: string, insertMap: object ) => {
             matchPartials.forEach( partial => {
                 const renderMap = genRenderMap( partial.rawFile );
                 const resolved = resolveRender( partial.rawFile, renderMap, insertMap['partialInput'][p_name] );
-                // console.log( 'Partial: ');
-                // console.log( partial );
-            //     console.log( 'Resolved: ')
-            //    console.log( resolved );
-            //    console.log( 'Insert into: ' );
-            //    console.log( rootCopy );
-               rootCopy = rootCopy.replace( partialSeg, resolved.render );
-            //    console.log( partialSeg );
+                rootCopy = rootCopy.replace( partialSeg, resolved.render );
             } );
             
         }
         // console.log( p_name );
     } );
-    todo_keys.forEach ( key => {
-        const { todo_keys } = genRenderMap( rootCopy );
-        todo_keys.forEach( keySeg => {
-            const k_name = keySeg.split( '@render=' )[1].split( '-->' )[0];
-            // const k_val = resolveRender( rawFile, renderMap );
-            console.log( rootCopy );
-            console.log( k_name );
-            console.log( keySeg );
-        } );
-        
+    todo_keys.forEach( keySeg => {
+        const k_name = keySeg.split( '@render=' )[1].split( '-->' )[0];
+        const k_val = insertMap [k_name ];
+        rootCopy = rootCopy.replace( keySeg, k_val ); 
     } ); 
     console.log( rootCopy );
     const keys = Object.keys( insertMap );

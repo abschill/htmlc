@@ -90,13 +90,10 @@ const template = (declaredPartials, rawFile, insertMap) => {
             });
         }
     });
-    todo_keys.forEach(key => {
-        const { todo_keys } = genRenderMap(rootCopy);
-        todo_keys.forEach(keySeg => {
-            const k_name = keySeg.split('@render=')[1].split('-->')[0];
-            console.log(insertMap[k_name]);
-            console.log(keySeg);
-        });
+    todo_keys.forEach(keySeg => {
+        const k_name = keySeg.split('@render=')[1].split('-->')[0];
+        const k_val = insertMap[k_name];
+        rootCopy = rootCopy.replace(keySeg, k_val);
     });
     console.log(rootCopy);
     const keys = Object.keys(insertMap);

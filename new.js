@@ -44,5 +44,5 @@ const myLoader = loader( {
     debug: false
 } );
 
-myLoader.loadTemplate( 'home', { page_title: 'Home' } )
-myLoader.loadTemplate( 'about', { page_title: 'About' } )
+myLoader.loadTemplate( 'home', { page_title: 'Home Page' } )
+myLoader.loadTemplate( 'about' )
