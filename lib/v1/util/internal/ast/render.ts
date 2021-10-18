@@ -96,7 +96,7 @@ const template = ( declaredPartials, rawFile: string, insertMap: object ) => {
     //partials first 
     todo_partials.forEach( partialSeg => {
         //@ts-ignore
-        const p_name = partialSeg.split( '=' )[1].split( '-->' )[0];
+        const p_name = partialSeg.split( '@render-partial=' )[1].split( '-->' )[0];
         
         // console.log( rawFile );
         const matchPartials = declaredPartials.filter( n => n.name === p_name );
@@ -120,7 +120,10 @@ const template = ( declaredPartials, rawFile: string, insertMap: object ) => {
     todo_keys.forEach ( key => {
         const { todo_keys } = genRenderMap( rootCopy );
         todo_keys.forEach( keySeg => {
-            console.log( insertMap );
+            const k_name = keySeg.split( '@render=' )[1].split( '-->' )[0];
+            // const k_val = resolveRender( rawFile, renderMap );
+            console.log( rootCopy );
+            console.log( k_name );
             console.log( keySeg );
         } );
         
