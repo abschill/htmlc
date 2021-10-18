@@ -4,6 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const words_1 = __importDefault(require("./words"));
+const words_2 = require("./words");
+const _1 = require(".");
 const genRenderMap = (rawFile) => {
     let todo_partials;
     let todo_keys;
@@ -29,8 +31,36 @@ const resolveRender = (file, renderMap, insertionMap) => {
     let copy = file;
     Object.entries(renderMap).forEach((render, itr) => {
         if (render[1]) {
-            console.log(render[1]);
-            console.log({ key: render[0], value: render[1] });
+            render[1].forEach(r => {
+                switch (render[0]) {
+                    case 'todo_keys':
+                        const name = r.split('render=')[1].split('-->')[0];
+                        const replaceVal = insertionMap[name];
+                        copy = copy.replace(r, replaceVal);
+                        break;
+                    case 'todo_loops':
+                        const loopName = r.split('(')[1].split(')')[0];
+                        const toInsert = insertionMap[loopName];
+                        let elChild = r;
+                        elChild = elChild.replace((0, words_2.FOR_H)(loopName), '').replace((0, words_2.FOR_T)(), '')
+                            .trimStart().replace(/\s\s+/gi, '');
+                        (0, _1.getKeysInElement)(elChild);
+                        toInsert.forEach(insertion => {
+                            if (typeof (insertion) === 'string') {
+                                console.log(insertion);
+                            }
+                            else if (typeof (insertion) === 'object') {
+                                console.log(Object.entries(insertion));
+                            }
+                        });
+                        break;
+                    case 'todo_partials':
+                        break;
+                    default:
+                        break;
+                }
+            });
+            console.log('~~~~~~~~~~~~~~~~~');
         }
     });
     return { raw: file, renderMap, insertionMap, render: copy };

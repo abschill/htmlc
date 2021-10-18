@@ -23,7 +23,7 @@ export const matchLoop = ( target: string ) => {
  */
 export const hasKey = ( target: string, key: string ) => target.includes( `<!--@render=${key}-->` );
 export const keyIndex = ( target: string, key: string ) => target.indexOf( `<!--@render=${key}-->` );
-export const translateKeyName = ( templated_key: string ) => templated_key.split( '=' )[1].split( '-->' )[0];
+export const translateKeyName = ( templated_key: string ) => templated_key.split( 'render=' )[1].split( '-->' )[0];
 export const replaceKey = ( target: string, key: string, value: string ) => {
     let _copy = target;
     _copy = _copy.replace( key, value );
@@ -60,3 +60,8 @@ export const matchPartial = ( target: string ) => {
     const _reggie = /<!--@render-partial=.*-->/gi;
     return target.match( _reggie );
 }
+
+
+export const getKeysInElement = ( el ) => {
+    console.log( el );
+};
