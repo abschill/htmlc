@@ -8,6 +8,10 @@ import {
     matchKey,
     translateKeyName
 } from '.';
+
+export const FOR_H = ( key ) => `<!--@for(${key}){`;
+export const FOR_T = () => `}-->`;
+
 /**
  * @module RESERVED_WORDS
  * @returns Dictionary with typed callbacks for AST

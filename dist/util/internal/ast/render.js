@@ -23,10 +23,16 @@ const genRenderMap = (rawFile) => {
                 break;
         }
     });
-    return { todo_partials, todo_keys, todo_loops, rawFile };
+    return { todo_partials, todo_keys, todo_loops };
 };
 const resolveRender = (file, renderMap, insertionMap) => {
     let copy = file;
+    Object.entries(renderMap).forEach((render, itr) => {
+        if (render[1]) {
+            console.log(render[1]);
+            console.log({ key: render[0], value: render[1] });
+        }
+    });
     return { raw: file, renderMap, insertionMap, render: copy };
 };
 const template = (declaredPartials, rawFile, insertMap) => {
@@ -39,9 +45,6 @@ const template = (declaredPartials, rawFile, insertMap) => {
             matchPartials.forEach(partial => {
                 const renderMap = genRenderMap(partial.rawFile);
                 const resolved = resolveRender(partial.rawFile, renderMap, insertMap['partialInput'][p_name]);
-                console.log('Partial: ');
-                console.log(partial);
-                console.log(resolved);
             });
         }
     });
