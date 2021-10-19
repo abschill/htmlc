@@ -37,6 +37,7 @@ const resolveRender = ( file, renderMap, insertionMap ) => {
     let outVal = [];
     let outObj = [];
     // console.log( insertionMap )
+    // console.log( renderMap );
     Object.entries( renderMap ).forEach( ( render: [key: string, value: any], itr )  => {
         // console.log( itr );
         // console.log( render[0] );
@@ -47,6 +48,8 @@ const resolveRender = ( file, renderMap, insertionMap ) => {
                 switch( render[0] ) {
                     case 'todo_keys':
                         const name = r.split( 'render=' )[1].split( '-->')[0];
+                        const globalVals = insertionMap['*'];
+                        console.log( globalVals );
                         const replaceVal = insertionMap[ name ]
                         copy = copy.replace( r, replaceVal );
                         break;
@@ -56,7 +59,7 @@ const resolveRender = ( file, renderMap, insertionMap ) => {
                         //console.log( `Loop: ${loopName}` );
                         let elChild = r.replace( FOR_H( loopName ), '' ).replace( FOR_T(), '' )
                                         .trimStart().replace( /\s\s+/gi, '');
-                        toInsert.forEach( insertion => {
+                        toInsert?.forEach( insertion => {
                             if( typeof( insertion ) === 'string' ) {
                                 //1d array
                                 // console.log()
