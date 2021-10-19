@@ -30,7 +30,7 @@
 
 #### Defined in
 
-[util/logger.ts:6](https://github.com/abschill/html-chunk-loader/blob/3536a6e/lib/v1/util/logger.ts#L6)
+[util/logger.ts:6](https://github.com/abschill/html-chunk-loader/blob/9c82be0/lib/v1/util/logger.ts#L6)
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 #### Defined in
 
-[util/logger.ts:5](https://github.com/abschill/html-chunk-loader/blob/3536a6e/lib/v1/util/logger.ts#L5)
+[util/logger.ts:5](https://github.com/abschill/html-chunk-loader/blob/9c82be0/lib/v1/util/logger.ts#L5)
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 #### Defined in
 
-[util/logger.ts:3](https://github.com/abschill/html-chunk-loader/blob/3536a6e/lib/v1/util/logger.ts#L3)
+[util/logger.ts:3](https://github.com/abschill/html-chunk-loader/blob/9c82be0/lib/v1/util/logger.ts#L3)
 
 ___
 
@@ -91,7 +91,7 @@ ___
 
 #### Defined in
 
-[util/logger.ts:8](https://github.com/abschill/html-chunk-loader/blob/3536a6e/lib/v1/util/logger.ts#L8)
+[util/logger.ts:8](https://github.com/abschill/html-chunk-loader/blob/9c82be0/lib/v1/util/logger.ts#L8)
 
 ___
 
@@ -111,4 +111,4 @@ ___
 
 #### Defined in
 
-[util/logger.ts:4](https://github.com/abschill/html-chunk-loader/blob/3536a6e/lib/v1/util/logger.ts#L4)
+[util/logger.ts:4](https://github.com/abschill/html-chunk-loader/blob/9c82be0/lib/v1/util/logger.ts#L4)

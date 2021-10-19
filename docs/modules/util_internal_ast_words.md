@@ -37,7 +37,7 @@
 
 #### Defined in
 
-[util/internal/ast/words.ts:19](https://github.com/abschill/html-chunk-loader/blob/3536a6e/lib/v1/util/internal/ast/words.ts#L19)
+[util/internal/ast/words.ts:19](https://github.com/abschill/html-chunk-loader/blob/9c82be0/lib/v1/util/internal/ast/words.ts#L19)
 
 ## Functions
 
@@ -57,7 +57,7 @@
 
 #### Defined in
 
-[util/internal/ast/words.ts:12](https://github.com/abschill/html-chunk-loader/blob/3536a6e/lib/v1/util/internal/ast/words.ts#L12)
+[util/internal/ast/words.ts:12](https://github.com/abschill/html-chunk-loader/blob/9c82be0/lib/v1/util/internal/ast/words.ts#L12)
 
 ___
 
@@ -71,4 +71,4 @@ ___
 
 #### Defined in
 
-[util/internal/ast/words.ts:13](https://github.com/abschill/html-chunk-loader/blob/3536a6e/lib/v1/util/internal/ast/words.ts#L13)
+[util/internal/ast/words.ts:13](https://github.com/abschill/html-chunk-loader/blob/9c82be0/lib/v1/util/internal/ast/words.ts#L13)

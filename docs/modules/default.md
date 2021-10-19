@@ -61,4 +61,4 @@
 
 #### Defined in
 
-[default.js:1](https://github.com/abschill/html-chunk-loader/blob/3536a6e/lib/v1/default.js#L1)
+[default.js:1](https://github.com/abschill/html-chunk-loader/blob/9c82be0/lib/v1/default.js#L1)

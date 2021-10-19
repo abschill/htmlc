@@ -29,7 +29,7 @@ Metadata about Partials
 
 #### Defined in
 
-[util/dirTree.ts:10](https://github.com/abschill/html-chunk-loader/blob/3536a6e/lib/v1/util/dirTree.ts#L10)
+[util/dirTree.ts:10](https://github.com/abschill/html-chunk-loader/blob/9c82be0/lib/v1/util/dirTree.ts#L10)
 
 ___
 
@@ -51,4 +51,4 @@ Metadata about Templates
 
 #### Defined in
 
-[util/dirTree.ts:33](https://github.com/abschill/html-chunk-loader/blob/3536a6e/lib/v1/util/dirTree.ts#L33)
+[util/dirTree.ts:33](https://github.com/abschill/html-chunk-loader/blob/9c82be0/lib/v1/util/dirTree.ts#L33)

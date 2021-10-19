@@ -16,11 +16,11 @@
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `declaredPartials` | `any` |
-| `rawFile` | `string` |
-| `insertMap` | `object` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `declaredPartials` | `any` | array of partials declared in loader context |
+| `rawFile` | `string` | raw file contents to insert to |
+| `insertMap` | `object` | map to insert values into templates from |
 
 #### Returns
 
@@ -28,4 +28,4 @@
 
 #### Defined in
 
-[util/internal/ast/render.ts:96](https://github.com/abschill/html-chunk-loader/blob/3536a6e/lib/v1/util/internal/ast/render.ts#L96)
+[util/internal/ast/render.ts:101](https://github.com/abschill/html-chunk-loader/blob/9c82be0/lib/v1/util/internal/ast/render.ts#L101)

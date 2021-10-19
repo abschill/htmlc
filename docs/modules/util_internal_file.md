@@ -28,7 +28,7 @@
 
 #### Defined in
 
-[util/internal/file.ts:29](https://github.com/abschill/html-chunk-loader/blob/3536a6e/lib/v1/util/internal/file.ts#L29)
+[util/internal/file.ts:29](https://github.com/abschill/html-chunk-loader/blob/9c82be0/lib/v1/util/internal/file.ts#L29)
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 #### Defined in
 
-[util/internal/file.ts:33](https://github.com/abschill/html-chunk-loader/blob/3536a6e/lib/v1/util/internal/file.ts#L33)
+[util/internal/file.ts:33](https://github.com/abschill/html-chunk-loader/blob/9c82be0/lib/v1/util/internal/file.ts#L33)
 
 ___
 
@@ -70,4 +70,4 @@ Name of the html file in the given target path, x-platform
 
 #### Defined in
 
-[util/internal/file.ts:9](https://github.com/abschill/html-chunk-loader/blob/3536a6e/lib/v1/util/internal/file.ts#L9)
+[util/internal/file.ts:9](https://github.com/abschill/html-chunk-loader/blob/9c82be0/lib/v1/util/internal/file.ts#L9)
