@@ -32,6 +32,7 @@ const loader = (_a) => {
         const { partialInput } = config;
         const globalInsertions = config.templateInput['*'];
         const spreadInsertions = Object.assign(Object.assign(Object.assign(Object.assign({}, namedInsertions), globalInsertions), data), { partialInput });
+        console.log(spreadInsertions);
         const fileMeta = conf.ctx.templates.filter(temp => temp.name === name)[0];
         const { rawFile } = fileMeta;
         const out = (0, render_1.default)(conf.ctx.partials, rawFile, spreadInsertions);
