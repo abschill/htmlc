@@ -44,14 +44,22 @@ const resolveRender = (file, renderMap, insertionMap) => {
                 switch (render[0]) {
                     case 'todo_keys':
                         const name = r.split('render=')[1].split('-->')[0];
-                        const globalVals = insertionMap['*'];
+                        const globalVals = insertionMap;
                         console.log(globalVals);
-                        const replaceVal = insertionMap[name];
+                        let replaceVal = insertionMap[name];
+                        console.log('replaceVal: ');
+                        console.log(replaceVal);
+                        if (!replaceVal) {
+                            replaceVal = globalVals;
+                        }
+                        if (!replaceVal) {
+                            console.warn('Values declared not found in templates');
+                        }
                         copy = copy.replace(r, replaceVal);
                         break;
                     case 'todo_loops':
                         const loopName = r.split('(')[1].split(')')[0];
-                        const toInsert = insertionMap[loopName];
+                        let toInsert = insertionMap[loopName];
                         let elChild = r.replace((0, words_2.FOR_H)(loopName), '').replace((0, words_2.FOR_T)(), '')
                             .trimStart().replace(/\s\s+/gi, '');
                         toInsert === null || toInsert === void 0 ? void 0 : toInsert.forEach(insertion => {

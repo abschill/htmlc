@@ -1,6 +1,7 @@
 import RESERVED_WORDS from './words';
 import { FOR_H, FOR_T } from './words';
-const genRenderMap = ( rawFile: string ) => {
+import { RenderMap, RenderTemplateArgs } from '../../../../..';
+const genRenderMap = ( rawFile: string ): RenderMap => {
     let todo_partials: string[];
     let todo_keys: string[];
     let todo_loops: string[];
@@ -21,9 +22,9 @@ const genRenderMap = ( rawFile: string ) => {
     } );
     return { todo_partials, todo_keys, todo_loops };
 }
-const handle1DIterable = ( clone, insert ) => clone.replace( '{_}', insert );
+const handle1DIterable = ( clone, insert ): string => clone.replace( '{_}', insert );
 
-const handleXDIterable = ( clone, insert ) => {
+const handleXDIterable = ( clone, insert ): string => {
     let copy = clone;
     insert.forEach( insertion => {
         copy = copy.replace( `{${insertion[0]}}`, insertion[1] );
@@ -31,8 +32,14 @@ const handleXDIterable = ( clone, insert ) => {
     return copy;
 }
 
-
-const resolveRender = ( file, renderMap, insertionMap ) => {
+/**
+ * 
+ * @param {string} file utf8 encoded file string to render into 
+ * @param {RenderMap} renderMap Matched tags taken from file
+ * @param {object} insertionMap map of values to render into template 
+ * @returns 
+ */
+const resolveRender = ( file: string, renderMap: RenderMap, insertionMap: object ) => {
     let copy = file;
     let outVal = [];
     let outObj = [];
@@ -48,15 +55,23 @@ const resolveRender = ( file, renderMap, insertionMap ) => {
                 switch( render[0] ) {
                     case 'todo_keys':
                         const name = r.split( 'render=' )[1].split( '-->')[0];
-                        const globalVals = insertionMap['*'];
+                        const globalVals = insertionMap;
                         console.log( globalVals );
-                        const replaceVal = insertionMap[ name ]
+                        let replaceVal = insertionMap[ name ];
+                        console.log( 'replaceVal: ' );
+                        console.log( replaceVal );
+                        if( !replaceVal ) {
+                            replaceVal = globalVals;
+                        }
+
+                        if( !replaceVal ) {
+                            console.warn( 'Values declared not found in templates' );
+                        }
                         copy = copy.replace( r, replaceVal );
                         break;
                     case 'todo_loops':
                         const loopName = r.split( '(' )[1].split( ')' )[0];
-                        const toInsert = insertionMap[ loopName ];
-                        //console.log( `Loop: ${loopName}` );
+                        let toInsert = insertionMap[ loopName ];
                         let elChild = r.replace( FOR_H( loopName ), '' ).replace( FOR_T(), '' )
                                         .trimStart().replace( /\s\s+/gi, '');
                         toInsert?.forEach( insertion => {
@@ -97,6 +112,7 @@ const resolveRender = ( file, renderMap, insertionMap ) => {
  * @param {Partial[]} declaredPartials array of partials declared in loader context
  * @param {string} rawFile raw file contents to insert to 
  * @param {object} insertMap map to insert values into templates from
+ * @returns {void}
  */
 const template = ( declaredPartials, rawFile: string, insertMap: object ) => {
     let rootCopy = rawFile;
@@ -111,8 +127,7 @@ const template = ( declaredPartials, rawFile: string, insertMap: object ) => {
         if( matchPartials.length > 0 ) {
             matchPartials.forEach( partial => {
                 const renderMap = genRenderMap( partial.rawFile );
-                const insertion = insertMap['partialInput'][p_name];
-                
+                const insertion = insertMap['partialInput'][p_name]; 
                 const resolved = resolveRender( partial.rawFile, renderMap, insertion );
                 rootCopy = rootCopy.replace( partialSeg, resolved.render );
             } );

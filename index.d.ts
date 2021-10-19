@@ -19,7 +19,7 @@ export type LoaderEngine = {
     options: LoaderOptions
 }
 
-export type renderTemplateArgs = {
+export type RenderTemplateArgs = {
     _toInsert: Object,
     raw: string,
     conf: LoaderOptions
@@ -27,7 +27,7 @@ export type renderTemplateArgs = {
 
 export type Template = {
     path: string,
-    args: renderTemplateArgs,
+    args: RenderTemplateArgs,
     valueOf: string
 }
 export type TargetDirectoryTree = { path: string, files: string[] }
@@ -35,4 +35,10 @@ export type FileInputMeta = {
     path: string,
     name: string,
     rawFile: string
+}
+
+export type RenderMap = {
+    todo_partials: string[],
+    todo_keys: string[],
+    todo_loops: string[]
 }
