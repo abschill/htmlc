@@ -92,7 +92,12 @@ const resolveRender = ( file, renderMap, insertionMap ) => {
     outObj.forEach( ( _out ) => copy = copy.replace( _out.replacer, objStr ) );
     return { raw: file, renderMap, insertionMap, render: copy };
 }
-
+/**
+ * 
+ * @param {Partial[]} declaredPartials array of partials declared in loader context
+ * @param {string} rawFile raw file contents to insert to 
+ * @param {object} insertMap map to insert values into templates from
+ */
 const template = ( declaredPartials, rawFile: string, insertMap: object ) => {
     let rootCopy = rawFile;
     const { todo_partials, todo_keys, todo_loops } = genRenderMap( rootCopy );
