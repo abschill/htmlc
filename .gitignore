@@ -3,3 +3,8 @@ lib/parser
 examples/**/node_modules
 public
 index.js
+new.js
+loader.js
+t.js
+yarn.lock
+mock
