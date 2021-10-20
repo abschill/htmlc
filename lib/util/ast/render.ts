@@ -125,6 +125,7 @@ const resolveRender = ( file: string, renderMap: RenderMap, insertionMap: object
 const template = ( declaredPartials, rawFile: string, insertMap: object ) => {
     let rootCopy = rawFile;
     const { todo_partials, todo_keys, todo_loops } = genRenderMap( rootCopy );
+    //console.log( insertMap );
     //partials first 
     todo_partials.forEach( partialSeg => {
         //@ts-ignore
@@ -135,7 +136,7 @@ const template = ( declaredPartials, rawFile: string, insertMap: object ) => {
         if( matchPartials.length > 0 ) {
             matchPartials.forEach( partial => {
                 const renderMap = genRenderMap( partial.rawFile );
-                const global_insertion = insertMap['partialInput']['*'];
+                const global_insertion = {...insertMap['partialInput']['*'], ...insertMap['*']};
                 const named_insertion = insertMap['partialInput'][p_name]; 
                 const insertion = {...global_insertion, ...named_insertion };
                 const resolved = resolveRender( partial.rawFile, renderMap, insertion );

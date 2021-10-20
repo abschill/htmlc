@@ -94,7 +94,7 @@ const template = (declaredPartials, rawFile, insertMap) => {
         if (matchPartials.length > 0) {
             matchPartials.forEach(partial => {
                 const renderMap = genRenderMap(partial.rawFile);
-                const global_insertion = insertMap['partialInput']['*'];
+                const global_insertion = Object.assign(Object.assign({}, insertMap['partialInput']['*']), insertMap['*']);
                 const named_insertion = insertMap['partialInput'][p_name];
                 const insertion = Object.assign(Object.assign({}, global_insertion), named_insertion);
                 const resolved = resolveRender(partial.rawFile, renderMap, insertion);
