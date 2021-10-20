@@ -28,4 +28,4 @@ context for engine
 
 #### Defined in
 
-[util/engine.ts:11](https://github.com/abschill/html-chunk-loader/blob/9c82be0/lib/v1/util/engine.ts#L11)
+util/engine.ts:9

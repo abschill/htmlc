@@ -22,23 +22,6 @@
 
 | Name | Type |
 | :------ | :------ |
-| `_custom_template_test` | `Object` |
-| `_custom_template_test.about` | `Object` |
-| `_custom_template_test.about.content` | `string` |
-| `_custom_template_test.home` | `Object` |
-| `_custom_template_test.home.content` | `string` |
-| `_custom_template_test.home.items` | `string`[] |
-| `_custom_template_test.home.items2` | { `desc`: `string` = "this is item 1"; `title`: `string` = "item 1" }[] |
-| `_partialInput` | `Object` |
-| `_partialInput.footer` | `Object` |
-| `_partialInput.footer.title` | `string` |
-| `_partialInput.head` | `Object` |
-| `_partialInput.head.desc` | `string` |
-| `_partialInput.head.styles` | `string`[] |
-| `_partialInput.head.title` | `string` |
-| `_partialInput.nav` | `Object` |
-| `_partialInput.nav.navItems` | { `label`: `string` = 'foo'; `url`: `string` = '/foo' }[] |
-| `_partialInput.nav.navTitle` | `string` |
 | `_publishDefault` | `string` |
 | `_static_config` | `Object` |
 | `_static_config.cleanup` | `boolean` |
@@ -61,4 +44,4 @@
 
 #### Defined in
 
-[default.js:1](https://github.com/abschill/html-chunk-loader/blob/9c82be0/lib/v1/default.js#L1)
+default.js:1

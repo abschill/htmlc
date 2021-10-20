@@ -1,5 +1,5 @@
 export type Loader = {
-    loadTemplate: Function
+    template: Function
 }
 export type LoaderOptions = {
     pathRoot?: string,

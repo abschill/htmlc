@@ -9,11 +9,11 @@
         "moduleResolution": "node",
         "sourceMap": true,
         "outDir": "./dist",
-        "rootDir": "./lib/v1",
+        "rootDir": "lib",
         "removeComments":true
     },
     "include": [
-        "./lib/v1/index.ts"
+        "lib/index.ts"
     ],
     "exclude":[
         "./tests/**/*",
@@ -21,7 +21,7 @@
     ],
     "typedocOptions": {
         "entryPoints": [
-            "./lib/v1/loader.ts"
+            "./lib/**/*"
         ],
         "out": "docs"
     }
