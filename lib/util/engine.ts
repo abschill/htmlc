@@ -1,5 +1,4 @@
 import { LoaderOptions, LoaderEngine } from '../..';
-import { statusObj } from './logger';
 import { resolvePartials, resolveTemplates } from './dirTree';
 /**
  * 
@@ -8,20 +7,8 @@ import { resolvePartials, resolveTemplates } from './dirTree';
  */
 const engine = ( config: LoaderOptions ): LoaderEngine => {
     const verbose = config?.debug ?? false;
-    if( verbose ) {
-        statusObj( 'Config: ', config );
-    }
-    if( verbose ) {
-        statusObj( 'Path Config: ', config );
-    }
     const partialInput = config?.partialInput;
     const templateInput = config?.templateInput;
-    if( partialInput && verbose ) {
-        statusObj( 'Partial Initials: ', partialInput );
-    }
-    if( templateInput && verbose ) {
-        statusObj( 'Template Initials: ', templateInput );
-    }
     const partials = resolvePartials( config );
     const templates = resolveTemplates( config );
     const ctx = {

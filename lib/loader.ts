@@ -1,6 +1,5 @@
 import engine from './util/engine';
 import { LoaderOptions, Loader } from '..';
-import { statusObj } from './util/logger';
 import render from './util/ast/render';
 import check_keys from './util/config';
 
@@ -10,13 +9,7 @@ import check_keys from './util/config';
  * @returns Loader for application
  */
 const loader = ( { ...config }: LoaderOptions ): Loader => {
-    if( config.debug ) {
-        statusObj( 'Initial Args: ', config );
-    }
     const conf = engine( config );
-    if( config.debug ) {
-       statusObj( 'Config:', conf );
-    }
     function template( name: string, {...data } ) {
         //if no data, load default input for template
         if( Object.keys( data ).length === 0 ) {
