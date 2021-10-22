@@ -8,7 +8,9 @@ import check_keys from './util/config';
  * @returns Loader for application
  */
 const loader = ( { ...config }: LoaderOptions ): Loader => {
+    
     const conf = engine( config );
+    // console.log( conf );
     function template( name: string, {...data } ) {
         //if no data, load default input for template
         if( Object.keys( data ).length === 0 ) {
