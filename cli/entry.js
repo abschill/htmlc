@@ -10,6 +10,7 @@ if( !conf ) {
     console.log( 'Run npm init -y && npm i html-chunk-loader or npx create-underpin to set up a project' );
 }
 else {
-    ssg( conf, args );
+    console.log( conf );
+    // ssg( conf, args );
 }
 

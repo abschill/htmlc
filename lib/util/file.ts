@@ -41,6 +41,5 @@ export const loadFileUTF = ( _path: string ) => {
     }
     catch( e ) {
         throw e;
-    }
-    
+    }   
 }

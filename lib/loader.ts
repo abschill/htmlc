@@ -2,7 +2,6 @@ import engine from './util/engine';
 import { LoaderOptions, Loader } from '..';
 import render from './util/ast/render';
 import check_keys from './util/config';
-
 /**
  * @constructor
  * @param {LoaderOptions} config config object for loader 
@@ -25,16 +24,14 @@ const loader = ( { ...config }: LoaderOptions ): Loader => {
         else {
             const namedInsertions = data;
             const { partialInput } = config;
-            const globalInsertions = config.templateInput['*'];
+            const globalInsertions = config.templateInput[ '*' ];
             const spreadInsertions = check_keys( {...namedInsertions, ...globalInsertions, partialInput } );
             const fileMeta = conf.ctx.templates.filter( temp => temp.name === name )[0];
             const { rawFile } = fileMeta;
             const out = render( conf.ctx.partials, rawFile, spreadInsertions );
             return out;
         }
-        
     }   
-
     return { template }
 }
 export default loader;

@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const dirTree_1 = require("./dirTree");
 const engine = (config) => {
-    var _a;
+    var _a, _b, _c;
     const verbose = (_a = config === null || config === void 0 ? void 0 : config.debug) !== null && _a !== void 0 ? _a : false;
-    const partialInput = config === null || config === void 0 ? void 0 : config.partialInput;
-    const templateInput = config === null || config === void 0 ? void 0 : config.templateInput;
+    const partialInput = (_b = config === null || config === void 0 ? void 0 : config.partialInput) !== null && _b !== void 0 ? _b : {};
+    const templateInput = (_c = config === null || config === void 0 ? void 0 : config.templateInput) !== null && _c !== void 0 ? _c : {};
     const partials = (0, dirTree_1.resolvePartials)(config);
     const templates = (0, dirTree_1.resolveTemplates)(config);
     const ctx = {

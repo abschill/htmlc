@@ -88,7 +88,7 @@ const resolveRender = (file, renderMap, insertionMap) => {
 const template = (declaredPartials, rawFile, insertMap) => {
     let rootCopy = rawFile;
     const { todo_partials, todo_keys, todo_loops } = genRenderMap(rootCopy);
-    todo_partials.forEach(partialSeg => {
+    todo_partials === null || todo_partials === void 0 ? void 0 : todo_partials.forEach(partialSeg => {
         const p_name = partialSeg.split('@render-partial=')[1].split('-->')[0];
         const matchPartials = declaredPartials.filter(n => n.name === p_name);
         if (matchPartials.length > 0) {
@@ -102,7 +102,7 @@ const template = (declaredPartials, rawFile, insertMap) => {
             });
         }
     });
-    todo_keys.forEach(keySeg => {
+    todo_keys === null || todo_keys === void 0 ? void 0 : todo_keys.forEach(keySeg => {
         const renderMap = genRenderMap(rootCopy);
         const resolved = resolveRender(rootCopy, renderMap, insertMap);
         rootCopy = resolved.render;

@@ -1,14 +1,15 @@
 
-// import Loader from '../dist';
+ import loader from '../dist';
 // import defaults from '../dist/default';
 // import { testInp } from './fn';
 // const l1 = new Loader({
 //     _partialInput: defaults._partialInput
 // });
 // const { _config } = l1;
+
 describe( 'asdsa', () => {
-    it( 'yes', () => {
-        expect( 1===1 ).toBe( true );
+    it( 'Loads', () => {
+        expect( 1 ).toBe( 1 );
     })
     
 })

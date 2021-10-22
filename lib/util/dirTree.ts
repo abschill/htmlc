@@ -22,7 +22,7 @@ export const resolvePartials = ( conf: LoaderOptions ): FileInputMeta[] => {
         }
     }
     else {
-        throw new Error( 'Partial Directory Resolution Failed' );
+        throw new Error( 'Partial Directory Resolution Failed - Partial Directory not Found' );
     } 
 }
 /**
@@ -45,6 +45,6 @@ export const resolveTemplates = ( conf: LoaderOptions ): FileInputMeta[] => {
         } 
     }
     else {
-        throw new Error( 'Template Directory Resolution Failed' );
+        throw new Error( 'Template Directory Resolution Failed - Template Directory not found' );
     }
 }

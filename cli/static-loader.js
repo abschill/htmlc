@@ -1,6 +1,6 @@
 const fs = require( 'fs' );
 const path = require( 'path' );
-const Loader = require( '../dist' );
+const loader = require( '../dist' );
 module.exports = loadStaticFiles = ( ctx, parts ) => {
     const loaderFile = require( path.resolve( process.cwd(), ctx.loaderFile ) )() ?? require( path.resolve( process.cwd(), 'loader.js' ) )();
     const outDir = path.join( process.cwd(), ctx.outPath ) ?? path.join( process.cwd(), 'public' );
@@ -13,11 +13,12 @@ module.exports = loadStaticFiles = ( ctx, parts ) => {
     
     
     if ( !fs.existsSync( outDir ) ) fs.mkdirSync( outDir );
-    const static_loader = new Loader({
-        root: ctx.root ?? 'views',
+    const static_loader = loader({
+        pathRoot: ctx.root ?? 'views',
         partials: ctx.partials ?? 'partials',
         templates: ctx.templates ?? 'pages',
-        _partialInput: parts,
+        partialInput: parts,
+        templateInput: loaderFile(),
         debug: ctx.debug ?? false
     });
     static_loader.templates.forEach( template => {

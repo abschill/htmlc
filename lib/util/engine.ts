@@ -7,8 +7,8 @@ import { resolvePartials, resolveTemplates } from './dirTree';
  */
 const engine = ( config: LoaderOptions ): LoaderEngine => {
     const verbose = config?.debug ?? false;
-    const partialInput = config?.partialInput;
-    const templateInput = config?.templateInput;
+    const partialInput = config?.partialInput ?? {};
+    const templateInput = config?.templateInput ?? {};
     const partials = resolvePartials( config );
     const templates = resolveTemplates( config );
     const ctx = {
@@ -22,7 +22,6 @@ const engine = ( config: LoaderOptions ): LoaderEngine => {
         debug: verbose
     }
     return { ctx, options };
-    
 }
 
 export default engine;

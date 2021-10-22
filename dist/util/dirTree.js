@@ -21,7 +21,7 @@ const resolvePartials = (conf) => {
         }
     }
     else {
-        throw new Error('Partial Directory Resolution Failed');
+        throw new Error('Partial Directory Resolution Failed - Partial Directory not Found');
     }
 };
 exports.resolvePartials = resolvePartials;
@@ -39,7 +39,7 @@ const resolveTemplates = (conf) => {
         }
     }
     else {
-        throw new Error('Template Directory Resolution Failed');
+        throw new Error('Template Directory Resolution Failed - Template Directory not found');
     }
 };
 exports.resolveTemplates = resolveTemplates;
