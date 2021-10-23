@@ -23,7 +23,7 @@
 
 #### Defined in
 
-options.d.ts:1
+[options.d.ts:1](https://github.com/abschill/html-chunk-loader/blob/2657f90/lib/options.d.ts#L1)
 
 ___
 
@@ -44,4 +44,4 @@ ___
 
 #### Defined in
 
-options.d.ts:4
+[options.d.ts:4](https://github.com/abschill/html-chunk-loader/blob/2657f90/lib/options.d.ts#L4)
