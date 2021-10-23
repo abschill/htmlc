@@ -157,6 +157,14 @@ const template = ( declaredPartials, rawFile: string, insertMap: object ) => {
         // const k_val = insertMap[ k_name ];
         // rootCopy = rootCopy.replace( keySeg, k_val ); 
     } ); 
+    // console.log( insertMap );
+    // console.log( todo_loops );
+    todo_loops?.forEach( loop => {
+        const renderMap = genRenderMap( rootCopy );
+        // console.log( renderMap );
+        const resolved = resolveRender( rootCopy, renderMap, insertMap );
+        rootCopy = resolved.render;
+    } );
     return rootCopy;
 
 }

@@ -97,13 +97,17 @@ const template = (declaredPartials, rawFile, insertMap) => {
                 const global_insertion = Object.assign(Object.assign({}, insertMap['partialInput']['*']), insertMap['*']);
                 const named_insertion = insertMap['partialInput'][p_name];
                 const insertion = Object.assign(Object.assign({}, global_insertion), named_insertion);
-                console.log(insertion);
                 const resolved = resolveRender(partial.rawFile, renderMap, insertion);
                 rootCopy = rootCopy.replace(partialSeg, resolved.render);
             });
         }
     });
     todo_keys === null || todo_keys === void 0 ? void 0 : todo_keys.forEach(keySeg => {
+        const renderMap = genRenderMap(rootCopy);
+        const resolved = resolveRender(rootCopy, renderMap, insertMap);
+        rootCopy = resolved.render;
+    });
+    todo_loops === null || todo_loops === void 0 ? void 0 : todo_loops.forEach(loop => {
         const renderMap = genRenderMap(rootCopy);
         const resolved = resolveRender(rootCopy, renderMap, insertMap);
         rootCopy = resolved.render;
