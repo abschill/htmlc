@@ -1,7 +1,9 @@
 import engine from './util/engine';
-import { LoaderOptions, Loader } from '..';
+import { LoaderOptions, Loader } from './options';
 import render from './util/ast/render';
 /**
+ * @module loader
+ * @description Rendering Context 
  * @constructor
  * @param {LoaderOptions} config config object for loader 
  * @returns Loader for application

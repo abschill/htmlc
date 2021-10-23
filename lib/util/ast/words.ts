@@ -1,12 +1,10 @@
 import {
     hasLoop,
     matchLoop,
-    loopIndex,
     hasPartial,
     matchPartial,
     hasKey,
-    matchKey,
-    translateKeyName
+    matchKey
 } from '.';
 
 export const FOR_H = ( key ) => `<!--@for(${key}){`;
@@ -19,13 +17,11 @@ export const FOR_T = () => `}-->`;
 const RESERVED_WORDS = {
     '@for': { 
         'boolean': hasLoop,
-        'array': matchLoop,
-        'head|tail': loopIndex
+        'array': matchLoop
     },
     '@render': {
         'boolean': hasKey,
-        'array': matchKey,
-        'translate': translateKeyName
+        'array': matchKey
     },
     '@render-partial': {
         'boolean': hasPartial,

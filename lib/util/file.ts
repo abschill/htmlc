@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { FileInputMeta } from '../..';
+import { FileInputMeta } from '../internals';
 /**
  * 
  * @param {string} filePath Full system-specific path of target file

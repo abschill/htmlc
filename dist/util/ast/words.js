@@ -9,13 +9,11 @@ exports.FOR_T = FOR_T;
 const RESERVED_WORDS = {
     '@for': {
         'boolean': _1.hasLoop,
-        'array': _1.matchLoop,
-        'head|tail': _1.loopIndex
+        'array': _1.matchLoop
     },
     '@render': {
         'boolean': _1.hasKey,
-        'array': _1.matchKey,
-        'translate': _1.translateKeyName
+        'array': _1.matchKey
     },
     '@render-partial': {
         'boolean': _1.hasPartial,

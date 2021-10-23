@@ -1,7 +1,13 @@
 import path from 'path';
-import { FileInputMeta, LoaderOptions } from '../..';
+import { FileInputMeta } from '../internals';
+import { LoaderOptions } from '../options';
 import { mapFileData, _files } from './file';
 import defaults from '../default';
+/**
+ * 
+ * @module dirTree internal file handling
+ * 
+ */
 /**
  * 
  * @param {LoaderConfig} conf Configuration to read paths from  

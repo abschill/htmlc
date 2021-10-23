@@ -1,6 +1,6 @@
 import RESERVED_WORDS from './words';
 import { FOR_H, FOR_T } from './words';
-import { RenderMap } from '../../../';
+import { RenderMap } from '../../internals';
 const genRenderMap = ( rawFile: string ): RenderMap => {
     let todo_partials: string[];
     let todo_keys: string[];

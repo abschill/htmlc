@@ -12,7 +12,7 @@
     "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable",
-    "docs": "npx typedoc --entryPointStrategy expand ./lib"
+    "docs": "typedoc"
   },
   "files": [
     "dist/**/*",

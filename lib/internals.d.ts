@@ -1,21 +1,7 @@
-export type Loader = {
-    template: Function
-}
-export type LoaderOptions = {
-    pathRoot?: string,
-    templates?: string,
-    partials?: string
-    partialInput: object,
-    templateInput: object,
-    debug: boolean
-}
-
+import { LoaderOptions } from './options';
 export type LoaderContext = {
     partials: any
     templates: any
-}
-export type LoaderEngine = { 
-    ctx: LoaderContext
 }
 
 export type RenderTemplateArgs = {
@@ -23,7 +9,6 @@ export type RenderTemplateArgs = {
     raw: string,
     conf: LoaderOptions
 }
-
 export type Template = {
     path: string,
     args: RenderTemplateArgs,

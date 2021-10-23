@@ -22,7 +22,7 @@
     ],
     "typedocOptions": {
         "entryPoints": [
-            "./lib/**/*"
+            "./lib/options.d.ts"
         ],
         "out": "docs"
     }

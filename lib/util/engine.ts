@@ -1,4 +1,4 @@
-import { LoaderOptions, LoaderEngine } from '../..';
+import { LoaderOptions } from '../options';
 import { resolvePartials, resolveTemplates } from './dirTree';
 /**
  * 
@@ -9,7 +9,7 @@ const engine = ( config: LoaderOptions ) => {
     const partials = resolvePartials( config );
     const templates = resolveTemplates( config );
     return {
-        config,
+        config, 
         partials,
         templates
     };
