@@ -1,7 +1,7 @@
 {
     "*": {
-        "page_title":"My Blog",
-        "page_description": "Cool Description"
+        "page_title":"Wildcard Fallback Title",
+        "desc":"Wilcard Fallback Desc"
     },
     "head":{
         "styles":[
@@ -12,7 +12,8 @@
     "nav": {
         "links":[
             { "url": "/", "label": "Home" },
-            { "url": "/test", "label": "Test" }
+            { "url": "/about", "label": "About" },
+            { "url": "/contact", "label": "Contact" }
         ]
     }
 }

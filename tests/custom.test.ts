@@ -35,10 +35,21 @@
 //     } );
     
 // });
-
-describe( 'asdsa', () => {
-    it( 'yes', () => {
-        expect( 1===1 ).toBe( true );
+import loader from '../dist';
+import partialData from './customPartial.json';
+import templateData from './customTemplate';
+const myLoader = loader( {
+    pathRoot: "views3",
+    partials: "layout",
+    partialInput: partialData,
+    templateInput: {},
+    debug: false
+} );
+describe( 'Load Complex Partial Data', () => {
+    it( 'Gets Metadata', () => {
+        const data = myLoader.template( 'home', templateData );
+        // console.log( data );
+        expect( data ).toMatch( 'HTTP' );
     })
     
 })

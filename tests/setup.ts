@@ -35,17 +35,16 @@
 export const partialData = () =>{
     return {
         "*": {
-            "page_title":"Hello World"
+            "page_title":"Hello World",
+            "page_description":"Cool Description"
         },
         head:{
-            "desc": "Cool Description",
             "styles":[
                     "https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css",
                     "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
             ]
         },
         nav: {
-            "page_title":"Hello World",
             links:[
                 { url: '/', label: 'Home' },
                 { url: '/test', label: 'Test' }
