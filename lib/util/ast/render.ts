@@ -141,7 +141,7 @@ const template = ( declaredPartials, rawFile: string, insertMap: object ) => {
                 const named_insertion = insertMap['partialInput'][p_name]; 
                 // console.log( named_insertion );
                 const insertion = {...global_insertion, ...named_insertion };
-                console.log( insertion );
+                // console.log( insertion );
                 const resolved = resolveRender( partial.rawFile, renderMap, insertion );
                 rootCopy = rootCopy.replace( partialSeg, resolved.render );
             } );
