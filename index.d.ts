@@ -15,8 +15,7 @@ export type LoaderContext = {
     templates: any
 }
 export type LoaderEngine = { 
-    ctx: LoaderContext,
-    options: LoaderOptions
+    ctx: LoaderContext
 }
 
 export type RenderTemplateArgs = {

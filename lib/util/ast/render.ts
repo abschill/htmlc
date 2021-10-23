@@ -58,7 +58,7 @@ const resolveRender = ( file: string, renderMap: RenderMap, insertionMap: object
                 switch( render[0] ) {
                     case 'todo_keys':
                         const name = r.split( 'render=' )[1].split( '-->')[0];
-                        const globalVals = insertionMap['*'];
+                        const globalVals = insertionMap[ '*' ];
                         // console.log( globalVals );
                         let replaceVal = insertionMap[ name ];
                         //console.log( r );
@@ -137,8 +137,11 @@ const template = ( declaredPartials, rawFile: string, insertMap: object ) => {
             matchPartials.forEach( partial => {
                 const renderMap = genRenderMap( partial.rawFile );
                 const global_insertion = {...insertMap['partialInput']['*'], ...insertMap['*']};
+                // console.log( global_insertion );
                 const named_insertion = insertMap['partialInput'][p_name]; 
+                // console.log( named_insertion );
                 const insertion = {...global_insertion, ...named_insertion };
+                console.log( insertion );
                 const resolved = resolveRender( partial.rawFile, renderMap, insertion );
                 rootCopy = rootCopy.replace( partialSeg, resolved.render );
             } );
