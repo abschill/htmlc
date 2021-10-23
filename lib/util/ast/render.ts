@@ -1,10 +1,10 @@
 import RESERVED_WORDS from './words';
 import { FOR_H, FOR_T } from './words';
-import { RenderMap, RenderTemplateArgs } from '../../../';
+import { RenderMap } from '../../../';
 const genRenderMap = ( rawFile: string ): RenderMap => {
     let todo_partials: string[];
     let todo_keys: string[];
-    let todo_loops: string[];
+    let todo_loops: string[]
     Object.entries( RESERVED_WORDS ).forEach( token => {
         switch( token[0] ) {
             case '@render':
@@ -25,6 +25,8 @@ const genRenderMap = ( rawFile: string ): RenderMap => {
 const handle1DIterable = ( clone, insert ): string => clone.replace( '{_}', insert );
 
 const handleXDIterable = ( clone, insert ): string => {
+    // console.log( clone );
+    // console.log( insert );
     let copy = clone;
     insert.forEach( insertion => {
         copy = copy.replace( `{${insertion[0]}}`, insertion[1] );
@@ -77,8 +79,14 @@ const resolveRender = ( file: string, renderMap: RenderMap, insertionMap: object
                         copy = copy.replace( r, replaceVal );
                         break;
                     case 'todo_loops':
+                        // console.log( r );
                         const loopName = r.split( '(' )[1].split( ')' )[0];
+                        // console.log( loopName );
+                       // console.log( '````')
+                    //    console.log( copy );
+                       // console.log( insertionMap );
                         let toInsert = insertionMap[ loopName ];
+                        // console.log( insertionMap );
                         let elChild = r.replace( FOR_H( loopName ), '' ).replace( FOR_T(), '' )
                                         .trimStart().replace( /\s\s+/gi, '');
                         toInsert?.forEach( insertion => {
@@ -149,7 +157,7 @@ const template = ( declaredPartials, rawFile: string, insertMap: object ) => {
         }
         // console.log( p_name );
     } );
-    todo_keys?.forEach( keySeg => {
+    todo_keys?.forEach( _ => {
         //const k_name = keySeg.split( '@render=' )[1].split( '-->' )[0];
         const renderMap = genRenderMap( rootCopy );
         const resolved = resolveRender( rootCopy, renderMap, insertMap );
@@ -159,12 +167,14 @@ const template = ( declaredPartials, rawFile: string, insertMap: object ) => {
     } ); 
     // console.log( insertMap );
     // console.log( todo_loops );
-    todo_loops?.forEach( loop => {
+    todo_loops?.forEach( _ => {
         const renderMap = genRenderMap( rootCopy );
+        // console.log( loop );
         // console.log( renderMap );
         const resolved = resolveRender( rootCopy, renderMap, insertMap );
         rootCopy = resolved.render;
     } );
+    // console.log( rootCopy );
     return rootCopy;
 
 }

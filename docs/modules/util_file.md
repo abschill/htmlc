@@ -30,7 +30,7 @@ array of files in directory
 
 #### Defined in
 
-util/file.ts:29
+[util/file.ts:29](https://github.com/abschill/html-chunk-loader/blob/ef949bc/lib/util/file.ts#L29)
 
 ___
 
@@ -52,7 +52,7 @@ path of file to load utf8
 
 #### Defined in
 
-util/file.ts:38
+[util/file.ts:38](https://github.com/abschill/html-chunk-loader/blob/ef949bc/lib/util/file.ts#L38)
 
 ___
 
@@ -74,4 +74,4 @@ Name of the html file in the given target path, x-platform
 
 #### Defined in
 
-util/file.ts:9
+[util/file.ts:9](https://github.com/abschill/html-chunk-loader/blob/ef949bc/lib/util/file.ts#L9)

@@ -12,7 +12,7 @@
 
 ### default
 
-▸ `Const` **default**(`config`): `LoaderEngine`
+▸ `Const` **default**(`config`): `Object`
 
 #### Parameters
 
@@ -22,10 +22,16 @@
 
 #### Returns
 
-`LoaderEngine`
+`Object`
 
 context for engine
 
+| Name | Type |
+| :------ | :------ |
+| `config` | `LoaderOptions` |
+| `partials` | `FileInputMeta`[] |
+| `templates` | `FileInputMeta`[] |
+
 #### Defined in
 
-util/engine.ts:9
+[util/engine.ts:8](https://github.com/abschill/html-chunk-loader/blob/ef949bc/lib/util/engine.ts#L8)

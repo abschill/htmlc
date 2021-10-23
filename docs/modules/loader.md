@@ -28,4 +28,4 @@ Loader for application
 
 #### Defined in
 
-loader.ts:10
+[loader.ts:9](https://github.com/abschill/html-chunk-loader/blob/ef949bc/lib/loader.ts#L9)

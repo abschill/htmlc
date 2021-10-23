@@ -28,4 +28,4 @@
 
 #### Defined in
 
-util/ast/render.ts:125
+[util/ast/render.ts:125](https://github.com/abschill/html-chunk-loader/blob/ef949bc/lib/util/ast/render.ts#L125)

@@ -12,10 +12,22 @@ export const loopIndex = ( target: string, arr: string ) => ( { 'head':target.in
  * @returns {Array} matched segments from input
  */
 export const matchLoop = ( target: string ) => {
-    const _reggie = /<!--@for\(\w+\){([\s|\w|<|=|"|:|/|\.({})>]+)-->/gi;
-    return target.match( _reggie );
+    let out = [];
+    const _opener = /<!--@for\(\w+\){/gi;
+    const opener = target.match( _opener );
+    if( opener?.length > 0 ) {
+        opener.forEach( ( match, idx ) => {
+            const openIdx = target.indexOf( match );
+            const chopBottom = target.slice( openIdx, target.length );
+            const ret = chopBottom.slice( 0, chopBottom.indexOf( '}-->' ) + 4 );
+            out.push( ret );
+        })
+    }
+    
+    //const _reggie = /<!--@for\(\w+\){[\s|\w|\W|<|=|"|:|/|\.({})>]+-->/gmi;
+    return out;
 }
-/**
+/**<!--@for\(\w+\){[\n|\r|\w|\t]*.*[\n|\r|\w|\t]*.*
  * 
  * @param {string} target the DOM to match against
  * @param {string} key the key of the iterable to match 

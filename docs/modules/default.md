@@ -44,4 +44,4 @@
 
 #### Defined in
 
-default.js:1
+[default.js:1](https://github.com/abschill/html-chunk-loader/blob/ef949bc/lib/default.js#L1)

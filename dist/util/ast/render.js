@@ -28,6 +28,8 @@ const genRenderMap = (rawFile) => {
 };
 const handle1DIterable = (clone, insert) => clone.replace('{_}', insert);
 const handleXDIterable = (clone, insert) => {
+    console.log(clone);
+    console.log(insert);
     let copy = clone;
     insert.forEach(insertion => {
         copy = copy.replace(`{${insertion[0]}}`, insertion[1]);
@@ -112,6 +114,7 @@ const template = (declaredPartials, rawFile, insertMap) => {
         const resolved = resolveRender(rootCopy, renderMap, insertMap);
         rootCopy = resolved.render;
     });
+    console.log(rootCopy);
     return rootCopy;
 };
 exports.default = template;

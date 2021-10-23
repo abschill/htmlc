@@ -18,6 +18,7 @@ const loader = ( { ...config }: LoaderOptions ): Loader => {
             const { partialInput } = config;
             const globalInsertions = config.templateInput[ '*' ];
             const spreadInsertions = {...namedInsertions, ...globalInsertions, partialInput };
+            
             const fileMeta = conf.templates.filter( temp => temp.name === name )[0];
             const { rawFile } = fileMeta;
             const out = render( conf.partials, rawFile, spreadInsertions );
@@ -36,6 +37,7 @@ const loader = ( { ...config }: LoaderOptions ): Loader => {
                     } 
                 } 
             };
+            // console.log( spreadInsertions );
             const fileMeta = conf.templates.filter( temp => temp.name === name )[0];
             const { rawFile } = fileMeta;
             const out = render( conf.partials, rawFile, spreadInsertions );

@@ -37,7 +37,7 @@
 
 #### Defined in
 
-util/ast/words.ts:19
+[util/ast/words.ts:19](https://github.com/abschill/html-chunk-loader/blob/ef949bc/lib/util/ast/words.ts#L19)
 
 ## Functions
 
@@ -57,7 +57,7 @@ util/ast/words.ts:19
 
 #### Defined in
 
-util/ast/words.ts:12
+[util/ast/words.ts:12](https://github.com/abschill/html-chunk-loader/blob/ef949bc/lib/util/ast/words.ts#L12)
 
 ___
 
@@ -71,4 +71,4 @@ ___
 
 #### Defined in
 
-util/ast/words.ts:13
+[util/ast/words.ts:13](https://github.com/abschill/html-chunk-loader/blob/ef949bc/lib/util/ast/words.ts#L13)

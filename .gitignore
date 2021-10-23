@@ -4,11 +4,13 @@ examples/**/node_modules
 public
 index.js
 new.js
+new1.js
 loader.js
 t.js
 yarn.lock
 mock
 views
 views2
+views3
 package-lock.json
 v0

@@ -14,4 +14,3 @@
 - [util/dirTree](modules/util_dirTree.md)
 - [util/engine](modules/util_engine.md)
 - [util/file](modules/util_file.md)
-- [util/logger](modules/util_logger.md)
