@@ -1,17 +1,43 @@
-import engine from './util/engine';
-import { LoaderOptions, Loader } from './options';
-import render from './util/ast/render';
+
 /**
  * @module loader
+ *  @example Initialization
+ * ```javascript
+ * const myLoader = loader( { pathRoot: 'views', templates: 'pages', partials: 'partials', partialInput: {}, templateInput: {} } );
+ * ```
+ * @example Render
+     * ```javascript
+     * myLoader.template( 'home', {...homeData} );
+     * ```
+ */
+
+import engine from './util/engine';
+import { LoaderOptions, Loader } from './options';
+
+
+import render from './util/ast/render';
+
+/**
+ * @function loader
  * @description Rendering Context 
- * @constructor
  * @param {LoaderOptions} config config object for loader 
  * @returns Loader for application
  */
-const loader = ( { ...config }: LoaderOptions ): Loader => {
+export const loader = ( { ...config }: LoaderOptions ): Loader => {
     // console.log( config );
     const conf = engine( config );
     // console.log( conf );
+    /**
+     * @function template
+     * @param {string} name Name of Template to Load
+     * @param {object} data data to override fallback data for given template
+     * @returns {string} the template's rendered content
+     * 
+     * @example
+     * ```javascript
+     * myLoader.template( 'home', {...homeData} );
+     * ```
+     */
     function template( name: string, {...data } ) {
         // console.log( data );
         //if no data, load default input for template
@@ -48,4 +74,3 @@ const loader = ( { ...config }: LoaderOptions ): Loader => {
     }   
     return { template }
 }
-export default loader;

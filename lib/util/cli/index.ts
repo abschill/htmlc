@@ -2,7 +2,7 @@
 const path = require( 'path' ); 
 const fs = require( 'fs' );
 const conf = JSON.parse( fs.readFileSync( path.resolve( process.cwd(), 'package.json' ) ).toString( 'utf-8' ) );
-import loader from '../../loader';
+import { loader } from '../../loader';
 import { _files } from '../file';
 const { static_config = {
     "pathRoot": "views",
