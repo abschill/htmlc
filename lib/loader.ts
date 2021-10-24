@@ -53,7 +53,7 @@ export const loader = ( { ...config }: LoaderOptions ): Loader => {
             return out;
         } 
         else {
-            const namedInsertions = {...data, ...config.templateInput[name] };
+            const namedInsertions = {...config.templateInput[name], ...data };
             const { partialInput } = config;
             const globalInsertions = config.templateInput[ '*' ];
             const spreadInsertions = {

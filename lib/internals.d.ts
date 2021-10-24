@@ -26,3 +26,9 @@ export type RenderMap = {
     todo_keys: string[],
     todo_loops: string[]
 }
+export type ResolvedRender = {
+    raw: string,
+    renderMap: RenderMap,
+    insertionMap: object,
+    render: string
+}

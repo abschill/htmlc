@@ -26,7 +26,9 @@
     "typedocOptions": {
         "entryPoints": [
             "./lib/loader.ts",
-            "./lib/options.d.ts"
+            "./lib/options.d.ts",
+            "./lib/util/engine.ts",
+            "./lib/util/ast/words.ts"
         ],
         "out": "docs"
     }

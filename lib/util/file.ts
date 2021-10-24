@@ -1,3 +1,8 @@
+/**
+ * 
+ * @module file internal file handling
+ * 
+ */
 import fs from 'fs';
 import path from 'path';
 import { FileInputMeta } from '../internals';
@@ -35,11 +40,4 @@ export const _files = ( dir: string ) =>fs.readdirSync( dir )
  * @param _path 
  * @returns path of file to load utf8
  */
-export const loadFileUTF = ( _path: string ) => {
-    try{ 
-        return fs.readFileSync( _path ).toString( 'utf-8' );
-    }
-    catch( e ) {
-        throw e;
-    }   
-}
+export const loadFileUTF = ( _path: string ) => fs.readFileSync( _path ).toString( 'utf-8' );

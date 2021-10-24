@@ -1,6 +1,18 @@
+/**
+ * @module render
+ * @description Handles Render Process for Internal Engine
+ */
+
 import RESERVED_WORDS from './words';
 import { FOR_H, FOR_T } from './words';
-import { RenderMap } from '../../internals';
+import { RenderMap, ResolvedRender } from '../../internals';
+
+/**
+ * 
+ * @param {string} rawFile The File to generate Render Map on 
+ * @returns {RenderMap} The todo loops for the map
+ */
+
 const genRenderMap = ( rawFile: string ): RenderMap => {
     let todo_partials: string[];
     let todo_keys: string[];
@@ -39,9 +51,9 @@ const handleXDIterable = ( clone, insert ): string => {
  * @param {string} file utf8 encoded file string to render into 
  * @param {RenderMap} renderMap Matched tags taken from file
  * @param {object} insertionMap map of values to render into template 
- * @returns 
+ * @returns {ResolvedRender} The Object Representing the rendered map with given insertions
  */
-const resolveRender = ( file: string, renderMap: RenderMap, insertionMap: object ) => {
+const resolveRender = ( file: string, renderMap: RenderMap, insertionMap: object ): ResolvedRender => {
     let copy = file;
     let outVal = [];
     let outObj = [];
@@ -128,9 +140,9 @@ const resolveRender = ( file: string, renderMap: RenderMap, insertionMap: object
  * @param {Partial[]} declaredPartials array of partials declared in loader context
  * @param {string} rawFile raw file contents to insert to 
  * @param {object} insertMap map to insert values into templates from
- * @returns {void}
+ * @returns {string} The rendered template
  */
-const template = ( declaredPartials, rawFile: string, insertMap: object ) => {
+const template = ( declaredPartials, rawFile: string, insertMap: object ):string => {
     let rootCopy = rawFile;
     const { todo_partials, todo_keys, todo_loops } = genRenderMap( rootCopy );
     //console.log( insertMap );

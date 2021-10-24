@@ -42,4 +42,4 @@ Loader for application
 
 #### Defined in
 
-[loader.ts:26](https://github.com/abschill/html-chunk-loader/blob/32ac8e5/lib/loader.ts#L26)
+[loader.ts:26](https://github.com/abschill/html-chunk-loader/blob/37399e7/lib/loader.ts#L26)
