@@ -14,7 +14,10 @@
         "removeComments":true
     },
     "include": [
-        "lib/index.ts"
+        "lib/index.ts",
+        "lib/options.d.ts",
+        "lib/internals.d.ts",
+        "lib/util/cli/index.ts"
     ],
     "exclude":[
         "./tests/**/*",

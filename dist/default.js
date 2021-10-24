@@ -19,8 +19,8 @@ module.exports = {
             "content": "about page"
         }
     },
-    "_static_config": {
-        "root": "views",
+    "static_config": {
+        "pathRoot": "views",
         "partials": "partials",
         "templates": "pages",
         "outPath": "public",
