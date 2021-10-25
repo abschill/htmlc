@@ -9,11 +9,10 @@
 // });
 // const { _config } = l1;
 const myLoader = loader( {
-    pathRoot: "views2",
+    pathRoot: "test-pkg/def",
     templates: "templates",
     partialInput: partialData,
-    templateInput: templateData,
-    debug: false
+    templateInput: templateData
 } );
 const home = myLoader.template( 'home' );
 describe( 'Example Home Page Tests', () => {
