@@ -19,14 +19,14 @@ const home = myLoader.template( 'home' );
 describe( 'Example Home Page Tests', () => {
     it( 'Loads page_title *', () => {
         // console.log( home );
-        expect( home ).toMatch( '<title>My Blog</title>' );
+        expect( home ).toMatch( `<title>${partialData['*'].page_title}</title>` );
         
     });
     it( 'Loads Styles 1d array', () => {
         expect( home ).toMatch( '<link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">');
     });
     it( 'Loads page_description', () => {
-        expect( home ).toMatch( '<meta name="description" content="Cool Description"/>' );
+        expect( home ).toMatch( `<meta name="description" content="${partialData['*'].page_description}"/>` );
     } );
 })
 // describe( 'Automatically fills in constructor', () => {

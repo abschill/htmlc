@@ -1,6 +1,6 @@
 /**
  * @module render
- * @description Handles Render Process for Internal Engine
+ * @description Handles Lexical Render Process for Internal Engine
  */
 
 import RESERVED_WORDS from './words';

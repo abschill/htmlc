@@ -50,6 +50,10 @@ describe( 'Load Complex Partial Data', () => {
         const data = myLoader.template( 'home', templateData );
         // console.log( data );
         expect( data ).toMatch( 'HTTP' );
+        expect( data ).toMatch( 'HTML' );
+        expect( data ).toMatch( 'CSS' );
+        expect( data ).toMatch( 'React' );
+        expect( data ).toMatch( 'Prismic' );
     })
     
 })
