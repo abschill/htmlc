@@ -39,23 +39,21 @@ export const loader = ( { ...config }: LoaderOptions ): Loader => {
      * ```
      */
     function template( name: string, {...data } ) {
+        const { templateInput = {}, partialInput = {} } = config;
         // console.log( data );
         //if no data, load default input for template
         if( Object.keys( data ).length === 0 ) {
-            const namedInsertions = config.templateInput[ name ];
-            const { partialInput } = config;
-            const globalInsertions = config.templateInput[ '*' ];
+            const namedInsertions = templateInput[ name ] ?? {};
+            const globalInsertions = templateInput[ '*' ] ?? {};
             const spreadInsertions = {...namedInsertions, ...globalInsertions, partialInput };
-            
             const fileMeta = conf.templates.filter( temp => temp.name === name )[0];
             const { rawFile } = fileMeta;
             const out = render( conf.partials, rawFile, spreadInsertions );
             return out;
         } 
         else {
-            const namedInsertions = {...config.templateInput[name], ...data };
-            const { partialInput } = config;
-            const globalInsertions = config.templateInput[ '*' ];
+            const namedInsertions = { ...templateInput[name], ...data };
+            const globalInsertions = templateInput[ '*' ] ?? {};
             const spreadInsertions = {
                 ...globalInsertions, ...namedInsertions,
                 partialInput: {
@@ -65,7 +63,6 @@ export const loader = ( { ...config }: LoaderOptions ): Loader => {
                     } 
                 } 
             };
-            // console.log( spreadInsertions );
             const fileMeta = conf.templates.filter( temp => temp.name === name )[0];
             const { rawFile } = fileMeta;
             const out = render( conf.partials, rawFile, spreadInsertions );
