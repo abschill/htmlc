@@ -13,7 +13,7 @@
 
 import engine from './util/engine';
 import { LoaderOptions, Loader } from './options';
-
+import { watch } from 'fs';
 
 import render from './util/ast/render';
 
@@ -25,8 +25,24 @@ import render from './util/ast/render';
  */
 export const loader = ( { ...config }: LoaderOptions ): Loader => {
     // console.log( config );
-    const conf = engine( config );
+    let conf = engine( config );
     // console.log( conf );
+    if( config.watch ) {
+        conf.partials.forEach( file => {
+            watch(file.path, (eventType, filename) => {
+                if( eventType === 'change' ) {
+                    conf = engine( config );
+                }
+            });
+        } );
+        conf.templates.forEach( file => {
+            watch(file.path, (eventType, filename) => {
+                if( eventType === 'change' ) {
+                    conf = engine( config );
+                }
+            });
+        } );
+    }
     /**
      * @function template
      * @param {string} name Name of Template to Load

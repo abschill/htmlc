@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[options.d.ts:1](https://github.com/abschill/html-chunk-loader/blob/3b9ee63/lib/options.d.ts#L1)
+[options.d.ts:1](https://github.com/abschill/html-chunk-loader/blob/564fb41/lib/options.d.ts#L1)
 
 ___
 
@@ -37,15 +37,16 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `debug` | `boolean` |
-| `partialInput` | `object` |
+| `partialInput?` | `object` |
 | `partials?` | `string` |
 | `pathRoot?` | `string` |
-| `templateInput` | `object` |
+| `templateInput?` | `object` |
 | `templates?` | `string` |
+| `watch?` | `boolean` |
 
 #### Defined in
 
-[options.d.ts:4](https://github.com/abschill/html-chunk-loader/blob/3b9ee63/lib/options.d.ts#L4)
+[options.d.ts:4](https://github.com/abschill/html-chunk-loader/blob/564fb41/lib/options.d.ts#L4)
 
 ___
 
@@ -65,4 +66,4 @@ ___
 
 #### Defined in
 
-[options.d.ts:12](https://github.com/abschill/html-chunk-loader/blob/3b9ee63/lib/options.d.ts#L12)
+[options.d.ts:13](https://github.com/abschill/html-chunk-loader/blob/564fb41/lib/options.d.ts#L13)
