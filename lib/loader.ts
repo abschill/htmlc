@@ -3,7 +3,7 @@
  * @module loader
  *  @example Initialization
  * ```javascript
- * const myLoader = loader( { pathRoot: 'views', templates: 'pages', partials: 'partials', partialInput: {}, templateInput: {} } );
+ * const myLoader = loader( { pathRoot: 'views', templates: 'pages', partials: 'partials' } );
  * ```
  * @example Render
      * ```javascript
@@ -24,9 +24,7 @@ import render from './util/ast/render';
  * @returns Loader for application
  */
 export const loader = ( { ...config }: LoaderOptions ): Loader => {
-    // console.log( config );
     let conf = engine( config );
-    // console.log( conf );
     if( config.watch ) {
         conf.partials.forEach( file => {
             watch(file.path, (eventType, filename) => {
@@ -54,9 +52,8 @@ export const loader = ( { ...config }: LoaderOptions ): Loader => {
      * myLoader.template( 'home', {...homeData} );
      * ```
      */
-    function template( name: string, {...data } ) {
+    function template( name: string, {...data }: object ): string {
         const { templateInput = {}, partialInput = {} } = config;
-        // console.log( data );
         //if no data, load default input for template
         if( Object.keys( data ).length === 0 ) {
             const namedInsertions = templateInput[ name ] ?? {};
@@ -64,7 +61,7 @@ export const loader = ( { ...config }: LoaderOptions ): Loader => {
             const spreadInsertions = {...namedInsertions, ...globalInsertions, partialInput };
             const fileMeta = conf.templates.filter( temp => temp.name === name )[0];
             const { rawFile } = fileMeta;
-            const out = render( conf.partials, rawFile, spreadInsertions );
+            const out = render( conf.partials, rawFile, spreadInsertions, config.debug );
             return out;
         } 
         else {
@@ -79,9 +76,13 @@ export const loader = ( { ...config }: LoaderOptions ): Loader => {
                     } 
                 } 
             };
+            if( config.debug ) {
+                console.log( 'Spread Insertions: ' );
+                console.log( spreadInsertions );
+            }
             const fileMeta = conf.templates.filter( temp => temp.name === name )[0];
             const { rawFile } = fileMeta;
-            const out = render( conf.partials, rawFile, spreadInsertions );
+            const out = render( conf.partials, rawFile, spreadInsertions, config.debug );
             return out;
         }
     }   

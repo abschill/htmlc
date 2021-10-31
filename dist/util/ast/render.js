@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const words_1 = __importDefault(require("./words"));
 const words_2 = require("./words");
+const { log, warn } = console;
 const genRenderMap = (rawFile) => {
     let todo_partials;
     let todo_keys;
@@ -51,7 +52,7 @@ const resolveRender = (file, renderMap, insertionMap) => {
                                 replaceVal = globalVals[name];
                             }
                             catch (e) {
-                                console.warn(`Failed to find ${name} to insert into ${file}`);
+                                warn(`Failed to find ${name} to insert into ${file}`);
                                 replaceVal = '';
                             }
                         }
@@ -85,9 +86,15 @@ const resolveRender = (file, renderMap, insertionMap) => {
     outObj.forEach((_out) => copy = copy.replace(_out.replacer, objStr));
     return { raw: file, renderMap, insertionMap, render: copy };
 };
-const template = (declaredPartials, rawFile, insertMap) => {
+const template = (declaredPartials, rawFile, insertMap, debug) => {
     let rootCopy = rawFile;
     const { todo_partials, todo_keys, todo_loops } = genRenderMap(rootCopy);
+    if (debug) {
+        log('Render Map:');
+        log(todo_partials);
+        log(todo_keys);
+        log(todo_loops);
+    }
     todo_partials === null || todo_partials === void 0 ? void 0 : todo_partials.forEach(partialSeg => {
         const p_name = partialSeg.split('@render-partial=')[1].split('-->')[0];
         const matchPartials = declaredPartials.filter(n => n.name === p_name);
@@ -98,6 +105,10 @@ const template = (declaredPartials, rawFile, insertMap) => {
                 const named_insertion = insertMap['partialInput'][p_name];
                 const insertion = Object.assign(Object.assign({}, global_insertion), named_insertion);
                 const resolved = resolveRender(partial.rawFile, renderMap, insertion);
+                if (debug) {
+                    log('Resolved Partial:');
+                    log(resolved);
+                }
                 rootCopy = rootCopy.replace(partialSeg, resolved.render);
             });
         }
@@ -105,11 +116,19 @@ const template = (declaredPartials, rawFile, insertMap) => {
     todo_keys === null || todo_keys === void 0 ? void 0 : todo_keys.forEach(_ => {
         const renderMap = genRenderMap(rootCopy);
         const resolved = resolveRender(rootCopy, renderMap, insertMap);
+        if (debug) {
+            log('Resolved Key:');
+            log(resolved);
+        }
         rootCopy = resolved.render;
     });
     todo_loops === null || todo_loops === void 0 ? void 0 : todo_loops.forEach(_ => {
         const renderMap = genRenderMap(rootCopy);
         const resolved = resolveRender(rootCopy, renderMap, insertMap);
+        if (debug) {
+            log('Resolved Loop:');
+            log(resolved);
+        }
         rootCopy = resolved.render;
     });
     return rootCopy;

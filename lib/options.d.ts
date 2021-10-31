@@ -8,7 +8,7 @@ export type LoaderOptions = {
     partialInput?: object,
     templateInput?: object,
     watch?: boolean,
-    debug: boolean
+    debug?: boolean
 }
 export type StaticLoaderOptions = {
     load_options: LoaderOptions,
