@@ -4,7 +4,7 @@
 
 **`example`** Initialization
 ```javascript
-const myLoader = loader( { pathRoot: 'views', templates: 'pages', partials: 'partials', partialInput: {}, templateInput: {} } );
+const myLoader = loader( { pathRoot: 'views', templates: 'pages', partials: 'partials' } );
 ```
 
 **`example`** Render
@@ -42,4 +42,4 @@ Loader for application
 
 #### Defined in
 
-[loader.ts:26](https://github.com/abschill/html-chunk-loader/blob/5efbb4a/lib/loader.ts#L26)
+[loader.ts:23](https://github.com/abschill/html-chunk-loader/blob/210d914/lib/loader.ts#L23)

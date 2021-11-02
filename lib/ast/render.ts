@@ -5,7 +5,7 @@
 
 import RESERVED_WORDS from './words';
 import { FOR_H, FOR_T } from './words';
-import { RenderMap, ResolvedRender } from '../../internals';
+import { RenderMap, ResolvedRender } from '../internals';
 const { log, warn } = console;
 /**
  * 

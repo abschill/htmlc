@@ -17,7 +17,7 @@
         "lib/index.ts",
         "lib/options.d.ts",
         "lib/internals.d.ts",
-        "lib/util/cli/index.ts"
+        "lib/cli/index.ts"
     ],
     "exclude":[
         "./tests/**/*",

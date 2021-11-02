@@ -10,13 +10,10 @@
      * myLoader.template( 'home', {...homeData} );
      * ```
  */
-
-import engine from './util/engine';
+import context from './util/engine';
 import { LoaderOptions, Loader } from './options';
 import { watch } from 'fs';
-
-import render from './util/ast/render';
-
+import render from './ast/render';
 /**
  * @function loader
  * @description Rendering Context 
@@ -24,19 +21,25 @@ import render from './util/ast/render';
  * @returns Loader for application
  */
 export const loader = ( { ...config }: LoaderOptions ): Loader => {
-    let conf = engine( config );
+    let conf = context( config );
     if( config.watch ) {
         conf.partials.forEach( file => {
             watch(file.path, (eventType, filename) => {
                 if( eventType === 'change' ) {
-                    conf = engine( config );
+                    if( config.debug ) {
+                        console.log( `Modified ${filename}, refresh browser to apply changes`)
+                    }
+                    conf = context( config );
                 }
             });
         } );
         conf.templates.forEach( file => {
             watch(file.path, (eventType, filename) => {
                 if( eventType === 'change' ) {
-                    conf = engine( config );
+                    if( config.debug ) {
+                        console.log( `Modified ${filename}, refresh browser to apply changes`)
+                    }
+                    conf = context( config );
                 }
             });
         } );

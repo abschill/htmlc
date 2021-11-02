@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[options.d.ts:1](https://github.com/abschill/html-chunk-loader/blob/5efbb4a/lib/options.d.ts#L1)
+[options.d.ts:1](https://github.com/abschill/html-chunk-loader/blob/210d914/lib/options.d.ts#L1)
 
 ___
 
@@ -46,7 +46,7 @@ ___
 
 #### Defined in
 
-[options.d.ts:4](https://github.com/abschill/html-chunk-loader/blob/5efbb4a/lib/options.d.ts#L4)
+[options.d.ts:4](https://github.com/abschill/html-chunk-loader/blob/210d914/lib/options.d.ts#L4)
 
 ___
 
@@ -66,4 +66,4 @@ ___
 
 #### Defined in
 
-[options.d.ts:13](https://github.com/abschill/html-chunk-loader/blob/5efbb4a/lib/options.d.ts#L13)
+[options.d.ts:13](https://github.com/abschill/html-chunk-loader/blob/210d914/lib/options.d.ts#L13)

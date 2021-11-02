@@ -4,9 +4,9 @@
  * @returns context for engine
  */
 import { LoaderOptions } from '../options';
-import { resolvePartials, resolveTemplates } from './dirTree';
+import { resolvePartials, resolveTemplates } from './file';
 
-const engine = ( config: LoaderOptions ) => {
+const context = ( config: LoaderOptions ) => {
     const partials = resolvePartials( config );
     const templates = resolveTemplates( config );
     return {
@@ -16,4 +16,4 @@ const engine = ( config: LoaderOptions ) => {
     };
 }
 
-export default engine;
+export default context;

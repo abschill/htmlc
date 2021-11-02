@@ -53,7 +53,7 @@ export const replaceKey = ( target: string, key: string, value: string ) => {
  * @returns {Array} matched segments from input
  */
 export const matchKey = ( target: string ) => {
-    const _reggie = /<!--@render=.*-->/gi;
+    const _reggie = /<!--@render=[\w|\d]+-->/gi;
     return target.match( _reggie );
 }
 /**
@@ -75,6 +75,6 @@ export const replacePartial = ( target: string, key: string, value: string ) => 
  * @returns {Array} matched segments from input
  */
 export const matchPartial = ( target: string ) => {
-    const _reggie = /<!--@render-partial=.*-->/gi;
+    const _reggie = /<!--@render-partial=[\w|\d]+-->/gi;
     return target.match( _reggie );
 }
