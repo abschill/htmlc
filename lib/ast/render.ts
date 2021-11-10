@@ -6,6 +6,7 @@
 import RESERVED_WORDS from './words';
 import { FOR_H, FOR_T } from './words';
 import { RenderMap, ResolvedRender } from '../internals';
+import { cleanHTML } from '../util/cleanHTML';
 const { log, warn } = console;
 /**
  * 
@@ -162,7 +163,15 @@ const template = ( declaredPartials, rawFile: string, insertMap: object, debug?:
         }
         rootCopy = resolved.render;
     } );
-    return rootCopy;
 
+    try {
+        return cleanHTML( rootCopy ); 
+    }
+    catch( e ) {
+        console.warn( 'Failed to Clean HTML' );
+        console.warn( e );
+        return rootCopy;
+    }
+    
 }
 export default template;

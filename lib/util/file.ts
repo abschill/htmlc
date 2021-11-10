@@ -8,7 +8,6 @@ import defaults from '../default';
 import fs from 'fs';
 import path from 'path';
 import { FileInputMeta } from '../internals';
-
 /**
  * 
  * @param {string} dir Directory (path) to grab files from  
@@ -17,14 +16,12 @@ import { FileInputMeta } from '../internals';
  export const _files = ( dir: string ) =>fs.readdirSync( dir )
  .filter(x => fs.lstatSync( path.join(dir, x )).isFile() )
  .map( x => path.resolve( dir, x ) );
-
 /**
  * @function resolvePartials
  * @description Resolves List of Partials from Loader Options
  * @param {LoaderConfig} conf Configuration to read paths from  
  * @returns {FileInputMeta} Metadata about Partials
  */
-
  export const resolvePartials = ( conf: LoaderOptions ): FileInputMeta[] => {
      const { partials = defaults.partials,
              pathRoot = defaults.pathRoot } = conf;

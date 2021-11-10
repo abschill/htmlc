@@ -28,5 +28,4 @@ toLoad.forEach( pathToRead => {
         fs.mkdirSync( outPath );
         fs.writeFileSync( path.resolve( outPath, `${name}.html`), myLoader.template( name ));
     }
-    
 } );

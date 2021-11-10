@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const words_1 = __importDefault(require("./words"));
 const words_2 = require("./words");
+const cleanHTML_1 = require("../util/cleanHTML");
 const { log, warn } = console;
 const genRenderMap = (rawFile) => {
     let todo_partials;
@@ -131,7 +132,7 @@ const template = (declaredPartials, rawFile, insertMap, debug) => {
         }
         rootCopy = resolved.render;
     });
-    return rootCopy;
+    return (0, cleanHTML_1.cleanHTML)(rootCopy);
 };
 exports.default = template;
 //# sourceMappingURL=render.js.map
