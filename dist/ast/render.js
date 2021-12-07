@@ -132,7 +132,14 @@ const template = (declaredPartials, rawFile, insertMap, debug) => {
         }
         rootCopy = resolved.render;
     });
-    return (0, cleanHTML_1.cleanHTML)(rootCopy);
+    try {
+        return (0, cleanHTML_1.cleanHTML)(rootCopy);
+    }
+    catch (e) {
+        console.warn('Failed to Clean HTML');
+        console.warn(e);
+        return rootCopy;
+    }
 };
 exports.default = template;
 //# sourceMappingURL=render.js.map

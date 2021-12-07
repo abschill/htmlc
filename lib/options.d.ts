@@ -1,6 +1,7 @@
 export type Loader = {
     template: Function
 }
+
 export type LoaderOptions = {
     pathRoot?: string,
     templates?: string,
@@ -10,6 +11,7 @@ export type LoaderOptions = {
     watch?: boolean,
     debug?: boolean
 }
+
 export type StaticLoaderOptions = {
     load_options: LoaderOptions,
     static_options: {
