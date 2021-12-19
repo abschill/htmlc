@@ -136,8 +136,8 @@ const template = (declaredPartials, rawFile, insertMap, debug) => {
         return (0, cleanHTML_1.cleanHTML)(rootCopy);
     }
     catch (e) {
-        console.warn('Failed to Clean HTML');
-        console.warn(e);
+        warn('Failed to Clean HTML');
+        warn(e);
         return rootCopy;
     }
 };

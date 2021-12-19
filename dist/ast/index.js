@@ -10,7 +10,7 @@ const matchLoop = (target) => {
     const _opener = /<!--@for\(\w+\){/gi;
     const opener = target.match(_opener);
     if ((opener === null || opener === void 0 ? void 0 : opener.length) > 0) {
-        opener.forEach((match, idx) => {
+        opener.forEach(match => {
             const openIdx = target.indexOf(match);
             const chopBottom = target.slice(openIdx, target.length);
             const ret = chopBottom.slice(0, chopBottom.indexOf('}-->') + 4);
@@ -26,30 +26,16 @@ const keyIndex = (target, key) => target.indexOf(`<!--@render=${key}-->`);
 exports.keyIndex = keyIndex;
 const translateKeyName = (templated_key) => templated_key.split('render=')[1].split('-->')[0];
 exports.translateKeyName = translateKeyName;
-const replaceKey = (target, key, value) => {
-    let _copy = target;
-    _copy = _copy.replace(key, value);
-    return _copy;
-};
+const replaceKey = (target, key, value) => target.replace(key, value);
 exports.replaceKey = replaceKey;
-const matchKey = (target) => {
-    const _reggie = /<!--@render=[\w|\d]+-->/gi;
-    return target.match(_reggie);
-};
+const matchKey = (target) => target.match(/<!--@render=[\w|\d]+-->/gi);
 exports.matchKey = matchKey;
 const hasPartial = (target, key) => target.includes(`<!--@render-partial=${key}-->`);
 exports.hasPartial = hasPartial;
 const partialIndex = (target, key) => target.indexOf(`<!--@render-partial=${key}-->`);
 exports.partialIndex = partialIndex;
-const replacePartial = (target, key, value) => {
-    let _copy = target;
-    _copy = _copy.replace(key, value);
-    return _copy;
-};
+const replacePartial = (target, key, value) => target.replace(key, value);
 exports.replacePartial = replacePartial;
-const matchPartial = (target) => {
-    const _reggie = /<!--@render-partial=[\w|\d]+-->/gi;
-    return target.match(_reggie);
-};
+const matchPartial = (target) => target.match(/<!--@render-partial=[\w|\d]+-->/gi);
 exports.matchPartial = matchPartial;
 //# sourceMappingURL=index.js.map

@@ -3,7 +3,7 @@
  * @module file internal file handling
  * 
  */
-import { LoaderOptions } from '../options';
+import { Loader } from '../..';
 import defaults from '../default';
 import fs from 'fs';
 import path from 'path';
@@ -22,7 +22,7 @@ import { FileInputMeta } from '../internals';
  * @param {LoaderConfig} conf Configuration to read paths from  
  * @returns {FileInputMeta} Metadata about Partials
  */
- export const resolvePartials = ( conf: LoaderOptions ): FileInputMeta[] => {
+ export const resolvePartials = ( conf: Loader.Options ): FileInputMeta[] => {
      const { partials = defaults.partials,
              pathRoot = defaults.pathRoot } = conf;
      const _path = path.join( process.cwd(), pathRoot, partials );
@@ -46,7 +46,7 @@ import { FileInputMeta } from '../internals';
   * @param {LoaderConfig} conf Configuration to read paths from  
   * @returns {FileInputMeta} Metadata about Templates
   */
- export const resolveTemplates = ( conf: LoaderOptions ): FileInputMeta[] => {
+ export const resolveTemplates = ( conf: Loader.Options ): FileInputMeta[] => {
      const { templates = defaults.templates,
          pathRoot = defaults.pathRoot } = conf;
      const _path = path.join( process.cwd(), pathRoot, templates );

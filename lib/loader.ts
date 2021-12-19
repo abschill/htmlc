@@ -11,16 +11,16 @@
      * ```
  */
 import context from './util/engine';
-import { LoaderOptions, Loader } from './options';
+import { Loader } from '..';
 import { watch } from 'fs';
 import render from './ast/render';
 /**
  * @function loader
  * @description Rendering Context 
- * @param {LoaderOptions} config config object for loader 
+ * @param {Loader.Options} config config object for loader 
  * @returns Loader for application
  */
-export const loader = ( { ...config }: LoaderOptions ): Loader => {
+export const loader = ( { ...config }: Loader.Options ): Loader.Runtime => {
     let conf = context( config );
     if( config.watch ) {
         conf.partials.forEach( file => {
@@ -55,7 +55,7 @@ export const loader = ( { ...config }: LoaderOptions ): Loader => {
      * myLoader.template( 'home', {...homeData} );
      * ```
      */
-    function template( name: string, {...data }: object ): string {
+    function template( name: string, {...data }: object ): Loader.template {
         const { templateInput = {}, partialInput = {} } = config;
         //if no data, load default input for template
         if( Object.keys( data ).length === 0 ) {

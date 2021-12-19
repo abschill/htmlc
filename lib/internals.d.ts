@@ -1,4 +1,4 @@
-import { LoaderOptions } from './options';
+import { Loader } from '..';
 export type LoaderContext = {
     partials: any
     templates: any
@@ -7,7 +7,7 @@ export type LoaderContext = {
 export type RenderTemplateArgs = {
     _toInsert: Object,
     raw: string,
-    conf: LoaderOptions
+    conf: Loader.Options
 }
 export type Template = {
     path: string,

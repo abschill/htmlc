@@ -15,7 +15,7 @@
     },
     "include": [
         "lib/index.ts",
-        "lib/options.d.ts",
+        "options.d.ts",
         "lib/internals.d.ts",
         "lib/cli/index.ts"
     ],

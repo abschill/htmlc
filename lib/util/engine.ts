@@ -1,19 +1,12 @@
 /**
  * 
- * @param { LoaderOptions } config configuration file for engine
+ * @param { Loader.Options } config configuration file for engine
  * @returns context for engine
  */
-import { LoaderOptions } from '../options';
-import { resolvePartials, resolveTemplates } from './file';
-
-const context = ( config: LoaderOptions ) => {
-    const partials = resolvePartials( config );
-    const templates = resolveTemplates( config );
-    return {
-        config, 
-        partials,
-        templates
-    };
-}
-
-export default context;
+import { Loader } from '../..';
+import { resolvePartials, resolveTemplates } from './file'; 
+export default ( config: Loader.Options ) => ({
+    config, 
+    partials: resolvePartials( config ),
+    templates: resolveTemplates( config )
+});

@@ -7,14 +7,17 @@ import RESERVED_WORDS from './words';
 import { FOR_H, FOR_T } from './words';
 import { RenderMap, ResolvedRender } from '../internals';
 import { cleanHTML } from '../util/cleanHTML';
+import { Loader } from '../..';
 const { log, warn } = console;
+
 /**
  * 
  * @param {string} rawFile The File to generate Render Map on 
  * @returns {RenderMap} The todo loops for the map
  */
 
-const genRenderMap = ( rawFile: string ): RenderMap => {
+const genRenderMap = ( rawFile: string ): 
+RenderMap => {
     let todo_partials: string[];
     let todo_keys: string[];
     let todo_loops: string[]
@@ -35,9 +38,9 @@ const genRenderMap = ( rawFile: string ): RenderMap => {
     } );
     return { todo_partials, todo_keys, todo_loops };
 }
-const handle1DIterable = ( clone, insert ): string => clone.replace( '{_}', insert );
+const handle1DIterable = ( clone, insert ): Loader.template => clone.replace( '{_}', insert );
 
-const handleXDIterable = ( clone, insert ): string => {
+const handleXDIterable = ( clone, insert ): Loader.template => {
     let copy = clone;
     insert.forEach( insertion => {
         copy = copy.replace( `{${insertion[0]}}`, insertion[1] );
@@ -52,7 +55,8 @@ const handleXDIterable = ( clone, insert ): string => {
  * @param {object} insertionMap map of values to render into template 
  * @returns {ResolvedRender} The Object Representing the rendered map with given insertions
  */
-const resolveRender = ( file: string, renderMap: RenderMap, insertionMap: object ): ResolvedRender => {
+const resolveRender = ( file: string, renderMap: RenderMap, insertionMap: object ): 
+ResolvedRender => {
     let copy = file;
     let outVal = [];
     let outObj = [];
@@ -115,7 +119,8 @@ const resolveRender = ( file: string, renderMap: RenderMap, insertionMap: object
  * @param {object} insertMap map to insert values into templates from
  * @returns {string} The rendered template
  */
-const template = ( declaredPartials, rawFile: string, insertMap: object, debug?: boolean ):string => {
+const template = ( declaredPartials, rawFile: string, insertMap: object, debug?: boolean ): 
+Loader.template => {
     let rootCopy = rawFile;
     const { todo_partials, todo_keys, todo_loops } = genRenderMap( rootCopy );
     if( debug ) {
@@ -168,8 +173,8 @@ const template = ( declaredPartials, rawFile: string, insertMap: object, debug?:
         return cleanHTML( rootCopy ); 
     }
     catch( e ) {
-        console.warn( 'Failed to Clean HTML' );
-        console.warn( e );
+        warn( 'Failed to Clean HTML' );
+        warn( e );
         return rootCopy;
     }
     
