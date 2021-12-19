@@ -1,12 +1,12 @@
 {
   "name": "html-chunk-loader",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "lockfileVersion": 2,
   "requires": true,
   "packages": {
     "": {
       "name": "html-chunk-loader",
-      "version": "0.2.5",
+      "version": "0.2.6",
       "hasInstallScript": true,
       "license": "ISC",
       "bin": {

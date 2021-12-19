@@ -10,7 +10,9 @@
  * @param {string} key the key of the iterable to match 
  * @returns {boolean} If the DOM has the render loop
  */
-export const hasLoop = ( target: string, arr: string ) => target.includes( `<!--@for(${arr}){` );
+export const hasLoop = ( target: string, arr: string ): 
+boolean => target.includes( `<!--@for(${arr}){` );
+
 export const loopIndex = ( target: string, arr: string ) => ( { 'head':target.indexOf( `<!--@for(${arr}){` ), 'tail': target.indexOf( '}-->') } );
 /**
  * 
@@ -18,7 +20,7 @@ export const loopIndex = ( target: string, arr: string ) => ( { 'head':target.in
  * @returns {Array} matched segments from input
  */
 export const matchLoop = ( target: string ): 
-string[] => {
+string[] | undefined[] => {
     let out = [];
     const _opener = /<!--@for\(\w+\){/gi;
     const opener = target.match( _opener );
@@ -56,7 +58,7 @@ string => target.replace( key, value );
  * @returns {RegExpMatchArray} matched segments from input
  */
 export const matchKey = ( target: string ): 
-RegExpMatchArray => target.match( /<!--@render=[\w|\d]+-->/gi );
+RegExpMatchArray | null => target.match( /<!--@render=[\w|\d]+-->/gi );
 /**
  * 
  * @param {string} target the DOM to match against
@@ -77,4 +79,4 @@ string => target.replace( key, value );
  * @returns {Array} matched segments from input
  */
 export const matchPartial = ( target: string ): 
-RegExpMatchArray => target.match( /<!--@render-partial=[\w|\d]+-->/gi );
+RegExpMatchArray | null => target.match( /<!--@render-partial=[\w|\d]+-->/gi );

@@ -1,10 +1,10 @@
 {
   "name": "html-chunk-loader",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Node Template Engine using HTML Comments",
   "main": "dist/index.js",
   "bin": "dist/cli/index.js",
-  "types": "index.d.ts",
+  "types": "lib/types.d.ts",
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
@@ -17,7 +17,6 @@
     "testCli": "yarn build && node dist/util/cli"
   },
   "files": [
-    "index.d.ts",
     "lib/**/*",
     "dist/*",
     "dist/**/*"

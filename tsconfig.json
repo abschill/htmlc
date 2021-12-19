@@ -15,7 +15,7 @@
     },
     "include": [
         "lib/index.ts",
-        "options.d.ts",
+        "lib/types.d.ts",
         "lib/internals.d.ts",
         "lib/cli/index.ts"
     ],
@@ -26,7 +26,7 @@
     "typedocOptions": {
         "entryPoints": [
             "./lib/loader.ts",
-            "./lib/options.d.ts"
+            "./lib/types.d.ts"
         ],
         "out": "docs"
     }
