@@ -6,7 +6,7 @@ const enums = {
     OPEN_HTML: '<html',
     OPEN_HTML_BLANK: '<html>',
     CLOSE_HTML: '</html>',
-    HEAD_OPEN: '<head',
+    HEAD_OPEN: '<head>',
     HEAD_OPEN_BLANK: '<head>',
     HEAD_CLOSE: '</head>',
     BODY_OPEN: '<body',
@@ -23,7 +23,7 @@ const cleanHTML = (htmlCopy) => {
             copy = headCache + BODY_OPEN_BLANK + bodyCache + BODY_CLOSE;
         }
         else {
-            copy = BODY_OPEN_BLANK + copy + BODY_CLOSE;
+            copy = HEAD_OPEN + HEAD_CLOSE + BODY_OPEN_BLANK + copy + BODY_CLOSE;
         }
     }
     if (!copy.includes(CLOSE_HTML)) {
