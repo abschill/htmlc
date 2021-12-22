@@ -3,7 +3,7 @@
  * @module file internal file handling
  * 
  */
-import { Loader } from '../..';
+import { Loader } from '../types';
 import defaults from '../default';
 import fs from 'fs';
 import path from 'path';

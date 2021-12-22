@@ -1,4 +1,4 @@
-import { Loader } from '..';
+import { Loader } from './types';
 export type LoaderContext = {
     partials: any
     templates: any

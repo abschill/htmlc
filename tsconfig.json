@@ -4,7 +4,6 @@
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "target": "es6",
-        "allowJs": true,
         "noImplicitAny": false,
         "moduleResolution": "node",
         "resolveJsonModule": true,
@@ -14,10 +13,7 @@
         "removeComments":true
     },
     "include": [
-        "lib/index.ts",
-        "lib/types.d.ts",
-        "lib/internals.d.ts",
-        "lib/cli/index.ts"
+        "lib/**/*"
     ],
     "exclude":[
         "./tests/**/*",

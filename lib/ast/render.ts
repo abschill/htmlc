@@ -7,7 +7,7 @@ import RESERVED_WORDS from './words';
 import { FOR_H, FOR_T } from './words';
 import { RenderMap, ResolvedRender } from '../internals';
 import { cleanHTML } from '../util/cleanHTML';
-import { Loader } from '../..';
+import { Loader } from '../types';
 const { log, warn } = console;
 
 /**

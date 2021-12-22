@@ -11,7 +11,7 @@
      * ```
  */
 import context from './util/engine';
-import { Loader } from '..';
+import { Loader } from './types';
 import { watch } from 'fs';
 import render from './ast/render';
 /**

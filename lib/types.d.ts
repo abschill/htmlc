@@ -1,4 +1,6 @@
 export declare namespace Loader {
+
+    export type init = ( options ?: Options) => Runtime;
     export type Options = {
         pathRoot ?: string;
         templates ?: string;
@@ -29,8 +31,6 @@ export declare namespace Loader {
         }
     }
 }
-
-
 
 
 
