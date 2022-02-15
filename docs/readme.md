@@ -1,4 +1,4 @@
-html-chunk-loader / [Modules](modules.md)
+html-chunk-loader / [Exports](modules.md)
 
 # HTML Chunk Loader
 ## Configurable Template Engine for Node

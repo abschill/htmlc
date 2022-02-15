@@ -3,11 +3,11 @@
  * @module loader
  *  @example Initialization
  * ```javascript
- * const myLoader = loader( { pathRoot: 'views', templates: 'pages', partials: 'partials' } );
+ * const myLoader = Loader( { pathRoot: 'views', templates: 'pages', partials: 'partials' } );
  * ```
  * @example Render
      * ```javascript
-     * myLoader.template( 'home', {...homeData} );
+     * myLoader.template( 'home', { ...homeData } );
      * ```
  */
 import context from './util/options';
@@ -46,9 +46,9 @@ export declare namespace Runtime {
 
 
 /**
- * @function loader
- * @description Rendering Context 
- * @param {Loader.Options} config config object for loader 
+ * @function Loader
+ * @description Rendering Context for templates
+ * @param {Loader.Options} 
  * @returns Loader for application
  */
 export const Loader = ( { ...config }: Runtime.Options ):
@@ -78,13 +78,14 @@ export const Loader = ( { ...config }: Runtime.Options ):
     }
     /**
      * @function template
-     * @param {string} name Name of Template to Load
-     * @param {object} data data to override fallback data for given template
+     * @param {string} 
+     * Name of Template to Load
+     * @param {object} 
+     * data to override fallback data for given template
      * @returns {string} the template's rendered content
-     * 
      * @example
      * ```javascript
-     * myLoader.template( 'home', {...homeData} );
+     * Loader.template( 'home', {...homeData} );
      * ```
      */
     function template( name: string, {...data }: object ): 

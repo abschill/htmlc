@@ -1,0 +1,12 @@
+mupdate.sh
+views/**/*
+views2/**/*
+views3/**/*
+mock/**/*
+test-pkg/**/*
+public/**/*
+.github
+.husky
+node_modules
+tests
+v0/**/*
