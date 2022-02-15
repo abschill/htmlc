@@ -21,7 +21,7 @@ const Loader = require( 'html-chunk-loader' );
 To import the correct module in ES6/Typescript, make sure to import from the path as follows
 
 ```
-import Loader from 'html-chunk-loader/dist/index.js';
+import { Loader } from 'html-chunk-loader/dist/loader.js';
 ```
 
 [API Reference](https://github.com/abschill/html-chunk-loader/tree/master/docs/modules.md)

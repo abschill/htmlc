@@ -7,7 +7,7 @@ import RESERVED_WORDS from './words';
 import { FOR_H, FOR_T } from './words';
 import { RenderMap, ResolvedRender } from '../internals';
 import { cleanHTML } from '../util/cleanHTML';
-import { Loader } from '../types';
+import { Runtime } from '../loader';
 const { log, warn } = console;
 
 /**
@@ -38,9 +38,9 @@ RenderMap => {
     } );
     return { todo_partials, todo_keys, todo_loops };
 }
-const handle1DIterable = ( clone, insert ): Loader.template => clone.replace( '{_}', insert );
+const handle1DIterable = ( clone: string, insert: string ): Runtime.template => clone.replace( '{_}', insert );
 
-const handleXDIterable = ( clone, insert ): Loader.template => {
+const handleXDIterable = ( clone: string, insert: any ): Runtime.template => {
     let copy = clone;
     insert.forEach( insertion => {
         copy = copy.replace( `{${insertion[0]}}`, insertion[1] );
@@ -60,7 +60,7 @@ ResolvedRender => {
     let copy = file;
     let outVal = [];
     let outObj = [];
-    Object.entries( renderMap ).forEach( ( render: [key: string, value: any], itr )  => {
+    Object.entries( renderMap ).forEach( ( render: [ key: string, value: any ] )  => {
         if ( render[1] ) {
             render[1].forEach( r => {
                 switch( render[0] ) {
@@ -120,7 +120,7 @@ ResolvedRender => {
  * @returns {string} The rendered template
  */
 const template = ( declaredPartials, rawFile: string, insertMap: object, debug?: boolean ): 
-Loader.template => {
+Runtime.template => {
     let rootCopy = rawFile;
     const { todo_partials, todo_keys, todo_loops } = genRenderMap( rootCopy );
     if( debug ) {

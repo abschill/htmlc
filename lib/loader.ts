@@ -10,21 +10,53 @@
      * myLoader.template( 'home', {...homeData} );
      * ```
  */
-import context from './util/engine';
-import { Loader } from './types';
+import context from './util/options';
 import { watch } from 'fs';
 import render from './ast/render';
+import { FileInputMeta } from './internals';
+
+export declare namespace Runtime {
+    export type Options = {
+        pathRoot ?: string
+        templates ?: string
+        partials ?: string
+        partialInput ?: object
+        templateInput ?: object
+        watch ?: boolean
+        debug ?: boolean
+    };
+
+    export type Context = {
+        config: Options
+        partials: FileInputMeta[]
+        templates: FileInputMeta[]
+    };
+    
+    export type template = string;
+    
+    export type StaticOptions = {
+        load_options: Options
+        static_options: {
+            cleanup: boolean
+            outPath: string
+            loaderFile: string | string[]
+        }
+    };
+}
+
+
 /**
  * @function loader
  * @description Rendering Context 
  * @param {Loader.Options} config config object for loader 
  * @returns Loader for application
  */
-export const loader = ( { ...config }: Loader.Options ): Loader.Runtime => {
+export const Loader = ( { ...config }: Runtime.Options ):
+{  template: ( name: string, { ...data } ?: object ) => Runtime.template } => {
     let conf = context( config );
     if( config.watch ) {
         conf.partials.forEach( file => {
-            watch(file.path, (eventType, filename) => {
+            watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
                     if( config.debug ) {
                         console.log( `Modified ${filename}, refresh browser to apply changes`)
@@ -34,7 +66,7 @@ export const loader = ( { ...config }: Loader.Options ): Loader.Runtime => {
             });
         } );
         conf.templates.forEach( file => {
-            watch(file.path, (eventType, filename) => {
+            watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
                     if( config.debug ) {
                         console.log( `Modified ${filename}, refresh browser to apply changes`)
@@ -55,7 +87,8 @@ export const loader = ( { ...config }: Loader.Options ): Loader.Runtime => {
      * myLoader.template( 'home', {...homeData} );
      * ```
      */
-    function template( name: string, {...data }: object ): Loader.template {
+    function template( name: string, {...data }: object ): 
+    Runtime.template {
         const { templateInput = {}, partialInput = {} } = config;
         //if no data, load default input for template
         if( Object.keys( data ).length === 0 ) {
@@ -88,6 +121,7 @@ export const loader = ( { ...config }: Loader.Options ): Loader.Runtime => {
             const out = render( conf.partials, rawFile, spreadInsertions, config.debug );
             return out;
         }
-    }   
-    return { template }
+    };  
+
+    return { template };
 }

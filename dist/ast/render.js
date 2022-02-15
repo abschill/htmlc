@@ -40,7 +40,7 @@ const resolveRender = (file, renderMap, insertionMap) => {
     let copy = file;
     let outVal = [];
     let outObj = [];
-    Object.entries(renderMap).forEach((render, itr) => {
+    Object.entries(renderMap).forEach((render) => {
         if (render[1]) {
             render[1].forEach(r => {
                 switch (render[0]) {

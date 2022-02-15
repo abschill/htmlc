@@ -1,5 +1,6 @@
-import loader from '../dist';
-const myLoader = loader( {
+import { Loader } from '../dist/loader.js';
+
+const myLoader = Loader( {
     pathRoot: 'test-pkg/barebones',
     partials: 'partials',
     templates: 'templates',

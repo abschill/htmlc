@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.mapFileData = exports.resolveTemplates = exports.resolvePartials = exports._files = void 0;
-const default_1 = __importDefault(require("../default"));
+const internals_1 = require("../internals");
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const _files = (dir) => fs_1.default.readdirSync(dir)
@@ -12,7 +12,7 @@ const _files = (dir) => fs_1.default.readdirSync(dir)
     .map(x => path_1.default.resolve(dir, x));
 exports._files = _files;
 const resolvePartials = (conf) => {
-    const { partials = default_1.default.partials, pathRoot = default_1.default.pathRoot } = conf;
+    const { partials = internals_1.DEFAULTS.partials, pathRoot = internals_1.DEFAULTS.pathRoot } = conf;
     const _path = path_1.default.join(process.cwd(), pathRoot, partials);
     if (_path) {
         try {
@@ -30,7 +30,7 @@ const resolvePartials = (conf) => {
 };
 exports.resolvePartials = resolvePartials;
 const resolveTemplates = (conf) => {
-    const { templates = default_1.default.templates, pathRoot = default_1.default.pathRoot } = conf;
+    const { templates = internals_1.DEFAULTS.templates, pathRoot = internals_1.DEFAULTS.pathRoot } = conf;
     const _path = path_1.default.join(process.cwd(), pathRoot, templates);
     if (_path) {
         try {

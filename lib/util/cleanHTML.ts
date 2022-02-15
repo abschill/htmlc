@@ -11,7 +11,8 @@ const enums = {
     BODY_CLOSE: '</body>'
 }
     
-export const cleanHTML = ( htmlCopy: string ): string => {
+export const cleanHTML = ( htmlCopy: string ): 
+string => {
     let copy = htmlCopy;
     const { 
         CLOSE_HTML, 

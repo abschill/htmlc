@@ -2,7 +2,7 @@
 const path = require( 'path' ); 
 const fs = require( 'fs' );
 const conf = JSON.parse( fs.readFileSync( path.resolve( process.cwd(), 'package.json' ) ).toString( 'utf-8' ) );
-import { loader } from '../loader';
+import { Loader } from '../loader';
 import { _files } from '../util/file';
 const { static_config = {
     "pathRoot": "views",
@@ -14,7 +14,7 @@ const { static_config = {
 } } = conf;
 const inp = require( path.join( process.cwd(), static_config.loaderFile ) )
 const outPath = path.join( process.cwd(), static_config.outPath );
-const myLoader = loader( { ...static_config, templateInput: inp, partialInput: inp } );
+const myLoader = Loader( { ...static_config, templateInput: inp, partialInput: inp } );
 const toLoad = _files( path.join( process.cwd(), static_config.pathRoot, static_config.templates ) );
 
 toLoad.forEach( pathToRead => {

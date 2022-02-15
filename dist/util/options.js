@@ -6,4 +6,4 @@ exports.default = (config) => ({
     partials: (0, file_1.resolvePartials)(config),
     templates: (0, file_1.resolveTemplates)(config)
 });
-//# sourceMappingURL=engine.js.map
+//# sourceMappingURL=options.js.map
