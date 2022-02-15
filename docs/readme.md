@@ -3,9 +3,30 @@ html-chunk-loader / [Modules](modules.md)
 # HTML Chunk Loader
 ## Configurable Template Engine for Node
 
-html-chunk-loader is a lightweight template engine for Node. It has support for ssr/ssg depending on what your goal is.
+html-chunk-loader is a simple, lightweight template engine for Node. It has support for ssr/ssg depending on what your goal is.
 
-** API Still in Development and not considered stable ** 
+## Basic Concepts
+
+A <strong>Template</strong> includes partials & or data
+A <strong>Partial</strong> includes data
+
+
+Data can be iterated over, or directly inserted by name into a template which is loaded from the initialized loader object, which will be the default export when using commonjs
+
+```
+const Loader = require( 'html-chunk-loader' );
+```
+
+
+## Typescript / ES6
+
+To import the correct module in ES6/Typescript, make sure to import from the path as follows
+
+
+```
+import Loader from 'html-chunk-loader/dist/index.js';
+```
+
 
 [API Reference](https://github.com/abschill/html-chunk-loader/tree/master/docs/modules.md)
 
