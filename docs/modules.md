@@ -7,4 +7,4 @@
 ### Modules
 
 - [loader](modules/loader.md)
-- [options](modules/options.md)
+- [types](modules/types.md)

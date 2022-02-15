@@ -22,7 +22,7 @@ myLoader.template( 'home', {...homeData} );
 
 ### loader
 
-▸ `Const` **loader**(`config`): [`Loader`](options.md#loader)
+▸ `Const` **loader**(`config`): [`Runtime`](types.Loader.md#runtime)
 
 **`function`** loader
 
@@ -32,14 +32,14 @@ myLoader.template( 'home', {...homeData} );
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `config` | [`LoaderOptions`](options.md#loaderoptions) | config object for loader |
+| `config` | [`Options`](types.Loader.md#options) | config object for loader |
 
 #### Returns
 
-[`Loader`](options.md#loader)
+[`Runtime`](types.Loader.md#runtime)
 
 Loader for application
 
 #### Defined in
 
-[loader.ts:23](https://github.com/abschill/html-chunk-loader/blob/210d914/lib/loader.ts#L23)
+[loader.ts:23](https://github.com/abschill/html-chunk-loader/blob/3e38031/lib/loader.ts#L23)
