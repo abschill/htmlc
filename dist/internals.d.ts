@@ -37,7 +37,7 @@ export declare type Dictionary<ReservedWord> = Array<ReservedWord>;
 export declare type ReservedWord = {
     key: string;
     boolean: (target: string, arr: string) => boolean;
-    array: (target: string) => string[];
+    array: (target: string) => RegExpMatchArray;
 };
 export declare const DEFAULTS: {
     _publishDefault: string;

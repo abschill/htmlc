@@ -42,7 +42,7 @@ export type Dictionary<ReservedWord> = Array<ReservedWord>
 export type ReservedWord = {
     key: string;
     boolean: ( target: string, arr: string ) => boolean;
-    array: ( target: string ) => RegExpMatchArray;
+    array: ( target: string ) => RegExpMatchArray | null;
 };
 
 
