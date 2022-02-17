@@ -52,7 +52,7 @@ export declare namespace Runtime {
  * @returns Loader for application
  */
 export const Loader = ( { ...config }: Runtime.Options ):
-{  template: ( name: string, { ...data } ?: object ) => Runtime.template } => {
+{  template: ( name: string, data ?: object ) => Runtime.template } => {
     let conf = context( config );
     if( config.watch ) {
         conf.partials.forEach( file => {
@@ -88,9 +88,10 @@ export const Loader = ( { ...config }: Runtime.Options ):
      * Loader.template( 'home', {...homeData} );
      * ```
      */
-    function template( name: string, {...data }: object ): 
+    function template( name: string, data ?: object ): 
     Runtime.template {
         const { templateInput = {}, partialInput = {} } = config;
+        data = { ...data } ?? {};
         //if no data, load default input for template
         if( Object.keys( data ).length === 0 ) {
             const namedInsertions = templateInput[ name ] ?? {};

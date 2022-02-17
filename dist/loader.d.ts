@@ -25,5 +25,5 @@ export declare namespace Runtime {
     };
 }
 export declare const Loader: ({ ...config }: Runtime.Options) => {
-    template: (name: string, { ...data }?: object) => string;
+    template: (name: string, data?: object) => string;
 };

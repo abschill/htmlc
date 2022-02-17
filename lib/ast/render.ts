@@ -25,7 +25,7 @@ RenderMap => {
     Object.entries( RESERVED_WORDS ).forEach( token => {
         switch( token[0] ) {
             case '@render':
-                todo_keys = token[1]?.array( rawFile )  ?? [];
+                todo_keys = token[1]?.array( rawFile ) ?? [];
                 break;
             case '@for':
                 todo_loops = token[1]?.array( rawFile )  ?? [];
