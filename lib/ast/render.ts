@@ -19,9 +19,9 @@ const { log, warn } = console;
 
 const genRenderMap = ( rawFile: string ): 
 RenderMap => {
-    let todo_partials: string[];
-    let todo_keys: string[];
-    let todo_loops: string[];
+    let todo_partials: string[] = [];
+    let todo_keys: string[] = [];
+    let todo_loops: string[] = [];
     Object.entries( RESERVED_WORDS ).forEach( token => {
         switch( token[0] ) {
             case '@render':
@@ -37,10 +37,9 @@ RenderMap => {
                 break;
         }
     } );
-
-    if( todo_partials.indexOf( null ) !== -1 || todo_partials.indexOf( undefined ) !== -1 ) todo_partials = todo_partials.filter( i => i );
-    if( todo_keys.indexOf( null ) !== -1 || todo_keys.indexOf( undefined ) !== -1 ) todo_keys = todo_keys.filter( i => i );
-    if( todo_loops.indexOf( null ) !== -1 || todo_loops.indexOf( undefined ) !== -1 ) todo_loops = todo_loops.filter( i => i );
+    todo_partials = todo_partials.filter( i => i );
+    todo_keys = todo_keys.filter( i => i );
+    todo_loops = todo_loops.filter( i => i );
 
     return { todo_partials, todo_keys, todo_loops };
 }
