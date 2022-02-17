@@ -88,8 +88,8 @@ const resolveRender = (file, renderMap, insertionMap) => {
             });
         }
     });
-    const valStr = outVal.map(val => val.insertion).join('');
-    const objStr = outObj.map(obj => obj.insertion).join('');
+    const valStr = outVal.map((val) => val.insertion).join('');
+    const objStr = outObj.map((obj) => obj.insertion).join('');
     outVal.forEach((_out) => copy = copy.replace(_out.replacer, valStr));
     outObj.forEach((_out) => copy = copy.replace(_out.replacer, objStr));
     return { raw: file, renderMap, insertionMap, render: copy };

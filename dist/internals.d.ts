@@ -29,6 +29,10 @@ export declare type ResolvedRender = {
     insertionMap: object;
     render: string;
 };
+export declare type StackItem = {
+    replacer: Runtime.template;
+    insertion: Runtime.template;
+};
 export declare const DEFAULTS: {
     _publishDefault: string;
     pathRoot: string;

@@ -34,7 +34,7 @@ export type ResolvedRender = {
     insertionMap: object
     render: string
 };
-
+export type StackItem = { replacer: Runtime.template, insertion: Runtime.template };
 
 export const DEFAULTS = {
     "_publishDefault":"dist",

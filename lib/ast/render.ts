@@ -8,7 +8,7 @@ import { FOR_H, FOR_T } from './words';
 import { RenderMap, ResolvedRender } from '../internals';
 import { cleanHTML } from '../util/cleanHTML';
 import { Runtime } from '../loader';
-import { FileInputMeta } from '../internals';
+import { FileInputMeta, StackItem } from '../internals';
 const { log, warn } = console;
 
 /**
@@ -66,7 +66,7 @@ ResolvedRender => {
     let copy = file;
     let outVal = [];
     let outObj = [];
-    Object.entries( renderMap ).forEach( ( render: [ key: string, value: any ] )  => {
+    Object.entries( renderMap ).forEach( ( render: [ key: string, value: string[] ] )  => {
         if ( render[1] ) {
             render[1].forEach( r => {
                 switch( render[0] ) {
@@ -111,10 +111,10 @@ ResolvedRender => {
             } );
         }
     } );
-    const valStr = outVal.map( val => val.insertion ).join( '' );
-    const objStr = outObj.map( obj => obj.insertion ).join( '' );
-    outVal.forEach( ( _out ) => copy = copy.replace( _out.replacer, valStr ) );
-    outObj.forEach( ( _out ) => copy = copy.replace( _out.replacer, objStr ) );
+    const valStr = outVal.map( ( val: StackItem ) => val.insertion ).join( '' );
+    const objStr = outObj.map( ( obj: StackItem ) => obj.insertion ).join( '' );
+    outVal.forEach( ( _out: StackItem ) => copy = copy.replace( _out.replacer, valStr ) );
+    outObj.forEach( ( _out: StackItem ) => copy = copy.replace( _out.replacer, objStr ) );
     return { raw: file, renderMap, insertionMap, render: copy };
 }
 /**
