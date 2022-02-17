@@ -1,3 +1,4 @@
 import { Runtime } from '../loader';
-declare const template: (declaredPartials: any, rawFile: string, insertMap: object, debug?: boolean) => Runtime.template;
+import { FileInputMeta } from '../internals';
+declare const template: (declaredPartials: FileInputMeta[], rawFile: string, insertMap: object, debug?: boolean) => Runtime.template;
 export default template;

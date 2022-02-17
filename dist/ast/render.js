@@ -12,26 +12,33 @@ const genRenderMap = (rawFile) => {
     let todo_keys;
     let todo_loops;
     Object.entries(words_1.default).forEach(token => {
+        var _a, _b, _c, _d, _e, _f;
         switch (token[0]) {
             case '@render':
-                todo_keys = token[1].array(rawFile);
+                todo_keys = (_b = (_a = token[1]) === null || _a === void 0 ? void 0 : _a.array(rawFile)) !== null && _b !== void 0 ? _b : [];
                 break;
             case '@for':
-                todo_loops = token[1].array(rawFile);
+                todo_loops = (_d = (_c = token[1]) === null || _c === void 0 ? void 0 : _c.array(rawFile)) !== null && _d !== void 0 ? _d : [];
                 break;
             case '@render-partial':
-                todo_partials = token[1].array(rawFile);
+                todo_partials = (_f = (_e = token[1]) === null || _e === void 0 ? void 0 : _e.array(rawFile)) !== null && _f !== void 0 ? _f : [];
                 break;
             default:
                 break;
         }
     });
+    if (todo_partials.indexOf(null) !== -1 || todo_partials.indexOf(undefined) !== -1)
+        todo_partials = todo_partials.filter(i => i);
+    if (todo_keys.indexOf(null) !== -1 || todo_keys.indexOf(undefined) !== -1)
+        todo_keys = todo_keys.filter(i => i);
+    if (todo_loops.indexOf(null) !== -1 || todo_loops.indexOf(undefined) !== -1)
+        todo_loops = todo_loops.filter(i => i);
     return { todo_partials, todo_keys, todo_loops };
 };
 const handle1DIterable = (clone, insert) => clone.replace('{_}', insert);
 const handleXDIterable = (clone, insert) => {
     let copy = clone;
-    insert.forEach(insertion => {
+    insert.forEach((insertion) => {
         copy = copy.replace(`{${insertion[0]}}`, insertion[1]);
     });
     return copy;

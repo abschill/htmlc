@@ -8,6 +8,7 @@ import { FOR_H, FOR_T } from './words';
 import { RenderMap, ResolvedRender } from '../internals';
 import { cleanHTML } from '../util/cleanHTML';
 import { Runtime } from '../loader';
+import { FileInputMeta } from '../internals';
 const { log, warn } = console;
 
 /**
@@ -20,29 +21,34 @@ const genRenderMap = ( rawFile: string ):
 RenderMap => {
     let todo_partials: string[];
     let todo_keys: string[];
-    let todo_loops: string[]
+    let todo_loops: string[];
     Object.entries( RESERVED_WORDS ).forEach( token => {
         switch( token[0] ) {
             case '@render':
-                todo_keys = token[1].array( rawFile );
+                todo_keys = token[1]?.array( rawFile )  ?? [];
                 break;
             case '@for':
-                todo_loops = token[1].array( rawFile );
+                todo_loops = token[1]?.array( rawFile )  ?? [];
                 break;
             case '@render-partial':
-                todo_partials = token[1].array( rawFile );
+                todo_partials = token[1]?.array( rawFile ) ?? [];
                 break;
             default:
                 break;
         }
     } );
+
+    if( todo_partials.indexOf( null ) !== -1 || todo_partials.indexOf( undefined ) !== -1 ) todo_partials = todo_partials.filter( i => i );
+    if( todo_keys.indexOf( null ) !== -1 || todo_keys.indexOf( undefined ) !== -1 ) todo_keys = todo_keys.filter( i => i );
+    if( todo_loops.indexOf( null ) !== -1 || todo_loops.indexOf( undefined ) !== -1 ) todo_loops = todo_loops.filter( i => i );
+
     return { todo_partials, todo_keys, todo_loops };
 }
 const handle1DIterable = ( clone: string, insert: string ): Runtime.template => clone.replace( '{_}', insert );
 
-const handleXDIterable = ( clone: string, insert: any ): Runtime.template => {
+const handleXDIterable = ( clone: string, insert: string[][] ): Runtime.template => {
     let copy = clone;
-    insert.forEach( insertion => {
+    insert.forEach( ( insertion: string[] ) => {
         copy = copy.replace( `{${insertion[0]}}`, insertion[1] );
     } );
     return copy;
@@ -76,7 +82,6 @@ ResolvedRender => {
                                 warn( `Failed to find ${name} to insert into ${file}`);
                                 replaceVal = '';
                             }
-                           
                         }
                         copy = copy.replace( r, replaceVal );
                         break;
@@ -119,7 +124,7 @@ ResolvedRender => {
  * @param {object} insertMap map to insert values into templates from
  * @returns {string} The rendered template
  */
-const template = ( declaredPartials, rawFile: string, insertMap: object, debug?: boolean ): 
+const template = ( declaredPartials: FileInputMeta[], rawFile: string, insertMap: object, debug?: boolean ): 
 Runtime.template => {
     let rootCopy = rawFile;
     const { todo_partials, todo_keys, todo_loops } = genRenderMap( rootCopy );

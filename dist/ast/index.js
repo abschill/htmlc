@@ -9,7 +9,7 @@ const matchLoop = (target) => {
     let out = [];
     const _opener = /<!--@for\(\w+\){/gi;
     const opener = target.match(_opener);
-    if ((opener === null || opener === void 0 ? void 0 : opener.length) > 0) {
+    if (opener && (opener === null || opener === void 0 ? void 0 : opener.length) > 0) {
         opener.forEach(match => {
             const openIdx = target.indexOf(match);
             const chopBottom = target.slice(openIdx, target.length);

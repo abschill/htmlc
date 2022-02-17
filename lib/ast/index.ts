@@ -24,7 +24,7 @@ string[] | undefined[] => {
     let out = [];
     const _opener = /<!--@for\(\w+\){/gi;
     const opener = target.match( _opener );
-    if( opener?.length > 0 ) {
+    if( opener && opener?.length > 0 ) {
         opener.forEach( match => {
             const openIdx = target.indexOf( match );
             const chopBottom = target.slice( openIdx, target.length );
