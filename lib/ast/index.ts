@@ -20,17 +20,17 @@ export const loopIndex = ( target: string, arr: string ) => ( { 'head':target.in
  * @returns {Array} matched segments from input
  */
 export const matchLoop = ( target: string ): 
-string[] | undefined[] => {
+string[] => {
     let out = [];
     const _opener = /<!--@for\(\w+\){/gi;
     const opener = target.match( _opener );
     if( opener && opener?.length > 0 ) {
         opener.forEach( match => {
-            const openIdx = target.indexOf( match );
-            const chopBottom = target.slice( openIdx, target.length );
-            const ret = chopBottom.slice( 0, chopBottom.indexOf( '}-->' ) + 4 );
-            out.push( ret );
-        })
+            const openIdx = target?.indexOf( match );
+            const chopBottom = target?.slice( openIdx, target.length );
+            const ret = chopBottom?.slice( 0, chopBottom.indexOf( '}-->' ) + 4 );
+            if ( ret ) out.push( ret );
+        } );
     }
     return out;
 }

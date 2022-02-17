@@ -3,7 +3,7 @@ export declare const FOR_T: () => string;
 declare const RESERVED_WORDS: {
     '@for': {
         boolean: (target: string, arr: string) => boolean;
-        array: (target: string) => string[] | undefined[];
+        array: (target: string) => string[];
     };
     '@render': {
         boolean: (target: string, key: string) => boolean;

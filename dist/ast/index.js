@@ -11,10 +11,11 @@ const matchLoop = (target) => {
     const opener = target.match(_opener);
     if (opener && (opener === null || opener === void 0 ? void 0 : opener.length) > 0) {
         opener.forEach(match => {
-            const openIdx = target.indexOf(match);
-            const chopBottom = target.slice(openIdx, target.length);
-            const ret = chopBottom.slice(0, chopBottom.indexOf('}-->') + 4);
-            out.push(ret);
+            const openIdx = target === null || target === void 0 ? void 0 : target.indexOf(match);
+            const chopBottom = target === null || target === void 0 ? void 0 : target.slice(openIdx, target.length);
+            const ret = chopBottom === null || chopBottom === void 0 ? void 0 : chopBottom.slice(0, chopBottom.indexOf('}-->') + 4);
+            if (ret)
+                out.push(ret);
         });
     }
     return out;
