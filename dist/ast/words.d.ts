@@ -1,17 +1,5 @@
-export declare const FOR_H: (key: any) => string;
+import { ReservedWord, Dictionary } from '../internals';
+export declare const FOR_H: (key: string) => string;
 export declare const FOR_T: () => string;
-declare const RESERVED_WORDS: {
-    '@for': {
-        boolean: (target: string, arr: string) => boolean;
-        array: (target: string) => string[];
-    };
-    '@render': {
-        boolean: (target: string, key: string) => boolean;
-        array: (target: string) => RegExpMatchArray;
-    };
-    '@render-partial': {
-        boolean: (target: string, key: string) => boolean;
-        array: (target: string) => RegExpMatchArray;
-    };
-};
+declare const RESERVED_WORDS: Dictionary<ReservedWord>;
 export default RESERVED_WORDS;

@@ -3,6 +3,7 @@
  * @description Maps reserved keywords in syntax to callbacks for the rendering engine
  * @returns Dictionary with typed callbacks for AST
  */
+import { ReservedWord, Dictionary } from '../internals';
 import {
     hasLoop,
     matchLoop,
@@ -12,22 +13,25 @@ import {
     matchKey
 } from '.';
 
-export const FOR_H = ( key ) => `<!--@for(${key}){`;
-export const FOR_T = () => `}-->`;
+export const FOR_H = ( key: string ): string => `<!--@for(${key}){`;
+export const FOR_T = (): string => `}-->`;
 
-const RESERVED_WORDS = {
-    '@for': { 
-        'boolean': hasLoop,
-        'array': matchLoop
+const RESERVED_WORDS: Dictionary<ReservedWord> = [
+    { 
+        key: '@for',
+        boolean: hasLoop,
+        array: matchLoop
     },
-    '@render': {
-        'boolean': hasKey,
-        'array': matchKey
+    {
+        key: '@render',
+        boolean: hasKey,
+        array: matchKey
     },
-    '@render-partial': {
-        'boolean': hasPartial,
-        'array': matchPartial
+    {
+        key: '@render-partial',
+        boolean: hasPartial,
+        array: matchPartial
     }
-}
+];
 
 export default RESERVED_WORDS;

@@ -22,16 +22,16 @@ RenderMap => {
     let todo_partials: string[] = [];
     let todo_keys: string[] = [];
     let todo_loops: string[] = [];
-    Object.entries( RESERVED_WORDS ).forEach( token => {
-        switch( token[0] ) {
+    RESERVED_WORDS.forEach( token => {
+        switch( token.key ) {
             case '@render':
-                todo_keys = token[1]?.array( rawFile ) ?? [];
+                todo_keys = token.array( rawFile ) ?? [];
                 break;
             case '@for':
-                todo_loops = token[1]?.array( rawFile )  ?? [];
+                todo_loops = token.array( rawFile )  ?? [];
                 break;
             case '@render-partial':
-                todo_partials = token[1]?.array( rawFile ) ?? [];
+                todo_partials = token.array( rawFile ) ?? [];
                 break;
             default:
                 break;

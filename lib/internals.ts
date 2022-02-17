@@ -36,6 +36,16 @@ export type ResolvedRender = {
 };
 export type StackItem = { replacer: Runtime.template, insertion: Runtime.template | object | Runtime.template[] | object[] };
 
+
+export type Dictionary<ReservedWord> = Array<ReservedWord>
+
+export type ReservedWord = {
+    key: string;
+    boolean: ( target: string, arr: string ) => boolean;
+    array: ( target: string ) => string[];
+};
+
+
 export const DEFAULTS = {
     "_publishDefault":"dist",
     "pathRoot":"views",

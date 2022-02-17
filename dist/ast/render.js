@@ -11,17 +11,17 @@ const genRenderMap = (rawFile) => {
     let todo_partials = [];
     let todo_keys = [];
     let todo_loops = [];
-    Object.entries(words_1.default).forEach(token => {
-        var _a, _b, _c, _d, _e, _f;
-        switch (token[0]) {
+    words_1.default.forEach(token => {
+        var _a, _b, _c;
+        switch (token.key) {
             case '@render':
-                todo_keys = (_b = (_a = token[1]) === null || _a === void 0 ? void 0 : _a.array(rawFile)) !== null && _b !== void 0 ? _b : [];
+                todo_keys = (_a = token.array(rawFile)) !== null && _a !== void 0 ? _a : [];
                 break;
             case '@for':
-                todo_loops = (_d = (_c = token[1]) === null || _c === void 0 ? void 0 : _c.array(rawFile)) !== null && _d !== void 0 ? _d : [];
+                todo_loops = (_b = token.array(rawFile)) !== null && _b !== void 0 ? _b : [];
                 break;
             case '@render-partial':
-                todo_partials = (_f = (_e = token[1]) === null || _e === void 0 ? void 0 : _e.array(rawFile)) !== null && _f !== void 0 ? _f : [];
+                todo_partials = (_c = token.array(rawFile)) !== null && _c !== void 0 ? _c : [];
                 break;
             default:
                 break;
