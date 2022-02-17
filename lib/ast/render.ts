@@ -89,7 +89,7 @@ ResolvedRender => {
                         let toInsert = insertionMap[ loopName ];
                         let elChild = r.replace( FOR_H( loopName ), '' ).replace( FOR_T(), '' )
                                         .trimStart().replace( /\s\s+/gi, '');
-                        toInsert?.forEach( insertion => {
+                        toInsert?.forEach( ( insertion: string | object ) => {
                             if( typeof( insertion ) === 'string' ) {
                                 //1d array
                                 outVal.push( { replacer: r, insertion: handle1DIterable( elChild, insertion ) } );

@@ -8,9 +8,9 @@ const words_2 = require("./words");
 const cleanHTML_1 = require("../util/cleanHTML");
 const { log, warn } = console;
 const genRenderMap = (rawFile) => {
-    let todo_partials;
-    let todo_keys;
-    let todo_loops;
+    let todo_partials = [];
+    let todo_keys = [];
+    let todo_loops = [];
     Object.entries(words_1.default).forEach(token => {
         var _a, _b, _c, _d, _e, _f;
         switch (token[0]) {
@@ -27,12 +27,9 @@ const genRenderMap = (rawFile) => {
                 break;
         }
     });
-    if (todo_partials.indexOf(null) !== -1 || todo_partials.indexOf(undefined) !== -1)
-        todo_partials = todo_partials.filter(i => i);
-    if (todo_keys.indexOf(null) !== -1 || todo_keys.indexOf(undefined) !== -1)
-        todo_keys = todo_keys.filter(i => i);
-    if (todo_loops.indexOf(null) !== -1 || todo_loops.indexOf(undefined) !== -1)
-        todo_loops = todo_loops.filter(i => i);
+    todo_partials = todo_partials.filter(i => i);
+    todo_keys = todo_keys.filter(i => i);
+    todo_loops = todo_loops.filter(i => i);
     return { todo_partials, todo_keys, todo_loops };
 };
 const handle1DIterable = (clone, insert) => clone.replace('{_}', insert);
@@ -71,7 +68,7 @@ const resolveRender = (file, renderMap, insertionMap) => {
                         let toInsert = insertionMap[loopName];
                         let elChild = r.replace((0, words_2.FOR_H)(loopName), '').replace((0, words_2.FOR_T)(), '')
                             .trimStart().replace(/\s\s+/gi, '');
-                        toInsert === null || toInsert === void 0 ? void 0 : toInsert.forEach(insertion => {
+                        toInsert === null || toInsert === void 0 ? void 0 : toInsert.forEach((insertion) => {
                             if (typeof (insertion) === 'string') {
                                 outVal.push({ replacer: r, insertion: handle1DIterable(elChild, insertion) });
                             }

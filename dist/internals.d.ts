@@ -31,7 +31,7 @@ export declare type ResolvedRender = {
 };
 export declare type StackItem = {
     replacer: Runtime.template;
-    insertion: Runtime.template;
+    insertion: Runtime.template | object | Runtime.template[] | object[];
 };
 export declare const DEFAULTS: {
     _publishDefault: string;
