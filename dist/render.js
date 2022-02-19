@@ -65,11 +65,13 @@ const resolveRender = (file, renderMap, insertionMap) => {
                         let elChild = r.replace((0, ast_1.FOR_H)(loopName), '').replace((0, ast_1.FOR_T)(), '')
                             .trimStart().replace(/\s\s+/gi, '');
                         toInsert === null || toInsert === void 0 ? void 0 : toInsert.forEach((insertion) => {
-                            if (typeof (insertion) === 'string') {
-                                outVal.push({ replacer: r, insertion: handle1DIterable(elChild, insertion) });
-                            }
-                            else if (typeof (insertion) === 'object') {
-                                outObj.push({ replacer: r, insertion: handleXDIterable(elChild, Object.entries(insertion)) });
+                            if (insertion) {
+                                if (typeof (insertion) === 'string') {
+                                    outVal.push({ replacer: r, insertion: handle1DIterable(elChild, insertion) });
+                                }
+                                else {
+                                    outObj.push({ replacer: r, insertion: handleXDIterable(elChild, Object.entries(insertion)) });
+                                }
                             }
                         });
                         break;

@@ -86,15 +86,16 @@ Resolved<RenderMap> => {
                         let toInsert = insertionMap[ loopName ];
                         let elChild = r.replace( FOR_H( loopName ), '' ).replace( FOR_T(), '' )
                                         .trimStart().replace( /\s\s+/gi, '');
-                        toInsert?.forEach( ( insertion: unknown ) => {
-                            if( typeof( insertion ) === 'string' ) {
-                                //1d array
-                                outVal.push( { replacer: r, insertion: handle1DIterable( elChild, insertion as string ) } );
-                            }
-                            else if( typeof( insertion ) === 'object' ) {
-                                //key/val]
-                                
-                                outObj.push( { replacer: r, insertion: handleXDIterable( elChild, Object.entries( insertion ) as string[][] ) } );
+                        toInsert?.forEach( ( insertion ?: unknown ) => {
+                            if( insertion ) {
+                                if( typeof( insertion ) === 'string' ) {
+                                    //1d array
+                                    outVal.push( { replacer: r, insertion: handle1DIterable( elChild, insertion as string ) } );
+                                }
+                                else {
+                                    //key/val
+                                    outObj.push( { replacer: r, insertion: handleXDIterable( elChild, Object.entries( insertion ) as string[][] ) } );
+                                }
                             }
                         } );
                         break;
