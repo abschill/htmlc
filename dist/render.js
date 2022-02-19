@@ -70,7 +70,9 @@ const resolveRender = (file, renderMap, insertionMap) => {
                                     outVal.push({ replacer: r, insertion: handle1DIterable(elChild, insertion) });
                                 }
                                 else {
-                                    outObj.push({ replacer: r, insertion: handleXDIterable(elChild, Object.entries(insertion)) });
+                                    const entries = Object.entries(insertion);
+                                    if (entries.length > 0)
+                                        outObj.push({ replacer: r, insertion: handleXDIterable(elChild, Object.entries(insertion)) });
                                 }
                             }
                         });

@@ -94,7 +94,8 @@ Resolved<RenderMap> => {
                                 }
                                 else {
                                     //key/val
-                                    outObj.push( { replacer: r, insertion: handleXDIterable( elChild, Object.entries( insertion ) as string[][] ) } );
+                                    const entries = Object.entries( insertion );
+                                    if( entries.length > 0  ) outObj.push( { replacer: r, insertion: handleXDIterable( elChild, Object.entries( insertion ) as string[][] ) } );
                                 }
                             }
                         } );
