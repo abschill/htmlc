@@ -25,13 +25,13 @@ RenderMap => {
     RESERVED_WORDS.forEach( token => {
         switch( token.key ) {
             case '@render':
-                todo_keys = token.array( rawFile ) ?? [];
+                todo_keys = token.array( rawFile ) as string[] ?? [];
                 break;
             case '@for':
-                todo_loops = token.array( rawFile )  ?? [];
+                todo_loops = token.array( rawFile ) as string[]  ?? [];
                 break;
             case '@render-partial':
-                todo_partials = token.array( rawFile ) ?? [];
+                todo_partials = token.array( rawFile ) as string[] ?? [];
                 break;
             default:
                 break;

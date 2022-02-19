@@ -31,7 +31,7 @@ export declare type Resolved<RenderMap> = {
 };
 export declare type StackItem = {
     replacer: Runtime.template;
-    insertion: Runtime.template | Runtime.template[] | Runtime.template[][] | ArrayLike<string>;
+    insertion: Runtime.template | Runtime.template[] | Runtime.template[][];
 };
 export declare type Dictionary<ReservedWord> = Array<ReservedWord>;
 export declare type ReservedWord = {
