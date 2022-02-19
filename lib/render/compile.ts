@@ -30,10 +30,8 @@ Runtime.template {
     if( Object.keys( data ).length === 0 ) {
         
         if( Object.keys( templateInput ).includes( template_name ) ) {
-            const scopedInsertions: 
-            hclInternal._insertMap = templateInput[ template_name ];
             const insertions: 
-            hclInternal.compiledMap = { ...globalInsertions, ...scopedInsertions, partialInput };
+            hclInternal.compiledMap = { ...globalInsertions, partialInput };
 
             if( conf.config.debug ) stampLog( insertions, 'spread::args|compile.ts#L38', true );
             const fileMeta = conf.templates.filter( temp => temp.name === template_name )[0];
@@ -53,7 +51,7 @@ Runtime.template {
     }
     else {
         const scopedInsertions: 
-        hclInternal._insertMap = { ...templateInput[ template_name ], ...data };
+        hclInternal._insertMap = { ...templateInput, ...data };
         
         const insertions: 
         hclInternal.compiledMap = {

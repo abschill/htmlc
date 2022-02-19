@@ -12,7 +12,7 @@
  */
 import context from './util/options';
 import { watch } from 'fs';
-import { hclFS, LoaderContext, hclInternal } from './render/internals';
+import { hclFS, LoaderContext, hclInternal, _DEFAULTS } from './render/internals';
 import { stampLog } from './util/stamp';
 import compile from './render/compile';
 
@@ -54,7 +54,7 @@ export declare namespace Runtime {
 export const Loader = ( config ?: Runtime.Options ):
 LoaderContext => {
 
-    let conf = context( config ?? {} );
+    let conf = context( config ?? _DEFAULTS );
 
     if( config.watch ) {
         conf.partials.forEach( file => {
@@ -92,5 +92,5 @@ LoaderContext => {
         return compile( name, conf, data );
     };  
 
-    return { template };
+    return { conf, template };
 }

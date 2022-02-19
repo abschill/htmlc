@@ -16,8 +16,7 @@ function compileArgs(template_name, conf, data) {
     const globalInsertions = templateInput;
     if (Object.keys(data).length === 0) {
         if (Object.keys(templateInput).includes(template_name)) {
-            const scopedInsertions = templateInput[template_name];
-            const insertions = Object.assign(Object.assign(Object.assign({}, globalInsertions), scopedInsertions), { partialInput });
+            const insertions = Object.assign(Object.assign({}, globalInsertions), { partialInput });
             if (conf.config.debug)
                 (0, stamp_1.stampLog)(insertions, 'spread::args|compile.ts#L38', true);
             const fileMeta = conf.templates.filter(temp => temp.name === template_name)[0];
@@ -36,7 +35,7 @@ function compileArgs(template_name, conf, data) {
         }
     }
     else {
-        const scopedInsertions = Object.assign(Object.assign({}, templateInput[template_name]), data);
+        const scopedInsertions = Object.assign(Object.assign({}, templateInput), data);
         const insertions = Object.assign(Object.assign(Object.assign({}, globalInsertions), scopedInsertions), { partialInput: Object.assign(Object.assign({}, partialInput), data['partialInput']) });
         if (conf.config.debug)
             (0, stamp_1.stampLog)(insertions, 'insertion::args|compile.ts#L67', true);

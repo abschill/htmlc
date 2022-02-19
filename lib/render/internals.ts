@@ -1,10 +1,14 @@
 import { Runtime } from '../loader';
-
-
 export declare namespace hclInternal {
+    
+    type Entry = Array<string | _insertMap>;
+
+    type Insertion = [
+        string|_insertMap, 
+        Entry
+    ];
 
     type _match = RegExpMatchArray | []
-
 
     type _insertMap = object
 
@@ -21,7 +25,7 @@ export declare namespace hclInternal {
     export type Resolved<RenderMap> = {
         raw: string
         renderMap: RenderMap
-        insertionMap: object
+        insertionMap: _insertMap
         render: string
     }
 
@@ -75,6 +79,7 @@ export type ReservedWord = {
 };
 
 export interface LoaderContext {  
+    conf: Runtime.Context
     template: ( name: string, data ?: object ) => Runtime.template 
 };
 
@@ -92,4 +97,12 @@ export const DEFAULTS = {
         "loaderFile":"loader.js",
         "cleanup":true
     }
+}
+export const _DEFAULTS = {
+    pathRoot: 'views',
+    templates: 'pages',
+    partials: 'partials',
+    templateInput: {},
+    partialInput: {},
+    watch: true
 }

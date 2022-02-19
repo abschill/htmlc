@@ -1,21 +1,14 @@
 { 
-    "*": {
-        "content": "My Blog",
-        "items": [
-            "foo",
-            "bar"
-        ]
-    },
-    "home":{
-        "items2": [
-            { "title": "foo", "desc": "foo" },
-            { "title": "bar", "desc": "bar" }
-        ]
-    },
-    "about":{
-        "content": "About Page",
-        "list":[
-            "foo", "bar"
-        ]
-    }
+    "content": "My Blog",
+    "items": [
+        "foo",
+        "bar"
+    ],
+    "items2": [
+        { "title": "foo", "desc": "foo" },
+        { "title": "bar", "desc": "bar" }
+    ],
+    "list":[
+        "foo", "bar"
+    ]
 }

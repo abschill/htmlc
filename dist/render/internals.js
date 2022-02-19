@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DEFAULTS = void 0;
+exports._DEFAULTS = exports.DEFAULTS = void 0;
 ;
 exports.DEFAULTS = {
     "_publishDefault": "dist",
@@ -16,5 +16,13 @@ exports.DEFAULTS = {
         "loaderFile": "loader.js",
         "cleanup": true
     }
+};
+exports._DEFAULTS = {
+    pathRoot: 'views',
+    templates: 'pages',
+    partials: 'partials',
+    templateInput: {},
+    partialInput: {},
+    watch: true
 };
 //# sourceMappingURL=internals.js.map

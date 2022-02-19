@@ -1,5 +1,10 @@
 import { Runtime } from '../loader';
 export declare namespace hclInternal {
+    type Entry = Array<string | _insertMap>;
+    type Insertion = [
+        string | _insertMap,
+        Entry
+    ];
     type _match = RegExpMatchArray | [];
     type _insertMap = object;
     interface compiledMap extends _insertMap {
@@ -13,7 +18,7 @@ export declare namespace hclInternal {
     type Resolved<RenderMap> = {
         raw: string;
         renderMap: RenderMap;
-        insertionMap: object;
+        insertionMap: _insertMap;
         render: string;
     };
     type StackItem = {
@@ -54,6 +59,7 @@ export declare type ReservedWord = {
     array: (target: string) => hclInternal._match;
 };
 export interface LoaderContext {
+    conf: Runtime.Context;
     template: (name: string, data?: object) => Runtime.template;
 }
 export declare const DEFAULTS: {
@@ -70,4 +76,12 @@ export declare const DEFAULTS: {
         loaderFile: string;
         cleanup: boolean;
     };
+};
+export declare const _DEFAULTS: {
+    pathRoot: string;
+    templates: string;
+    partials: string;
+    templateInput: {};
+    partialInput: {};
+    watch: boolean;
 };
