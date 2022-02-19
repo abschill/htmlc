@@ -56,20 +56,20 @@ LoaderContext => {
 
     let conf = context( config ?? _DEFAULTS );
 
-    if( config.watch ) {
+    if( conf.config.watch ) {
         conf.partials.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-                    if( config.debug ) stampLog( `Modified ${filename}, refresh browser to apply changes`, 'watch::partials|loader.ts#L63' )
-                    conf = context( config );
+                    if( conf.config.debug ) stampLog( `Modified ${filename}, refresh browser to apply changes`, 'watch::partials|loader.ts#L63' )
+                    conf = context( config ?? _DEFAULTS );
                 }
             });
         } );
         conf.templates.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-                    if( config.debug ) stampLog( `Modified ${filename}, refresh browser to apply changes`, 'watch::templates|loader.ts#L71' )
-                    conf = context( config );
+                    if( conf.config.debug ) stampLog( `Modified ${filename}, refresh browser to apply changes`, 'watch::templates|loader.ts#L71' )
+                    conf = context( config ?? _DEFAULTS );
                 }
             });
         } );

@@ -71,7 +71,7 @@ const resolveRender = (file, renderMap, insertionMap, debug) => {
                         const loopName = r.split('(')[1].split(')')[0];
                         let toInsert = insertionMap[loopName];
                         if (debug)
-                            (0, stamp_1.stampLog)(toInsert, 'toInsert::frommap');
+                            (0, stamp_1.stampLog)(toInsert, 'toInsert::frommap|render/index.ts#L104');
                         let elChild = r.replace((0, ast_1.FOR_H)(loopName), '').replace((0, ast_1.FOR_T)(), '')
                             .trimStart().replace(/\s\s+/gi, '');
                         toInsert === null || toInsert === void 0 ? void 0 : toInsert.forEach((insertion) => {
@@ -99,20 +99,20 @@ const resolveRender = (file, renderMap, insertionMap, debug) => {
         else {
             warn(`Warning: key ${itemlist} is missing a value to insert`);
             if (debug)
-                (0, stamp_1.stampLog)(itemlist, 'rendermap::error|render/index.ts#L131');
+                (0, stamp_1.stampLog)(itemlist, 'rendermap::error|render/index.ts#L134');
         }
     });
     if (debug) {
-        (0, stamp_1.stampLog)(outVal, 'outval::prejoin|render/index.ts#L136');
-        (0, stamp_1.stampLog)(outObj, 'outobj::prejoin|render/index.ts#L137');
+        (0, stamp_1.stampLog)(outVal, 'outval::prejoin|render/index.ts#L139');
+        (0, stamp_1.stampLog)(outObj, 'outobj::prejoin|render/index.ts#L140');
     }
     const valStr = outVal.map((val) => val.insertion).join('');
     const objStr = outObj.map((obj) => obj.insertion).join('');
     outVal.forEach((_out) => copy = copy.replace(_out.replacer, valStr));
     outObj.forEach((_out) => copy = copy.replace(_out.replacer, objStr));
     if (debug) {
-        (0, stamp_1.stampLog)(valStr, 'valstr::postjoin|render/index.ts#L146');
-        (0, stamp_1.stampLog)(objStr, 'objstr::postjoin|render/index.ts#L147');
+        (0, stamp_1.stampLog)(valStr, 'valstr::postjoin|render/index.ts#L149');
+        (0, stamp_1.stampLog)(objStr, 'objstr::postjoin|render/index.ts#L150');
     }
     return { raw: file, renderMap, insertionMap, render: copy };
 };
@@ -120,7 +120,7 @@ const render = (declaredPartials, rawFile, insertMap, debug) => {
     let rootCopy = rawFile;
     const renMap = genRenderMap(rootCopy);
     if (debug)
-        (0, stamp_1.stampLog)(renMap, 'render::map|render/index.ts#L166');
+        (0, stamp_1.stampLog)(renMap, 'render::map|render/index.ts#L169');
     if (renMap.todo_partials && renMap.todo_partials.length > 0) {
         renMap.todo_partials.forEach((partialSeg) => {
             const p_name = partialSeg.split('@render-partial=')[1].split('-->')[0];
