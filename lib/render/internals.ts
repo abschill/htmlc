@@ -1,6 +1,6 @@
 import { Runtime } from '../loader';
 export declare namespace hclInternal {
-    
+
     type Entry = Array<string | _insertMap>;
 
     type Insertion = [
@@ -75,7 +75,7 @@ export type Dictionary<ReservedWord> = Array<ReservedWord>
 export type ReservedWord = {
     key: string;
     boolean: ( target: string, arr: string ) => boolean;
-    array: ( target: string ) => hclInternal._match;
+    array: ( target: string ) => RegExpMatchArray | null
 };
 
 export interface LoaderContext {  

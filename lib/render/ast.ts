@@ -4,7 +4,6 @@
  * @description The callbacks for the Reserved Words
  * 
  */
-import { hclInternal } from "./internals";
 export const FOR_H = ( key: string ): string => `<!--@for(${key}){`;
 export const FOR_T = (): string => `}-->`;
 
@@ -23,8 +22,7 @@ export const loopIndex = ( target: string, arr: string ) => ( { 'head':target.in
  * @param {string} target The Partial/Template to match render loop against
  * @returns {Array} matched segments from input
  */
-export const matchLoop = ( target: string ): 
-string|any|never[] => {
+export const matchLoop = ( target: string ) => {
     let out = [];
     const _opener = /<!--@for\(\w+\){/gi;
     const opener = target.match( _opener );
@@ -33,6 +31,7 @@ string|any|never[] => {
             const openIdx = target?.indexOf( match );
             const chopBottom = target?.slice( openIdx, target.length );
             const ret = chopBottom?.slice( 0, chopBottom.indexOf( '}-->' ) + 4 );
+            //@ts-nocheck
             if ( ret ) out.push( ret );
         } );
     }
@@ -62,7 +61,7 @@ string => target.replace( key, value );
  * @returns {RegExpMatchArray} matched segments from input
  */
 export const matchKey = ( target: string ): 
-hclInternal._match => target.match( /<!--@render=[\w|\d]+-->/gi );
+RegExpMatchArray | null => target.match( /<!--@render=[\w|\d]+-->/gi );
 
 /**
  * 
@@ -84,4 +83,4 @@ string => target.replace( key, value );
  * @returns {Array} matched segments from input
  */
 export const matchPartial = ( target: string ): 
-hclInternal._match => target.match( /<!--@render-partial=[\w|\d]+-->/gi );
+RegExpMatchArray | null => target.match( /<!--@render-partial=[\w|\d]+-->/gi );
