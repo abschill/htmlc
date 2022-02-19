@@ -1,6 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.matchPartial = exports.replacePartial = exports.partialIndex = exports.hasPartial = exports.matchKey = exports.replaceKey = exports.translateKeyName = exports.keyIndex = exports.hasKey = exports.matchLoop = exports.loopIndex = exports.hasLoop = void 0;
+exports.matchPartial = exports.replacePartial = exports.partialIndex = exports.hasPartial = exports.matchKey = exports.replaceKey = exports.translateKeyName = exports.keyIndex = exports.hasKey = exports.matchLoop = exports.loopIndex = exports.hasLoop = exports.FOR_T = exports.FOR_H = void 0;
+const FOR_H = (key) => `<!--@for(${key}){`;
+exports.FOR_H = FOR_H;
+const FOR_T = () => `}-->`;
+exports.FOR_T = FOR_T;
 const hasLoop = (target, arr) => target.includes(`<!--@for(${arr}){`);
 exports.hasLoop = hasLoop;
 const loopIndex = (target, arr) => ({ 'head': target.indexOf(`<!--@for(${arr}){`), 'tail': target.indexOf('}-->') });
@@ -39,4 +43,4 @@ const replacePartial = (target, key, value) => target.replace(key, value);
 exports.replacePartial = replacePartial;
 const matchPartial = (target) => target.match(/<!--@render-partial=[\w|\d]+-->/gi);
 exports.matchPartial = matchPartial;
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=ast.js.map

@@ -4,6 +4,10 @@
  * @description The callbacks for the Reserved Words
  * 
  */
+
+export const FOR_H = ( key: string ): string => `<!--@for(${key}){`;
+export const FOR_T = (): string => `}-->`;
+
 /**
  * 
  * @param {string} target the DOM to match against
@@ -59,6 +63,7 @@ string => target.replace( key, value );
  */
 export const matchKey = ( target: string ): 
 RegExpMatchArray | null => target.match( /<!--@render=[\w|\d]+-->/gi );
+
 /**
  * 
  * @param {string} target the DOM to match against

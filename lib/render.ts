@@ -3,12 +3,12 @@
  * @description Handles Lexical Render Process for Internal Engine
  */
 
-import RESERVED_WORDS from './words';
-import { FOR_H, FOR_T } from './words';
-import { RenderMap, ResolvedRender } from '../internals';
-import { cleanHTML } from '../util/cleanHTML';
-import { Runtime } from '../loader';
-import { FileInputMeta, StackItem } from '../internals';
+import RESERVED_WORDS from './abt';
+import { FOR_H, FOR_T } from './ast';
+import { RenderMap, ResolvedRender } from './internals';
+import { cleanHTML } from './util/cleanHTML';
+import { Runtime } from './loader';
+import { FileInputMeta, StackItem } from './internals';
 const { log, warn } = console;
 
 /**
@@ -63,8 +63,8 @@ const handleXDIterable = ( clone: string, insert: string[][] ): Runtime.template
 const resolveRender = ( file: string, renderMap: RenderMap, insertionMap: object ): 
 ResolvedRender => {
     let copy = file;
-    let outVal = [];
-    let outObj = [];
+    let outVal: StackItem[] = [];
+    let outObj: StackItem[] = [];
     Object.entries( renderMap ).forEach( ( render: [ key: string, value: string[] ] )  => {
         if ( render[1] ) {
             render[1].forEach( r => {
@@ -89,7 +89,7 @@ ResolvedRender => {
                         let toInsert = insertionMap[ loopName ];
                         let elChild = r.replace( FOR_H( loopName ), '' ).replace( FOR_T(), '' )
                                         .trimStart().replace( /\s\s+/gi, '');
-                        toInsert?.forEach( ( insertion: string | object ) => {
+                        toInsert?.forEach( ( insertion: unknown ) => {
                             if( typeof( insertion ) === 'string' ) {
                                 //1d array
                                 outVal.push( { replacer: r, insertion: handle1DIterable( elChild, insertion ) } );

@@ -12,7 +12,7 @@
  */
 import context from './util/options';
 import { watch } from 'fs';
-import render from './ast/render';
+import render from './render';
 import { FileInputMeta } from './internals';
 
 export declare namespace Runtime {

@@ -1,3 +1,5 @@
+export declare const FOR_H: (key: string) => string;
+export declare const FOR_T: () => string;
 export declare const hasLoop: (target: string, arr: string) => boolean;
 export declare const loopIndex: (target: string, arr: string) => {
     head: number;

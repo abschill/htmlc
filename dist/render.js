@@ -3,15 +3,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const words_1 = __importDefault(require("./words"));
-const words_2 = require("./words");
-const cleanHTML_1 = require("../util/cleanHTML");
+const abt_1 = __importDefault(require("./abt"));
+const ast_1 = require("./ast");
+const cleanHTML_1 = require("./util/cleanHTML");
 const { log, warn } = console;
 const genRenderMap = (rawFile) => {
     let todo_partials = [];
     let todo_keys = [];
     let todo_loops = [];
-    words_1.default.forEach(token => {
+    abt_1.default.forEach(token => {
         var _a, _b, _c;
         switch (token.key) {
             case '@render':
@@ -66,7 +66,7 @@ const resolveRender = (file, renderMap, insertionMap) => {
                     case 'todo_loops':
                         const loopName = r.split('(')[1].split(')')[0];
                         let toInsert = insertionMap[loopName];
-                        let elChild = r.replace((0, words_2.FOR_H)(loopName), '').replace((0, words_2.FOR_T)(), '')
+                        let elChild = r.replace((0, ast_1.FOR_H)(loopName), '').replace((0, ast_1.FOR_T)(), '')
                             .trimStart().replace(/\s\s+/gi, '');
                         toInsert === null || toInsert === void 0 ? void 0 : toInsert.forEach((insertion) => {
                             if (typeof (insertion) === 'string') {
