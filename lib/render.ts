@@ -19,27 +19,24 @@ const { log, warn } = console;
 
 const genRenderMap = ( rawFile: string ): 
 RenderMap => {
-    let todo_partials: string[] = [];
-    let todo_keys: string[] = [];
-    let todo_loops: string[] = [];
+    let todo_partials = null;
+    let todo_keys = null;
+    let todo_loops = null;
     RESERVED_WORDS.forEach( token => {
         switch( token.key ) {
             case '@render':
-                todo_keys = token.array( rawFile ) as string[] ?? [];
+                todo_keys = token.array( rawFile );
                 break;
             case '@for':
-                todo_loops = token.array( rawFile ) as string[]  ?? [];
+                todo_loops = token.array( rawFile );
                 break;
             case '@render-partial':
-                todo_partials = token.array( rawFile ) as string[] ?? [];
+                todo_partials = token.array( rawFile );
                 break;
             default:
                 break;
         }
     } );
-    todo_partials = todo_partials.filter( i => i );
-    todo_keys = todo_keys.filter( i => i );
-    todo_loops = todo_loops.filter( i => i );
 
     return { todo_partials, todo_keys, todo_loops };
 }
@@ -133,45 +130,53 @@ Runtime.template => {
         log( todo_keys );
         log( todo_loops );
     }
-    todo_partials?.forEach( partialSeg => {
-        //@ts-ignore
-        const p_name = partialSeg.split( '@render-partial=' )[1].split( '-->' )[0];
-        const matchPartials = declaredPartials.filter( n => n.name === p_name );
-        if( matchPartials.length > 0 ) {
-            matchPartials.forEach( partial => {
-                const renderMap = genRenderMap( partial.rawFile );
-                const global_insertion = {...insertMap['partialInput']['*'], ...insertMap['*']};
-                const named_insertion = insertMap['partialInput'][p_name]; 
-                const insertion = {...global_insertion, ...named_insertion };
-                const resolved = resolveRender( partial.rawFile, renderMap, insertion );
-                if( debug ) {
-                    log( 'Resolved Partial:' );
-                    log( resolved );
-                }
-                rootCopy = rootCopy.replace( partialSeg, resolved.render );
-            } );
-            
-        }
-    } );
-    todo_keys?.forEach( _ => {
-        const renderMap = genRenderMap( rootCopy );
-        const resolved = resolveRender( rootCopy, renderMap, insertMap );
-        if( debug ) {
-            log( 'Resolved Key:' );
-            log( resolved );
-        }
-        rootCopy = resolved.render;
 
-    } ); 
-    todo_loops?.forEach( _ => {
-        const renderMap = genRenderMap( rootCopy );
-        const resolved = resolveRender( rootCopy, renderMap, insertMap );
-        if( debug ) {
-            log( 'Resolved Loop:' );
-            log( resolved );
-        }
-        rootCopy = resolved.render;
-    } );
+    if( todo_partials && todo_partials.length > 0 ) {
+        todo_partials.forEach( partialSeg => {
+            //@ts-ignore
+            const p_name = partialSeg.split( '@render-partial=' )[1].split( '-->' )[0];
+            const matchPartials = declaredPartials.filter( n => n.name === p_name );
+            if( matchPartials.length > 0 ) {
+                matchPartials.forEach( partial => {
+                    const renderMap = genRenderMap( partial.rawFile );
+                    const global_insertion = {...insertMap['partialInput']['*'], ...insertMap['*']};
+                    const named_insertion = insertMap['partialInput'][p_name]; 
+                    const insertion = {...global_insertion, ...named_insertion };
+                    const resolved = resolveRender( partial.rawFile, renderMap, insertion );
+                    if( debug ) {
+                        log( 'Resolved Partial:' );
+                        log( resolved );
+                    }
+                    rootCopy = rootCopy.replace( partialSeg, resolved.render );
+                } );
+                
+            }
+        } );
+    } 
+
+    if( todo_keys && todo_keys.length > 0 ) {
+        todo_keys.forEach( _ => {
+            const renderMap = genRenderMap( rootCopy );
+            const resolved = resolveRender( rootCopy, renderMap, insertMap );
+            if( debug ) {
+                log( 'Resolved Key:' );
+                log( resolved );
+            }
+            rootCopy = resolved.render;
+        } ); 
+    }
+
+    if( todo_loops && todo_loops.length > 0 ) {
+        todo_loops.forEach( _ => {
+            const renderMap = genRenderMap( rootCopy );
+            const resolved = resolveRender( rootCopy, renderMap, insertMap );
+            if( debug ) {
+                log( 'Resolved Loop:' );
+                log( resolved );
+            }
+            rootCopy = resolved.render;
+        } );
+    }
 
     try {
         return cleanHTML( rootCopy ); 
