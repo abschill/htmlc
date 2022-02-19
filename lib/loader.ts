@@ -21,8 +21,8 @@ export declare namespace Runtime {
         pathRoot ?: string
         templates ?: string
         partials ?: string
-        partialInput ?: hclInternal._mapSection
-        templateInput ?: hclInternal._mapSection
+        partialInput ?: hclInternal._insertMap
+        templateInput ?: hclInternal._insertMap
         watch ?: boolean
         debug ?: boolean
     };
@@ -60,7 +60,7 @@ LoaderContext => {
         conf.partials.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-                    if( config.debug ) stampLog( `Modified ${filename}, refresh browser to apply changes`, 'watch::partials' )
+                    if( config.debug ) stampLog( `Modified ${filename}, refresh browser to apply changes`, 'watch::partials|loader.ts#L63' )
                     conf = context( config );
                 }
             });
@@ -68,13 +68,13 @@ LoaderContext => {
         conf.templates.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-                    if( config.debug ) stampLog( `Modified ${filename}, refresh browser to apply changes`, 'watch::templates' )
+                    if( config.debug ) stampLog( `Modified ${filename}, refresh browser to apply changes`, 'watch::templates|loader.ts#L71' )
                     conf = context( config );
                 }
             });
         } );
     }
-    
+
     /**
      * @function template
      * @param {string} 

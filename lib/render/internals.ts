@@ -8,12 +8,8 @@ export declare namespace hclInternal {
 
     type _insertMap = object
 
-    interface _mapSection extends _insertMap {
-        '*' ?: _insertMap
-    }
-
     interface compiledMap extends _insertMap { 
-        partialInput: _mapSection
+        partialInput: _insertMap
     }
 
     export interface RenderMap {

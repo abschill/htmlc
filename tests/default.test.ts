@@ -14,7 +14,7 @@ const home = myLoader.template( 'home' );
 describe( 'Example Home Page Tests', () => {
 
     it( 'Loads page_title *', () => {
-        expect( home ).toMatch( `<title>${partialData['*'].page_title}</title>` );
+        expect( home ).toMatch( `<title>${partialData.page_title}</title>` );
     } );
 
     it( 'Loads Styles 1d array', () => {
@@ -22,6 +22,6 @@ describe( 'Example Home Page Tests', () => {
     } );
 
     it( 'Loads page_description', () => {
-        expect( home ).toMatch( `<meta name="description" content="${partialData['*'].page_description}"/>` );
+        expect( home ).toMatch( `<meta name="description" content="${partialData.page_description}"/>` );
     } );
 } );

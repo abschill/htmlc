@@ -4,8 +4,8 @@ export declare namespace Runtime {
         pathRoot?: string;
         templates?: string;
         partials?: string;
-        partialInput?: hclInternal._mapSection;
-        templateInput?: hclInternal._mapSection;
+        partialInput?: hclInternal._insertMap;
+        templateInput?: hclInternal._insertMap;
         watch?: boolean;
         debug?: boolean;
     };

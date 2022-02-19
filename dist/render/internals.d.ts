@@ -2,11 +2,8 @@ import { Runtime } from '../loader';
 export declare namespace hclInternal {
     type _match = RegExpMatchArray | [];
     type _insertMap = object;
-    interface _mapSection extends _insertMap {
-        '*'?: _insertMap;
-    }
     interface compiledMap extends _insertMap {
-        partialInput: _mapSection;
+        partialInput: _insertMap;
     }
     interface RenderMap {
         todo_partials: _match;

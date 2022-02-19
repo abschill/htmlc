@@ -74,23 +74,23 @@ const handleXDIterable = ( clone: string, insert: string[][] ): Runtime.template
 const resolveRender = ( 
     file: string, 
     renderMap: hclInternal.RenderMap, 
-    insertionMap: object,
+    insertionMap: hclInternal._insertMap,
     debug ?: boolean
 ): hclInternal.Resolved<hclInternal.RenderMap> => {
     let copy = file;
     const outVal: hclInternal.StackItem[] = [];
     const outObj: hclInternal.StackItem[] = [];
 
-    if( debug ) stampLog( renderMap, 'rendermap', true );
+    if( debug ) stampLog( renderMap, 'rendermap|render/index.ts#L84' );
 
     Object.entries( renderMap ).forEach( ( render: [ key: string, value: string[] ] )  => {
-        if( debug ) stampLog( render, 'rendermap::entry' );
+        if( debug ) stampLog( render, 'rendermap::entry|render/index.ts#L87' );
         if ( render[1] ) {
             render[1].forEach( r => {
                 switch( render[0] ) {
                     case 'todo_keys':
                         const name = r.split( 'render=' )[1].split( '-->')[0];
-                        const globalVals = insertionMap[ '*' ];
+                        const globalVals = insertionMap;
                         let replaceVal = insertionMap[ name ];
                         if( !replaceVal ) {
                             try {
@@ -132,13 +132,13 @@ const resolveRender = (
         }
         else {
             warn( `Warning: key ${render[0]} is missing a value to insert` );
-            if( debug ) stampLog( render, 'rendermap::error' );
+            if( debug ) stampLog( render, 'rendermap::error|render/index.ts#L135' );
         }
     } );
 
     if( debug ) {
-        stampLog( outVal, 'outval::prejoin' );
-        stampLog( outObj, 'outobj::prejoin' );
+        stampLog( outVal, 'outval::prejoin|render/index.ts#L140' );
+        stampLog( outObj, 'outobj::prejoin|render/index.ts#L141' );
     }
 
     const valStr = outVal.map( ( val: hclInternal.StackItem ) => val.insertion ).join( '' );
@@ -147,8 +147,8 @@ const resolveRender = (
     outObj.forEach( ( _out: hclInternal.StackItem ) => copy = copy.replace( _out.replacer, objStr ) );
 
     if( debug ) {
-        stampLog( valStr, 'valstr::postjoin' );
-        stampLog( objStr, 'objstr::postjoin' );
+        stampLog( valStr, 'valstr::postjoin|render/index.ts#L150' );
+        stampLog( objStr, 'objstr::postjoin|render/index.ts#L151' );
     }
     return { raw: file, renderMap, insertionMap, render: copy };
 }
@@ -163,7 +163,7 @@ const render = ( declaredPartials: hclFS.FileInputMeta[], rawFile: hclFS.fileUTF
 Runtime.template => {
     let rootCopy = rawFile;
     const renMap = genRenderMap( rootCopy );
-    if( debug ) stampLog( renMap, 'render::map' );
+    if( debug ) stampLog( renMap, 'render::map|render/index.ts#L166' );
 
     if( renMap.todo_partials && renMap.todo_partials.length > 0 ) {
         renMap.todo_partials.forEach( ( partialSeg: string ) => {
@@ -174,15 +174,15 @@ Runtime.template => {
                 matchPartials.forEach( partial => {
                     const renderMap = genRenderMap( partial.rawFile );
                     const global_insertion = {
-                        ...insertMap['partialInput']['*'], 
-                        ...insertMap[ '*' ] 
+                        ...insertMap['partialInput'], 
+                        ...insertMap
                     };
-                    const named_insertion = insertMap?.[ 'partialInput' ]?.[p_name] ?? {}; 
-                    const insertion = {...global_insertion, ...named_insertion };
+                    const scoped_insertion = insertMap?.[ 'partialInput' ] ?? {}; 
+                    const insertion = {...global_insertion, ...scoped_insertion };
 
-                    if( debug ) stampLog( insertion, 'inserted::partialdata' );
+                    if( debug ) stampLog( insertion, 'inserted::partialdata|render/index.ts#L183' );
                     const resolved = resolveRender( partial.rawFile, renderMap, insertion, debug );
-                    if( debug ) stampLog( resolved, 'resolved::partial' );
+                    if( debug ) stampLog( resolved, 'resolved::partial|render/index.ts#L185' );
 
                     rootCopy = rootCopy.replace( partialSeg, resolved.render );
                 } );

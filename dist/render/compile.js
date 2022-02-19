@@ -10,40 +10,39 @@ function compileArgs(template_name, conf, data) {
     if (!data)
         data = {};
     if (conf.config.debug) {
-        (0, stamp_1.stampLog)(conf.config, 'fn::conf');
-        (0, stamp_1.stampLog)(data, 'fn::args');
+        (0, stamp_1.stampLog)(conf.config, 'fn::conf|compile.ts#L17');
+        (0, stamp_1.stampLog)(data, 'fn::args|compile.ts#L18');
     }
+    const globalInsertions = templateInput;
     if (Object.keys(data).length === 0) {
-        const globalInsertions = Object.keys(templateInput).includes('*') ? templateInput['*'] : {};
         if (Object.keys(templateInput).includes(template_name)) {
-            const namedInsertions = templateInput[template_name];
-            const spreadInsertions = Object.assign(Object.assign(Object.assign({}, namedInsertions), globalInsertions), { partialInput });
+            const scopedInsertions = templateInput[template_name];
+            const insertions = Object.assign(Object.assign(Object.assign({}, globalInsertions), scopedInsertions), { partialInput });
             if (conf.config.debug)
-                (0, stamp_1.stampLog)(spreadInsertions, 'spread::args', true);
+                (0, stamp_1.stampLog)(insertions, 'spread::args|compile.ts#L38', true);
             const fileMeta = conf.templates.filter(temp => temp.name === template_name)[0];
             const { rawFile } = fileMeta;
-            const out = (0, _1.default)(conf.partials, rawFile, spreadInsertions, conf.config.debug);
+            const out = (0, _1.default)(conf.partials, rawFile, insertions, conf.config.debug);
             return out;
         }
         else {
-            const spreadInsertions = Object.assign(Object.assign({}, globalInsertions), { partialInput });
+            const insertions = Object.assign(Object.assign({}, globalInsertions), { partialInput });
             if (conf.config.debug)
-                (0, stamp_1.stampLog)(spreadInsertions, 'spread::args', true);
+                (0, stamp_1.stampLog)(insertions, 'insertion::args|compile.ts#L47', true);
             const fileMeta = conf.templates.filter(temp => temp.name === template_name)[0];
             const { rawFile } = fileMeta;
-            const out = (0, _1.default)(conf.partials, rawFile, spreadInsertions, conf.config.debug);
+            const out = (0, _1.default)(conf.partials, rawFile, insertions, conf.config.debug);
             return out;
         }
     }
     else {
-        const namedInsertions = Object.assign(Object.assign({}, templateInput[template_name]), data);
-        const globalInsertions = Object.keys(templateInput).includes('*') ? templateInput['*'] : {};
-        const spreadInsertions = Object.assign(Object.assign(Object.assign({}, globalInsertions), namedInsertions), { partialInput: Object.assign(Object.assign({}, partialInput), { "*": Object.assign(Object.assign({}, partialInput['*']), data['partialInput']) }) });
+        const scopedInsertions = Object.assign(Object.assign({}, templateInput[template_name]), data);
+        const insertions = Object.assign(Object.assign(Object.assign({}, globalInsertions), scopedInsertions), { partialInput: Object.assign(Object.assign({}, partialInput), data['partialInput']) });
         if (conf.config.debug)
-            (0, stamp_1.stampLog)(spreadInsertions, 'spread::args', true);
+            (0, stamp_1.stampLog)(insertions, 'insertion::args|compile.ts#L67', true);
         const fileMeta = conf.templates.filter(temp => temp.name === template_name)[0];
         const { rawFile } = fileMeta;
-        const out = (0, _1.default)(conf.partials, rawFile, spreadInsertions, conf.config.debug);
+        const out = (0, _1.default)(conf.partials, rawFile, insertions, conf.config.debug);
         return out;
     }
 }

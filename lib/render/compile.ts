@@ -14,8 +14,8 @@ Runtime.template {
     if( !data ) data = {};
 
     if( conf.config.debug ) {
-        stampLog( conf.config, 'fn::conf' );
-        stampLog( data, 'fn::args' );
+        stampLog( conf.config, 'fn::conf|compile.ts#L17' );
+        stampLog( data, 'fn::args|compile.ts#L18' );
     }
 
     /**
@@ -25,53 +25,49 @@ Runtime.template {
          * 3: 
     */
     //if no data, load default input for template
-
+    const globalInsertions: 
+    hclInternal._insertMap = templateInput;
     if( Object.keys( data ).length === 0 ) {
-        const globalInsertions: 
-        hclInternal._insertMap = Object.keys( templateInput ).includes( '*' ) ? templateInput[ '*' ] : {};
+        
         if( Object.keys( templateInput ).includes( template_name ) ) {
-            const namedInsertions: 
+            const scopedInsertions: 
             hclInternal._insertMap = templateInput[ template_name ];
-            const spreadInsertions: 
-            hclInternal.compiledMap = { ...namedInsertions, ...globalInsertions, partialInput };
+            const insertions: 
+            hclInternal.compiledMap = { ...globalInsertions, ...scopedInsertions, partialInput };
 
-            if( conf.config.debug ) stampLog( spreadInsertions, 'spread::args', true );
+            if( conf.config.debug ) stampLog( insertions, 'spread::args|compile.ts#L38', true );
             const fileMeta = conf.templates.filter( temp => temp.name === template_name )[0];
             const { rawFile } = fileMeta;
-            const out = render( conf.partials, rawFile, spreadInsertions, conf.config.debug );
+            const out = render( conf.partials, rawFile, insertions, conf.config.debug );
             return out;
         }
         else {
-            const spreadInsertions: 
+            const insertions: 
             hclInternal.compiledMap = { ...globalInsertions, partialInput };
-            if( conf.config.debug ) stampLog( spreadInsertions, 'spread::args', true );
+            if( conf.config.debug ) stampLog( insertions, 'insertion::args|compile.ts#L47', true );
             const fileMeta = conf.templates.filter( temp => temp.name === template_name )[0];
             const { rawFile } = fileMeta;
-            const out = render( conf.partials, rawFile, spreadInsertions, conf.config.debug );
+            const out = render( conf.partials, rawFile, insertions, conf.config.debug );
             return out;
         }
     }
     else {
-        const namedInsertions: 
-            hclInternal._insertMap = { ...templateInput[ template_name ], ...data };
-            const globalInsertions: 
-            hclInternal._insertMap = Object.keys( templateInput ).includes( '*' ) ? templateInput[ '*' ] : {};
+        const scopedInsertions: 
+        hclInternal._insertMap = { ...templateInput[ template_name ], ...data };
+        
+        const insertions: 
+        hclInternal.compiledMap = {
+            ...globalInsertions, ...scopedInsertions,
+            partialInput: {
+                ...partialInput, 
+                ...data[ 'partialInput' ]
+            } 
+        };
 
-            const spreadInsertions: 
-            hclInternal.compiledMap = {
-                ...globalInsertions, ...namedInsertions,
-                partialInput: {
-                    ...partialInput, 
-                    '*': {
-                        ...partialInput[ '*' ], ...data[ 'partialInput' ]  
-                    } 
-                } 
-            };
-
-            if( conf.config.debug ) stampLog( spreadInsertions, 'spread::args', true );
-            const fileMeta = conf.templates.filter( temp => temp.name === template_name )[0];
-            const { rawFile } = fileMeta;
-            const out = render( conf.partials, rawFile, spreadInsertions, conf.config.debug );
-            return out;
+        if( conf.config.debug ) stampLog( insertions, 'insertion::args|compile.ts#L67', true );
+        const fileMeta = conf.templates.filter( temp => temp.name === template_name )[0];
+        const { rawFile } = fileMeta;
+        const out = render( conf.partials, rawFile, insertions, conf.config.debug );
+        return out;
     }
 }

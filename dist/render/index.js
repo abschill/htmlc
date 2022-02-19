@@ -45,16 +45,16 @@ const resolveRender = (file, renderMap, insertionMap, debug) => {
     const outVal = [];
     const outObj = [];
     if (debug)
-        (0, stamp_1.stampLog)(renderMap, 'rendermap', true);
+        (0, stamp_1.stampLog)(renderMap, 'rendermap|render/index.ts#L84');
     Object.entries(renderMap).forEach((render) => {
         if (debug)
-            (0, stamp_1.stampLog)(render, 'rendermap::entry');
+            (0, stamp_1.stampLog)(render, 'rendermap::entry|render/index.ts#L87');
         if (render[1]) {
             render[1].forEach(r => {
                 switch (render[0]) {
                     case 'todo_keys':
                         const name = r.split('render=')[1].split('-->')[0];
-                        const globalVals = insertionMap['*'];
+                        const globalVals = insertionMap;
                         let replaceVal = insertionMap[name];
                         if (!replaceVal) {
                             try {
@@ -95,20 +95,20 @@ const resolveRender = (file, renderMap, insertionMap, debug) => {
         else {
             warn(`Warning: key ${render[0]} is missing a value to insert`);
             if (debug)
-                (0, stamp_1.stampLog)(render, 'rendermap::error');
+                (0, stamp_1.stampLog)(render, 'rendermap::error|render/index.ts#L135');
         }
     });
     if (debug) {
-        (0, stamp_1.stampLog)(outVal, 'outval::prejoin');
-        (0, stamp_1.stampLog)(outObj, 'outobj::prejoin');
+        (0, stamp_1.stampLog)(outVal, 'outval::prejoin|render/index.ts#L140');
+        (0, stamp_1.stampLog)(outObj, 'outobj::prejoin|render/index.ts#L141');
     }
     const valStr = outVal.map((val) => val.insertion).join('');
     const objStr = outObj.map((obj) => obj.insertion).join('');
     outVal.forEach((_out) => copy = copy.replace(_out.replacer, valStr));
     outObj.forEach((_out) => copy = copy.replace(_out.replacer, objStr));
     if (debug) {
-        (0, stamp_1.stampLog)(valStr, 'valstr::postjoin');
-        (0, stamp_1.stampLog)(objStr, 'objstr::postjoin');
+        (0, stamp_1.stampLog)(valStr, 'valstr::postjoin|render/index.ts#L150');
+        (0, stamp_1.stampLog)(objStr, 'objstr::postjoin|render/index.ts#L151');
     }
     return { raw: file, renderMap, insertionMap, render: copy };
 };
@@ -116,7 +116,7 @@ const render = (declaredPartials, rawFile, insertMap, debug) => {
     let rootCopy = rawFile;
     const renMap = genRenderMap(rootCopy);
     if (debug)
-        (0, stamp_1.stampLog)(renMap, 'render::map');
+        (0, stamp_1.stampLog)(renMap, 'render::map|render/index.ts#L166');
     if (renMap.todo_partials && renMap.todo_partials.length > 0) {
         renMap.todo_partials.forEach((partialSeg) => {
             const p_name = partialSeg.split('@render-partial=')[1].split('-->')[0];
@@ -125,14 +125,16 @@ const render = (declaredPartials, rawFile, insertMap, debug) => {
             const matchPartials = declaredPartials.filter(n => n.name === p_name);
             if (matchPartials.length > 0) {
                 matchPartials.forEach(partial => {
-                    var _a, _b, _c;
+                    var _a;
                     const renderMap = genRenderMap(partial.rawFile);
-                    const global_insertion = Object.assign(Object.assign({}, (_a = insertMap === null || insertMap === void 0 ? void 0 : insertMap['partialInput']) === null || _a === void 0 ? void 0 : _a['*']), insertMap['*']);
-                    const named_insertion = (_c = (_b = insertMap === null || insertMap === void 0 ? void 0 : insertMap['partialInput']) === null || _b === void 0 ? void 0 : _b[p_name]) !== null && _c !== void 0 ? _c : {};
-                    const insertion = Object.assign(Object.assign({}, global_insertion), named_insertion);
+                    const global_insertion = Object.assign(Object.assign({}, insertMap['partialInput']), insertMap);
+                    const scoped_insertion = (_a = insertMap === null || insertMap === void 0 ? void 0 : insertMap['partialInput']) !== null && _a !== void 0 ? _a : {};
+                    const insertion = Object.assign(Object.assign({}, global_insertion), scoped_insertion);
+                    if (debug)
+                        (0, stamp_1.stampLog)(insertion, 'inserted::partialdata|render/index.ts#L183');
                     const resolved = resolveRender(partial.rawFile, renderMap, insertion, debug);
                     if (debug)
-                        (0, stamp_1.stampLog)(resolved, 'resolved::partial');
+                        (0, stamp_1.stampLog)(resolved, 'resolved::partial|render/index.ts#L185');
                     rootCopy = rootCopy.replace(partialSeg, resolved.render);
                 });
             }

@@ -4,8 +4,7 @@ const myLoader = Loader( {
     pathRoot: 'test-pkg/barebones',
     partials: 'partials',
     templates: 'templates',
-    templateInput: {},
-    partialInput: {}
+
 });
 describe( 'Load Static Partial Data', () => {
     const home = myLoader.template( 'home' );
