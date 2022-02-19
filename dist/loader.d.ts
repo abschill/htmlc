@@ -1,18 +1,18 @@
-import { FileInputMeta } from './internals';
+import { hclFS, LoaderContext, hclInternal } from './render/internals';
 export declare namespace Runtime {
     type Options = {
         pathRoot?: string;
         templates?: string;
         partials?: string;
-        partialInput?: object;
-        templateInput?: object;
+        partialInput?: hclInternal._mapSection;
+        templateInput?: hclInternal._mapSection;
         watch?: boolean;
         debug?: boolean;
     };
     type Context = {
         config: Options;
-        partials: FileInputMeta[];
-        templates: FileInputMeta[];
+        partials: hclFS.FileInputMeta[];
+        templates: hclFS.FileInputMeta[];
     };
     type template = string;
     type StaticOptions = {
@@ -24,6 +24,4 @@ export declare namespace Runtime {
         };
     };
 }
-export declare const Loader: ({ ...config }: Runtime.Options) => {
-    template: (name: string, data?: object) => string;
-};
+export declare const Loader: (config?: Runtime.Options) => LoaderContext;

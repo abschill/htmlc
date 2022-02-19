@@ -4,10 +4,10 @@
  * 
  */
 import { Runtime } from '../loader';
-import { DEFAULTS } from '../internals';
+import { DEFAULTS } from '../render/internals';
 import fs from 'fs';
 import path from 'path';
-import { FileInputMeta } from '../internals';
+import { hclFS } from '../render/internals';
 
 /**
  * 
@@ -19,7 +19,7 @@ import { FileInputMeta } from '../internals';
  .map( x => path.resolve( dir, x ) );
 
 export const resolvePartials = ( conf: Runtime.Options ): 
-FileInputMeta[] => {
+hclFS.FileInputMeta[] => {
      const { partials = DEFAULTS.partials,
              pathRoot = DEFAULTS.pathRoot } = conf;
      const _path = path.join( process.cwd(), pathRoot, partials );
@@ -44,7 +44,7 @@ FileInputMeta[] => {
  * @returns {FileInputMeta[]} Metadata about Templates
  */
 export const resolveTemplates = ( conf: Runtime.Options ): 
-FileInputMeta[] => {
+hclFS.FileInputMeta[] => {
     const { templates = DEFAULTS.templates,
         pathRoot = DEFAULTS.pathRoot } = conf;
     const _path = path.join( process.cwd(), pathRoot, templates );
@@ -68,7 +68,7 @@ FileInputMeta[] => {
  * @returns Name of the html file in the given target path, x-platform
  */
 export const mapFileData = ( filePath: string ): 
-FileInputMeta => {
+hclFS.FileInputMeta => {
     const n = filePath.split( '.html' );
     if( process.platform === 'win32' ) {
         const na = n[0].split( '\\' );
@@ -89,4 +89,4 @@ FileInputMeta => {
  * @returns path of file to load utf8
  */
 const loadFileUTF = ( _path: string ): 
-string => fs.readFileSync( _path ).toString( 'utf-8' );
+hclFS.fileUTF8 => fs.readFileSync( _path ).toString( 'utf-8' );

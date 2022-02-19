@@ -1,6 +1,9 @@
 import { Dictionary, ReservedWord } from "./internals";
 import { hasLoop, matchLoop, hasKey, matchKey, hasPartial, matchPartial } from './ast';
 
+export const KEY_MAP = [ '@for', '@render', '@render-partial' ];
+
+
 const RESERVED_WORDS: Dictionary<ReservedWord> = [
     { 
         key: '@for',

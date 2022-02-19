@@ -10,3 +10,4 @@ public/**/*
 node_modules
 tests
 v0/**/*
+index.ts

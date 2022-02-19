@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.mapFileData = exports.resolveTemplates = exports.resolvePartials = exports._files = void 0;
-const internals_1 = require("../internals");
+const internals_1 = require("../render/internals");
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const _files = (dir) => fs_1.default.readdirSync(dir)
