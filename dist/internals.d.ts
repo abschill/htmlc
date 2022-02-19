@@ -18,11 +18,11 @@ export declare type FileInputMeta = {
     name: string;
     rawFile: string;
 };
-export declare type RenderMap = {
+export interface RenderMap {
     todo_partials: string[];
     todo_keys: string[];
     todo_loops: string[];
-};
+}
 export declare type Resolved<RenderMap> = {
     raw: string;
     renderMap: RenderMap;
