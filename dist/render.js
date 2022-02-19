@@ -42,8 +42,8 @@ const handleXDIterable = (clone, insert) => {
 };
 const resolveRender = (file, renderMap, insertionMap) => {
     let copy = file;
-    let outVal = [];
-    let outObj = [];
+    const outVal = [];
+    const outObj = [];
     Object.entries(renderMap).forEach((render) => {
         if (render[1]) {
             render[1].forEach(r => {

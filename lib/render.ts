@@ -63,8 +63,8 @@ const handleXDIterable = ( clone: string, insert: string[][] ): Runtime.template
 const resolveRender = ( file: string, renderMap: RenderMap, insertionMap: object ): 
 ResolvedRender => {
     let copy = file;
-    let outVal: StackItem[] = [];
-    let outObj: StackItem[] = [];
+    const outVal: StackItem[] = [];
+    const outObj: StackItem[] = [];
     Object.entries( renderMap ).forEach( ( render: [ key: string, value: string[] ] )  => {
         if ( render[1] ) {
             render[1].forEach( r => {
@@ -92,13 +92,12 @@ ResolvedRender => {
                         toInsert?.forEach( ( insertion: unknown ) => {
                             if( typeof( insertion ) === 'string' ) {
                                 //1d array
-                                outVal.push( { replacer: r, insertion: handle1DIterable( elChild, insertion ) } );
+                                outVal.push( { replacer: r, insertion: handle1DIterable( elChild, insertion as string ) } );
                             }
                             else if( typeof( insertion ) === 'object' ) {
                                 //key/val
-                                outObj.push( { replacer: r, insertion: handleXDIterable( elChild, Object.entries( insertion ) ) } );
+                                outObj.push( { replacer: r, insertion: handleXDIterable( elChild, Object.entries( insertion ) as string[][] ) } );
                             }
-                            
                         } );
                         break;
                     case 'todo_partials':
