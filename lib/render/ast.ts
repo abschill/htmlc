@@ -4,7 +4,7 @@
  * @description The callbacks for the Reserved Words
  * 
  */
-
+import { hclInternal } from "./internals";
 export const FOR_H = ( key: string ): string => `<!--@for(${key}){`;
 export const FOR_T = (): string => `}-->`;
 
@@ -24,7 +24,7 @@ export const loopIndex = ( target: string, arr: string ) => ( { 'head':target.in
  * @returns {Array} matched segments from input
  */
 export const matchLoop = ( target: string ): 
-string[] => {
+string|any|never[] => {
     let out = [];
     const _opener = /<!--@for\(\w+\){/gi;
     const opener = target.match( _opener );
@@ -62,7 +62,7 @@ string => target.replace( key, value );
  * @returns {RegExpMatchArray} matched segments from input
  */
 export const matchKey = ( target: string ): 
-RegExpMatchArray | null => target.match( /<!--@render=[\w|\d]+-->/gi );
+hclInternal._match => target.match( /<!--@render=[\w|\d]+-->/gi );
 
 /**
  * 
@@ -84,4 +84,4 @@ string => target.replace( key, value );
  * @returns {Array} matched segments from input
  */
 export const matchPartial = ( target: string ): 
-RegExpMatchArray | null => target.match( /<!--@render-partial=[\w|\d]+-->/gi );
+hclInternal._match => target.match( /<!--@render-partial=[\w|\d]+-->/gi );
