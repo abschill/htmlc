@@ -23,7 +23,7 @@ export declare type RenderMap = {
     todo_keys: string[];
     todo_loops: string[];
 };
-export declare type ResolvedRender = {
+export declare type Resolved<RenderMap> = {
     raw: string;
     renderMap: RenderMap;
     insertionMap: object;
@@ -31,7 +31,7 @@ export declare type ResolvedRender = {
 };
 export declare type StackItem = {
     replacer: Runtime.template;
-    insertion: Runtime.template | object | Runtime.template[] | object[];
+    insertion: Runtime.template | Runtime.template[] | Runtime.template[][] | ArrayLike<string>;
 };
 export declare type Dictionary<ReservedWord> = Array<ReservedWord>;
 export declare type ReservedWord = {

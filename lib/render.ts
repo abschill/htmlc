@@ -5,7 +5,7 @@
 
 import RESERVED_WORDS from './abt';
 import { FOR_H, FOR_T } from './ast';
-import { RenderMap, ResolvedRender } from './internals';
+import { RenderMap, Resolved } from './internals';
 import { cleanHTML } from './util/cleanHTML';
 import { Runtime } from './loader';
 import { FileInputMeta, StackItem } from './internals';
@@ -61,7 +61,7 @@ const handleXDIterable = ( clone: string, insert: string[][] ): Runtime.template
  * @returns {ResolvedRender} The Object Representing the rendered map with given insertions
  */
 const resolveRender = ( file: string, renderMap: RenderMap, insertionMap: object ): 
-ResolvedRender => {
+Resolved<RenderMap> => {
     let copy = file;
     const outVal: StackItem[] = [];
     const outObj: StackItem[] = [];
@@ -95,7 +95,8 @@ ResolvedRender => {
                                 outVal.push( { replacer: r, insertion: handle1DIterable( elChild, insertion as string ) } );
                             }
                             else if( typeof( insertion ) === 'object' ) {
-                                //key/val
+                                //key/val]
+                                
                                 outObj.push( { replacer: r, insertion: handleXDIterable( elChild, Object.entries( insertion ) as string[][] ) } );
                             }
                         } );

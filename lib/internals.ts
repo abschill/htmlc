@@ -22,20 +22,23 @@ export type FileInputMeta = {
     rawFile: string
 };
 
-export type RenderMap = {
+export interface RenderMap {
     todo_partials: string[]
     todo_keys: string[]
     todo_loops: string[]
 };
 
-export type ResolvedRender = {
+export type Resolved<RenderMap> = {
     raw: string
     renderMap: RenderMap
     insertionMap: object
     render: string
 };
-export type StackItem = { replacer: Runtime.template, insertion: Runtime.template | object | Runtime.template[] | object[] };
 
+export type StackItem = { 
+    replacer: Runtime.template
+    insertion: Runtime.template | Runtime.template[] | Runtime.template[][] | ArrayLike<string>
+};
 
 export type Dictionary<ReservedWord> = Array<ReservedWord>
 
