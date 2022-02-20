@@ -10,14 +10,14 @@ const enums = {
     BODY_OPEN_BLANK: '<body>',
     BODY_CLOSE: '</body>'
 }
-    
-export const cleanHTML = ( htmlCopy: string ): 
+
+export const cleanHTML = ( htmlCopy: string ):
 string => {
     let copy = htmlCopy;
-    const { 
-        CLOSE_HTML, 
-        OPEN_HTML, 
-        OPEN_HTML_BLANK, 
+    const {
+        CLOSE_HTML,
+        OPEN_HTML,
+        OPEN_HTML_BLANK,
         DOCTYPE,
         HEAD_OPEN,
         HEAD_CLOSE,
@@ -25,7 +25,7 @@ string => {
         BODY_OPEN_BLANK,
         BODY_CLOSE
      } = enums;
-    
+
 
     if( !copy.includes( BODY_OPEN ) ) {
         if( copy.includes( HEAD_OPEN ) ) {

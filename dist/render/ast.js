@@ -10,7 +10,7 @@ exports.hasLoop = hasLoop;
 const loopIndex = (target, arr) => ({ 'head': target.indexOf(`<!--@for(${arr}){`), 'tail': target.indexOf('}-->') });
 exports.loopIndex = loopIndex;
 const matchLoop = (target) => {
-    let out = [];
+    const out = [];
     const _opener = /<!--@for\(\w+\){/gi;
     const opener = target.match(_opener);
     if (opener && (opener === null || opener === void 0 ? void 0 : opener.length) > 0) {

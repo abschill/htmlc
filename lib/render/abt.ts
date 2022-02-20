@@ -5,7 +5,7 @@ export const KEY_MAP = [ '@for', '@render', '@render-partial' ];
 
 
 const RESERVED_WORDS: Dictionary<ReservedWord> = [
-    { 
+    {
         key: '@for',
         boolean: hasLoop,
         array: matchLoop

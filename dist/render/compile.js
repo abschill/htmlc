@@ -18,7 +18,7 @@ function compileArgs(template_name, conf, data) {
         if (Object.keys(templateInput).includes(template_name)) {
             const insertions = Object.assign(Object.assign({}, globalInsertions), { partialInput });
             if (conf.config.debug)
-                (0, stamp_1.stampLog)(insertions, 'spread::args|compile.ts#L38', true);
+                (0, stamp_1.stampLog)(insertions, 'spread::args|compile.ts#L35');
             const fileMeta = conf.templates.filter(temp => temp.name === template_name)[0];
             const { rawFile } = fileMeta;
             const out = (0, _1.default)(conf.partials, rawFile, insertions, conf.config.debug);
@@ -27,7 +27,7 @@ function compileArgs(template_name, conf, data) {
         else {
             const insertions = Object.assign(Object.assign({}, globalInsertions), { partialInput });
             if (conf.config.debug)
-                (0, stamp_1.stampLog)(insertions, 'insertion::args|compile.ts#L47', true);
+                (0, stamp_1.stampLog)(insertions, 'insertion::args|compile.ts#L44');
             const fileMeta = conf.templates.filter(temp => temp.name === template_name)[0];
             const { rawFile } = fileMeta;
             const out = (0, _1.default)(conf.partials, rawFile, insertions, conf.config.debug);
@@ -38,7 +38,7 @@ function compileArgs(template_name, conf, data) {
         const scopedInsertions = Object.assign(Object.assign({}, templateInput), data);
         const insertions = Object.assign(Object.assign(Object.assign({}, globalInsertions), scopedInsertions), { partialInput: Object.assign(Object.assign({}, partialInput), data['partialInput']) });
         if (conf.config.debug)
-            (0, stamp_1.stampLog)(insertions, 'insertion::args|compile.ts#L67', true);
+            (0, stamp_1.stampLog)(insertions, 'insertion::args|compile.ts#L67');
         const fileMeta = conf.templates.filter(temp => temp.name === template_name)[0];
         const { rawFile } = fileMeta;
         const out = (0, _1.default)(conf.partials, rawFile, insertions, conf.config.debug);

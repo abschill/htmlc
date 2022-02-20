@@ -4,7 +4,7 @@ export declare namespace hclInternal {
     type Entry = Array<string | _insertMap>;
 
     type Insertion = [
-        string|_insertMap, 
+        string|_insertMap,
         Entry
     ];
 
@@ -12,7 +12,7 @@ export declare namespace hclInternal {
 
     type _insertMap = object
 
-    interface compiledMap extends _insertMap { 
+    interface compiledMap extends _insertMap {
         partialInput: _insertMap
     }
 
@@ -29,9 +29,9 @@ export declare namespace hclInternal {
         render: string
     }
 
-    export type StackItem = { 
+    export type StackItem = {
         replacer: Runtime.template
-        insertion: Runtime.template | Runtime.template[] | Runtime.template[][] 
+        insertion: Runtime.template | Runtime.template[] | Runtime.template[][]
     }
 
     export type RenderTemplateArgs = {
@@ -39,7 +39,7 @@ export declare namespace hclInternal {
         raw: string
         conf: Runtime.Options
     }
-    
+
     export type Template = {
         path: string
         args: RenderTemplateArgs
@@ -49,9 +49,9 @@ export declare namespace hclInternal {
 
 export declare namespace hclFS {
 
-    type TargetDirectoryTree = { 
+    type TargetDirectoryTree = {
         path: string
-        files: string[] 
+        files: string[]
     }
 
     type FileInputMeta = {
@@ -78,9 +78,9 @@ export type ReservedWord = {
     array: ( target: string ) => RegExpMatchArray | null
 };
 
-export interface LoaderContext {  
+export interface LoaderContext {
     conf: Runtime.Context
-    template: ( name: string, data ?: object ) => Runtime.template 
+    template: ( name: string, data ?: object ) => Runtime.template
 };
 
 export const DEFAULTS = {

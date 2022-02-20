@@ -32,9 +32,9 @@ export declare namespace Runtime {
         partials: hclFS.FileInputMeta[]
         templates: hclFS.FileInputMeta[]
     };
-    
+
     export type template = string;
-    
+
     export type StaticOptions = {
         load_options: Options
         static_options: {
@@ -48,7 +48,7 @@ export declare namespace Runtime {
 /**
  * @function Loader
  * @description Rendering Context for templates
- * @param {Loader.Options} 
+ * @param {Loader.Options}
  * @returns Loader for application
  */
 export const Loader = ( config ?: Runtime.Options ):
@@ -77,9 +77,9 @@ LoaderContext => {
 
     /**
      * @function template
-     * @param {string} 
+     * @param {string}
      * Name of Template to Load
-     * @param {object} 
+     * @param {object}
      * data to override fallback data for given template
      * @returns {string} the template's rendered content
      * @example
@@ -87,10 +87,10 @@ LoaderContext => {
      * Loader.template( 'home', {...homeData} );
      * ```
      */
-    function template( name: string, data ?: hclInternal._insertMap ): 
+    function template( name: string, data ?: hclInternal._insertMap ):
     Runtime.template {
         return compile( name, conf, data );
-    };  
+    };
 
     return { conf, template };
 }

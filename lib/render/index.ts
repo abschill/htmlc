@@ -11,20 +11,20 @@ import { hclFS, hclInternal } from './internals';
 import { stampLog } from '../util/stamp';
 const { warn } = console;
 /**
- * 
- * @param {string} _content The File to generate Render Map on 
+ *
+ * @param {string} _content The File to generate Render Map on
  * @returns {RenderMap} The todo loops for the map
  */
 
-const genRenderMap = ( 
-    _content: string 
+const genRenderMap = (
+    _content: string
 ): hclInternal.RenderMap => {
     const _map: hclInternal.RenderMap = {
         todo_keys: [],
         todo_loops: [],
         todo_partials: []
     };
-    
+
     RESERVED_WORDS.forEach( token => {
         const keymap = token.array( _content );
         switch( token.key ) {
@@ -47,7 +47,7 @@ const genRenderMap = (
 
 const handle1DIterable = ( clone: string, insert: string ): Runtime.template => clone.replace( '{_}', insert );
 
-const handleXDIterable = ( 
+const handleXDIterable = (
     clone: string,
      insert: hclInternal.Insertion | hclInternal.Entry
 ): Runtime.template => {
@@ -59,15 +59,15 @@ const handleXDIterable = (
 }
 
 /**
- * 
- * @param {string} file utf8 encoded file string to render into 
+ *
+ * @param {string} file utf8 encoded file string to render into
  * @param {RenderMap} renderMap Matched tags taken from file
- * @param {object} insertionMap map of values to render into template 
+ * @param {object} insertionMap map of values to render into template
  * @returns {ResolvedRender} The Object Representing the rendered map with given insertions
  */
-const resolveRender = ( 
-    file: string, 
-    renderMap: hclInternal.RenderMap, 
+const resolveRender = (
+    file: string,
+    renderMap: hclInternal.RenderMap,
     insertionMap: hclInternal._insertMap,
     debug ?: boolean
 ): hclInternal.Resolved<hclInternal.RenderMap> => {
@@ -102,7 +102,7 @@ const resolveRender = (
                         const loopName = r.split( '(' )[1].split( ')' )[0];
                         let toInsert = insertionMap[loopName]
                         if( debug ) stampLog( toInsert, 'toInsert::frommap|render/index.ts#L104' );
-                        
+
                         let elChild = r.replace( FOR_H( loopName ), '' ).replace( FOR_T(), '' )
                                         .trimStart().replace( /\s\s+/gi, '');
                         toInsert?.forEach( ( insertion ?: string | hclInternal._insertMap ) => {
@@ -152,17 +152,17 @@ const resolveRender = (
     return { raw: file, renderMap, insertionMap, render: copy };
 }
 /**
- * 
+ *
  * @param {Partial[]} declaredPartials array of partials declared in loader context
- * @param {string} rawFile raw file contents to insert to 
+ * @param {string} rawFile raw file contents to insert to
  * @param {object} insertMap map to insert values into templates from
  * @returns {string} The rendered template
  */
-const render = ( 
-    declaredPartials: hclFS.FileInputMeta[], 
-    rawFile: hclFS.fileUTF8, 
-    insertMap: hclInternal._insertMap, 
-    debug?: boolean 
+const render = (
+    declaredPartials: hclFS.FileInputMeta[],
+    rawFile: hclFS.fileUTF8,
+    insertMap: hclInternal._insertMap,
+    debug?: boolean
 ): Runtime.template => {
     let rootCopy = rawFile;
     const renMap = genRenderMap( rootCopy );
@@ -177,7 +177,7 @@ const render = (
                 matchPartials.forEach( partial => {
                     const renderMap = genRenderMap( partial.rawFile );
 
-                    const scoped_insertion = insertMap[ 'partialInput' ] ?? {}; 
+                    const scoped_insertion = insertMap[ 'partialInput' ] ?? {};
                     const insertion = {...insertMap, ...scoped_insertion };
 
                     if( debug ) stampLog( insertion, 'inserted::partialdata|render/index.ts#L183' );
@@ -186,10 +186,10 @@ const render = (
 
                     rootCopy = rootCopy.replace( partialSeg, resolved.render );
                 } );
-                
+
             }
         } );
-    } 
+    }
 
     if( renMap.todo_keys && renMap.todo_keys.length > 0 ) {
         renMap.todo_keys.forEach( _ => {
@@ -197,7 +197,7 @@ const render = (
             const resolved = resolveRender( rootCopy, renderMap, insertMap );
             if( debug ) stampLog( resolved, 'resolved::key');
             rootCopy = resolved.render;
-        } ); 
+        } );
     }
 
     if( renMap.todo_loops && renMap.todo_loops.length > 0 ) {
@@ -210,13 +210,13 @@ const render = (
     }
 
     try {
-        return cleanHTML( rootCopy ); 
+        return cleanHTML( rootCopy );
     }
     catch( e ) {
         warn( 'Failed to Clean HTML' );
         warn( e );
         return rootCopy;
     }
-    
+
 }
 export default render;

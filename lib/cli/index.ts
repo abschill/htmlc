@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const path = require( 'path' ); 
+const path = require( 'path' );
 const fs = require( 'fs' );
 const conf = JSON.parse( fs.readFileSync( path.resolve( process.cwd(), 'package.json' ) ).toString( 'utf-8' ) );
 import { Loader } from '../loader';

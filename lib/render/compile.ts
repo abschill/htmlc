@@ -22,27 +22,26 @@ Runtime.template {
          * steps
          * 1: if no data, grab template with constructor data
          * 2: if data, compile data and grab template
-         * 3: 
+         * 3:
     */
     //if no data, load default input for template
-    const globalInsertions: 
+    const globalInsertions:
     hclInternal._insertMap = templateInput;
     if( Object.keys( data ).length === 0 ) {
-        
         if( Object.keys( templateInput ).includes( template_name ) ) {
-            const insertions: 
+            const insertions:
             hclInternal.compiledMap = { ...globalInsertions, partialInput };
 
-            if( conf.config.debug ) stampLog( insertions, 'spread::args|compile.ts#L38', true );
+            if( conf.config.debug ) stampLog( insertions, 'spread::args|compile.ts#L35' );
             const fileMeta = conf.templates.filter( temp => temp.name === template_name )[0];
             const { rawFile } = fileMeta;
             const out = render( conf.partials, rawFile, insertions, conf.config.debug );
             return out;
         }
         else {
-            const insertions: 
+            const insertions:
             hclInternal.compiledMap = { ...globalInsertions, partialInput };
-            if( conf.config.debug ) stampLog( insertions, 'insertion::args|compile.ts#L47', true );
+            if( conf.config.debug ) stampLog( insertions, 'insertion::args|compile.ts#L44' );
             const fileMeta = conf.templates.filter( temp => temp.name === template_name )[0];
             const { rawFile } = fileMeta;
             const out = render( conf.partials, rawFile, insertions, conf.config.debug );
@@ -50,19 +49,19 @@ Runtime.template {
         }
     }
     else {
-        const scopedInsertions: 
+        const scopedInsertions:
         hclInternal._insertMap = { ...templateInput, ...data };
-        
-        const insertions: 
+
+        const insertions:
         hclInternal.compiledMap = {
             ...globalInsertions, ...scopedInsertions,
             partialInput: {
-                ...partialInput, 
+                ...partialInput,
                 ...data[ 'partialInput' ]
-            } 
+            }
         };
 
-        if( conf.config.debug ) stampLog( insertions, 'insertion::args|compile.ts#L67', true );
+        if( conf.config.debug ) stampLog( insertions, 'insertion::args|compile.ts#L67' );
         const fileMeta = conf.templates.filter( temp => temp.name === template_name )[0];
         const { rawFile } = fileMeta;
         const out = render( conf.partials, rawFile, insertions, conf.config.debug );

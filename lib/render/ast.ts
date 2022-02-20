@@ -23,7 +23,7 @@ export const loopIndex = ( target: string, arr: string ) => ( { 'head':target.in
  * @returns {Array} matched segments from input
  */
 export const matchLoop = ( target: string ) => {
-    let out = [];
+    const out = [];
     const _opener = /<!--@for\(\w+\){/gi;
     const opener = target.match( _opener );
     if( opener && opener?.length > 0 ) {
