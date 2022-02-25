@@ -23,7 +23,7 @@ export declare namespace hclInternal {
     };
     type StackItem = {
         replacer: Runtime.template;
-        insertion: Runtime.template | Runtime.template[] | Runtime.template[][];
+        insertion: Runtime.template;
     };
     type RenderTemplateArgs = {
         _toInsert: Object;
