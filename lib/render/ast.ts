@@ -22,8 +22,9 @@ export const loopIndex = ( target: string, arr: string ) => ( { 'head':target.in
  * @param {string} target The Partial/Template to match render loop against
  * @returns {Array} matched segments from input
  */
-export const matchLoop = ( target: string ) => {
-    const out = [];
+export const matchLoop = ( target: string ):
+Array<string> => {
+    const out: Array<string> = [];
     const _opener = /<!--@for\(\w+\){/gi;
     const opener = target.match( _opener );
     if( opener && opener?.length > 0 ) {
@@ -36,7 +37,8 @@ export const matchLoop = ( target: string ) => {
     }
     return out;
 }
-/**<!--@for\(\w+\){[\n|\r|\w|\t]*.*[\n|\r|\w|\t]*.*
+
+/**
  *
  * @param {string} target the DOM to match against
  * @param {string} key the key of the iterable to match
