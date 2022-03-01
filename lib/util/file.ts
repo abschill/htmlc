@@ -1,11 +1,11 @@
 /**
  * @module file internal file handling
  */
-import { Runtime } from '../loader';
-import { DEFAULTS } from '../render/internals';
+import { core } from '../loader';
+import { DEFAULTS } from '../core/internals';
 import fs from 'fs';
 import path from 'path';
-import { hclFS } from '../render/internals';
+import { internals } from '../core/internals';
 
 /**
  *
@@ -16,8 +16,8 @@ export const _files = ( dir: string ) => fs.readdirSync( dir )
 .filter(x => fs.lstatSync( path.join(dir, x )).isFile() )
 .map( x => path.resolve( dir, x ) );
 
-export const resolvePartials = ( conf: Runtime.Options ):
-hclFS.FileInputMeta[] => {
+export const resolvePartials = ( conf: core.Options ):
+internals.FileInputMeta[] => {
      const { partials = DEFAULTS.partials,
              pathRoot = DEFAULTS.pathRoot } = conf;
      const _path = path.join( process.cwd(), pathRoot, partials );
@@ -42,8 +42,8 @@ hclFS.FileInputMeta[] => {
  * @param {LoaderConfig} conf Configuration to read paths from
  * @returns {FileInputMeta[]} Metadata about Templates
  */
-export const resolveTemplates = ( conf: Runtime.Options ):
-hclFS.FileInputMeta[] => {
+export const resolveTemplates = ( conf: core.Options ):
+internals.FileInputMeta[] => {
     const { templates = DEFAULTS.templates,
         pathRoot = DEFAULTS.pathRoot } = conf;
     const _path = path.join( process.cwd(), pathRoot, templates );
@@ -67,7 +67,7 @@ hclFS.FileInputMeta[] => {
  * @returns Name of the html file in the given target path, x-platform
  */
 export const mapFileData = ( filePath: string ):
-hclFS.FileInputMeta => {
+internals.FileInputMeta => {
     const n = filePath.split( '.html' );
     if( process.platform === 'win32' ) {
         const na = n[0].split( '\\' );
@@ -88,4 +88,4 @@ hclFS.FileInputMeta => {
  * @returns path of file to load utf8
  */
 const loadFileUTF = ( _path: string ):
-hclFS.fileUTF8 => fs.readFileSync( _path ).toString( 'utf-8' );
+internals.fileUTF8 => fs.readFileSync( _path ).toString( 'utf-8' );

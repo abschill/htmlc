@@ -1,33 +1,33 @@
-import { Runtime } from '../loader';
-export declare namespace hclInternal {
+import { core } from '../loader';
+export declare namespace internals {
 
-	type EventName = string;
+	export type EventName = string;
 
-	type EventArgs<T> = [
+	export type EventArgs<T> = [
 		T,
-		Runtime.Context,
+		core.Context,
 		IArguments
 	]
 
-	interface CompilerArgs {
+	export interface CompilerArgs {
 		template_name: string;
-		ctx: Runtime.Context;
-		data ?: _insertMap;
+		ctx: core.Context;
+		data ?: UINSERT_MAP;
 	}
 
-    type Entry = Array<string | _insertMap>;
+    export type Entry = Array<string | UINSERT_MAP>;
 
-    type Insertion = [
-        string|_insertMap,
+    export type Insertion = [
+        string|UINSERT_MAP,
         Entry
     ];
 
-    type _match = RegExpMatchArray | []
+    export type _match = RegExpMatchArray | []
 
-    type _insertMap = object;
+    export type UINSERT_MAP = object;
 
-    interface compiledMap extends _insertMap {
-        partialInput: _insertMap;
+    export interface compiledMap extends UINSERT_MAP {
+        partialInput: UINSERT_MAP;
     }
 
     export interface RenderMap {
@@ -39,31 +39,22 @@ export declare namespace hclInternal {
     export type Resolved<RenderMap> = {
         raw: string;
         renderMap: RenderMap;
-        insertionMap: _insertMap;
+        insertionMap: UINSERT_MAP;
         render: string;
     }
 
     export type StackItem = {
-        replacer: Runtime.template;
-        insertion: Runtime.template | Runtime.template[] | Runtime.template[][];
+        replacer: core.template;
+        insertion: core.template | core.template[] | core.template[][];
     }
 
     export type RenderTemplateArgs = {
         _toInsert: Object;
         raw: string;
-        conf: Runtime.Options;
+        conf: core.Options;
     }
 
-    export type Template = {
-        path: string;
-        args: RenderTemplateArgs;
-        valueOf: string;
-    }
-}
-
-export declare namespace hclFS {
-
-    type TargetDirectoryTree = {
+	type TargetDirectoryTree = {
         path: string;
         files: string[];
     }
@@ -75,29 +66,28 @@ export declare namespace hclFS {
     }
 
     type fileUTF8 = string;
+
+	export type _templateInsert = object | {} | any | null;
+
+	export interface TemplateInsertion {
+		partialInput ?: TemplateInsertion;
+	}
+
+	export type Dictionary<ReservedWord> = Array<ReservedWord>
+
+	export type ReservedWord = {
+		key: string;
+		boolean: ( target: string, arr: string ) => boolean;
+		array: ( target: string ) => RegExpMatchArray | null
+	}
+
+	export interface RuntimeState {
+		conf: core.Context
+		template: ( name: string, data ?: object ) => core.template
+	}
 }
 
-
-export type _templateInsert = object | {} | any | null;
-
-export interface TemplateInsertion {
-    partialInput ?: TemplateInsertion;
-}
-
-export type Dictionary<ReservedWord> = Array<ReservedWord>
-
-export type ReservedWord = {
-    key: string;
-    boolean: ( target: string, arr: string ) => boolean;
-    array: ( target: string ) => RegExpMatchArray | null
-};
-
-export interface LoaderContext {
-    conf: Runtime.Context
-    template: ( name: string, data ?: object ) => Runtime.template
-};
-
-export const _DEFAULTS: Runtime.Options = {
+export const _DEFAULTS: core.Options = {
     pathRoot: 'views',
     templates: 'pages',
     partials: 'partials',
@@ -127,7 +117,7 @@ export class hclDebugger {
 
 	constructor() {}
 
-	static _registerEvent( ...args: hclInternal.EventArgs<hclInternal.EventName> ) {
+	static _registerEvent( ...args: internals.EventArgs<internals.EventName> ) {
 		const eventName = args[0];
 		const templateName = args[2]['0'].template_name;
 		const contextData = args[2]['0'].ctx;
@@ -137,5 +127,4 @@ export class hclDebugger {
 			log( 'HCL_CTX: ', contextData );
 		}
 	}
-
 };

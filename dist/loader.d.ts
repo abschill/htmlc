@@ -1,30 +1,30 @@
-import { hclFS, LoaderContext, hclInternal } from './render/internals';
-export declare namespace Runtime {
+import { internals } from './core/internals';
+export declare namespace core {
     type Event<T> = {
         (args: T): T;
     };
-    type UOptions = {
+    type Options = {
         pathRoot?: string;
         templates?: string;
         partials?: string;
-        partialInput?: hclInternal._insertMap;
-        templateInput?: hclInternal._insertMap;
+        partialInput?: internals.UINSERT_MAP;
+        templateInput?: internals.UINSERT_MAP;
         watch?: boolean;
         debug?: boolean;
     };
-    type Options = {
+    type ROptions = {
         pathRoot: string;
         templates: string;
         partials: string;
-        partialInput: hclInternal._insertMap;
-        templateInput: hclInternal._insertMap;
+        partialInput: internals.UINSERT_MAP;
+        templateInput: internals.UINSERT_MAP;
         watch: boolean;
         debug: boolean;
     };
     type Context = {
         config: Options;
-        partials: hclFS.FileInputMeta[];
-        templates: hclFS.FileInputMeta[];
+        partials: internals.FileInputMeta[];
+        templates: internals.FileInputMeta[];
     };
     type template = string;
     type StaticOptions = {
@@ -36,4 +36,4 @@ export declare namespace Runtime {
         };
     };
 }
-export declare const Loader: (config?: Runtime.Options) => LoaderContext;
+export declare const Loader: (config?: core.Options) => internals.RuntimeState;

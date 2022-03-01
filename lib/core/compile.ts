@@ -1,11 +1,11 @@
-import { Runtime } from '../loader';
-import { hclInternal } from './internals';
+import { core } from '../loader';
+import { internals } from './internals';
 import { stampLog } from '../util/stamp';
 import render from '.';
 import { hclDebugger } from './internals';
 
-export default function compile( args: hclInternal.CompilerArgs ):
-Runtime.template {
+export default function compile( args: internals.CompilerArgs ):
+core.template {
     /**
      * If any data was keyed with the template name in the constructor, we will use as a secondary priority load value
      * these objects will default to {} if not entered
@@ -23,11 +23,11 @@ Runtime.template {
     */
     //if no data, load default input for template
     const globalInsertions:
-    hclInternal._insertMap = templateInput;
+    internals.UINSERT_MAP = templateInput;
     if( Object.keys( args.data ).length === 0 ) {
         if( Object.keys( templateInput ).includes( args.template_name ) ) {
             const insertions:
-            hclInternal.compiledMap = { ...globalInsertions, partialInput };
+            internals.compiledMap = { ...globalInsertions, partialInput };
             hclDebugger._registerEvent( 'insert', args.ctx, arguments );
             const fileMeta = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
             const { rawFile } = fileMeta;
@@ -36,7 +36,7 @@ Runtime.template {
         }
         else {
             const insertions:
-            hclInternal.compiledMap = { ...globalInsertions, partialInput };
+            internals.compiledMap = { ...globalInsertions, partialInput };
             if( args.ctx.config.debug ) stampLog( insertions, 'insertion::args|compile.ts#L44' );
             const fileMeta = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
             const { rawFile } = fileMeta;
@@ -46,10 +46,10 @@ Runtime.template {
     }
     else {
         const scopedInsertions:
-        hclInternal._insertMap = { ...templateInput, ...args.data };
+        internals.UINSERT_MAP = { ...templateInput, ...args.data };
 
         const insertions:
-        hclInternal.compiledMap = {
+        internals.compiledMap = {
             ...globalInsertions, ...scopedInsertions,
             partialInput: {
                 ...partialInput,

@@ -12,11 +12,11 @@
  */
 import context from './util/options';
 import { watch } from 'fs';
-import { hclFS, LoaderContext, hclInternal, _DEFAULTS } from './render/internals';
+import { internals, _DEFAULTS } from './core/internals';
 import { stampLog } from './util/stamp';
-import compile from './render/compile';
+import compile from './core/compile';
 
-export declare namespace Runtime {
+export declare namespace core {
 
 	export type Event<T> = {
 		( args: T ): T;
@@ -26,8 +26,8 @@ export declare namespace Runtime {
         pathRoot ?: string;
         templates ?: string;
         partials ?: string;
-        partialInput ?: hclInternal._insertMap;
-        templateInput ?: hclInternal._insertMap;
+        partialInput ?: internals.UINSERT_MAP;
+        templateInput ?: internals.UINSERT_MAP;
         watch ?: boolean;
         debug ?: boolean;
     };
@@ -36,16 +36,16 @@ export declare namespace Runtime {
         pathRoot : string;
         templates : string;
         partials : string;
-        partialInput : hclInternal._insertMap;
-        templateInput : hclInternal._insertMap;
+        partialInput : internals.UINSERT_MAP;
+        templateInput : internals.UINSERT_MAP;
         watch : boolean;
         debug : boolean;
     };
 
     export type Context = {
         config: Options;
-        partials: hclFS.FileInputMeta[];
-        templates: hclFS.FileInputMeta[];
+        partials: internals.FileInputMeta[];
+        templates: internals.FileInputMeta[];
     };
 
     export type template = string;
@@ -66,10 +66,10 @@ export declare namespace Runtime {
  * @param {Loader.Options}
  * @returns Loader for application
  */
-export const Loader = ( config ?: Runtime.Options ):
-LoaderContext => {
+export const Loader = ( config ?: core.Options ):
+internals.RuntimeState => {
 
-    let conf: Runtime.Context = context( config ?? _DEFAULTS );
+    let conf: core.Context = context( config ?? _DEFAULTS );
 
     if( conf.config.watch ) {
         conf.partials.forEach( file => {
@@ -102,8 +102,8 @@ LoaderContext => {
      * Loader.template( 'home', {...homeData} );
      * ```
      */
-    function template( name: string, data ?: hclInternal._insertMap ):
-    Runtime.template {
+    function template( name: string, data ?: internals.UINSERT_MAP ):
+    core.template {
         return compile( { template_name: name, ctx: conf, data } );
     };
 

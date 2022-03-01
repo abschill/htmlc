@@ -1,14 +1,14 @@
-import { Runtime } from '../loader';
-export declare namespace coreInternal {
+import { core } from '../loader';
+export declare namespace internals {
     type EventName = string;
     type EventArgs<T> = [
         T,
-        Runtime.Context,
+        core.Context,
         IArguments
     ];
     interface CompilerArgs {
         template_name: string;
-        ctx: Runtime.Context;
+        ctx: core.Context;
         data?: UINSERT_MAP;
     }
     type Entry = Array<string | UINSERT_MAP>;
@@ -33,21 +33,14 @@ export declare namespace coreInternal {
         render: string;
     };
     type StackItem = {
-        replacer: Runtime.template;
-        insertion: Runtime.template | Runtime.template[] | Runtime.template[][];
+        replacer: core.template;
+        insertion: core.template | core.template[] | core.template[][];
     };
     type RenderTemplateArgs = {
         _toInsert: Object;
         raw: string;
-        conf: Runtime.Options;
+        conf: core.Options;
     };
-    type Template = {
-        path: string;
-        args: RenderTemplateArgs;
-        valueOf: string;
-    };
-}
-export declare namespace hclFS {
     type TargetDirectoryTree = {
         path: string;
         files: string[];
@@ -58,22 +51,22 @@ export declare namespace hclFS {
         rawFile: string;
     };
     type fileUTF8 = string;
+    type _templateInsert = object | {} | any | null;
+    interface TemplateInsertion {
+        partialInput?: TemplateInsertion;
+    }
+    type Dictionary<ReservedWord> = Array<ReservedWord>;
+    type ReservedWord = {
+        key: string;
+        boolean: (target: string, arr: string) => boolean;
+        array: (target: string) => RegExpMatchArray | null;
+    };
+    interface RuntimeState {
+        conf: core.Context;
+        template: (name: string, data?: object) => core.template;
+    }
 }
-export declare type _templateInsert = object | {} | any | null;
-export interface TemplateInsertion {
-    partialInput?: TemplateInsertion;
-}
-export declare type Dictionary<ReservedWord> = Array<ReservedWord>;
-export declare type ReservedWord = {
-    key: string;
-    boolean: (target: string, arr: string) => boolean;
-    array: (target: string) => RegExpMatchArray | null;
-};
-export interface LoaderContext {
-    conf: Runtime.Context;
-    template: (name: string, data?: object) => Runtime.template;
-}
-export declare const _DEFAULTS: Runtime.Options;
+export declare const _DEFAULTS: core.Options;
 export declare const DEFAULTS: {
     _publishDefault: string;
     outDefault: string;
@@ -95,5 +88,5 @@ export declare const DEFAULTS: {
 };
 export declare class hclDebugger {
     constructor();
-    static _registerEvent(...args: coreInternal.EventArgs<coreInternal.EventName>): void;
+    static _registerEvent(...args: internals.EventArgs<internals.EventName>): void;
 }
