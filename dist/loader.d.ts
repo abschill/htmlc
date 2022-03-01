@@ -1,5 +1,8 @@
 import { hclFS, LoaderContext, hclInternal } from './render/internals';
 export declare namespace Runtime {
+    type Event<T> = {
+        (args: T): T;
+    };
     type Options = {
         pathRoot?: string;
         templates?: string;

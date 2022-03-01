@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports._DEFAULTS = exports.DEFAULTS = void 0;
+exports.hclDebugger = exports._DEFAULTS = exports.DEFAULTS = void 0;
 ;
 exports.DEFAULTS = {
     "_publishDefault": "dist",
@@ -25,4 +25,18 @@ exports._DEFAULTS = {
     partialInput: {},
     watch: true
 };
+const { log } = console;
+class hclDebugger {
+    constructor() { }
+    static _registerEvent(...args) {
+        const eventName = args[0];
+        const templateName = args[2]['0'].template_name;
+        const contextData = args[2]['0'].ctx;
+        log('HCL_EVENT: ', eventName);
+        log('HCL_TEMPLATE: ', templateName);
+        log('HCL_CTX: ', contextData);
+    }
+}
+exports.hclDebugger = hclDebugger;
+;
 //# sourceMappingURL=internals.js.map

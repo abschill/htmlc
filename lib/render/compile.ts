@@ -2,22 +2,19 @@ import { Runtime } from '../loader';
 import { hclInternal } from './internals';
 import { stampLog } from '../util/stamp';
 import render from '.';
+import { hclDebugger } from './internals';
 
-export default function compileArgs( template_name: string, conf: Runtime.Context, data ?: hclInternal._insertMap ):
+export default function compile( args: hclInternal.CompilerArgs ):
 Runtime.template {
     /**
      * If any data was keyed with the template name in the constructor, we will use as a secondary priority load value
      * these objects will default to {} if not entered
      */
-    const { templateInput = {}, partialInput = {} } = conf.config;
+    const { templateInput = {}, partialInput = {} } = args.ctx.config;
     // unset null data if applicable
-    if( !data ) data = {};
+    if( !args.data ) args.data = {};
 
-    if( conf.config.debug ) {
-        stampLog( conf.config, 'fn::conf|compile.ts#L17' );
-        stampLog( data, 'fn::args|compile.ts#L18' );
-    }
-
+    hclDebugger._registerEvent( 'init', args.ctx, arguments );
     /**
          * steps
          * 1: if no data, grab template with constructor data
@@ -27,44 +24,44 @@ Runtime.template {
     //if no data, load default input for template
     const globalInsertions:
     hclInternal._insertMap = templateInput;
-    if( Object.keys( data ).length === 0 ) {
-        if( Object.keys( templateInput ).includes( template_name ) ) {
+    if( Object.keys( args.data ).length === 0 ) {
+        if( Object.keys( templateInput ).includes( args.template_name ) ) {
             const insertions:
             hclInternal.compiledMap = { ...globalInsertions, partialInput };
 
-            if( conf.config.debug ) stampLog( insertions, 'spread::args|compile.ts#L35' );
-            const fileMeta = conf.templates.filter( temp => temp.name === template_name )[0];
+            if( args.ctx.config.debug ) stampLog( insertions, 'spread::args|compile.ts#L35' );
+            const fileMeta = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
             const { rawFile } = fileMeta;
-            const out = render( conf.partials, rawFile, insertions, conf.config.debug );
+            const out = render( args.ctx.partials, rawFile, insertions, args.ctx.config.debug );
             return out;
         }
         else {
             const insertions:
             hclInternal.compiledMap = { ...globalInsertions, partialInput };
-            if( conf.config.debug ) stampLog( insertions, 'insertion::args|compile.ts#L44' );
-            const fileMeta = conf.templates.filter( temp => temp.name === template_name )[0];
+            if( args.ctx.config.debug ) stampLog( insertions, 'insertion::args|compile.ts#L44' );
+            const fileMeta = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
             const { rawFile } = fileMeta;
-            const out = render( conf.partials, rawFile, insertions, conf.config.debug );
+            const out = render( args.ctx.partials, rawFile, insertions, args.ctx.config.debug );
             return out;
         }
     }
     else {
         const scopedInsertions:
-        hclInternal._insertMap = { ...templateInput, ...data };
+        hclInternal._insertMap = { ...templateInput, ...args.data };
 
         const insertions:
         hclInternal.compiledMap = {
             ...globalInsertions, ...scopedInsertions,
             partialInput: {
                 ...partialInput,
-                ...data[ 'partialInput' ]
+                ...args.data[ 'partialInput' ]
             }
         };
 
-        if( conf.config.debug ) stampLog( insertions, 'insertion::args|compile.ts#L67' );
-        const fileMeta = conf.templates.filter( temp => temp.name === template_name )[0];
+        hclDebugger._registerEvent( 'insert', args.ctx, arguments );
+        const fileMeta = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
         const { rawFile } = fileMeta;
-        const out = render( conf.partials, rawFile, insertions, conf.config.debug );
+        const out = render( args.ctx.partials, rawFile, insertions, args.ctx.config.debug );
         return out;
     }
 }

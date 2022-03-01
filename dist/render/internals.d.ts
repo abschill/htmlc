@@ -1,5 +1,16 @@
 import { Runtime } from '../loader';
 export declare namespace hclInternal {
+    type EventName = string;
+    type EventArgs<T> = [
+        T,
+        Runtime.Context,
+        IArguments
+    ];
+    interface CompilerArgs {
+        template_name: string;
+        ctx: Runtime.Context;
+        data?: _insertMap;
+    }
     type Entry = Array<string | _insertMap>;
     type Insertion = [
         string | _insertMap,
@@ -85,3 +96,7 @@ export declare const _DEFAULTS: {
     partialInput: {};
     watch: boolean;
 };
+export declare class hclDebugger {
+    constructor();
+    static _registerEvent(...args: hclInternal.EventArgs<hclInternal.EventName>): void;
+}

@@ -17,6 +17,11 @@ import { stampLog } from './util/stamp';
 import compile from './render/compile';
 
 export declare namespace Runtime {
+
+	export type Event<T> = {
+		( args: T ): T;
+	}
+
     export type Options = {
         pathRoot ?: string
         templates ?: string
@@ -54,7 +59,7 @@ export declare namespace Runtime {
 export const Loader = ( config ?: Runtime.Options ):
 LoaderContext => {
 
-    let conf = context( config ?? _DEFAULTS );
+    let conf: Runtime.Context = context( config ?? _DEFAULTS );
 
     if( conf.config.watch ) {
         conf.partials.forEach( file => {
@@ -89,7 +94,7 @@ LoaderContext => {
      */
     function template( name: string, data ?: hclInternal._insertMap ):
     Runtime.template {
-        return compile( name, conf, data );
+        return compile( { template_name: name, ctx: conf, data } );
     };
 
     return { conf, template };

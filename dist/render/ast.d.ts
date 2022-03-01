@@ -5,7 +5,7 @@ export declare const loopIndex: (target: string, arr: string) => {
     head: number;
     tail: number;
 };
-export declare const matchLoop: (target: string) => any[];
+export declare const matchLoop: (target: string) => Array<string>;
 export declare const hasKey: (target: string, key: string) => boolean;
 export declare const keyIndex: (target: string, key: string) => number;
 export declare const translateKeyName: (templated_key: string) => string;

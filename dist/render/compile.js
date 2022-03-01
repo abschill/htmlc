@@ -5,45 +5,45 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const stamp_1 = require("../util/stamp");
 const _1 = __importDefault(require("."));
-function compileArgs(template_name, conf, data) {
-    const { templateInput = {}, partialInput = {} } = conf.config;
-    if (!data)
-        data = {};
-    if (conf.config.debug) {
-        (0, stamp_1.stampLog)(conf.config, 'fn::conf|compile.ts#L17');
-        (0, stamp_1.stampLog)(data, 'fn::args|compile.ts#L18');
+const internals_1 = require("./internals");
+function compile(args) {
+    const { templateInput = {}, partialInput = {} } = args.ctx.config;
+    if (!args.data)
+        args.data = {};
+    if (args.ctx.config.debug) {
     }
+    internals_1.hclDebugger._registerEvent('init', args.ctx, arguments);
     const globalInsertions = templateInput;
-    if (Object.keys(data).length === 0) {
-        if (Object.keys(templateInput).includes(template_name)) {
+    if (Object.keys(args.data).length === 0) {
+        if (Object.keys(templateInput).includes(args.template_name)) {
             const insertions = Object.assign(Object.assign({}, globalInsertions), { partialInput });
-            if (conf.config.debug)
+            if (args.ctx.config.debug)
                 (0, stamp_1.stampLog)(insertions, 'spread::args|compile.ts#L35');
-            const fileMeta = conf.templates.filter(temp => temp.name === template_name)[0];
+            const fileMeta = args.ctx.templates.filter(temp => temp.name === args.template_name)[0];
             const { rawFile } = fileMeta;
-            const out = (0, _1.default)(conf.partials, rawFile, insertions, conf.config.debug);
+            const out = (0, _1.default)(args.ctx.partials, rawFile, insertions, args.ctx.config.debug);
             return out;
         }
         else {
             const insertions = Object.assign(Object.assign({}, globalInsertions), { partialInput });
-            if (conf.config.debug)
+            if (args.ctx.config.debug)
                 (0, stamp_1.stampLog)(insertions, 'insertion::args|compile.ts#L44');
-            const fileMeta = conf.templates.filter(temp => temp.name === template_name)[0];
+            const fileMeta = args.ctx.templates.filter(temp => temp.name === args.template_name)[0];
             const { rawFile } = fileMeta;
-            const out = (0, _1.default)(conf.partials, rawFile, insertions, conf.config.debug);
+            const out = (0, _1.default)(args.ctx.partials, rawFile, insertions, args.ctx.config.debug);
             return out;
         }
     }
     else {
-        const scopedInsertions = Object.assign(Object.assign({}, templateInput), data);
-        const insertions = Object.assign(Object.assign(Object.assign({}, globalInsertions), scopedInsertions), { partialInput: Object.assign(Object.assign({}, partialInput), data['partialInput']) });
-        if (conf.config.debug)
+        const scopedInsertions = Object.assign(Object.assign({}, templateInput), args.data);
+        const insertions = Object.assign(Object.assign(Object.assign({}, globalInsertions), scopedInsertions), { partialInput: Object.assign(Object.assign({}, partialInput), args.data['partialInput']) });
+        if (args.ctx.config.debug)
             (0, stamp_1.stampLog)(insertions, 'insertion::args|compile.ts#L67');
-        const fileMeta = conf.templates.filter(temp => temp.name === template_name)[0];
+        const fileMeta = args.ctx.templates.filter(temp => temp.name === args.template_name)[0];
         const { rawFile } = fileMeta;
-        const out = (0, _1.default)(conf.partials, rawFile, insertions, conf.config.debug);
+        const out = (0, _1.default)(args.ctx.partials, rawFile, insertions, args.ctx.config.debug);
         return out;
     }
 }
-exports.default = compileArgs;
+exports.default = compile;
 //# sourceMappingURL=compile.js.map

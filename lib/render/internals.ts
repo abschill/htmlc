@@ -1,6 +1,20 @@
 import { Runtime } from '../loader';
 export declare namespace hclInternal {
 
+	type EventName = string;
+
+	type EventArgs<T> = [
+		T,
+		Runtime.Context,
+		IArguments
+	]
+
+	interface CompilerArgs {
+		template_name: string;
+		ctx: Runtime.Context;
+		data ?: _insertMap;
+	}
+
     type Entry = Array<string | _insertMap>;
 
     type Insertion = [
@@ -10,57 +24,57 @@ export declare namespace hclInternal {
 
     type _match = RegExpMatchArray | []
 
-    type _insertMap = object
+    type _insertMap = object;
 
     interface compiledMap extends _insertMap {
-        partialInput: _insertMap
+        partialInput: _insertMap;
     }
 
     export interface RenderMap {
-        todo_partials: _match
-        todo_keys: _match
-        todo_loops: _match
+        todo_partials: _match;
+        todo_keys: _match;
+        todo_loops: _match;
     }
 
     export type Resolved<RenderMap> = {
-        raw: string
-        renderMap: RenderMap
-        insertionMap: _insertMap
-        render: string
+        raw: string;
+        renderMap: RenderMap;
+        insertionMap: _insertMap;
+        render: string;
     }
 
     export type StackItem = {
-        replacer: Runtime.template
-        insertion: Runtime.template | Runtime.template[] | Runtime.template[][]
+        replacer: Runtime.template;
+        insertion: Runtime.template | Runtime.template[] | Runtime.template[][];
     }
 
     export type RenderTemplateArgs = {
-        _toInsert: Object
-        raw: string
-        conf: Runtime.Options
+        _toInsert: Object;
+        raw: string;
+        conf: Runtime.Options;
     }
 
     export type Template = {
-        path: string
-        args: RenderTemplateArgs
-        valueOf: string
+        path: string;
+        args: RenderTemplateArgs;
+        valueOf: string;
     }
 }
 
 export declare namespace hclFS {
 
     type TargetDirectoryTree = {
-        path: string
-        files: string[]
+        path: string;
+        files: string[];
     }
 
     type FileInputMeta = {
-        path: string
-        name: string
-        rawFile: string
+        path: string;
+        name: string;
+        rawFile: string;
     }
 
-    type fileUTF8 = string
+    type fileUTF8 = string;
 }
 
 
@@ -106,3 +120,22 @@ export const _DEFAULTS = {
     partialInput: {},
     watch: true
 }
+
+const { log } = console;
+
+export class hclDebugger {
+
+	constructor() {}
+
+	static _registerEvent( ...args: hclInternal.EventArgs<hclInternal.EventName> ) {
+		const eventName = args[0];
+		const templateName = args[2]['0'].template_name;
+		const contextData = args[2]['0'].ctx;
+		if( args[1].config.debug ) {
+			log( 'HCL_EVENT: ', eventName );
+			log( 'HCL_TEMPLATE: ', templateName );
+			log( 'HCL_CTX: ', contextData );
+		}
+	}
+
+};
