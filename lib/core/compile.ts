@@ -37,7 +37,7 @@ core.template {
         else {
             const insertions:
             internals.compiledMap = { ...globalInsertions, partialInput };
-            if( args.ctx.config.debug ) stampLog( insertions, 'insertion::args|compile.ts#L44' );
+			hclDebugger._registerEvent( 'template::insert:args', args.ctx, arguments );
             const fileMeta = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
             const { rawFile } = fileMeta;
             const out = render( args.ctx.partials, rawFile, insertions, args.ctx.config.debug );

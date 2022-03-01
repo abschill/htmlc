@@ -78,12 +78,12 @@ export declare namespace internals {
 	export type ReservedWord = {
 		key: string;
 		boolean: ( target: string, arr: string ) => boolean;
-		array: ( target: string ) => RegExpMatchArray | null
+		array: ( target: string ) => RegExpMatchArray | null;
 	}
 
 	export interface RuntimeState {
-		conf: core.Context
-		template: ( name: string, data ?: object ) => core.template
+		ctx: core.Context;
+		template: ( name: string, data ?: object ) => core.template;
 	}
 }
 

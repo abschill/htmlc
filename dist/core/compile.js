@@ -3,7 +3,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const stamp_1 = require("../util/stamp");
 const _1 = __importDefault(require("."));
 const internals_1 = require("./internals");
 function compile(args) {
@@ -23,8 +22,7 @@ function compile(args) {
         }
         else {
             const insertions = Object.assign(Object.assign({}, globalInsertions), { partialInput });
-            if (args.ctx.config.debug)
-                (0, stamp_1.stampLog)(insertions, 'insertion::args|compile.ts#L44');
+            internals_1.hclDebugger._registerEvent('template::insert:args', args.ctx, arguments);
             const fileMeta = args.ctx.templates.filter(temp => temp.name === args.template_name)[0];
             const { rawFile } = fileMeta;
             const out = (0, _1.default)(args.ctx.partials, rawFile, insertions, args.ctx.config.debug);

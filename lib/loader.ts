@@ -12,7 +12,7 @@
  */
 import context from './util/options';
 import { watch } from 'fs';
-import { internals, _DEFAULTS } from './core/internals';
+import { internals, _DEFAULTS, hclDebugger } from './core/internals';
 import { stampLog } from './util/stamp';
 import compile from './core/compile';
 
@@ -64,27 +64,27 @@ export declare namespace core {
  * @function Loader
  * @description Rendering Context for templates
  * @param {Loader.Options}
- * @returns Loader for application
+ * @returns Factory function for runtime context
  */
 export const Loader = ( config ?: core.Options ):
 internals.RuntimeState => {
 
-    let conf: core.Context = context( config ?? _DEFAULTS );
+    let ctx: core.Context = context( config ?? _DEFAULTS );
 
-    if( conf.config.watch ) {
-        conf.partials.forEach( file => {
+    if( ctx.config.watch ) {
+        ctx.partials.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-                    if( conf.config.debug ) stampLog( `Modified ${filename}, refresh browser to apply changes`, 'watch::partials|loader.ts#L63' )
-                    conf = context( config ?? _DEFAULTS );
+                    if( ctx.config.debug ) stampLog( `Modified ${filename}, refresh browser to apply changes`, 'watch::partials|loader.ts#L63' )
+                    ctx = context( config ?? _DEFAULTS );
                 }
             });
         } );
-        conf.templates.forEach( file => {
+        ctx.templates.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-                    if( conf.config.debug ) stampLog( `Modified ${filename}, refresh browser to apply changes`, 'watch::templates|loader.ts#L71' )
-                    conf = context( config ?? _DEFAULTS );
+                    if( ctx.config.debug ) stampLog( `Modified ${filename}, refresh browser to apply changes`, 'watch::templates|loader.ts#L71' )
+                    ctx = context( config ?? _DEFAULTS );
                 }
             });
         } );
@@ -104,8 +104,8 @@ internals.RuntimeState => {
      */
     function template( name: string, data ?: internals.UINSERT_MAP ):
     core.template {
-        return compile( { template_name: name, ctx: conf, data } );
+        return compile( { template_name: name, ctx, data } );
     };
 
-    return { conf, template };
+    return { ctx, template };
 }

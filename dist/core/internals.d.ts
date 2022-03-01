@@ -62,7 +62,7 @@ export declare namespace internals {
         array: (target: string) => RegExpMatchArray | null;
     };
     interface RuntimeState {
-        conf: core.Context;
+        ctx: core.Context;
         template: (name: string, data?: object) => core.template;
     }
 }
