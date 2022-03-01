@@ -1,0 +1,3 @@
+0.4.5 - blockers
+
+- update context function to take UOptions and check over for each type before assigning default values.

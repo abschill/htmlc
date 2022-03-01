@@ -97,28 +97,28 @@ export interface LoaderContext {
     template: ( name: string, data ?: object ) => Runtime.template
 };
 
-export const DEFAULTS = {
-    "_publishDefault" : "dist",
-    "pathRoot":"views",
-    "partials":"partials",
-    "templates":"pages",
-    "outDefault":"public",
-    "static_config": {
-        "pathRoot": "views",
-        "partials": "partials",
-        "templates": "pages",
-        "outPath": "public",
-        "loaderFile":"loader.js",
-        "cleanup":true
-    }
-}
 export const _DEFAULTS: Runtime.Options = {
     pathRoot: 'views',
     templates: 'pages',
     partials: 'partials',
     templateInput: {},
     partialInput: {},
-    watch: true
+    watch: false,
+	debug: false
+}
+
+export const DEFAULTS = {
+	..._DEFAULTS,
+    _publishDefault : "dist",
+    outDefault: "public",
+    static_config: {
+        pathRoot: 'views',
+        partials: 'partials',
+        templates: 'pages',
+        outPath: 'public',
+        loaderFile: 'loader.js',
+        cleanup: true
+    }
 }
 
 const { log } = console;

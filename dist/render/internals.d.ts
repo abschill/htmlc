@@ -73,11 +73,9 @@ export interface LoaderContext {
     conf: Runtime.Context;
     template: (name: string, data?: object) => Runtime.template;
 }
+export declare const _DEFAULTS: Runtime.Options;
 export declare const DEFAULTS: {
     _publishDefault: string;
-    pathRoot: string;
-    partials: string;
-    templates: string;
     outDefault: string;
     static_config: {
         pathRoot: string;
@@ -87,14 +85,13 @@ export declare const DEFAULTS: {
         loaderFile: string;
         cleanup: boolean;
     };
-};
-export declare const _DEFAULTS: {
     pathRoot: string;
     templates: string;
     partials: string;
-    templateInput: {};
-    partialInput: {};
+    partialInput: object;
+    templateInput: object;
     watch: boolean;
+    debug: boolean;
 };
 export declare class hclDebugger {
     constructor();

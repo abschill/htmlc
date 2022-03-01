@@ -32,6 +32,16 @@ export declare namespace Runtime {
         debug ?: boolean;
     };
 
+	export type ROptions = {
+        pathRoot : string;
+        templates : string;
+        partials : string;
+        partialInput : hclInternal._insertMap;
+        templateInput : hclInternal._insertMap;
+        watch : boolean;
+        debug : boolean;
+    };
+
     export type Context = {
         config: Options;
         partials: hclFS.FileInputMeta[];

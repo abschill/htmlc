@@ -1,30 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.hclDebugger = exports._DEFAULTS = exports.DEFAULTS = void 0;
+exports.hclDebugger = exports.DEFAULTS = exports._DEFAULTS = void 0;
 ;
-exports.DEFAULTS = {
-    "_publishDefault": "dist",
-    "pathRoot": "views",
-    "partials": "partials",
-    "templates": "pages",
-    "outDefault": "public",
-    "static_config": {
-        "pathRoot": "views",
-        "partials": "partials",
-        "templates": "pages",
-        "outPath": "public",
-        "loaderFile": "loader.js",
-        "cleanup": true
-    }
-};
 exports._DEFAULTS = {
     pathRoot: 'views',
     templates: 'pages',
     partials: 'partials',
     templateInput: {},
     partialInput: {},
-    watch: true
+    watch: false,
+    debug: false
 };
+exports.DEFAULTS = Object.assign(Object.assign({}, exports._DEFAULTS), { _publishDefault: "dist", outDefault: "public", static_config: {
+        pathRoot: 'views',
+        partials: 'partials',
+        templates: 'pages',
+        outPath: 'public',
+        loaderFile: 'loader.js',
+        cleanup: true
+    } });
 const { log } = console;
 class hclDebugger {
     constructor() { }

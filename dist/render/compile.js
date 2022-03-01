@@ -15,8 +15,7 @@ function compile(args) {
     if (Object.keys(args.data).length === 0) {
         if (Object.keys(templateInput).includes(args.template_name)) {
             const insertions = Object.assign(Object.assign({}, globalInsertions), { partialInput });
-            if (args.ctx.config.debug)
-                (0, stamp_1.stampLog)(insertions, 'spread::args|compile.ts#L35');
+            internals_1.hclDebugger._registerEvent('insert', args.ctx, arguments);
             const fileMeta = args.ctx.templates.filter(temp => temp.name === args.template_name)[0];
             const { rawFile } = fileMeta;
             const out = (0, _1.default)(args.ctx.partials, rawFile, insertions, args.ctx.config.debug);

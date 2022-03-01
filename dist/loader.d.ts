@@ -3,7 +3,7 @@ export declare namespace Runtime {
     type Event<T> = {
         (args: T): T;
     };
-    type Options = {
+    type UOptions = {
         pathRoot?: string;
         templates?: string;
         partials?: string;
@@ -11,6 +11,15 @@ export declare namespace Runtime {
         templateInput?: hclInternal._insertMap;
         watch?: boolean;
         debug?: boolean;
+    };
+    type Options = {
+        pathRoot: string;
+        templates: string;
+        partials: string;
+        partialInput: hclInternal._insertMap;
+        templateInput: hclInternal._insertMap;
+        watch: boolean;
+        debug: boolean;
     };
     type Context = {
         config: Options;
