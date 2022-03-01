@@ -28,8 +28,7 @@ Runtime.template {
         if( Object.keys( templateInput ).includes( args.template_name ) ) {
             const insertions:
             hclInternal.compiledMap = { ...globalInsertions, partialInput };
-
-            if( args.ctx.config.debug ) stampLog( insertions, 'spread::args|compile.ts#L35' );
+            hclDebugger._registerEvent( 'insert', args.ctx, arguments );
             const fileMeta = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
             const { rawFile } = fileMeta;
             const out = render( args.ctx.partials, rawFile, insertions, args.ctx.config.debug );
@@ -57,7 +56,6 @@ Runtime.template {
                 ...args.data[ 'partialInput' ]
             }
         };
-
         hclDebugger._registerEvent( 'insert', args.ctx, arguments );
         const fileMeta = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
         const { rawFile } = fileMeta;

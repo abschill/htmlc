@@ -112,7 +112,7 @@ export const DEFAULTS = {
         "cleanup":true
     }
 }
-export const _DEFAULTS = {
+export const _DEFAULTS: Runtime.Options = {
     pathRoot: 'views',
     templates: 'pages',
     partials: 'partials',

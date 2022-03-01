@@ -32,9 +32,11 @@ class hclDebugger {
         const eventName = args[0];
         const templateName = args[2]['0'].template_name;
         const contextData = args[2]['0'].ctx;
-        log('HCL_EVENT: ', eventName);
-        log('HCL_TEMPLATE: ', templateName);
-        log('HCL_CTX: ', contextData);
+        if (args[1].config.debug) {
+            log('HCL_EVENT: ', eventName);
+            log('HCL_TEMPLATE: ', templateName);
+            log('HCL_CTX: ', contextData);
+        }
     }
 }
 exports.hclDebugger = hclDebugger;

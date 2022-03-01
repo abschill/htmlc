@@ -23,30 +23,30 @@ export declare namespace Runtime {
 	}
 
     export type Options = {
-        pathRoot ?: string
-        templates ?: string
-        partials ?: string
-        partialInput ?: hclInternal._insertMap
-        templateInput ?: hclInternal._insertMap
-        watch ?: boolean
-        debug ?: boolean
+        pathRoot ?: string;
+        templates ?: string;
+        partials ?: string;
+        partialInput ?: hclInternal._insertMap;
+        templateInput ?: hclInternal._insertMap;
+        watch ?: boolean;
+        debug ?: boolean;
     };
 
     export type Context = {
-        config: Options
-        partials: hclFS.FileInputMeta[]
-        templates: hclFS.FileInputMeta[]
+        config: Options;
+        partials: hclFS.FileInputMeta[];
+        templates: hclFS.FileInputMeta[];
     };
 
     export type template = string;
 
     export type StaticOptions = {
-        load_options: Options
+        load_options: Options;
         static_options: {
-            cleanup: boolean
-            outPath: string
-            loaderFile: string | string[]
-        }
+            cleanup: boolean;
+            outPath: string;
+            loaderFile: string | string[];
+        };
     };
 }
 

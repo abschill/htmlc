@@ -10,8 +10,6 @@ function compile(args) {
     const { templateInput = {}, partialInput = {} } = args.ctx.config;
     if (!args.data)
         args.data = {};
-    if (args.ctx.config.debug) {
-    }
     internals_1.hclDebugger._registerEvent('init', args.ctx, arguments);
     const globalInsertions = templateInput;
     if (Object.keys(args.data).length === 0) {
@@ -37,8 +35,7 @@ function compile(args) {
     else {
         const scopedInsertions = Object.assign(Object.assign({}, templateInput), args.data);
         const insertions = Object.assign(Object.assign(Object.assign({}, globalInsertions), scopedInsertions), { partialInput: Object.assign(Object.assign({}, partialInput), args.data['partialInput']) });
-        if (args.ctx.config.debug)
-            (0, stamp_1.stampLog)(insertions, 'insertion::args|compile.ts#L67');
+        internals_1.hclDebugger._registerEvent('insert', args.ctx, arguments);
         const fileMeta = args.ctx.templates.filter(temp => temp.name === args.template_name)[0];
         const { rawFile } = fileMeta;
         const out = (0, _1.default)(args.ctx.partials, rawFile, insertions, args.ctx.config.debug);
