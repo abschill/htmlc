@@ -13,7 +13,7 @@ import { internals } from '../core/internals';
  * @returns array of files in directory
  */
 export const _files = ( dir: string ) => fs.readdirSync( dir )
-.filter(x => fs.lstatSync( path.join(dir, x )).isFile() )
+.filter(x => fs.lstatSync( path.join( dir, x )).isFile() )
 .map( x => path.resolve( dir, x ) );
 
 export const resolvePartials = ( conf: core.Options ):

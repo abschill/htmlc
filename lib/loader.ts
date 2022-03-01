@@ -12,7 +12,7 @@
  */
 import context from './util/options';
 import { watch } from 'fs';
-import { internals, _DEFAULTS, hclDebugger } from './core/internals';
+import { internals, compiler,  _DEFAULTS, hclDebugger } from './core/internals';
 import { stampLog } from './util/stamp';
 import compile from './core/compile';
 
@@ -26,8 +26,8 @@ export declare namespace core {
         pathRoot ?: string;
         templates ?: string;
         partials ?: string;
-        partialInput ?: internals.UINSERT_MAP;
-        templateInput ?: internals.UINSERT_MAP;
+        partialInput ?: compiler.UINSERT_MAP;
+        templateInput ?: compiler.UINSERT_MAP;
         watch ?: boolean;
         debug ?: boolean;
     };
@@ -36,8 +36,8 @@ export declare namespace core {
         pathRoot : string;
         templates : string;
         partials : string;
-        partialInput : internals.UINSERT_MAP;
-        templateInput : internals.UINSERT_MAP;
+        partialInput : compiler.UINSERT_MAP;
+        templateInput : compiler.UINSERT_MAP;
         watch : boolean;
         debug : boolean;
     };
@@ -102,7 +102,7 @@ internals.RuntimeState => {
      * Loader.template( 'home', {...homeData} );
      * ```
      */
-    function template( name: string, data ?: internals.UINSERT_MAP ):
+    function template( name: string, data ?: compiler.UINSERT_MAP ):
     core.template {
         return compile( { template_name: name, ctx, data } );
     };

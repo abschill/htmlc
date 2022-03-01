@@ -1,4 +1,4 @@
-import { internals } from './core/internals';
+import { internals, compiler } from './core/internals';
 export declare namespace core {
     type Event<T> = {
         (args: T): T;
@@ -7,8 +7,8 @@ export declare namespace core {
         pathRoot?: string;
         templates?: string;
         partials?: string;
-        partialInput?: internals.UINSERT_MAP;
-        templateInput?: internals.UINSERT_MAP;
+        partialInput?: compiler.UINSERT_MAP;
+        templateInput?: compiler.UINSERT_MAP;
         watch?: boolean;
         debug?: boolean;
     };
@@ -16,8 +16,8 @@ export declare namespace core {
         pathRoot: string;
         templates: string;
         partials: string;
-        partialInput: internals.UINSERT_MAP;
-        templateInput: internals.UINSERT_MAP;
+        partialInput: compiler.UINSERT_MAP;
+        templateInput: compiler.UINSERT_MAP;
         watch: boolean;
         debug: boolean;
     };

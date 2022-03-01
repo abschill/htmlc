@@ -1,11 +1,17 @@
-import { internals } from "./internals";
-import { hasLoop, matchLoop, hasKey, matchKey, hasPartial, matchPartial } from './ast';
+import { compiler } from "./internals";
+import {
+	hasLoop,
+	matchLoop,
+	hasKey,
+	matchKey,
+	hasPartial,
+	matchPartial
+} from './ast';
 
 export const KEY_MAP = [ '@for', '@render', '@render-partial' ];
 
-
 const RESERVED_WORDS:
-internals.Dictionary<internals.ReservedWord> = [
+compiler.Dictionary<compiler.ReservedWord> = [
     {
         key: '@for',
         boolean: hasLoop,

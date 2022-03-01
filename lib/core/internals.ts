@@ -1,51 +1,69 @@
 import { core } from '../loader';
-export declare namespace internals {
 
-	export type EventName = string;
-
-	export type EventArgs<T> = [
+export declare namespace coreEvent {
+	export type Name = string;
+	export type Args<T> = [
 		T,
 		core.Context,
 		IArguments
 	]
 
-	export interface CompilerArgs {
+	export interface Trigger<T> {
+		name: string;
+		signature: Args<T>
+	}
+}
+
+export declare namespace compiler {
+	export type ASTMatch = RegExpMatchArray | []
+
+	export interface Args {
 		template_name: string;
 		ctx: core.Context;
-		data ?: UINSERT_MAP;
+		data ?: compiler.UINSERT_MAP;
 	}
 
-    export type Entry = Array<string | UINSERT_MAP>;
+	export interface RenderMap {
+        todo_partials: ASTMatch;
+        todo_keys: ASTMatch;
+        todo_loops: ASTMatch;
+    }
 
-    export type Insertion = [
-        string|UINSERT_MAP,
-        Entry
-    ];
+	export type Dictionary<ReservedWord> = Array<ReservedWord>
 
-    export type _match = RegExpMatchArray | []
+	export type ReservedWord = {
+		key: string;
+		boolean: ( target: string, arr: string ) => boolean;
+		array: ( target: string ) => RegExpMatchArray | null;
+	}
 
-    export type UINSERT_MAP = object;
+	export type StackItem = {
+        replacer: core.template;
+        insertion: core.template | core.template[] | core.template[][];
+    }
+
+	export type UINSERT_MAP = object;
+
 
     export interface compiledMap extends UINSERT_MAP {
         partialInput: UINSERT_MAP;
     }
+}
 
-    export interface RenderMap {
-        todo_partials: _match;
-        todo_keys: _match;
-        todo_loops: _match;
-    }
+export declare namespace internals {
+
+    export type Entry = Array<string | compiler.UINSERT_MAP>;
+
+    export type Insertion = [
+        string|compiler.UINSERT_MAP,
+        Entry
+    ];
 
     export type Resolved<RenderMap> = {
         raw: string;
         renderMap: RenderMap;
-        insertionMap: UINSERT_MAP;
+        insertionMap: compiler.UINSERT_MAP;
         render: string;
-    }
-
-    export type StackItem = {
-        replacer: core.template;
-        insertion: core.template | core.template[] | core.template[][];
     }
 
     export type RenderTemplateArgs = {
@@ -71,14 +89,6 @@ export declare namespace internals {
 
 	export interface TemplateInsertion {
 		partialInput ?: TemplateInsertion;
-	}
-
-	export type Dictionary<ReservedWord> = Array<ReservedWord>
-
-	export type ReservedWord = {
-		key: string;
-		boolean: ( target: string, arr: string ) => boolean;
-		array: ( target: string ) => RegExpMatchArray | null;
 	}
 
 	export interface RuntimeState {
@@ -117,7 +127,7 @@ export class hclDebugger {
 
 	constructor() {}
 
-	static _registerEvent( ...args: internals.EventArgs<internals.EventName> ) {
+	static _registerEvent( ...args: coreEvent.Args<coreEvent.Name> ) {
 		const eventName = args[0];
 		const templateName = args[2]['0'].template_name;
 		const contextData = args[2]['0'].ctx;

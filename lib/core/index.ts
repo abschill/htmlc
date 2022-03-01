@@ -7,7 +7,7 @@ import RESERVED_WORDS, { KEY_MAP } from './abt';
 import { FOR_H, FOR_T } from './ast';
 import { cleanHTML } from '../util/cleanHTML';
 import { core } from '../loader';
-import { internals } from './internals';
+import { internals, compiler } from './internals';
 import { stampLog } from '../util/stamp';
 const { warn } = console;
 /**
@@ -18,8 +18,8 @@ const { warn } = console;
 
 const genRenderMap = (
     _content: string
-): internals.RenderMap => {
-    const _map: internals.RenderMap = {
+): compiler.RenderMap => {
+    const _map: compiler.RenderMap = {
         todo_keys: [],
         todo_loops: [],
         todo_partials: []
@@ -52,7 +52,7 @@ const handleXDIterable = (
      insert: internals.Insertion | internals.Entry
 ): core.template => {
     let copy = clone;
-    insert.forEach( ( insertion: string | internals.UINSERT_MAP ) => {
+    insert.forEach( ( insertion: string | compiler.UINSERT_MAP ) => {
         copy = copy.replace( `{${insertion[0]}}`, insertion[1] );
     } );
     return copy;
@@ -67,13 +67,13 @@ const handleXDIterable = (
  */
 const resolveRender = (
     file: string,
-    renderMap: internals.RenderMap,
-    insertionMap: internals.UINSERT_MAP,
+    renderMap: compiler.RenderMap,
+    insertionMap: compiler.UINSERT_MAP,
     debug ?: boolean
-): internals.Resolved<internals.RenderMap> => {
+): internals.Resolved<compiler.RenderMap> => {
     let copy = file;
-    const outVal: internals.StackItem[] = [];
-    const outObj: internals.StackItem[] = [];
+    const outVal: compiler.StackItem[] = [];
+    const outObj: compiler.StackItem[] = [];
 
     if( debug ) stampLog( renderMap, 'rendermap::map|render/index.ts#L78' );
 
@@ -105,7 +105,7 @@ const resolveRender = (
 
                         let elChild = r.replace( FOR_H( loopName ), '' ).replace( FOR_T(), '' )
                                         .trimStart().replace( /\s\s+/gi, '');
-                        toInsert?.forEach( ( insertion ?: string | internals.UINSERT_MAP ) => {
+                        toInsert?.forEach( ( insertion ?: string | compiler.UINSERT_MAP ) => {
                             if( typeof( insertion ) === 'string' ) {
                                 //1d array
                                 outVal.push( { replacer: r, insertion: handle1DIterable( elChild, insertion as string ) } );
@@ -140,10 +140,10 @@ const resolveRender = (
         stampLog( outObj, 'outobj::prejoin|render/index.ts#L140' );
     }
 
-    const valStr = outVal.map( ( val: internals.StackItem ) => val.insertion ).join( '' );
-    const objStr = outObj.map( ( obj: internals.StackItem ) => obj.insertion ).join( '' );
-    outVal.forEach( ( _out: internals.StackItem ) => copy = copy.replace( _out.replacer, valStr ) );
-    outObj.forEach( ( _out: internals.StackItem ) => copy = copy.replace( _out.replacer, objStr ) );
+    const valStr = outVal.map( ( val: compiler.StackItem ) => val.insertion ).join( '' );
+    const objStr = outObj.map( ( obj: compiler.StackItem ) => obj.insertion ).join( '' );
+    outVal.forEach( ( _out: compiler.StackItem ) => copy = copy.replace( _out.replacer, valStr ) );
+    outObj.forEach( ( _out: compiler.StackItem ) => copy = copy.replace( _out.replacer, objStr ) );
 
     if( debug ) {
         stampLog( valStr, 'valstr::postjoin|render/index.ts#L149' );
@@ -161,7 +161,7 @@ const resolveRender = (
 const render = (
     declaredPartials: internals.FileInputMeta[],
     rawFile: internals.fileUTF8,
-    insertMap: internals.UINSERT_MAP,
+    insertMap: compiler.UINSERT_MAP,
     debug?: boolean
 ): core.template => {
     let rootCopy = rawFile;

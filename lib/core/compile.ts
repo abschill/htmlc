@@ -1,10 +1,9 @@
 import { core } from '../loader';
-import { internals } from './internals';
-import { stampLog } from '../util/stamp';
+import { compiler } from './internals';
 import render from '.';
 import { hclDebugger } from './internals';
 
-export default function compile( args: internals.CompilerArgs ):
+export default function compile( args: compiler.Args ):
 core.template {
     /**
      * If any data was keyed with the template name in the constructor, we will use as a secondary priority load value
@@ -23,11 +22,11 @@ core.template {
     */
     //if no data, load default input for template
     const globalInsertions:
-    internals.UINSERT_MAP = templateInput;
+    compiler.UINSERT_MAP = templateInput;
     if( Object.keys( args.data ).length === 0 ) {
         if( Object.keys( templateInput ).includes( args.template_name ) ) {
             const insertions:
-            internals.compiledMap = { ...globalInsertions, partialInput };
+            compiler.compiledMap = { ...globalInsertions, partialInput };
             hclDebugger._registerEvent( 'insert', args.ctx, arguments );
             const fileMeta = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
             const { rawFile } = fileMeta;
@@ -36,7 +35,7 @@ core.template {
         }
         else {
             const insertions:
-            internals.compiledMap = { ...globalInsertions, partialInput };
+            compiler.compiledMap = { ...globalInsertions, partialInput };
 			hclDebugger._registerEvent( 'template::insert:args', args.ctx, arguments );
             const fileMeta = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
             const { rawFile } = fileMeta;
@@ -46,10 +45,10 @@ core.template {
     }
     else {
         const scopedInsertions:
-        internals.UINSERT_MAP = { ...templateInput, ...args.data };
+        compiler.UINSERT_MAP = { ...templateInput, ...args.data };
 
         const insertions:
-        internals.compiledMap = {
+        compiler.compiledMap = {
             ...globalInsertions, ...scopedInsertions,
             partialInput: {
                 ...partialInput,
