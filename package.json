@@ -16,8 +16,6 @@
     "testCli": "yarn build && node dist/util/cli"
   },
   "files": [
-    "lib/**/*",
-    "dist/*",
     "dist/**/*"
   ],
   "keywords": [
