@@ -123,7 +123,7 @@ export const DEFAULTS = {
 
 const { log } = console;
 
-export class hclDebugger {
+export class Debugger {
 
 	constructor() {}
 
@@ -137,4 +137,11 @@ export class hclDebugger {
 			log( 'HCL_CTX: ', contextData );
 		}
 	}
+
+	static _registerMap( rmap: compiler.RenderMap, imap: compiler.UINSERT_MAP ) {
+		log( 'HCL_EVENT: map::register' );
+		log( rmap );
+		log( imap );
+	}
+
 };

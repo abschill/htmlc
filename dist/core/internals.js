@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.hclDebugger = exports.DEFAULTS = exports._DEFAULTS = void 0;
+exports.Debugger = exports.DEFAULTS = exports._DEFAULTS = void 0;
 exports._DEFAULTS = {
     pathRoot: 'views',
     templates: 'pages',
@@ -19,7 +19,7 @@ exports.DEFAULTS = Object.assign(Object.assign({}, exports._DEFAULTS), { _publis
         cleanup: true
     } });
 const { log } = console;
-class hclDebugger {
+class Debugger {
     constructor() { }
     static _registerEvent(...args) {
         const eventName = args[0];
@@ -31,7 +31,12 @@ class hclDebugger {
             log('HCL_CTX: ', contextData);
         }
     }
+    static _registerMap(rmap, imap) {
+        log('HCL_EVENT: map::register');
+        log(rmap);
+        log(imap);
+    }
 }
-exports.hclDebugger = hclDebugger;
+exports.Debugger = Debugger;
 ;
 //# sourceMappingURL=internals.js.map

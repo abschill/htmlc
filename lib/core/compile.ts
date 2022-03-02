@@ -1,7 +1,7 @@
 import { core } from '../loader';
 import { compiler } from './internals';
 import render from '.';
-import { hclDebugger } from './internals';
+import { Debugger } from './internals';
 
 export default function compile( args: compiler.Args ):
 core.template {
@@ -13,7 +13,8 @@ core.template {
     // unset null data if applicable
     if( !args.data ) args.data = {};
 
-    hclDebugger._registerEvent( 'init', args.ctx, arguments );
+    Debugger._registerEvent( 'init', args.ctx, arguments );
+
     /**
          * steps
          * 1: if no data, grab template with constructor data
@@ -27,7 +28,9 @@ core.template {
         if( Object.keys( templateInput ).includes( args.template_name ) ) {
             const insertions:
             compiler.compiledMap = { ...globalInsertions, partialInput };
-            hclDebugger._registerEvent( 'insert', args.ctx, arguments );
+
+            Debugger._registerEvent( 'insert', args.ctx, arguments );
+
             const fileMeta = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
             const { rawFile } = fileMeta;
             const out = render( args.ctx.partials, rawFile, insertions, args.ctx.config.debug );
@@ -36,7 +39,9 @@ core.template {
         else {
             const insertions:
             compiler.compiledMap = { ...globalInsertions, partialInput };
-			hclDebugger._registerEvent( 'template::insert:args', args.ctx, arguments );
+
+			Debugger._registerEvent( 'template::insert:args', args.ctx, arguments );
+
             const fileMeta = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
             const { rawFile } = fileMeta;
             const out = render( args.ctx.partials, rawFile, insertions, args.ctx.config.debug );
@@ -55,7 +60,9 @@ core.template {
                 ...args.data[ 'partialInput' ]
             }
         };
-        hclDebugger._registerEvent( 'insert', args.ctx, arguments );
+
+        Debugger._registerEvent( 'insert', args.ctx, arguments );
+
         const fileMeta = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
         const { rawFile } = fileMeta;
         const out = render( args.ctx.partials, rawFile, insertions, args.ctx.config.debug );

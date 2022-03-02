@@ -94,7 +94,8 @@ export declare const DEFAULTS: {
     watch?: boolean;
     debug?: boolean;
 };
-export declare class hclDebugger {
+export declare class Debugger {
     constructor();
     static _registerEvent(...args: coreEvent.Args<coreEvent.Name>): void;
+    static _registerMap(rmap: compiler.RenderMap, imap: compiler.UINSERT_MAP): void;
 }

@@ -1,7 +1,7 @@
 const { time, timeEnd, log } = console;
 
 
-export const stampLog = ( msg: object | string, label: string ) => {
+export const stamp = ( msg: object | string, label: string ) => {
     time( label );
     log( '\n' );
     log( '~~~~~~~~~~~~~~~~~~' );

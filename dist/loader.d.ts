@@ -36,4 +36,4 @@ export declare namespace core {
         };
     };
 }
-export declare const Loader: (config?: core.Options) => internals.RuntimeState;
+export declare function Loader(config?: core.Options): internals.RuntimeState;

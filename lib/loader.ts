@@ -12,8 +12,8 @@
  */
 import context from './util/options';
 import { watch } from 'fs';
-import { internals, compiler,  _DEFAULTS, hclDebugger } from './core/internals';
-import { stampLog } from './util/stamp';
+import { internals, compiler,  _DEFAULTS } from './core/internals';
+import { Debugger } from './core/internals';
 import compile from './core/compile';
 
 export declare namespace core {
@@ -66,8 +66,8 @@ export declare namespace core {
  * @param {Loader.Options}
  * @returns Factory function for runtime context
  */
-export const Loader = ( config ?: core.Options ):
-internals.RuntimeState => {
+export function Loader ( config ?: core.Options ):
+internals.RuntimeState {
 
     let ctx: core.Context = context( config ?? _DEFAULTS );
 
@@ -75,16 +75,18 @@ internals.RuntimeState => {
         ctx.partials.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-                    if( ctx.config.debug ) stampLog( `Modified ${filename}, refresh browser to apply changes`, 'watch::partials|loader.ts#L63' )
-                    ctx = context( config ?? _DEFAULTS );
+                    //if( ctx.config.debug ) stampLog( `Modified ${filename}, refresh browser to apply changes`, 'watch::partials|loader.ts#L63' )
+                    Debugger._registerEvent( `Modified ${filename}, refresh browser to apply changes`, ctx, arguments );
+					ctx = context( config ?? _DEFAULTS );
                 }
             });
         } );
         ctx.templates.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-                    if( ctx.config.debug ) stampLog( `Modified ${filename}, refresh browser to apply changes`, 'watch::templates|loader.ts#L71' )
-                    ctx = context( config ?? _DEFAULTS );
+                    //if( ctx.config.debug ) stampLog( `Modified ${filename}, refresh browser to apply changes`, 'watch::templates|loader.ts#L71' )
+					Debugger._registerEvent( `Modified ${filename}, refresh browser to apply changes`, ctx, arguments );
+					ctx = context( config ?? _DEFAULTS );
                 }
             });
         } );

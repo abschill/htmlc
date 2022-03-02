@@ -1,1 +1,1 @@
-export declare const stampLog: (msg: object | string, label: string) => void;
+export declare const stamp: (msg: object | string, label: string) => void;

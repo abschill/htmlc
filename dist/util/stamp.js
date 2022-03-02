@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stampLog = void 0;
+exports.stamp = void 0;
 const { time, timeEnd, log } = console;
-const stampLog = (msg, label) => {
+const stamp = (msg, label) => {
     time(label);
     log('\n');
     log('~~~~~~~~~~~~~~~~~~');
@@ -10,5 +10,5 @@ const stampLog = (msg, label) => {
     log('\n');
     timeEnd(label);
 };
-exports.stampLog = stampLog;
+exports.stamp = stamp;
 //# sourceMappingURL=stamp.js.map
