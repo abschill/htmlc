@@ -15,28 +15,23 @@ function compile(args) {
         if (Object.keys(templateInput).includes(args.template_name)) {
             const insertions = Object.assign(Object.assign({}, globalInsertions), { partialInput });
             internals_1.Debugger._registerEvent('insert', args.ctx, arguments);
-            const fileMeta = args.ctx.templates.filter(temp => temp.name === args.template_name)[0];
-            const { rawFile } = fileMeta;
+            const { rawFile } = args.ctx.templates.filter(temp => temp.name === args.template_name)[0];
             const out = (0, _1.default)(args.ctx.partials, rawFile, insertions, args.ctx.config.debug);
             return out;
         }
         else {
             const insertions = Object.assign(Object.assign({}, globalInsertions), { partialInput });
             internals_1.Debugger._registerEvent('template::insert:args', args.ctx, arguments);
-            const fileMeta = args.ctx.templates.filter(temp => temp.name === args.template_name)[0];
-            const { rawFile } = fileMeta;
-            const out = (0, _1.default)(args.ctx.partials, rawFile, insertions, args.ctx.config.debug);
-            return out;
+            const { rawFile } = args.ctx.templates.filter(temp => temp.name === args.template_name)[0];
+            return (0, _1.default)(args.ctx.partials, rawFile, insertions, args.ctx.config.debug);
         }
     }
     else {
         const scopedInsertions = Object.assign(Object.assign({}, templateInput), args.data);
         const insertions = Object.assign(Object.assign(Object.assign({}, globalInsertions), scopedInsertions), { partialInput: Object.assign(Object.assign({}, partialInput), args.data['partialInput']) });
         internals_1.Debugger._registerEvent('insert', args.ctx, arguments);
-        const fileMeta = args.ctx.templates.filter(temp => temp.name === args.template_name)[0];
-        const { rawFile } = fileMeta;
-        const out = (0, _1.default)(args.ctx.partials, rawFile, insertions, args.ctx.config.debug);
-        return out;
+        const { rawFile } = args.ctx.templates.filter(temp => temp.name === args.template_name)[0];
+        return (0, _1.default)(args.ctx.partials, rawFile, insertions, args.ctx.config.debug);
     }
 }
 exports.default = compile;

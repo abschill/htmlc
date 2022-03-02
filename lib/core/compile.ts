@@ -28,24 +28,17 @@ core.template {
         if( Object.keys( templateInput ).includes( args.template_name ) ) {
             const insertions:
             compiler.compiledMap = { ...globalInsertions, partialInput };
-
             Debugger._registerEvent( 'insert', args.ctx, arguments );
-
-            const fileMeta = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
-            const { rawFile } = fileMeta;
+            const { rawFile } = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
             const out = render( args.ctx.partials, rawFile, insertions, args.ctx.config.debug );
             return out;
         }
         else {
             const insertions:
             compiler.compiledMap = { ...globalInsertions, partialInput };
-
 			Debugger._registerEvent( 'template::insert:args', args.ctx, arguments );
-
-            const fileMeta = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
-            const { rawFile } = fileMeta;
-            const out = render( args.ctx.partials, rawFile, insertions, args.ctx.config.debug );
-            return out;
+            const { rawFile } = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
+            return render( args.ctx.partials, rawFile, insertions, args.ctx.config.debug );
         }
     }
     else {
@@ -62,10 +55,7 @@ core.template {
         };
 
         Debugger._registerEvent( 'insert', args.ctx, arguments );
-
-        const fileMeta = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
-        const { rawFile } = fileMeta;
-        const out = render( args.ctx.partials, rawFile, insertions, args.ctx.config.debug );
-        return out;
+        const { rawFile } = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
+        return render( args.ctx.partials, rawFile, insertions, args.ctx.config.debug );
     }
 }
