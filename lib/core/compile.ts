@@ -15,12 +15,6 @@ core.template {
 
     Debugger._registerEvent( 'init', args.ctx, arguments );
 
-    /**
-         * steps
-         * 1: if no data, grab template with constructor data
-         * 2: if data, compile data and grab template
-         * 3:
-    */
     //if no data, load default input for template
     const globalInsertions:
     compiler.UINSERT_MAP = templateInput;

@@ -1,7 +1,7 @@
-
-import { Loader } from '../dist/loader.js';
-import partialData from './partialData.json';
-import templateData from './templateData.json';
+// test cjs import in def
+const Loader = require( '../dist' );
+const partialData = require( './partialData.json' );
+const templateData = require( './templateData.json' );
 
 const myLoader = Loader( {
     pathRoot: "test-pkg/def",
@@ -11,7 +11,7 @@ const myLoader = Loader( {
 } );
 const home = myLoader.template( 'home' );
 
-describe( 'Example Home Page Tests | ESM', () => {
+describe( 'Example Home Page Tests | CJS', () => {
 
     it( 'Loads page_title *', () => {
         expect( home ).toMatch( `<title>${partialData.page_title}</title>` );
@@ -25,4 +25,3 @@ describe( 'Example Home Page Tests | ESM', () => {
         expect( home ).toMatch( `<meta name="description" content="${partialData.page_description}"/>` );
     } );
 } );
-
