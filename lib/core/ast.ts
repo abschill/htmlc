@@ -10,13 +10,13 @@ export const FOR_T = (): string => `}-->`;
 /**
  *
  * @param {string} target the DOM to match against
- * @param {string} key the key of the iterable to match
- * @returns {boolean} If the DOM has the render loop
+ * @param {string} k the key of the iterable to match
+ * @returns {boolean} If the DOM String has the render loop
  */
-export const hasLoop = ( target: string, arr: string ):
-boolean => target.includes( `<!--@for(${arr}){` );
+export const hasLoop = ( target: string, k: string ):
+boolean => target.includes( `<!--@for(${k}){` );
 
-export const loopIndex = ( target: string, arr: string ) => ( { 'head':target.indexOf( `<!--@for(${arr}){` ), 'tail': target.indexOf( '}-->') } );
+export const loopIndex = ( target: string, k: string ) => ( { 'head':target.indexOf( `<!--@for(${k}){` ), 'tail': target.indexOf( '}-->') } );
 /**
  *
  * @param {string} target The Partial/Template to match render loop against
@@ -41,20 +41,20 @@ Array<string> => {
 /**
  *
  * @param {string} target the DOM to match against
- * @param {string} key the key of the iterable to match
+ * @param {string} k the key of the iterable to match
  * @returns {boolean} If the DOM has the render key
  */
-export const hasKey = ( target: string, key: string ):
-boolean => target.includes( `<!--@render=${key}-->` );
+export const hasKey = ( target: string, k: string ):
+boolean => target.includes( `<!--@render=${k}-->` );
 
-export const keyIndex = ( target: string, key: string ):
-number => target.indexOf( `<!--@render=${key}-->` );
+export const keyIndex = ( target: string, k: string ):
+number => target.indexOf( `<!--@render=${k}-->` );
 
-export const translateKeyName = ( templated_key: string ):
-string => templated_key.split( 'render=' )[1].split( '-->' )[0];
+export const translateKeyName = ( t_k: string ):
+string => t_k.split( 'render=' )[1].split( '-->' )[0];
 
-export const replaceKey = ( target: string, key: string, value: string ):
-string => target.replace( key, value );
+export const replaceKey = ( target: string, k: string, v: string ):
+string => target.replace( k, v );
 
 /**
  *
@@ -67,17 +67,17 @@ RegExpMatchArray | null => target.match( /<!--@render=[\w|\d]+-->/gi );
 /**
  *
  * @param {string} target the DOM to match against
- * @param {string} key the key of the iterable to match
+ * @param {string} k the key of the iterable to match
  * @returns {boolean} If the DOM has the partial key
  */
-export const hasPartial = ( target: string, key: string ):
-boolean => target.includes( `<!--@render-partial=${key}-->` );
+export const hasPartial = ( target: string, k: string ):
+boolean => target.includes( `<!--@render-partial=${k}-->` );
 
-export const partialIndex = ( target: string, key: string ):
-number => target.indexOf( `<!--@render-partial=${key}-->` );
+export const partialIndex = ( target: string, k: string ):
+number => target.indexOf( `<!--@render-partial=${k}-->` );
 
-export const replacePartial = ( target: string, key: string, value: string ):
-string => target.replace( key, value );
+export const replacePartial = ( target: string, k: string, value: string ):
+string => target.replace( k, value );
 /**
  *
  * @param {string} target The Partial/Template to match partial key against

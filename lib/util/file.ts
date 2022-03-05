@@ -49,9 +49,7 @@ internals.FileInputMeta[] => {
     const _path = path.join( process.cwd(), pathRoot, templates );
     if( _path ) {
         try {
-            const __files = _files( _path );
-            const files = __files.map( mapFileData );
-            return files;
+            return _files( _path ).map( mapFileData );
         }
         catch( e ) {
             throw e;

@@ -24,8 +24,7 @@ core.template {
             compiler.compiledMap = { ...globalInsertions, partialInput };
             Debugger._registerEvent( 'insert', args.ctx, arguments );
             const { rawFile } = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
-            const out = render( args.ctx.partials, rawFile, insertions, args.ctx.config.debug );
-            return out;
+            return render( args.ctx.partials, rawFile, insertions, args.ctx.config.debug );
         }
         else {
             const insertions:

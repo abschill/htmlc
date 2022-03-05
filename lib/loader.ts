@@ -17,6 +17,10 @@ import { Debugger } from './core/internals';
 import compile from './core/compile';
 
 export declare namespace core {
+	export interface RuntimeState {
+		ctx: core.Context;
+		template: ( name: string, data ?: object ) => core.template;
+	}
 
 	export type Event<T> = {
 		( args: T ): T;
@@ -67,7 +71,7 @@ export declare namespace core {
  * @returns Factory function for runtime context
  */
 export function Loader ( config ?: core.Options ):
-internals.RuntimeState {
+core.RuntimeState {
 
     let ctx: core.Context = context( config ?? _DEFAULTS );
 

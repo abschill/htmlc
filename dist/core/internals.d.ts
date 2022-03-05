@@ -69,10 +69,6 @@ export declare namespace internals {
     interface TemplateInsertion {
         partialInput?: TemplateInsertion;
     }
-    interface RuntimeState {
-        ctx: core.Context;
-        template: (name: string, data?: object) => core.template;
-    }
 }
 export declare const _DEFAULTS: core.Options;
 export declare const DEFAULTS: {

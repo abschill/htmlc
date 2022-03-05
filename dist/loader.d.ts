@@ -1,5 +1,9 @@
 import { internals, compiler } from './core/internals';
 export declare namespace core {
+    interface RuntimeState {
+        ctx: core.Context;
+        template: (name: string, data?: object) => core.template;
+    }
     type Event<T> = {
         (args: T): T;
     };
@@ -36,4 +40,4 @@ export declare namespace core {
         };
     };
 }
-export declare function Loader(config?: core.Options): internals.RuntimeState;
+export declare function Loader(config?: core.Options): core.RuntimeState;
