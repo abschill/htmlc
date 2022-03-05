@@ -12,7 +12,7 @@ import { Debugger } from './internals';
 const { warn } = console;
 
 const rmap = (
-    _content: string
+    content: string
 ): compiler.RenderMap => {
     const _map: compiler.RenderMap = {
         todo_keys: [],
@@ -21,7 +21,7 @@ const rmap = (
     };
 
     RESERVED_WORDS.forEach( token => {
-        const keymap = token.array( _content );
+        const keymap = token.array( content );
         switch( token.key ) {
             case '@render':
                 keymap ? _map.todo_keys = keymap: _map.todo_keys = [];
@@ -29,7 +29,7 @@ const rmap = (
             case '@for':
                 keymap ? _map.todo_loops = keymap: _map.todo_loops = [];
                 break;
-            case '@render-partial':
+            case '@partial':
                 keymap ?_map.todo_partials = keymap: _map.todo_partials = [];
                 break;
             default:
@@ -162,7 +162,7 @@ const render = (
 
     if( renMap.todo_partials && renMap.todo_partials.length > 0 ) {
         renMap.todo_partials.forEach( ( partialSeg: string ) => {
-            const p_name = partialSeg.split( '@render-partial=' )[1].split( '-->' )[0];
+            const p_name = partialSeg.split( '@partial=' )[1].split( '-->' )[0];
             const matchPartials = declaredPartials.filter( n => n.name === p_name );
             if( matchPartials.length > 0 ) {
                 matchPartials.forEach( partial => {

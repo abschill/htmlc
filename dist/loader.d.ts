@@ -4,6 +4,9 @@ export declare namespace core {
         ctx: core.Context;
         template: (name: string, data?: object) => core.template;
     }
+    type Entity<Type> = {
+        [Property in keyof Type]-?: Type[Property];
+    };
     type Event<T> = {
         (args: T): T;
     };
@@ -16,23 +19,15 @@ export declare namespace core {
         watch?: boolean;
         debug?: boolean;
     };
-    type ROptions = {
-        pathRoot: string;
-        templates: string;
-        partials: string;
-        partialInput: compiler.UINSERT_MAP;
-        templateInput: compiler.UINSERT_MAP;
-        watch: boolean;
-        debug: boolean;
-    };
+    type ROptions = Entity<Options>;
     type Context = {
-        config: Options;
+        config: ROptions;
         partials: internals.FileInputMeta[];
         templates: internals.FileInputMeta[];
     };
     type template = string;
     type StaticOptions = {
-        load_options: Options;
+        load_options: ROptions;
         static_options: {
             cleanup: boolean;
             outPath: string;

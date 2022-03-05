@@ -1,6 +1,8 @@
 import { Loader } from '../lib/loader';
 import partialData from './partialData.json';
 import templateData from './templateData.json';
+import { mapFileData } from '../lib/util/file';
+import path from 'path';
 
 const pathRoot = 'test-pkg/def';
 const templates = 'templates';
@@ -20,3 +22,4 @@ describe( 'Internal TS Module Testing', () => {
     } );
     it( 'Load constructor data', () => expect( Object.keys( i.ctx.config.templateInput ).length ).toBeGreaterThan( 0 ) );
 } );
+

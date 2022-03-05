@@ -8,14 +8,14 @@ const ast_1 = require("./ast");
 const cleanHTML_1 = require("../util/cleanHTML");
 const internals_1 = require("./internals");
 const { warn } = console;
-const rmap = (_content) => {
+const rmap = (content) => {
     const _map = {
         todo_keys: [],
         todo_loops: [],
         todo_partials: []
     };
     abt_1.default.forEach(token => {
-        const keymap = token.array(_content);
+        const keymap = token.array(content);
         switch (token.key) {
             case '@render':
                 keymap ? _map.todo_keys = keymap : _map.todo_keys = [];
@@ -23,7 +23,7 @@ const rmap = (_content) => {
             case '@for':
                 keymap ? _map.todo_loops = keymap : _map.todo_loops = [];
                 break;
-            case '@render-partial':
+            case '@partial':
                 keymap ? _map.todo_partials = keymap : _map.todo_partials = [];
                 break;
             default:
@@ -112,7 +112,7 @@ const render = (declaredPartials, rawFile, insertMap, debug) => {
         internals_1.Debugger._registerMap(renMap, insertMap);
     if (renMap.todo_partials && renMap.todo_partials.length > 0) {
         renMap.todo_partials.forEach((partialSeg) => {
-            const p_name = partialSeg.split('@render-partial=')[1].split('-->')[0];
+            const p_name = partialSeg.split('@partial=')[1].split('-->')[0];
             const matchPartials = declaredPartials.filter(n => n.name === p_name);
             if (matchPartials.length > 0) {
                 matchPartials.forEach(partial => {

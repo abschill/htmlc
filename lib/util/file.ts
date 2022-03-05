@@ -9,7 +9,7 @@ import { internals } from '../core/internals';
 
 /**
  *
- * @param {string} dir Directory (path) to grab files from
+ * @param dir Directory (path) to grab files from
  * @returns array of files in directory
  */
 export const _files = ( dir: string ) => fs.readdirSync( dir )
@@ -23,9 +23,7 @@ internals.FileInputMeta[] => {
      const _path = path.join( process.cwd(), pathRoot, partials );
      if( _path ) {
          try {
-             const __files = _files( _path );
-             const files = __files.map( mapFileData );
-             return files;
+             return _files( _path ).map( mapFileData );
          }
          catch( e ) {
              throw e;
@@ -39,8 +37,8 @@ internals.FileInputMeta[] => {
 /**
  * @function resolveTemplates
  * @description Resolves List of Templates from Loader Options
- * @param {LoaderConfig} conf Configuration to read paths from
- * @returns {FileInputMeta[]} Metadata about Templates
+ * @param conf Configuration to read paths from
+ * @returns {internals.FileInputMeta[]} Metadata about Templates
  */
 export const resolveTemplates = ( conf: core.Options ):
 internals.FileInputMeta[] => {

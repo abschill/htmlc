@@ -15,7 +15,7 @@ export declare namespace coreEvent {
 }
 
 export declare namespace compiler {
-	export type ASTMatch = RegExpMatchArray | []
+	export type ASTMatch = RegExpMatchArray | String[] | []
 
 	export interface Args {
 		template_name: string;
@@ -33,8 +33,8 @@ export declare namespace compiler {
 
 	export type ReservedWord = {
 		key: string;
-		boolean: ( target: string, arr: string ) => boolean;
-		array: ( target: string ) => RegExpMatchArray | null;
+		boolean: ( a: internals.kBUF ) => boolean;
+		array: ( a: internals.AST_TARGET ) => Array<string>;
 	}
 
 	export type StackItem = {
@@ -44,13 +44,32 @@ export declare namespace compiler {
 
 	export type UINSERT_MAP = object;
 
-
     export interface compiledMap extends UINSERT_MAP {
         partialInput: UINSERT_MAP;
     }
 }
 
 export declare namespace internals {
+
+	export type AST_TARGET = string;
+
+	//stores key value to test against ast target domstring
+	export type kBUF = {
+		target: AST_TARGET
+		key: string;
+	}
+
+	//stores value assigned to key to test against target domstring
+	export type vBUF = {
+		target: AST_TARGET;
+		key: string;
+		value: string;
+	}
+
+	export interface RLoopBUF {
+		head: number;
+		tail: number;
+	}
 
     export type Entry = Array<string | compiler.UINSERT_MAP>;
 
@@ -69,7 +88,7 @@ export declare namespace internals {
     export type RenderTemplateArgs = {
         _toInsert: Object;
         raw: string;
-        conf: core.Options;
+        conf: core.ROptions;
     }
 
 	type TargetDirectoryTree = {
@@ -89,7 +108,7 @@ export declare namespace internals {
 
 }
 
-export const _DEFAULTS: core.Options = {
+export const _DEFAULTS: core.Entity<core.Options> = {
     pathRoot: 'views',
     templates: 'pages',
     partials: 'partials',
@@ -136,4 +155,4 @@ export class Debugger {
 		log( imap );
 	}
 
-};
+}

@@ -38,5 +38,4 @@ class Debugger {
     }
 }
 exports.Debugger = Debugger;
-;
 //# sourceMappingURL=internals.js.map

@@ -12,7 +12,7 @@ export declare namespace coreEvent {
     }
 }
 export declare namespace compiler {
-    type ASTMatch = RegExpMatchArray | [];
+    type ASTMatch = RegExpMatchArray | String[] | [];
     interface Args {
         template_name: string;
         ctx: core.Context;
@@ -26,8 +26,8 @@ export declare namespace compiler {
     type Dictionary<ReservedWord> = Array<ReservedWord>;
     type ReservedWord = {
         key: string;
-        boolean: (target: string, arr: string) => boolean;
-        array: (target: string) => RegExpMatchArray | null;
+        boolean: (a: internals.kBUF) => boolean;
+        array: (a: internals.AST_TARGET) => Array<string>;
     };
     type StackItem = {
         replacer: core.template;
@@ -39,6 +39,20 @@ export declare namespace compiler {
     }
 }
 export declare namespace internals {
+    type AST_TARGET = string;
+    type kBUF = {
+        target: AST_TARGET;
+        key: string;
+    };
+    type vBUF = {
+        target: AST_TARGET;
+        key: string;
+        value: string;
+    };
+    interface RLoopBUF {
+        head: number;
+        tail: number;
+    }
     type Entry = Array<string | compiler.UINSERT_MAP>;
     type Insertion = [
         string | compiler.UINSERT_MAP,
@@ -53,7 +67,7 @@ export declare namespace internals {
     type RenderTemplateArgs = {
         _toInsert: Object;
         raw: string;
-        conf: core.Options;
+        conf: core.ROptions;
     };
     type TargetDirectoryTree = {
         path: string;
@@ -66,11 +80,8 @@ export declare namespace internals {
     };
     type fileUTF8 = string;
     type _templateInsert = object | {} | any | null;
-    interface TemplateInsertion {
-        partialInput?: TemplateInsertion;
-    }
 }
-export declare const _DEFAULTS: core.Options;
+export declare const _DEFAULTS: core.Entity<core.Options>;
 export declare const DEFAULTS: {
     _publishDefault: string;
     outDefault: string;
@@ -82,13 +93,13 @@ export declare const DEFAULTS: {
         loaderFile: string;
         cleanup: boolean;
     };
-    pathRoot?: string;
-    templates?: string;
-    partials?: string;
-    partialInput?: object;
-    templateInput?: object;
-    watch?: boolean;
-    debug?: boolean;
+    pathRoot: string;
+    templates: string;
+    partials: string;
+    partialInput: object;
+    templateInput: object;
+    watch: boolean;
+    debug: boolean;
 };
 export declare class Debugger {
     constructor();

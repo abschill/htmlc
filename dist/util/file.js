@@ -16,9 +16,7 @@ const resolvePartials = (conf) => {
     const _path = path_1.default.join(process.cwd(), pathRoot, partials);
     if (_path) {
         try {
-            const __files = (0, exports._files)(_path);
-            const files = __files.map(exports.mapFileData);
-            return files;
+            return (0, exports._files)(_path).map(exports.mapFileData);
         }
         catch (e) {
             throw e;
@@ -34,9 +32,7 @@ const resolveTemplates = (conf) => {
     const _path = path_1.default.join(process.cwd(), pathRoot, templates);
     if (_path) {
         try {
-            const __files = (0, exports._files)(_path);
-            const files = __files.map(exports.mapFileData);
-            return files;
+            return (0, exports._files)(_path).map(exports.mapFileData);
         }
         catch (e) {
             throw e;

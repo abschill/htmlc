@@ -1,46 +1,81 @@
 "use strict";
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.matchPartial = exports.replacePartial = exports.partialIndex = exports.hasPartial = exports.matchKey = exports.replaceKey = exports.translateKeyName = exports.keyIndex = exports.hasKey = exports.matchLoop = exports.loopIndex = exports.hasLoop = exports.FOR_T = exports.FOR_H = void 0;
+exports.Parser = exports.replaceKey = exports.translateKeyName = exports.keyIndex = exports.loopIndex = exports.FOR_T = exports.FOR_H = void 0;
 const FOR_H = (key) => `<!--@for(${key}){`;
 exports.FOR_H = FOR_H;
 const FOR_T = () => `}-->`;
 exports.FOR_T = FOR_T;
-const hasLoop = (target, arr) => target.includes(`<!--@for(${arr}){`);
-exports.hasLoop = hasLoop;
-const loopIndex = (target, arr) => ({ 'head': target.indexOf(`<!--@for(${arr}){`), 'tail': target.indexOf('}-->') });
+const loopIndex = (a) => ({
+    head: a.target.indexOf((0, exports.FOR_H)(a.key)),
+    tail: a.target.indexOf((0, exports.FOR_T)())
+});
 exports.loopIndex = loopIndex;
-const matchLoop = (target) => {
-    const out = [];
-    const _opener = /<!--@for\(\w+\){/gi;
-    const opener = target.match(_opener);
-    if (opener && (opener === null || opener === void 0 ? void 0 : opener.length) > 0) {
-        opener.forEach(match => {
-            const openIdx = target === null || target === void 0 ? void 0 : target.indexOf(match);
-            const chopBottom = target === null || target === void 0 ? void 0 : target.slice(openIdx, target.length);
-            const ret = chopBottom === null || chopBottom === void 0 ? void 0 : chopBottom.slice(0, chopBottom.indexOf('}-->') + 4);
-            if (ret)
-                out.push(ret);
-        });
-    }
-    return out;
-};
-exports.matchLoop = matchLoop;
-const hasKey = (target, key) => target.includes(`<!--@render=${key}-->`);
-exports.hasKey = hasKey;
-const keyIndex = (target, key) => target.indexOf(`<!--@render=${key}-->`);
+const keyIndex = (a) => a.target.indexOf(`<!--@render=${a.key}-->`);
 exports.keyIndex = keyIndex;
-const translateKeyName = (templated_key) => templated_key.split('render=')[1].split('-->')[0];
+const translateKeyName = (t_k) => t_k.split('render=')[1].split('-->')[0];
 exports.translateKeyName = translateKeyName;
-const replaceKey = (target, key, value) => target.replace(key, value);
+const replaceKey = (a) => a.target.replace(a.key, a.value);
 exports.replaceKey = replaceKey;
-const matchKey = (target) => target.match(/<!--@render=[\w|\d]+-->/gi);
-exports.matchKey = matchKey;
-const hasPartial = (target, key) => target.includes(`<!--@render-partial=${key}-->`);
-exports.hasPartial = hasPartial;
-const partialIndex = (target, key) => target.indexOf(`<!--@render-partial=${key}-->`);
-exports.partialIndex = partialIndex;
-const replacePartial = (target, key, value) => target.replace(key, value);
-exports.replacePartial = replacePartial;
-const matchPartial = (target) => target.match(/<!--@render-partial=[\w|\d]+-->/gi);
-exports.matchPartial = matchPartial;
+class Parser {
+    static _replaceSignature(type, val) {
+        switch (type) {
+            case 'partial':
+                return this._partialSignature.replace(this._delim, val);
+            case 'loop':
+                return this._loopSignature.replace(this._delim, val);
+            default:
+                return this._keySignature.replace(this._delim, val);
+        }
+    }
+    static hasPartial(a) {
+        return a.target.includes(this._replaceSignature(this._partialKey, a.key));
+    }
+    static partialIndex(a) {
+        return a.target.indexOf(this._replaceSignature(this._partialKey, a.key));
+    }
+    static matchPartials(target) {
+        return target.match(/<!--@partial=[\w|\d]+-->/gi);
+    }
+    static replacePartial(a) {
+        return a.target.replace(this._replaceSignature(this._partialKey, a.key), a.value);
+    }
+    static hasKey(a) {
+        return a.target.includes(this._replaceSignature(this._renderKey, a.key));
+    }
+    static matchKeys(target) {
+        return target.match(/<!--@render=[\w|\d]+-->/gi);
+    }
+    static hasLoop(a) {
+        return a.target.includes(`<!--@for(${a.key}){`);
+    }
+    static matchLoops(target) {
+        const out = [];
+        const _opener = /<!--@for\(\w+\){/gi;
+        const opener = target.match(_opener);
+        if (opener && (opener === null || opener === void 0 ? void 0 : opener.length) > 0) {
+            opener.forEach(match => {
+                const chopBottom = target.slice(target.indexOf(match), target.length);
+                if (chopBottom) {
+                    const ret = chopBottom === null || chopBottom === void 0 ? void 0 : chopBottom.slice(0, chopBottom.indexOf('}-->') + 4);
+                    if (ret)
+                        out.push(ret);
+                }
+            });
+        }
+        return out;
+    }
+}
+exports.Parser = Parser;
+_a = Parser;
+Parser._delim = '{_}';
+Parser._renderKey = 'render';
+Parser.__renderKey__ = `@${_a._renderKey}`;
+Parser._partialKey = 'partial';
+Parser.__partialKey__ = `@${_a._partialKey}`;
+Parser._loopKey = 'for';
+Parser.__loopKey__ = `@${_a._loopKey}`;
+Parser._loopSignature = `<!--${_a.__loopKey__}(${_a._delim}){}-->`;
+Parser._keySignature = `<!--${_a.__renderKey__}=${_a._delim}->`;
+Parser._partialSignature = `<!--${_a.__partialKey__}=${_a._delim}-->`;
 //# sourceMappingURL=ast.js.map

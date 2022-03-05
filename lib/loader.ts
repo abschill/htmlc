@@ -17,9 +17,14 @@ import { Debugger } from './core/internals';
 import compile from './core/compile';
 
 export declare namespace core {
+
 	export interface RuntimeState {
 		ctx: core.Context;
 		template: ( name: string, data ?: object ) => core.template;
+	}
+
+	type Entity<Type> = {
+		[Property in keyof Type]-?: Type[Property];
 	}
 
 	export type Event<T> = {
@@ -36,18 +41,10 @@ export declare namespace core {
         debug ?: boolean;
     };
 
-	export type ROptions = {
-        pathRoot : string;
-        templates : string;
-        partials : string;
-        partialInput : compiler.UINSERT_MAP;
-        templateInput : compiler.UINSERT_MAP;
-        watch : boolean;
-        debug : boolean;
-    };
+	export type ROptions = Entity<Options>;
 
     export type Context = {
-        config: Options;
+        config: ROptions;
         partials: internals.FileInputMeta[];
         templates: internals.FileInputMeta[];
     };
@@ -55,7 +52,7 @@ export declare namespace core {
     export type template = string;
 
     export type StaticOptions = {
-        load_options: Options;
+        load_options: ROptions;
         static_options: {
             cleanup: boolean;
             outPath: string;
@@ -67,8 +64,8 @@ export declare namespace core {
 /**
  * @function Loader
  * @description Rendering Context for templates
- * @param {Loader.Options}
  * @returns Factory function for runtime context
+ * @param config
  */
 export function Loader ( config ?: core.Options ):
 core.RuntimeState {
@@ -97,21 +94,21 @@ core.RuntimeState {
     }
 
     /**
-     * @function template
-     * @param {string}
-     * Name of Template to Load
-     * @param {object}
-     * data to override fallback data for given template
-     * @returns {string} the template's rendered content
-     * @example
-     * ```javascript
-     * Loader.template( 'home', {...homeData} );
-     * ```
-     */
+	 * @function template
+	 * Name of Template to Load
+	 * data to override fallback data for given template
+	 * @returns {string} the template's rendered content
+	 * @example
+	 * ```javascript
+	 * Loader.template( 'home', {...homeData} );
+	 * ```
+	 * @param name
+	 * @param data
+	 */
     function template( name: string, data ?: compiler.UINSERT_MAP ):
     core.template {
         return compile( { template_name: name, ctx, data } );
-    };
+    }
 
     return { ctx, template };
 }

@@ -1,31 +1,24 @@
 import { compiler } from "./internals";
-import {
-	hasLoop,
-	matchLoop,
-	hasKey,
-	matchKey,
-	hasPartial,
-	matchPartial
-} from './ast';
+import { Parser } from './ast';
 
-export const KEY_MAP = [ '@for', '@render', '@render-partial' ];
+export const KEY_MAP = [ '@for', '@render', '@partial' ];
 
 const RESERVED_WORDS:
 compiler.Dictionary<compiler.ReservedWord> = [
     {
-        key: '@for',
-        boolean: hasLoop,
-        array: matchLoop
+        key: Parser.__loopKey__,
+        boolean: Parser.hasLoop,
+        array: Parser.matchLoops
     },
     {
-        key: '@render',
-        boolean: hasKey,
-        array: matchKey
+        key: Parser.__renderKey__,
+        boolean: Parser.hasKey,
+        array: Parser.matchKeys
     },
     {
-        key: '@render-partial',
-        boolean: hasPartial,
-        array: matchPartial
+        key: Parser.__partialKey__,
+        boolean: Parser.hasPartial,
+        array: Parser.matchPartials
     }
 ];
 
