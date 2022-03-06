@@ -1,8 +1,7 @@
 import { Loader } from '../lib/loader';
 import partialData from './partialData.json';
 import templateData from './templateData.json';
-import { mapFileData } from '../lib/util/file';
-import path from 'path';
+import { fsUtil } from '../lib/util/file';
 
 const pathRoot = 'test-pkg/def';
 const templates = 'templates';

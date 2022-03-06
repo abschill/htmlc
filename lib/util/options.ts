@@ -4,7 +4,7 @@
  * @returns context for engine
  */
 import { core } from '../loader';
-import { resolvePartials, resolveTemplates } from './file';
+import { fsUtil } from './file';
 import { _DEFAULTS } from "../core/internals";
 
 export default ( config: core.Options ):
@@ -12,8 +12,8 @@ export default ( config: core.Options ):
 		const hydrated = __clean( config );
 		return  {
 		config: hydrated,
-		partials: resolvePartials( config ),
-		templates: resolveTemplates( config )
+		partials: fsUtil.resolvePartials( config ),
+		templates: fsUtil.resolveTemplates( config )
 	}
 }
 

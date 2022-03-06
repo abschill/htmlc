@@ -6,8 +6,8 @@ exports.default = (config) => {
     const hydrated = __clean(config);
     return {
         config: hydrated,
-        partials: (0, file_1.resolvePartials)(config),
-        templates: (0, file_1.resolveTemplates)(config)
+        partials: file_1.fsUtil.resolvePartials(config),
+        templates: file_1.fsUtil.resolveTemplates(config)
     };
 };
 const __clean = (config) => Object.keys(config) === Object.keys(internals_1._DEFAULTS) ?

@@ -3,7 +3,7 @@ const path = require( 'path' );
 const fs = require( 'fs' );
 const conf = JSON.parse( fs.readFileSync( path.resolve( process.cwd(), 'package.json' ) ).toString( 'utf-8' ) );
 import { Loader } from '../loader';
-import { _files } from '../util/file';
+import { fsUtil } from '../util/file';
 const { static_config = {
     "pathRoot": "views",
     "partials": "partials",
@@ -15,7 +15,7 @@ const { static_config = {
 const inp = require( path.join( process.cwd(), static_config.loaderFile ) )
 const outPath = path.join( process.cwd(), static_config.outPath );
 const myLoader = Loader( { ...static_config, templateInput: inp, partialInput: inp } );
-const toLoad = _files( path.join( process.cwd(), static_config.pathRoot, static_config.templates ) );
+const toLoad = fsUtil.readDir( path.join( process.cwd(), static_config.pathRoot, static_config.templates ) );
 
 toLoad.forEach( pathToRead => {
     const nameSplit = pathToRead.split( '.html' );

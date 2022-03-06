@@ -82,7 +82,7 @@ export function __renderMap (
 	return _map;
 }
 
-export function resolve(
+export function resolve (
 	file: string,
 	renderMap: compiler.RenderMap,
 	insertionMap: compiler.UINSERT_MAP,
