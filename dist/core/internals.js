@@ -18,7 +18,7 @@ exports.DEFAULTS = Object.assign(Object.assign({}, exports._DEFAULTS), { _publis
         loaderFile: 'loader.js',
         cleanup: true
     } });
-const { log } = console;
+const { log, warn } = console;
 class Debugger {
     constructor() { }
     static _registerEvent(...args) {
@@ -30,6 +30,9 @@ class Debugger {
             log('HCL_TEMPLATE: ', templateName);
             log('HCL_CTX: ', contextData);
         }
+    }
+    static raise(m) {
+        warn(m);
     }
     static _registerMap(rmap, imap) {
         log('HCL_EVENT: map::register');

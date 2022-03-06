@@ -132,7 +132,7 @@ export const DEFAULTS = {
     }
 }
 
-const { log } = console;
+const { log, warn } = console;
 
 export class Debugger {
 
@@ -149,10 +149,13 @@ export class Debugger {
 		}
 	}
 
+	static raise( m ) {
+		warn( m );
+	}
+
 	static _registerMap( rmap: compiler.RenderMap, imap: compiler.UINSERT_MAP ) {
 		log( 'HCL_EVENT: map::register' );
 		log( rmap );
 		log( imap );
 	}
-
 }

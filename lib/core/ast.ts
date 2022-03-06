@@ -4,7 +4,7 @@
  * @description The callbacks for the Reserved Words
  *
  */
-import { internals } from "./internals";
+import {compiler, internals} from "./internals";
 
 export const FOR_H = ( key: string ): string => `<!--@for(${key}){`;
 export const FOR_T = (): string => `}-->`;
@@ -41,12 +41,16 @@ string => a.target.replace( a.key, a.value );
 
 export class Parser {
 	static _delim: string = '{_}';
+
 	static _renderKey = 'render';
 	static __renderKey__ = `@${this._renderKey}`;
 	static _partialKey = 'partial';
 	static __partialKey__ = `@${this._partialKey}`;
 	static _loopKey = 'for';
 	static __loopKey__ = `@${this._loopKey}`;
+
+	static FOR_T = (): string => `}-->`;
+	static FOR_H = ( key: string ): string => `<!--@for(${key}){`;
 
 	static _loopSignature: string = `<!--${this.__loopKey__}(${this._delim}){}-->`;
 	static _keySignature: string = `<!--${this.__renderKey__}=${this._delim}->`;
@@ -104,5 +108,17 @@ export class Parser {
 			} );
 		}
 		return out;
+	}
+
+	public static replaceAnonLoopBuf( a: internals.kBUF ) {
+		return a.target.replace( this._delim, a.key );
+	}
+
+	public static replacedNamedLoopBuf(  clone: string, insert: internals.Insertion | internals.Entry ) {
+		let copy = clone;
+		insert.forEach( ( insertion: string | compiler.UINSERT_MAP ) => {
+			copy = copy.replace( `{${insertion[0]}}`, insertion[1] );
+		} );
+		return copy;
 	}
 }

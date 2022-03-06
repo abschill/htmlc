@@ -13,6 +13,8 @@ export declare class Parser {
     static __partialKey__: string;
     static _loopKey: string;
     static __loopKey__: string;
+    static FOR_T: () => string;
+    static FOR_H: (key: string) => string;
     static _loopSignature: string;
     static _keySignature: string;
     static _partialSignature: string;
@@ -25,4 +27,6 @@ export declare class Parser {
     static matchKeys(target: internals.AST_TARGET): RegExpMatchArray;
     static hasLoop(a: internals.kBUF): boolean;
     static matchLoops(target: internals.AST_TARGET): string[];
+    static replaceAnonLoopBuf(a: internals.kBUF): string;
+    static replacedNamedLoopBuf(clone: string, insert: internals.Insertion | internals.Entry): string;
 }

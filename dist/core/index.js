@@ -4,10 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const abt_1 = __importDefault(require("./abt"));
-const ast_1 = require("./ast");
 const cleanHTML_1 = require("../util/cleanHTML");
 const internals_1 = require("./internals");
-const { warn } = console;
+const ast_1 = require("./ast");
 const rmap = (content) => {
     const _map = {
         todo_keys: [],
@@ -32,14 +31,6 @@ const rmap = (content) => {
     });
     return _map;
 };
-const r1d_iterable = (clone, insert) => clone.replace('{_}', insert);
-const rxd_iterable = (clone, insert) => {
-    let copy = clone;
-    insert.forEach((insertion) => {
-        copy = copy.replace(`{${insertion[0]}}`, insertion[1]);
-    });
-    return copy;
-};
 function resolve(file, renderMap, insertionMap, debug) {
     let copy = file;
     const outVal = [];
@@ -51,14 +42,14 @@ function resolve(file, renderMap, insertionMap, debug) {
                 switch (itemlist[0]) {
                     case 'todo_keys':
                         const name = r.split('render=')[1].split('-->')[0];
-                        const globalVals = insertionMap;
+                        const globals = insertionMap;
                         let replaceVal = insertionMap[name];
                         if (!replaceVal) {
                             try {
-                                replaceVal = globalVals[name];
+                                replaceVal = globals[name];
                             }
                             catch (e) {
-                                warn(`Failed to find ${name} to insert into ${file}`);
+                                internals_1.Debugger.raise(`Failed to find ${name} to insert into ${file}`);
                                 replaceVal = '';
                             }
                         }
@@ -67,20 +58,20 @@ function resolve(file, renderMap, insertionMap, debug) {
                     case 'todo_loops':
                         const loopName = r.split('(')[1].split(')')[0];
                         let toInsert = insertionMap[loopName];
-                        let elChild = r.replace((0, ast_1.FOR_H)(loopName), '').replace((0, ast_1.FOR_T)(), '')
+                        let elChild = r.replace(ast_1.Parser.FOR_H(loopName), '').replace(ast_1.Parser.FOR_T(), '')
                             .trimStart().replace(/\s\s+/gi, '');
                         toInsert === null || toInsert === void 0 ? void 0 : toInsert.forEach((insertion) => {
                             if (typeof (insertion) === 'string') {
-                                outVal.push({ replacer: r, insertion: r1d_iterable(elChild, insertion) });
+                                outVal.push({ replacer: r, insertion: ast_1.Parser.replaceAnonLoopBuf({ target: elChild, key: insertion }) });
                             }
                             else if (typeof (insertion) === 'object') {
                                 const entries = Object.entries(insertion);
                                 if (entries.length > 0)
-                                    outObj.push({ replacer: r, insertion: rxd_iterable(elChild, entries) });
+                                    outObj.push({ replacer: r, insertion: ast_1.Parser.replacedNamedLoopBuf(elChild, entries) });
                             }
                             else {
-                                warn(`warning: insertion ${loopName} has an unrecognized value of`);
-                                warn(insertion);
+                                internals_1.Debugger.raise(`warning: insertion ${loopName} has an unrecognized value of`);
+                                internals_1.Debugger.raise(insertion);
                             }
                         });
                         break;
@@ -92,7 +83,7 @@ function resolve(file, renderMap, insertionMap, debug) {
             });
         }
         else {
-            warn(`Warning: key ${itemlist} is missing a value to insert`);
+            internals_1.Debugger.raise(`Warning: key ${itemlist} is missing a value to insert`);
         }
     });
     if (debug) {
@@ -150,8 +141,8 @@ const render = (declaredPartials, rawFile, insertMap, debug) => {
         return (0, cleanHTML_1.cleanHTML)(rootCopy);
     }
     catch (e) {
-        warn('Failed to Clean HTML');
-        warn(e);
+        internals_1.Debugger.raise('Failed to Clean HTML');
+        internals_1.Debugger.raise(e);
         return rootCopy;
     }
 };

@@ -65,6 +65,16 @@ class Parser {
         }
         return out;
     }
+    static replaceAnonLoopBuf(a) {
+        return a.target.replace(this._delim, a.key);
+    }
+    static replacedNamedLoopBuf(clone, insert) {
+        let copy = clone;
+        insert.forEach((insertion) => {
+            copy = copy.replace(`{${insertion[0]}}`, insertion[1]);
+        });
+        return copy;
+    }
 }
 exports.Parser = Parser;
 _a = Parser;
@@ -75,6 +85,8 @@ Parser._partialKey = 'partial';
 Parser.__partialKey__ = `@${_a._partialKey}`;
 Parser._loopKey = 'for';
 Parser.__loopKey__ = `@${_a._loopKey}`;
+Parser.FOR_T = () => `}-->`;
+Parser.FOR_H = (key) => `<!--@for(${key}){`;
 Parser._loopSignature = `<!--${_a.__loopKey__}(${_a._delim}){}-->`;
 Parser._keySignature = `<!--${_a.__renderKey__}=${_a._delim}->`;
 Parser._partialSignature = `<!--${_a.__partialKey__}=${_a._delim}-->`;

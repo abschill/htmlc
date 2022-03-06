@@ -4,12 +4,11 @@
  */
 
 import RESERVED_WORDS from './abt';
-import { FOR_H, FOR_T } from './ast';
 import { cleanHTML } from '../util/cleanHTML';
 import { core } from '../loader';
 import { internals, compiler } from './internals';
 import { Debugger } from './internals';
-const { warn } = console;
+import { Parser } from './ast';
 
 const rmap = (
     content: string
@@ -40,21 +39,6 @@ const rmap = (
     return _map;
 }
 
-const r1d_iterable = ( clone: string, insert: string ):
-core.template => clone.replace( '{_}', insert );
-
-const rxd_iterable = (
-    clone: string,
-    insert: internals.Insertion | internals.Entry
-): core.template => {
-    let copy = clone;
-    insert.forEach( ( insertion: string | compiler.UINSERT_MAP ) => {
-        copy = copy.replace( `{${insertion[0]}}`, insertion[1] );
-    } );
-    return copy;
-}
-
-
 function resolve(
     file: string,
     renderMap: compiler.RenderMap,
@@ -73,18 +57,17 @@ function resolve(
         // if( debug ) stampLog( itemlist, 'rendermap::itemlist|render/index.ts#L81' );
         if ( itemlist[1] ) {
             itemlist[1].forEach( r => {
-
                 switch( itemlist[0] ) {
                     case 'todo_keys':
                         const name = r.split( 'render=' )[1].split( '-->')[0];
-                        const globalVals = insertionMap;
+                        const globals = insertionMap;
                         let replaceVal = insertionMap[ name ];
                         if( !replaceVal ) {
                             try {
-                                replaceVal = globalVals[name];
+                                replaceVal = globals[name];
                             }
                             catch( e ) {
-                                warn( `Failed to find ${name} to insert into ${file}`);
+								Debugger.raise( `Failed to find ${name} to insert into ${file}`);
                                 replaceVal = '';
                             }
                         }
@@ -92,24 +75,25 @@ function resolve(
                         break;
                     case 'todo_loops':
                         const loopName = r.split( '(' )[1].split( ')' )[0];
-                        let toInsert = insertionMap[loopName]
+                        let toInsert = insertionMap[loopName];
                         // if( debug ) stampLog( toInsert, 'toInsert::frommap|render/index.ts#L104' );
 
-                        let elChild = r.replace( FOR_H( loopName ), '' ).replace( FOR_T(), '' )
+                        let elChild = r.replace( Parser.FOR_H( loopName ), '' ).replace( Parser.FOR_T(), '' )
                                         .trimStart().replace( /\s\s+/gi, '');
+
                         toInsert?.forEach( ( insertion ?: string | compiler.UINSERT_MAP ) => {
                             if( typeof( insertion ) === 'string' ) {
                                 //1d array
-                                outVal.push( { replacer: r, insertion: r1d_iterable( elChild, insertion as string ) } );
+                                outVal.push( { replacer: r, insertion: Parser.replaceAnonLoopBuf( { target: elChild, key: insertion as string } ) } );
                             }
                             else if ( typeof( insertion ) === 'object' ) {
                                 //key/val
                                 const entries = Object.entries( insertion );
-                                if( entries.length > 0  ) outObj.push( { replacer: r, insertion: rxd_iterable( elChild, entries ) } );
+                                if( entries.length > 0  ) outObj.push( { replacer: r, insertion: Parser.replacedNamedLoopBuf( elChild, entries ) } );
                             }
                             else {
-                                warn( `warning: insertion ${loopName} has an unrecognized value of` );
-                                warn( insertion );
+                                Debugger.raise( `warning: insertion ${loopName} has an unrecognized value of` );
+								Debugger.raise( insertion );
                             }
                         } );
                         break;
@@ -122,7 +106,7 @@ function resolve(
             } );
         }
         else {
-            warn( `Warning: key ${itemlist} is missing a value to insert` );
+			Debugger.raise( `Warning: key ${itemlist} is missing a value to insert` );
             // if( debug ) stampLog( itemlist, 'rendermap::error|render/index.ts#L134' );
         }
     } );
@@ -148,13 +132,14 @@ function resolve(
  * @param {Partial[]} declaredPartials array of partials declared in loader context
  * @param {string} rawFile raw file contents to insert to
  * @param {object} insertMap map to insert values into templates from
+ * @param debug
  * @returns {string} The rendered template
  */
 const render = (
     declaredPartials: internals.FileInputMeta[],
     rawFile: internals.fileUTF8,
     insertMap: compiler.UINSERT_MAP,
-    debug?: boolean
+    debug ?: boolean
 ): core.template => {
     let rootCopy = rawFile;
     const renMap = rmap( rootCopy );
@@ -176,7 +161,6 @@ const render = (
 
                     rootCopy = rootCopy.replace( partialSeg, resolved.render );
                 } );
-
             }
         } );
     }
@@ -204,10 +188,9 @@ const render = (
         return cleanHTML( rootCopy );
     }
     catch( e ) {
-        warn( 'Failed to Clean HTML' );
-        warn( e );
+		Debugger.raise( 'Failed to Clean HTML' );
+		Debugger.raise( e );
         return rootCopy;
     }
-
 }
 export default render;
