@@ -1,45 +1,6 @@
-/**
- *
- * @module ast
- * @description The callbacks for the Reserved Words
- *
- */
-import {compiler, internals} from "./internals";
+import { compiler, internals } from "./internals";
 
-export const FOR_H = ( key: string ): string => `<!--@for(${key}){`;
-export const FOR_T = (): string => `}-->`;
-/**
- *
- * @returns {boolean} If the DOM String has the render loop
- * @param a
- */
-// export const hasLoop = ( a: internals.kBUF ):
-// boolean => a.target.includes( `<!--@for(${a.key}){` );
-
-export const loopIndex = ( a: internals.kBUF ):
-internals.RLoopBUF => ( {
-	head: a.target.indexOf( FOR_H( a.key ) ),
-	tail: a.target.indexOf( FOR_T() )
-} );
-
-/**
- *
- * @returns {boolean} If the DOM has the render key
- * @param a
- */
-// export const hasKey = ( a: internals.kBUF ):
-// boolean => a.target.includes( `<!--@render=${a.key}-->` );
-
-export const keyIndex = ( a: internals.kBUF ):
-number => a.target.indexOf( `<!--@render=${a.key}-->` );
-
-export const translateKeyName = ( t_k: string ):
-string => t_k.split( 'render=' )[1].split( '-->' )[0];
-
-export const replaceKey = ( a: internals.vBUF ):
-string => a.target.replace( a.key, a.value );
-
-export class Parser {
+export default class Parser {
 	static _delim: string = '{_}';
 
 	static _renderKey = 'render';

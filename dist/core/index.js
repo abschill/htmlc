@@ -3,34 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const abt_1 = __importDefault(require("./abt"));
 const cleanHTML_1 = require("../util/cleanHTML");
 const internals_1 = require("./internals");
-const ast_1 = require("./ast");
-const rmap = (content) => {
-    const _map = {
-        todo_keys: [],
-        todo_loops: [],
-        todo_partials: []
-    };
-    abt_1.default.forEach(token => {
-        const keymap = token.array(content);
-        switch (token.key) {
-            case '@render':
-                keymap ? _map.todo_keys = keymap : _map.todo_keys = [];
-                break;
-            case '@for':
-                keymap ? _map.todo_loops = keymap : _map.todo_loops = [];
-                break;
-            case '@partial':
-                keymap ? _map.todo_partials = keymap : _map.todo_partials = [];
-                break;
-            default:
-                break;
-        }
-    });
-    return _map;
-};
+const parser_1 = __importDefault(require("./parser"));
+const compile_1 = require("./compile");
 function resolve(file, renderMap, insertionMap, debug) {
     let copy = file;
     const outVal = [];
@@ -58,16 +34,16 @@ function resolve(file, renderMap, insertionMap, debug) {
                     case 'todo_loops':
                         const loopName = r.split('(')[1].split(')')[0];
                         let toInsert = insertionMap[loopName];
-                        let elChild = r.replace(ast_1.Parser.FOR_H(loopName), '').replace(ast_1.Parser.FOR_T(), '')
+                        let elChild = r.replace(parser_1.default.FOR_H(loopName), '').replace(parser_1.default.FOR_T(), '')
                             .trimStart().replace(/\s\s+/gi, '');
                         toInsert === null || toInsert === void 0 ? void 0 : toInsert.forEach((insertion) => {
                             if (typeof (insertion) === 'string') {
-                                outVal.push({ replacer: r, insertion: ast_1.Parser.replaceAnonLoopBuf({ target: elChild, key: insertion }) });
+                                outVal.push({ replacer: r, insertion: parser_1.default.replaceAnonLoopBuf({ target: elChild, key: insertion }) });
                             }
                             else if (typeof (insertion) === 'object') {
                                 const entries = Object.entries(insertion);
                                 if (entries.length > 0)
-                                    outObj.push({ replacer: r, insertion: ast_1.Parser.replacedNamedLoopBuf(elChild, entries) });
+                                    outObj.push({ replacer: r, insertion: parser_1.default.replacedNamedLoopBuf(elChild, entries) });
                             }
                             else {
                                 internals_1.Debugger.raise(`warning: insertion ${loopName} has an unrecognized value of`);
@@ -98,7 +74,7 @@ function resolve(file, renderMap, insertionMap, debug) {
 }
 const render = (declaredPartials, rawFile, insertMap, debug) => {
     let rootCopy = rawFile;
-    const renMap = rmap(rootCopy);
+    const renMap = (0, compile_1.__renderMap)(rootCopy);
     if (debug)
         internals_1.Debugger._registerMap(renMap, insertMap);
     if (renMap.todo_partials && renMap.todo_partials.length > 0) {
@@ -108,7 +84,7 @@ const render = (declaredPartials, rawFile, insertMap, debug) => {
             if (matchPartials.length > 0) {
                 matchPartials.forEach(partial => {
                     var _a;
-                    const renderMap = rmap(partial.rawFile);
+                    const renderMap = (0, compile_1.__renderMap)(partial.rawFile);
                     const scoped_insertion = (_a = insertMap['partialInput']) !== null && _a !== void 0 ? _a : {};
                     const insertion = Object.assign(Object.assign({}, insertMap), scoped_insertion);
                     const resolved = resolve(partial.rawFile, renderMap, insertion, debug);
@@ -121,7 +97,7 @@ const render = (declaredPartials, rawFile, insertMap, debug) => {
     }
     if (renMap.todo_keys && renMap.todo_keys.length > 0) {
         renMap.todo_keys.forEach(_ => {
-            const renderMap = rmap(rootCopy);
+            const renderMap = (0, compile_1.__renderMap)(rootCopy);
             const resolved = resolve(rootCopy, renderMap, insertMap);
             if (debug)
                 internals_1.Debugger._registerMap(renderMap, insertMap);
@@ -130,11 +106,10 @@ const render = (declaredPartials, rawFile, insertMap, debug) => {
     }
     if (renMap.todo_loops && renMap.todo_loops.length > 0) {
         renMap.todo_loops.forEach(_ => {
-            const renderMap = rmap(rootCopy);
-            const resolved = resolve(rootCopy, renderMap, insertMap);
+            const renderMap = (0, compile_1.__renderMap)(rootCopy);
             if (debug)
                 internals_1.Debugger._registerMap(renderMap, insertMap);
-            rootCopy = resolved.render;
+            rootCopy = resolve(rootCopy, renderMap, insertMap).render;
         });
     }
     try {

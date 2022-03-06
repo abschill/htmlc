@@ -2,6 +2,7 @@ import { core } from '../loader';
 import { compiler } from './internals';
 import render from '.';
 import { Debugger } from './internals';
+import RESERVED_WORDS from "./abt";
 
 export default function compile( args: compiler.Args ):
 core.template {
@@ -51,4 +52,31 @@ core.template {
         const { rawFile } = args.ctx.templates.filter( temp => temp.name === args.template_name )[0];
         return render( args.ctx.partials, rawFile, insertions, args.ctx.config.debug );
     }
+}
+export function __renderMap (
+	content: string
+): compiler.RenderMap {
+	const _map: compiler.RenderMap = {
+		todo_keys: [],
+		todo_loops: [],
+		todo_partials: []
+	};
+	RESERVED_WORDS.forEach( token => {
+		const keymap = token.array( content );
+		switch( token.key ) {
+			case '@render':
+				keymap ? _map.todo_keys = keymap: _map.todo_keys = [];
+				break;
+			case '@for':
+				keymap ? _map.todo_loops = keymap: _map.todo_loops = [];
+				break;
+			case '@partial':
+				keymap ?_map.todo_partials = keymap: _map.todo_partials = [];
+				break;
+			default:
+				break;
+		}
+	} );
+
+	return _map;
 }

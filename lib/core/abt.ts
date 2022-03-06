@@ -1,7 +1,5 @@
 import { compiler } from "./internals";
-import { Parser } from './ast';
-
-export const KEY_MAP = [ '@for', '@render', '@partial' ];
+import Parser from './parser';
 
 const RESERVED_WORDS:
 compiler.Dictionary<compiler.ReservedWord> = [

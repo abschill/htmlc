@@ -3,8 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.__renderMap = void 0;
 const _1 = __importDefault(require("."));
 const internals_1 = require("./internals");
+const abt_1 = __importDefault(require("./abt"));
 function compile(args) {
     const { templateInput = {}, partialInput = {} } = args.ctx.config;
     if (!args.data)
@@ -34,4 +36,29 @@ function compile(args) {
     }
 }
 exports.default = compile;
+function __renderMap(content) {
+    const _map = {
+        todo_keys: [],
+        todo_loops: [],
+        todo_partials: []
+    };
+    abt_1.default.forEach(token => {
+        const keymap = token.array(content);
+        switch (token.key) {
+            case '@render':
+                keymap ? _map.todo_keys = keymap : _map.todo_keys = [];
+                break;
+            case '@for':
+                keymap ? _map.todo_loops = keymap : _map.todo_loops = [];
+                break;
+            case '@partial':
+                keymap ? _map.todo_partials = keymap : _map.todo_partials = [];
+                break;
+            default:
+                break;
+        }
+    });
+    return _map;
+}
+exports.__renderMap = __renderMap;
 //# sourceMappingURL=compile.js.map
