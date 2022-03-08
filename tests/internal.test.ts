@@ -13,12 +13,15 @@ const i = Loader( {
 } );
 
 describe( 'Internal TS Module Testing', () => {
+    
     it( 'Loads Conf Root', () => {
         expect( i.ctx.config.pathRoot ).toBe( 'test-pkg/def' );
     } );
+
     it( 'Loads Conf Templates', () => {
         expect( i.ctx.config.templates ).toBe( templates );
     } );
+
     it( 'Load constructor data', () => expect( Object.keys( i.ctx.config.templateInput ).length ).toBeGreaterThan( 0 ) );
 } );
 
