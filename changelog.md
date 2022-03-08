@@ -1,8 +1,7 @@
 # 0.4.5
 ### 3/7/2022
 ### Important 
-@render-partial is now @partial as of v0.4.5, old modules will break if you do not update when you are using this version or greater.
-reduce bundle size remove lib & defer typings to .d.ts output
+@render-partial is now @partial as of v0.4.5
 
 # 0.4.4
 ### 2/26/22
