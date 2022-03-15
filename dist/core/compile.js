@@ -38,7 +38,7 @@ function compile(args) {
 }
 exports.default = compile;
 function __renderMap(content) {
-    const _map = {
+    const __map__ = {
         todo_keys: [],
         todo_loops: [],
         todo_partials: []
@@ -46,33 +46,42 @@ function __renderMap(content) {
     abt_1.default.forEach(token => {
         const keymap = token.array(content);
         switch (token.key) {
-            case '@render':
-                keymap ? _map.todo_keys = keymap : _map.todo_keys = [];
+            case parser_1.default.__renderKey__:
+                keymap ? __map__.todo_keys = keymap : __map__.todo_keys = [];
                 break;
-            case '@for':
-                keymap ? _map.todo_loops = keymap : _map.todo_loops = [];
+            case parser_1.default.__loopKey__:
+                keymap ? __map__.todo_loops = keymap : __map__.todo_loops = [];
                 break;
-            case '@partial':
-                keymap ? _map.todo_partials = keymap : _map.todo_partials = [];
+            case parser_1.default.__partialKey__:
+                keymap ? __map__.todo_partials = keymap : __map__.todo_partials = [];
                 break;
             default:
                 break;
         }
     });
-    return _map;
+    return __map__;
 }
 exports.__renderMap = __renderMap;
 function resolve(file, renderMap, insertionMap, debug) {
     let copy = file;
     const outVal = [];
     const outObj = [];
-    internals_1.Debugger._registerMap(renderMap, insertionMap);
+    if (debug)
+        internals_1.Debugger._registerMap(renderMap, insertionMap);
+    console.log(renderMap);
     Object.entries(renderMap).forEach((itemlist) => {
-        if (itemlist[1]) {
+        console.log(itemlist);
+        if (!itemlist[1]) {
+            if (debug)
+                internals_1.Debugger.raise(`Passing ${itemlist[0]}`);
+        }
+        else {
             itemlist[1].forEach(r => {
+                var _a;
+                console.log(r);
                 switch (itemlist[0]) {
                     case 'todo_keys':
-                        const name = r.split('render=')[1].split('-->')[0];
+                        const name = r.split(`${parser_1.default.__renderKey__}=`)[1].split(parser_1.default.__CLOSE__)[0];
                         const globals = insertionMap;
                         let replaceVal = insertionMap[name];
                         if (!replaceVal) {
@@ -87,21 +96,27 @@ function resolve(file, renderMap, insertionMap, debug) {
                         copy = copy.replace(r, replaceVal);
                         break;
                     case 'todo_loops':
-                        const loopName = r.split('(')[1].split(')')[0];
+                        const loopName = (_a = r.split('(')[1]) === null || _a === void 0 ? void 0 : _a.split(')')[0];
                         let toInsert = insertionMap[loopName];
-                        let elChild = r.replace(parser_1.default.FOR_H(loopName), '').replace(parser_1.default.FOR_T(), '')
+                        let elChild = r.replace(parser_1.default.LOOP_OPEN(loopName), '').replace(parser_1.default.LOOP_CLOSE, '')
                             .trimStart().replace(/\s\s+/gi, '');
                         toInsert === null || toInsert === void 0 ? void 0 : toInsert.forEach((insertion) => {
                             if (typeof (insertion) === 'string') {
-                                outVal.push({ replacer: r, insertion: parser_1.default.replaceAnonLoopBuf({ target: elChild, key: insertion }) });
+                                outVal.push({
+                                    replacer: r,
+                                    insertion: parser_1.default.replaceAnonLoopBuf({ target: elChild, key: insertion })
+                                });
                             }
                             else if (typeof (insertion) === 'object') {
                                 const entries = Object.entries(insertion);
                                 if (entries.length > 0)
-                                    outObj.push({ replacer: r, insertion: parser_1.default.replacedNamedLoopBuf(elChild, entries) });
+                                    outObj.push({
+                                        replacer: r,
+                                        insertion: parser_1.default.replacedNamedLoopBuf(elChild, entries)
+                                    });
                             }
                             else {
-                                internals_1.Debugger.raise(`warning: insertion ${loopName} has an unrecognized value of`);
+                                internals_1.Debugger.raise(`warning: insertion ${loopName} has an unrecognized value of:\n`);
                                 internals_1.Debugger.raise(insertion);
                             }
                         });
@@ -113,18 +128,11 @@ function resolve(file, renderMap, insertionMap, debug) {
                 }
             });
         }
-        else {
-            internals_1.Debugger.raise(`Warning: key ${itemlist} is missing a value to insert`);
-        }
     });
-    if (debug) {
-    }
     const valStr = outVal.map((val) => val.insertion).join('');
     const objStr = outObj.map((obj) => obj.insertion).join('');
     outVal.forEach((_out) => copy = copy.replace(_out.replacer, valStr));
     outObj.forEach((_out) => copy = copy.replace(_out.replacer, objStr));
-    if (debug) {
-    }
     return { raw: file, renderMap, insertionMap, render: copy };
 }
 exports.resolve = resolve;

@@ -39,6 +39,9 @@ class Debugger {
         log(rmap);
         log(imap);
     }
+    static _finalize(args) {
+        log(args);
+    }
 }
 exports.Debugger = Debugger;
 //# sourceMappingURL=internals.js.map

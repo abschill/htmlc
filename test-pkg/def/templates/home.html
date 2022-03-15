@@ -3,15 +3,16 @@
 <main>
     <h1><!--@render=content--></h1>
     <ul>
-        <!--@for(items){
+        <!--@loop(items){
             <li class="test">{_}</li>    
         }-->
     </ul>
     <ul>
-        <!--@for(items2){
+        <!--@loop(items2){
            <li>
-               <a href="{url}">
-                   {title}
+               <a href="#">
+                   <h3>{title}</h3>
+                   <p>{desc}</p>
                </a>
            </li>
        }-->

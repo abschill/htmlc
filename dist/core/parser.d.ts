@@ -1,14 +1,15 @@
 import { internals } from "./internals";
 export default class Parser {
     static _delim: string;
+    static __CLOSE__: string;
+    static LOOP_CLOSE: string;
+    static LOOP_OPEN: (key: string) => string;
     static _renderKey: string;
     static __renderKey__: string;
     static _partialKey: string;
     static __partialKey__: string;
     static _loopKey: string;
     static __loopKey__: string;
-    static FOR_T: () => string;
-    static FOR_H: (key: string) => string;
     static _loopSignature: string;
     static _keySignature: string;
     static _partialSignature: string;

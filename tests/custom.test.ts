@@ -29,7 +29,6 @@ const myLoader2 = Loader( {
     debug: false
 } );
 
-
 describe( 'Load Constructed Partial Data', () => {
     it( 'Gets Argument', () => {
         const data = myLoader0.template( 'home', templateData );

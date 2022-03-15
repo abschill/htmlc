@@ -5,8 +5,9 @@ import { Debugger } from './internals';
 import RESERVED_WORDS from "./abt";
 import Parser from "./parser";
 
-export default function compile( args: compiler.Args ):
-core.template {
+export default function compile ( 
+	args: compiler.Args 
+): core.template {
     /**
      * If any data was keyed with the template name in the constructor, we will use as a secondary priority load value
      * these objects will default to {} if not entered
@@ -57,7 +58,7 @@ core.template {
 export function __renderMap (
 	content: string
 ): compiler.RenderMap {
-	const _map: compiler.RenderMap = {
+	const __map__: compiler.RenderMap = {
 		todo_keys: [],
 		todo_loops: [],
 		todo_partials: []
@@ -65,21 +66,21 @@ export function __renderMap (
 	RESERVED_WORDS.forEach( token => {
 		const keymap = token.array( content );
 		switch( token.key ) {
-			case '@render':
-				keymap ? _map.todo_keys = keymap: _map.todo_keys = [];
+			case Parser.__renderKey__:
+				keymap ? __map__.todo_keys = keymap: __map__.todo_keys = [];
 				break;
-			case '@for':
-				keymap ? _map.todo_loops = keymap: _map.todo_loops = [];
+			case Parser.__loopKey__:
+				keymap ? __map__.todo_loops = keymap: __map__.todo_loops = [];
 				break;
-			case '@partial':
-				keymap ?_map.todo_partials = keymap: _map.todo_partials = [];
+			case Parser.__partialKey__:
+				keymap ? __map__.todo_partials = keymap: __map__.todo_partials = [];
 				break;
 			default:
 				break;
 		}
 	} );
 
-	return _map;
+	return __map__;
 }
 
 export function resolve (
@@ -92,19 +93,20 @@ export function resolve (
 	const outVal: compiler.StackItem[] = [];
 	const outObj: compiler.StackItem[] = [];
 
-	// if( debug ) stampLog( renderMap, 'rendermap::map|render/index.ts#L78' );
-
-	Debugger._registerMap( renderMap, insertionMap );
-
-	Object.entries( renderMap ).forEach( ( itemlist : [ key: string, value: string[]|string[][] ] )  => {
-		// if( debug ) stampLog( itemlist, 'rendermap::itemlist|render/index.ts#L81' );
-		if ( itemlist[1] ) {
+	if( debug ) Debugger._registerMap( renderMap, insertionMap );
+	Object.entries( renderMap ).forEach( ( itemlist : [ key: string, value: string[] | string[][] ] ) => {
+		console.log( itemlist );
+		if ( !itemlist[1] ) {
+			if( debug ) Debugger.raise( `Passing ${itemlist[0]}` );
+		}
+		else {
 			itemlist[1].forEach( r => {
+				console.log( r );
 				switch( itemlist[0] ) {
 					case 'todo_keys':
-						const name = r.split( 'render=' )[1].split( '-->')[0];
+						const name = r.split( `${Parser.__renderKey__}=` )[1].split( Parser.__CLOSE__ )[0];
 						const globals = insertionMap;
-						let replaceVal = insertionMap[ name ];
+						let replaceVal = insertionMap[name];
 						if( !replaceVal ) {
 							try {
 								replaceVal = globals[name];
@@ -117,25 +119,29 @@ export function resolve (
 						copy = copy.replace( r, replaceVal );
 						break;
 					case 'todo_loops':
-						const loopName = r.split( '(' )[1].split( ')' )[0];
+						const loopName = r.split( '(' )[1]?.split( ')' )[0];
 						let toInsert = insertionMap[loopName];
-						// if( debug ) stampLog( toInsert, 'toInsert::frommap|render/index.ts#L104' );
-
-						let elChild = r.replace( Parser.FOR_H( loopName ), '' ).replace( Parser.FOR_T(), '' )
+						let elChild = r.replace( Parser.LOOP_OPEN( loopName ), '' ).replace( Parser.LOOP_CLOSE, '' )
 							.trimStart().replace( /\s\s+/gi, '');
 
 						toInsert?.forEach( ( insertion ?: string | compiler.UINSERT_MAP ) => {
 							if( typeof( insertion ) === 'string' ) {
 								//1d array
-								outVal.push( { replacer: r, insertion: Parser.replaceAnonLoopBuf( { target: elChild, key: insertion as string } ) } );
+								outVal.push( { 
+									replacer: r, 
+									insertion: Parser.replaceAnonLoopBuf( { target: elChild, key: insertion as string } ) 
+								} );
 							}
 							else if ( typeof( insertion ) === 'object' ) {
 								//key/val
 								const entries = Object.entries( insertion );
-								if( entries.length > 0  ) outObj.push( { replacer: r, insertion: Parser.replacedNamedLoopBuf( elChild, entries ) } );
+								if ( entries.length > 0  ) outObj.push( { 
+									replacer: r, 
+									insertion: Parser.replacedNamedLoopBuf( elChild, entries ) 
+								} );
 							}
 							else {
-								Debugger.raise( `warning: insertion ${loopName} has an unrecognized value of` );
+								Debugger.raise( `warning: insertion ${loopName} has an unrecognized value of:\n` );
 								Debugger.raise( insertion );
 							}
 						} );
@@ -148,25 +154,11 @@ export function resolve (
 				}
 			} );
 		}
-		else {
-			Debugger.raise( `Warning: key ${itemlist} is missing a value to insert` );
-			// if( debug ) stampLog( itemlist, 'rendermap::error|render/index.ts#L134' );
-		}
 	} );
-
-	if( debug ) {
-		// stampLog( outVal, 'outval::prejoin|render/index.ts#L139' );
-		// stampLog( outObj, 'outobj::prejoin|render/index.ts#L140' );
-	}
 
 	const valStr = outVal.map( ( val: compiler.StackItem ) => val.insertion ).join( '' );
 	const objStr = outObj.map( ( obj: compiler.StackItem ) => obj.insertion ).join( '' );
 	outVal.forEach( ( _out: compiler.StackItem ) => copy = copy.replace( _out.replacer, valStr ) );
 	outObj.forEach( ( _out: compiler.StackItem ) => copy = copy.replace( _out.replacer, objStr ) );
-
-	if( debug ) {
-		// stampLog( valStr, 'valstr::postjoin|render/index.ts#L149' );
-		// stampLog( objStr, 'objstr::postjoin|render/index.ts#L150' );
-	}
 	return { raw: file, renderMap, insertionMap, render: copy };
 }

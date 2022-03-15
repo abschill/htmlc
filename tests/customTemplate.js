@@ -5,7 +5,7 @@ module.exports = {
     ],
     "homeLinks":[
         {
-          "icon": 'https://images.prismic.io/absedu/4a8c12a9-072d-4438-bcff-955588feed3d_http.png?auto=compress,format&rect=0,0,250,250&w=128&h=128',
+          icon: 'https://images.prismic.io/absedu/4a8c12a9-072d-4438-bcff-955588feed3d_http.png?auto=compress,format&rect=0,0,250,250&w=128&h=128',
           date: '2021-07-29',
           title: 'Web Servers 105: HTTP Caching',
           tags: 'Web Servers,Back End,HTTP/REST,Tutorial',

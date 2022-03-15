@@ -158,4 +158,8 @@ export class Debugger {
 		log( rmap );
 		log( imap );
 	}
+
+	static _finalize( args: { raw: string , render: string } ) {
+		log( args );
+	}
 }

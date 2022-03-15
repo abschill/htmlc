@@ -2,6 +2,8 @@
 ### tba
 ### Important 
 @render-partial is now @partial as of v0.4.5
+@for is now @loop as of v0.4.5
+new debug points
 
 # 0.4.4
 ### 2/26/22

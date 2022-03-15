@@ -1,8 +1,12 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const cleanHTML_1 = require("../util/cleanHTML");
 const internals_1 = require("./internals");
 const compile_1 = require("./compile");
+const parser_1 = __importDefault(require("./parser"));
 const render = (declaredPartials, rawFile, insertMap, debug) => {
     let rootCopy = rawFile;
     const renMap = (0, compile_1.__renderMap)(rootCopy);
@@ -10,7 +14,7 @@ const render = (declaredPartials, rawFile, insertMap, debug) => {
         internals_1.Debugger._registerMap(renMap, insertMap);
     if (renMap.todo_partials && renMap.todo_partials.length > 0) {
         renMap.todo_partials.forEach((partialSeg) => {
-            const p_name = partialSeg.split('@partial=')[1].split('-->')[0];
+            const p_name = partialSeg.split(`${parser_1.default.__partialKey__}=`)[1].split(parser_1.default.__CLOSE__)[0];
             const matchPartials = declaredPartials.filter(n => n.name === p_name);
             if (matchPartials.length > 0) {
                 matchPartials.forEach(partial => {
@@ -44,7 +48,10 @@ const render = (declaredPartials, rawFile, insertMap, debug) => {
         });
     }
     try {
-        return (0, cleanHTML_1.cleanHTML)(rootCopy);
+        const render = (0, cleanHTML_1.cleanHTML)(rootCopy);
+        if (debug)
+            internals_1.Debugger._finalize({ raw: rawFile, render });
+        return render;
     }
     catch (e) {
         internals_1.Debugger.raise('Failed to Clean HTML');

@@ -7,6 +7,7 @@ import { core } from '../loader';
 import { internals, compiler } from './internals';
 import { Debugger } from './internals';
 import { __renderMap, resolve } from './compile';
+import Parser from './parser';
 /**
  *
  * @param {Partial[]} declaredPartials array of partials declared in loader context
@@ -27,13 +28,13 @@ const render = (
 
     if( renMap.todo_partials && renMap.todo_partials.length > 0 ) {
         renMap.todo_partials.forEach( ( partialSeg: string ) => {
-            const p_name = partialSeg.split( '@partial=' )[1].split( '-->' )[0];
+            const p_name = partialSeg.split( `${Parser.__partialKey__}=` )[1].split( Parser.__CLOSE__ )[0];
             const matchPartials = declaredPartials.filter( n => n.name === p_name );
             if( matchPartials.length > 0 ) {
                 matchPartials.forEach( partial => {
                     const renderMap = __renderMap( partial.rawFile );
                     const scoped_insertion = insertMap[ 'partialInput' ] ?? {};
-                    const insertion = {...insertMap, ...scoped_insertion };
+                    const insertion = { ...insertMap, ...scoped_insertion };
                     const resolved = resolve( partial.rawFile, renderMap, insertion, debug );
                     if( debug ) Debugger._registerMap( renderMap, insertMap );
                     rootCopy = rootCopy.replace( partialSeg, resolved.render );
@@ -61,7 +62,9 @@ const render = (
     }
 
     try {
-        return cleanHTML( rootCopy );
+        const render = cleanHTML( rootCopy );
+        if( debug ) Debugger._finalize( { raw: rawFile, render } );
+        return render;
     }
     catch( e ) {
 		Debugger.raise( 'Failed to Clean HTML' );
