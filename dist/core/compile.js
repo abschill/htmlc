@@ -68,7 +68,6 @@ function resolve(file, renderMap, insertionMap, debug) {
     const outObj = [];
     if (debug)
         internals_1.Debugger._registerMap(renderMap, insertionMap);
-    console.log(renderMap);
     Object.entries(renderMap).forEach((itemlist) => {
         console.log(itemlist);
         if (!itemlist[1]) {

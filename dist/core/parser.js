@@ -19,7 +19,7 @@ class Parser {
         return a.target.indexOf(Parser._replaceSignature(Parser._partialKey, a.key));
     }
     static matchPartials(target) {
-        return target.match(/<!--@partial=[\w|\d]+-->/gi);
+        return target.match(Parser._partialReggie);
     }
     static replacePartial(a) {
         return a.target.replace(Parser._replaceSignature(Parser._partialKey, a.key), a.value);
@@ -28,7 +28,7 @@ class Parser {
         return a.target.includes(Parser._replaceSignature(Parser._renderKey, a.key));
     }
     static matchKeys(target) {
-        return target.match(/<!--@render=[\w|\d]+-->/gi);
+        return target.match(Parser._keyReggie);
     }
     static hasLoop(a) {
         return a.target.includes(`<!--${Parser.__loopKey__}(${a.key}){`);
@@ -75,4 +75,6 @@ Parser.__loopKey__ = `@${_a._loopKey}`;
 Parser._loopSignature = `<!--${_a.__loopKey__}(${_a._delim}){}${_a.__CLOSE__}`;
 Parser._keySignature = `<!--${_a.__renderKey__}=${_a._delim}${_a.__CLOSE__}`;
 Parser._partialSignature = `<!--${_a.__partialKey__}=${_a._delim}${_a.__CLOSE__}`;
+Parser._keyReggie = /<!--@render=[\w|\d]+-->/gi;
+Parser._partialReggie = /<!--@partial=[\w|\d]+-->/gi;
 //# sourceMappingURL=parser.js.map

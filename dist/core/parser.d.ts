@@ -13,6 +13,8 @@ export default class Parser {
     static _loopSignature: string;
     static _keySignature: string;
     static _partialSignature: string;
+    static _keyReggie: RegExp;
+    static _partialReggie: RegExp;
     private static _replaceSignature;
     static hasPartial(a: internals.kBUF): boolean;
     static partialIndex(a: internals.kBUF): number;
