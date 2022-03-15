@@ -1,5 +1,5 @@
 import { core } from '../loader';
-import {compiler, internals} from './internals';
+import { compiler, internals } from './internals';
 import render from '.';
 import { Debugger } from './internals';
 import RESERVED_WORDS from "./abt";
@@ -95,13 +95,11 @@ export function resolve (
 
 	if( debug ) Debugger._registerMap( renderMap, insertionMap );
 	Object.entries( renderMap ).forEach( ( itemlist : [ key: string, value: string[] | string[][] ] ) => {
-		console.log( itemlist );
 		if ( !itemlist[1] ) {
 			if( debug ) Debugger.raise( `Passing ${itemlist[0]}` );
 		}
 		else {
 			itemlist[1].forEach( r => {
-				console.log( r );
 				switch( itemlist[0] ) {
 					case 'todo_keys':
 						const name = r.split( `${Parser.__renderKey__}=` )[1].split( Parser.__CLOSE__ )[0];
