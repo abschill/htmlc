@@ -1,22 +1,25 @@
 /**
  * @module file internal file handling
  */
-import { core } from '../loader';
-import { DEFAULTS } from '../core/internals';
+import { core } from '../../';
+import { DEFAULTS } from '..';
 import fs from 'fs';
 import path from 'path';
-import { internals } from '../core/internals';
+import { internals } from '..';
 
 export class fsUtil {
+
 	static readDir( dir: string ) {
 		return fs.readdirSync( dir )
 			.filter( x => fs.lstatSync( path.join( dir, x ) ).isFile() )
 			.map( x => path.resolve( dir, x ) );
 	}
+
 	static loadUTF8( filePath: string ):
 		internals.fileUTF8 {
 		return fs.readFileSync( filePath ).toString( 'utf-8' );
 	}
+	
 	static mapData( filePath: string ):
 		internals.FileInputMeta {
 		const n = filePath.split( '.html' );

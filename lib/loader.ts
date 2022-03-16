@@ -10,56 +10,12 @@
      * myLoader.template( 'home', { ...homeData } );
      * ```
  */
-import context from './util/options';
+import context from './core/internals/util/options';
 import { watch } from 'fs';
-import { internals, compiler,  _DEFAULTS } from './core/internals';
-import { Debugger } from './core/internals';
+import { core } from './core';
+import { compiler,  _DEFAULTS } from './core/internals';
+import { Debugger } from './core/internals/debugger';
 import compile from './core/compile';
-
-export declare namespace core {
-
-	export interface RuntimeState {
-		ctx: core.Context;
-		template: ( name: string, data ?: object ) => core.template;
-	}
-
-	type Entity<Type> = {
-		[Property in keyof Type]-?: Type[Property];
-	}
-
-	export type Event<T> = {
-		( args: T ): T;
-	}
-
-    export type Options = {
-        pathRoot ?: string;
-        templates ?: string;
-        partials ?: string;
-        partialInput ?: compiler.UINSERT_MAP;
-        templateInput ?: compiler.UINSERT_MAP;
-        watch ?: boolean;
-        debug ?: boolean;
-    };
-
-	export type ROptions = Entity<Options>;
-
-    export type Context = {
-        config: ROptions;
-        partials: internals.FileInputMeta[];
-        templates: internals.FileInputMeta[];
-    };
-
-    export type template = string;
-
-    export type StaticOptions = {
-        load_options: ROptions;
-        static_options: {
-            cleanup: boolean;
-            outPath: string;
-            loaderFile: string | string[];
-        };
-    };
-}
 
 /**
  * @function Loader

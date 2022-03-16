@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const conf = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), 'package.json')).toString('utf-8'));
 const loader_1 = require("../loader");
-const file_1 = require("../util/file");
+const file_1 = require("../core/internals/util/file");
 const { static_config = {
     "pathRoot": "views",
     "partials": "partials",

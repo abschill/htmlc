@@ -2,12 +2,55 @@
  * @module render
  * @description Handles Lexical Render Process for Internal Engine
  */
-import { cleanHTML } from '../util/cleanHTML';
-import { core } from '../loader';
+import { cleanHTML } from './internals/util/cleanHTML';
 import { internals, compiler } from './internals';
-import { Debugger } from './internals';
+import { Debugger } from './internals/debugger';
 import { __renderMap, resolve } from './compile';
 import Parser from './parser';
+
+export declare namespace core {
+    export type Context = {
+        config: ROptions;
+        partials: internals.FileInputMeta[];
+        templates: internals.FileInputMeta[];
+    };
+
+	export interface RuntimeState {
+		ctx: core.Context;
+		template: ( name: string, data ?: object ) => core.template;
+	}
+
+	type Entity<Type> = {
+		[Property in keyof Type]-?: Type[Property];
+	}
+
+	export type Event<T> = {
+		( args: T ): T;
+	}
+
+    export type Options = {
+        pathRoot ?: string;
+        templates ?: string;
+        partials ?: string;
+        partialInput ?: compiler.UINSERT_MAP;
+        templateInput ?: compiler.UINSERT_MAP;
+        watch ?: boolean;
+        debug ?: boolean;
+    };
+
+	export type ROptions = Entity<Options>;
+
+    export type template = string;
+
+    export type StaticOptions = {
+        load_options: ROptions;
+        static_options: {
+            cleanup: boolean;
+            outPath: string;
+            loaderFile: string | string[];
+        };
+    };
+}
 /**
  *
  * @param {Partial[]} declaredPartials array of partials declared in loader context

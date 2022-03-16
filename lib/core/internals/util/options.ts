@@ -3,9 +3,9 @@
  * @param { Runtime.Options } config configuration file for engine
  * @returns context for engine
  */
-import { core } from '../loader';
+import { core } from '../../';
 import { fsUtil } from './file';
-import { _DEFAULTS } from "../core/internals";
+import { _DEFAULTS } from "..";
 
 export default ( config: core.Options ):
 	core.Context => {

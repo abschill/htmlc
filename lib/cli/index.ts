@@ -3,7 +3,7 @@ const path = require( 'path' );
 const fs = require( 'fs' );
 const conf = JSON.parse( fs.readFileSync( path.resolve( process.cwd(), 'package.json' ) ).toString( 'utf-8' ) );
 import { Loader } from '../loader';
-import { fsUtil } from '../util/file';
+import { fsUtil } from '../core/internals/util/file';
 const { static_config = {
     "pathRoot": "views",
     "partials": "partials",

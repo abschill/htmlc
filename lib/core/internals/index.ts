@@ -1,4 +1,4 @@
-import { core } from '../loader';
+import { core } from '../';
 
 export declare namespace coreEvent {
 	export type Name = string;
@@ -130,36 +130,4 @@ export const DEFAULTS = {
         loaderFile: 'loader.js',
         cleanup: true
     }
-}
-
-const { log, warn } = console;
-
-export class Debugger {
-
-	constructor() {}
-
-	static _registerEvent( ...args: coreEvent.Args<coreEvent.Name> ) {
-		const eventName = args[0];
-		const templateName = args[2]['0'].template_name;
-		const contextData = args[2]['0'].ctx;
-		if( args[1].config.debug ) {
-			log( 'HCL_EVENT: ', eventName );
-			log( 'HCL_TEMPLATE: ', templateName );
-			log( 'HCL_CTX: ', contextData );
-		}
-	}
-
-	static raise( m ) {
-		warn( m );
-	}
-
-	static _registerMap( rmap: compiler.RenderMap, imap: compiler.UINSERT_MAP ) {
-		log( 'HCL_EVENT: map::register' );
-		log( rmap );
-		log( imap );
-	}
-
-	static _finalize( args: { raw: string , render: string } ) {
-		log( args );
-	}
 }

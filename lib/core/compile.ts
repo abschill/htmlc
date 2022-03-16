@@ -1,7 +1,7 @@
-import { core } from '../loader';
+import { core } from '.';
 import { compiler, internals } from './internals';
 import render from '.';
-import { Debugger } from './internals';
+import { Debugger } from './internals/debugger';
 import RESERVED_WORDS from "./abt";
 import Parser from "./parser";
 
@@ -159,4 +159,11 @@ export function resolve (
 	outVal.forEach( ( _out: compiler.StackItem ) => copy = copy.replace( _out.replacer, valStr ) );
 	outObj.forEach( ( _out: compiler.StackItem ) => copy = copy.replace( _out.replacer, objStr ) );
 	return { raw: file, renderMap, insertionMap, render: copy };
+}
+
+
+export class Compiler {
+	constructor() {
+
+	}
 }
