@@ -69,7 +69,6 @@ function resolve(file, renderMap, insertionMap, debug) {
     if (debug)
         internals_1.Debugger._registerMap(renderMap, insertionMap);
     Object.entries(renderMap).forEach((itemlist) => {
-        console.log(itemlist);
         if (!itemlist[1]) {
             if (debug)
                 internals_1.Debugger.raise(`Passing ${itemlist[0]}`);
@@ -77,7 +76,6 @@ function resolve(file, renderMap, insertionMap, debug) {
         else {
             itemlist[1].forEach(r => {
                 var _a;
-                console.log(r);
                 switch (itemlist[0]) {
                     case 'todo_keys':
                         const name = r.split(`${parser_1.default.__renderKey__}=`)[1].split(parser_1.default.__CLOSE__)[0];

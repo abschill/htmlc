@@ -1,3 +1,5 @@
-0.4.5 - blockers
+0.4.7
 
-- update context function to take UOptions and check over for each type before assigning default values.
+- set up logFile config option to write runtime logs to given file path
+- change file sync ops -> async in pure function util modules (similar to way it is but without delaying event loop)
+- lets merge the compiler / resolve ops into a static namespace similar to the parser
