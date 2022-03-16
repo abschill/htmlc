@@ -7,7 +7,7 @@ const {
 	timeEnd 
 } = console;
 
-export class Debugger {
+export default class Debugger {
 
 	static _registerEvent( ...args: coreEvent.Args<coreEvent.Name> ) {
 		const eventName = args[0];

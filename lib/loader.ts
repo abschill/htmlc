@@ -14,8 +14,8 @@ import context from './core/internals/util/options';
 import { watch } from 'fs';
 import { core } from './core';
 import { compiler,  _DEFAULTS } from './core/internals';
-import { Debugger } from './core/internals/debugger';
-import compile from './core/compile';
+import Debugger from './core/internals/debugger';
+import Compiler from './core/compile';
 
 /**
  * @function Loader
@@ -63,7 +63,7 @@ core.RuntimeState {
 	 */
     function template( name: string, data ?: compiler.UINSERT_MAP ):
     core.template {
-        return compile( { template_name: name, ctx, data } );
+        return Compiler.compile( { template_name: name, ctx, data } );
     }
 
     return { ctx, template };

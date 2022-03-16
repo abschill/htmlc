@@ -9,7 +9,7 @@ const compile_1 = require("./compile");
 const parser_1 = __importDefault(require("./parser"));
 const render = (declaredPartials, rawFile, insertMap, debug) => {
     let rootCopy = rawFile;
-    const renMap = (0, compile_1.__renderMap)(rootCopy);
+    const renMap = compile_1.Compiler.__renderMap(rootCopy);
     if (debug)
         debugger_1.Debugger._registerMap(renMap, insertMap);
     if (renMap.todo_partials && renMap.todo_partials.length > 0) {
@@ -19,10 +19,10 @@ const render = (declaredPartials, rawFile, insertMap, debug) => {
             if (matchPartials.length > 0) {
                 matchPartials.forEach(partial => {
                     var _a;
-                    const renderMap = (0, compile_1.__renderMap)(partial.rawFile);
+                    const renderMap = compile_1.Compiler.__renderMap(partial.rawFile);
                     const scoped_insertion = (_a = insertMap['partialInput']) !== null && _a !== void 0 ? _a : {};
                     const insertion = Object.assign(Object.assign({}, insertMap), scoped_insertion);
-                    const resolved = (0, compile_1.resolve)(partial.rawFile, renderMap, insertion, debug);
+                    const resolved = compile_1.Compiler.resolve(partial.rawFile, renderMap, insertion, debug);
                     if (debug)
                         debugger_1.Debugger._registerMap(renderMap, insertMap);
                     rootCopy = rootCopy.replace(partialSeg, resolved.render);
@@ -32,8 +32,8 @@ const render = (declaredPartials, rawFile, insertMap, debug) => {
     }
     if (renMap.todo_keys && renMap.todo_keys.length > 0) {
         renMap.todo_keys.forEach(_ => {
-            const renderMap = (0, compile_1.__renderMap)(rootCopy);
-            const resolved = (0, compile_1.resolve)(rootCopy, renderMap, insertMap);
+            const renderMap = compile_1.Compiler.__renderMap(rootCopy);
+            const resolved = compile_1.Compiler.resolve(rootCopy, renderMap, insertMap);
             if (debug)
                 debugger_1.Debugger._registerMap(renderMap, insertMap);
             rootCopy = resolved.render;
@@ -41,10 +41,10 @@ const render = (declaredPartials, rawFile, insertMap, debug) => {
     }
     if (renMap.todo_loops && renMap.todo_loops.length > 0) {
         renMap.todo_loops.forEach(_ => {
-            const renderMap = (0, compile_1.__renderMap)(rootCopy);
+            const renderMap = compile_1.Compiler.__renderMap(rootCopy);
             if (debug)
                 debugger_1.Debugger._registerMap(renderMap, insertMap);
-            rootCopy = (0, compile_1.resolve)(rootCopy, renderMap, insertMap).render;
+            rootCopy = compile_1.Compiler.resolve(rootCopy, renderMap, insertMap).render;
         });
     }
     try {
