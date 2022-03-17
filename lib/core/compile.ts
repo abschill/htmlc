@@ -8,13 +8,13 @@ import Parser from "./parser";
 export default class Compiler {
 	
 	static scanTemplate( args: compiler.Args ) {
-		const fileData = args.ctx.templates.filter( ( temp: internals.FileInputMeta ) => temp.name === args.template_name )[0];
-		if( fileData.rawFile ) {
-			return fileData.rawFile;
+		try {
+			const fileData = args.ctx.templates.filter( ( temp: internals.FileInputMeta ) => temp.name === args.template_name )[0];
+			return fileData.rawFile
 		}
-		else {
-			Debugger.raise( `Template '${fileData.name} not found'` );
-		}
+		catch( e ) {
+			Debugger.raise( `Template '${args.template_name} not found'` );
+		}	
 	}
 
 	static __renderMap( content: string ) {
@@ -23,6 +23,7 @@ export default class Compiler {
 			todo_loops: [],
 			todo_partials: []
 		};
+
 		RESERVED_WORDS.forEach( token => {
 			const keymap = token.array( content );
 			switch( token.key ) {
@@ -50,7 +51,7 @@ export default class Compiler {
 		 * If any data was keyed with the template name in the constructor, we will use as a secondary priority load value
 		 * these objects will default to {} if not entered
 		 */
-		const { templateInput = {}, partialInput = {} } = args.ctx.config;
+		const {templateInput = {}, partialInput = {}} = args.ctx.config;
 		// unset null data if applicable
 		if( !args.data ) args.data = {};
 	
@@ -61,24 +62,23 @@ export default class Compiler {
 		compiler.UINSERT_MAP = templateInput;
 		if( Object.keys( args.data ).length === 0 ) {
 			const insertions:
-			compiler.compiledMap = { ...globalInsertions, partialInput };
+			compiler.compiledMap = {...globalInsertions, partialInput};
 			Debugger._registerEvent( 'template::insert:args', args.ctx, arguments );
-			return render( args.ctx.partials, Compiler.scanTemplate( args ), insertions, args.ctx.config.debug );
+			return render( args.ctx.partials, Compiler.scanTemplate( args ), insertions, args.ctx.config.debug !== null );
 		}
 		else {
 			const scopedInsertions:
-			compiler.UINSERT_MAP = { ...templateInput, ...args.data };
+			compiler.UINSERT_MAP = {...templateInput, ...args.data};
 			const insertions:
-			compiler.compiledMap = {
-				...globalInsertions, ...scopedInsertions,
+			compiler.compiledMap = {...globalInsertions, ...scopedInsertions,
 				partialInput: {
 					...partialInput,
-					...args.data[ 'partialInput' ]
+					...args.data['partialInput']
 				}
 			};
 	
 			Debugger._registerEvent( 'insert', args.ctx, arguments );
-			return render( args.ctx.partials, Compiler.scanTemplate( args ), insertions, args.ctx.config.debug );
+			return render( args.ctx.partials, Compiler.scanTemplate( args ), insertions, args.ctx.config.debug !== null );
 		}
 	}
 	static resolve (
@@ -92,7 +92,7 @@ export default class Compiler {
 		const outObj: compiler.StackItem[] = [];
 	
 		if( debug ) Debugger._registerMap( renderMap, insertionMap );
-		Object.entries( renderMap ).forEach( ( itemlist : [ key: string, value: string[] | string[][] ] ) => {
+		Object.entries( renderMap ).forEach( ( itemlist : [key: string, value: string[] | string[][]] ) => {
 			if ( !itemlist[1] ) {
 				if( debug ) Debugger.raise( `Passing ${itemlist[0]}` );
 			}
@@ -118,14 +118,14 @@ export default class Compiler {
 							const loopName = r.split( '(' )[1]?.split( ')' )[0];
 							let toInsert = insertionMap[loopName];
 							let elChild = r.replace( Parser.LOOP_OPEN( loopName ), '' ).replace( Parser.LOOP_CLOSE, '' )
-								.trimStart().replace( /\s\s+/gi, '');
+								.trimStart().replace( /\s\s+/gi, '' );
 	
 							toInsert?.forEach( ( insertion ?: string | compiler.UINSERT_MAP ) => {
 								if( typeof( insertion ) === 'string' ) {
 									//1d array
 									outVal.push( { 
 										replacer: r, 
-										insertion: Parser.replaceAnonLoopBuf( { target: elChild, key: insertion as string } ) 
+										insertion: Parser.replaceAnonLoopBuf( {target: elChild, key: insertion as string} ) 
 									} );
 								}
 								else if ( typeof( insertion ) === 'object' ) {
@@ -156,6 +156,12 @@ export default class Compiler {
 		const objStr = outObj.map( ( obj: compiler.StackItem ) => obj.insertion ).join( '' );
 		outVal.forEach( ( _out: compiler.StackItem ) => copy = copy.replace( _out.replacer, valStr ) );
 		outObj.forEach( ( _out: compiler.StackItem ) => copy = copy.replace( _out.replacer, objStr ) );
-		return { raw: file, renderMap, insertionMap, render: copy };
+
+		return {
+			raw: file, 
+			renderMap, 
+			insertionMap, 
+			render: copy
+		};
 	}
 }

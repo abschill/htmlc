@@ -9,6 +9,10 @@ export declare namespace core {
         ctx: core.Context;
         template: (name: string, data?: object) => core.template;
     }
+    type RDebugOpts = boolean | {
+        logFile: string;
+        suppressFatal: boolean;
+    };
     type Entity<Type> = {
         [Property in keyof Type]-?: Type[Property];
     };
@@ -22,7 +26,7 @@ export declare namespace core {
         partialInput?: compiler.UINSERT_MAP;
         templateInput?: compiler.UINSERT_MAP;
         watch?: boolean;
-        debug?: boolean;
+        debug?: RDebugOpts;
     };
     type ROptions = Entity<Options>;
     type template = string;

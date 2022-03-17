@@ -61,8 +61,8 @@ core.RuntimeState {
 	 */
     function template( name: string, data ?: compiler.UINSERT_MAP ):
     core.template {
-        return Compiler.compile( { template_name: name, ctx, data } );
+        return Compiler.compile( {template_name: name, ctx, data} );
     }
 
-    return { ctx, template };
+    return {ctx, template};
 }

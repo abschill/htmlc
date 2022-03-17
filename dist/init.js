@@ -4,10 +4,16 @@ const file_1 = require("./core/internals/util/file");
 const internals_1 = require("./core/internals");
 exports.default = (config) => {
     const hydrated = clean(config);
-    return {
+    const partials = file_1.fsUtil.resolvePartials(config);
+    const templates = file_1.fsUtil.resolveTemplates(config);
+    return (partials && templates) ? {
         config: hydrated,
-        partials: file_1.fsUtil.resolvePartials(config),
-        templates: file_1.fsUtil.resolveTemplates(config)
+        partials,
+        templates
+    } : {
+        config: hydrated,
+        partials: [],
+        templates: []
     };
 };
 const clean = (config) => Object.keys(config) === Object.keys(internals_1._DEFAULTS) ?

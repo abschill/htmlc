@@ -99,5 +99,5 @@ export declare const DEFAULTS: {
     partialInput: object;
     templateInput: object;
     watch: boolean;
-    debug: boolean;
+    debug: core.RDebugOpts;
 };

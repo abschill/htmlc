@@ -7,6 +7,7 @@ exports.fsUtil = void 0;
 const __1 = require("..");
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
+const debugger_1 = __importDefault(require("../debugger"));
 class fsUtil {
     static readDir(dir) {
         return fs_1.default.readdirSync(dir)
@@ -34,32 +35,15 @@ class fsUtil {
     static resolveTemplates(conf) {
         const { templates = __1.DEFAULTS.templates, pathRoot = __1.DEFAULTS.pathRoot } = conf;
         const _path = path_1.default.join(process.cwd(), pathRoot, templates);
-        if (_path) {
-            try {
-                return this.readDir(_path).map(p => this.mapData(p));
-            }
-            catch (e) {
-                throw e;
-            }
-        }
-        else {
-            throw new Error('Template Directory Resolution Failed - Template Directory not found');
-        }
+        return _path ? this.readDir(_path).map(p => this.mapData(p)) :
+            debugger_1.default.raise(`Error: finding templates in ${pathRoot}/${templates} `);
     }
     static resolvePartials(conf) {
         const { partials = __1.DEFAULTS.partials, pathRoot = __1.DEFAULTS.pathRoot } = conf;
         const _path = path_1.default.join(process.cwd(), pathRoot, partials);
-        if (_path) {
-            try {
-                return this.readDir(_path).map(p => this.mapData(p));
-            }
-            catch (e) {
-                throw e;
-            }
-        }
-        else {
-            throw new Error('Partial Directory Resolution Failed - Partial Directory not Found');
-        }
+        return _path ?
+            this.readDir(_path).map(p => this.mapData(p)) :
+            debugger_1.default.raise(`Error: finding templates in ${pathRoot}/${partials} `);
     }
 }
 exports.fsUtil = fsUtil;

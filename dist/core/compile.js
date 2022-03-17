@@ -9,12 +9,12 @@ const abt_1 = __importDefault(require("./abt"));
 const parser_1 = __importDefault(require("./parser"));
 class Compiler {
     static scanTemplate(args) {
-        const fileData = args.ctx.templates.filter((temp) => temp.name === args.template_name)[0];
-        if (fileData.rawFile) {
+        try {
+            const fileData = args.ctx.templates.filter((temp) => temp.name === args.template_name)[0];
             return fileData.rawFile;
         }
-        else {
-            debugger_1.default.raise(`Template '${fileData.name} not found'`);
+        catch (e) {
+            debugger_1.default.raise(`Template '${args.template_name} not found'`);
         }
     }
     static __renderMap(content) {
@@ -50,13 +50,13 @@ class Compiler {
         if (Object.keys(args.data).length === 0) {
             const insertions = Object.assign(Object.assign({}, globalInsertions), { partialInput });
             debugger_1.default._registerEvent('template::insert:args', args.ctx, arguments);
-            return (0, _1.default)(args.ctx.partials, Compiler.scanTemplate(args), insertions, args.ctx.config.debug);
+            return (0, _1.default)(args.ctx.partials, Compiler.scanTemplate(args), insertions, args.ctx.config.debug !== null);
         }
         else {
             const scopedInsertions = Object.assign(Object.assign({}, templateInput), args.data);
             const insertions = Object.assign(Object.assign(Object.assign({}, globalInsertions), scopedInsertions), { partialInput: Object.assign(Object.assign({}, partialInput), args.data['partialInput']) });
             debugger_1.default._registerEvent('insert', args.ctx, arguments);
-            return (0, _1.default)(args.ctx.partials, Compiler.scanTemplate(args), insertions, args.ctx.config.debug);
+            return (0, _1.default)(args.ctx.partials, Compiler.scanTemplate(args), insertions, args.ctx.config.debug !== null);
         }
     }
     static resolve(file, renderMap, insertionMap, debug) {
@@ -127,7 +127,12 @@ class Compiler {
         const objStr = outObj.map((obj) => obj.insertion).join('');
         outVal.forEach((_out) => copy = copy.replace(_out.replacer, valStr));
         outObj.forEach((_out) => copy = copy.replace(_out.replacer, objStr));
-        return { raw: file, renderMap, insertionMap, render: copy };
+        return {
+            raw: file,
+            renderMap,
+            insertionMap,
+            render: copy
+        };
     }
 }
 exports.default = Compiler;
