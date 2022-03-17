@@ -3,19 +3,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Compiler = void 0;
 const _1 = __importDefault(require("."));
-const debugger_1 = require("./internals/debugger");
+const debugger_1 = __importDefault(require("./internals/debugger"));
 const abt_1 = __importDefault(require("./abt"));
 const parser_1 = __importDefault(require("./parser"));
 class Compiler {
-    static scanTemplate(name, args) {
+    static scanTemplate(args) {
         const fileData = args.ctx.templates.filter((temp) => temp.name === args.template_name)[0];
         if (fileData.rawFile) {
             return fileData.rawFile;
         }
         else {
-            debugger_1.Debugger.raise(`Template '${fileData.name} not found'`);
+            debugger_1.default.raise(`Template '${fileData.name} not found'`);
         }
     }
     static __renderMap(content) {
@@ -46,18 +45,18 @@ class Compiler {
         const { templateInput = {}, partialInput = {} } = args.ctx.config;
         if (!args.data)
             args.data = {};
-        debugger_1.Debugger._registerEvent('init', args.ctx, arguments);
+        debugger_1.default._registerEvent('init', args.ctx, arguments);
         const globalInsertions = templateInput;
         if (Object.keys(args.data).length === 0) {
             const insertions = Object.assign(Object.assign({}, globalInsertions), { partialInput });
-            debugger_1.Debugger._registerEvent('template::insert:args', args.ctx, arguments);
-            return (0, _1.default)(args.ctx.partials, Compiler.scanTemplate(args.template_name, args), insertions, args.ctx.config.debug);
+            debugger_1.default._registerEvent('template::insert:args', args.ctx, arguments);
+            return (0, _1.default)(args.ctx.partials, Compiler.scanTemplate(args), insertions, args.ctx.config.debug);
         }
         else {
             const scopedInsertions = Object.assign(Object.assign({}, templateInput), args.data);
             const insertions = Object.assign(Object.assign(Object.assign({}, globalInsertions), scopedInsertions), { partialInput: Object.assign(Object.assign({}, partialInput), args.data['partialInput']) });
-            debugger_1.Debugger._registerEvent('insert', args.ctx, arguments);
-            return (0, _1.default)(args.ctx.partials, Compiler.scanTemplate(args.template_name, args), insertions, args.ctx.config.debug);
+            debugger_1.default._registerEvent('insert', args.ctx, arguments);
+            return (0, _1.default)(args.ctx.partials, Compiler.scanTemplate(args), insertions, args.ctx.config.debug);
         }
     }
     static resolve(file, renderMap, insertionMap, debug) {
@@ -65,11 +64,11 @@ class Compiler {
         const outVal = [];
         const outObj = [];
         if (debug)
-            debugger_1.Debugger._registerMap(renderMap, insertionMap);
+            debugger_1.default._registerMap(renderMap, insertionMap);
         Object.entries(renderMap).forEach((itemlist) => {
             if (!itemlist[1]) {
                 if (debug)
-                    debugger_1.Debugger.raise(`Passing ${itemlist[0]}`);
+                    debugger_1.default.raise(`Passing ${itemlist[0]}`);
             }
             else {
                 itemlist[1].forEach(r => {
@@ -84,7 +83,7 @@ class Compiler {
                                     replaceVal = globals[name];
                                 }
                                 catch (e) {
-                                    debugger_1.Debugger.raise(`Failed to find ${name} to insert into ${file}`);
+                                    debugger_1.default.raise(`Failed to find ${name} to insert into ${file}`);
                                     replaceVal = '';
                                 }
                             }
@@ -111,8 +110,8 @@ class Compiler {
                                         });
                                 }
                                 else {
-                                    debugger_1.Debugger.raise(`warning: insertion ${loopName} has an unrecognized value of:\n`);
-                                    debugger_1.Debugger.raise(insertion);
+                                    debugger_1.default.raise(`warning: insertion ${loopName} has an unrecognized value of:\n`);
+                                    debugger_1.default.raise(insertion);
                                 }
                             });
                             break;
@@ -131,5 +130,5 @@ class Compiler {
         return { raw: file, renderMap, insertionMap, render: copy };
     }
 }
-exports.Compiler = Compiler;
+exports.default = Compiler;
 //# sourceMappingURL=compile.js.map

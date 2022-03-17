@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Debugger = void 0;
 const { log, warn, time, timeEnd } = console;
 class Debugger {
     static _registerEvent(...args) {
@@ -33,5 +32,5 @@ class Debugger {
         log(args);
     }
 }
-exports.Debugger = Debugger;
+exports.default = Debugger;
 //# sourceMappingURL=debugger.js.map

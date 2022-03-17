@@ -10,7 +10,7 @@
      * myLoader.template( 'home', { ...homeData } );
      * ```
  */
-import context from './core/internals/util/options';
+import hydrateRuntime from './init';
 import { watch } from 'fs';
 import { core } from './core';
 import { compiler,  _DEFAULTS } from './core/internals';
@@ -26,26 +26,24 @@ import Compiler from './core/compile';
 export function Loader ( config ?: core.Options ):
 core.RuntimeState {
 
-    let ctx: core.Context = context( config ?? _DEFAULTS );
+    let ctx: core.Context = hydrateRuntime( config ?? _DEFAULTS );
 
     if( ctx.config.watch ) {
         ctx.partials.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-                    //if( ctx.config.debug ) stampLog( `Modified ${filename}, refresh browser to apply changes`, 'watch::partials|loader.ts#L63' )
                     Debugger._registerEvent( `Modified ${filename}, refresh browser to apply changes`, ctx, arguments );
-					ctx = context( config ?? _DEFAULTS );
+					ctx = hydrateRuntime( config ?? _DEFAULTS );
                 }
-            });
+            } );
         } );
         ctx.templates.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-                    //if( ctx.config.debug ) stampLog( `Modified ${filename}, refresh browser to apply changes`, 'watch::templates|loader.ts#L71' )
 					Debugger._registerEvent( `Modified ${filename}, refresh browser to apply changes`, ctx, arguments );
-					ctx = context( config ?? _DEFAULTS );
+					ctx = hydrateRuntime( config ?? _DEFAULTS );
                 }
-            });
+            } );
         } );
     }
 

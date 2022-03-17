@@ -21,7 +21,6 @@ export default class Parser {
 	static _keyReggie: RegExp = /<!--@render=[\w|\d]+-->/gi;
 	static _partialReggie: RegExp = /<!--@partial=[\w|\d]+-->/gi;
 
-
 	private static _replaceSignature( type: string, val: string ) {
 		switch( type ) {
 			case Parser._partialKey:
@@ -33,35 +32,35 @@ export default class Parser {
 		}
 	}
 
-	public static hasPartial( a: internals.kBUF ) {
+	static hasPartial( a: internals.kBUF ) {
 		return a.target.includes( Parser._replaceSignature( Parser._partialKey, a.key ) );
 	}
 
-	public static partialIndex( a: internals.kBUF ) {
+	static partialIndex( a: internals.kBUF ) {
 		return a.target.indexOf( Parser._replaceSignature( Parser._partialKey, a.key ) );
 	}
 
-	public static matchPartials( target: internals.AST_TARGET ) {
+	static matchPartials( target: internals.AST_TARGET ) {
 		return target.match( Parser._partialReggie );
 	}
 
-	public static replacePartial( a: internals.vBUF ) {
+	static replacePartial( a: internals.vBUF ) {
 		return a.target.replace( Parser._replaceSignature( Parser._partialKey, a.key ), a.value );
 	}
 
-	public static hasKey( a: internals.kBUF ) {
+	static hasKey( a: internals.kBUF ) {
 		return a.target.includes( Parser._replaceSignature( Parser._renderKey, a.key ) );
 	}
 
-	public static matchKeys( target: internals.AST_TARGET  ) {
+	static matchKeys( target: internals.AST_TARGET  ) {
 		return target.match( Parser._keyReggie );
 	}
 
-	public static hasLoop( a: internals.kBUF ) {
+	static hasLoop( a: internals.kBUF ) {
 		return a.target.includes( `<!--${Parser.__loopKey__}(${a.key}){` );
 	}
 
-	public static matchLoops( target: internals.AST_TARGET ) {
+	static matchLoops( target: internals.AST_TARGET ) {
 		const out: Array<string> = [];
 		const _opener = /<!--@loop\(\w+\){/gi;
 		const opener = target.match( _opener );
@@ -77,11 +76,11 @@ export default class Parser {
 		return out;
 	}
 
-	public static replaceAnonLoopBuf( a: internals.kBUF ) {
+	static replaceAnonLoopBuf( a: internals.kBUF ) {
 		return a.target.replace( Parser._delim, a.key );
 	}
 
-	public static replacedNamedLoopBuf( clone: string, insert: internals.Insertion | internals.Entry ) {
+	static replacedNamedLoopBuf( clone: string, insert: internals.Insertion | internals.Entry ) {
 		let copy = clone;
 		insert.forEach( ( insertion: string | compiler.UINSERT_MAP ) => {
 			copy = copy.replace( `{${insertion[0]}}`, insertion[1] );

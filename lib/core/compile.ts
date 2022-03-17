@@ -7,7 +7,7 @@ import Parser from "./parser";
 
 export default class Compiler {
 	
-	static scanTemplate( name: string, args: compiler.Args ) {
+	static scanTemplate( args: compiler.Args ) {
 		const fileData = args.ctx.templates.filter( ( temp: internals.FileInputMeta ) => temp.name === args.template_name )[0];
 		if( fileData.rawFile ) {
 			return fileData.rawFile;
@@ -63,7 +63,7 @@ export default class Compiler {
 			const insertions:
 			compiler.compiledMap = { ...globalInsertions, partialInput };
 			Debugger._registerEvent( 'template::insert:args', args.ctx, arguments );
-			return render( args.ctx.partials, Compiler.scanTemplate( args.template_name, args ), insertions, args.ctx.config.debug );
+			return render( args.ctx.partials, Compiler.scanTemplate( args ), insertions, args.ctx.config.debug );
 		}
 		else {
 			const scopedInsertions:
@@ -78,7 +78,7 @@ export default class Compiler {
 			};
 	
 			Debugger._registerEvent( 'insert', args.ctx, arguments );
-			return render( args.ctx.partials, Compiler.scanTemplate( args.template_name, args ), insertions, args.ctx.config.debug );
+			return render( args.ctx.partials, Compiler.scanTemplate( args ), insertions, args.ctx.config.debug );
 		}
 	}
 	static resolve (

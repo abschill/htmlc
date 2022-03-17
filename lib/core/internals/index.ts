@@ -14,6 +14,7 @@ export declare namespace coreEvent {
 	}
 }
 
+
 export declare namespace compiler {
 	export type ASTMatch = RegExpMatchArray | String[] | []
 

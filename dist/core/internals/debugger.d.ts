@@ -1,5 +1,5 @@
 import { coreEvent, compiler } from ".";
-export declare class Debugger {
+export default class Debugger {
     static _registerEvent(...args: coreEvent.Args<coreEvent.Name>): void;
     static raise(m: any): void;
     static stamp(msg: object | string, label: string): void;
