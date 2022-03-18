@@ -4,21 +4,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fsUtil = void 0;
+const fs_1 = require("fs");
+const path_1 = require("path");
 const __1 = require("..");
-const fs_1 = __importDefault(require("fs"));
-const path_1 = __importDefault(require("path"));
 const debugger_1 = __importDefault(require("../debugger"));
 class fsUtil {
     static readDir(dir) {
-        return fs_1.default.readdirSync(dir)
-            .filter(x => fs_1.default.lstatSync(path_1.default.join(dir, x)).isFile())
-            .map(x => path_1.default.resolve(dir, x));
+        return fs_1.readdirSync(dir)
+            .filter(x => fs_1.lstatSync(path_1.join(dir, x)).isFile())
+            .map(x => path_1.resolve(dir, x));
     }
     static toStringF(filePath) {
-        return fs_1.default.readFileSync(filePath).toString('utf-8');
+        return fs_1.readFileSync(filePath).toString('utf-8');
     }
     static toJSONF(filePath) {
-        return fs_1.default.readFileSync(filePath).toJSON();
+        return fs_1.readFileSync(filePath).toJSON();
     }
     static mapData(filePath) {
         const n = filePath.split('.html');
@@ -37,13 +37,13 @@ class fsUtil {
     }
     static resolveTemplates(conf) {
         const { templates = __1.DEFAULTS.templates, pathRoot = __1.DEFAULTS.pathRoot } = conf;
-        const _path = path_1.default.join(process.cwd(), pathRoot, templates);
+        const _path = path_1.join(process.cwd(), pathRoot, templates);
         return _path ? this.readDir(_path).map(p => this.mapData(p)) :
             debugger_1.default.raise(`Error: finding templates in ${pathRoot}/${templates} `);
     }
     static resolvePartials(conf) {
         const { partials = __1.DEFAULTS.partials, pathRoot = __1.DEFAULTS.pathRoot } = conf;
-        const _path = path_1.default.join(process.cwd(), pathRoot, partials);
+        const _path = path_1.join(process.cwd(), pathRoot, partials);
         return _path ?
             this.readDir(_path).map(p => this.mapData(p)) :
             debugger_1.default.raise(`Error: finding templates in ${pathRoot}/${partials} `);

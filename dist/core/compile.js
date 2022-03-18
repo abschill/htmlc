@@ -134,6 +134,41 @@ class Compiler {
             render: copy
         };
     }
+    static resolveDeclaredPartials(renMap, declaredPartials, insertMap, rootCopy) {
+        let rc = rootCopy;
+        renMap.todo_partials.forEach((partialSeg) => {
+            const p_name = partialSeg.split(`${parser_1.default.__partialKey__}=`)[1].split(parser_1.default.__CLOSE__)[0];
+            const matchPartials = declaredPartials.filter(n => n.name === p_name);
+            if (matchPartials.length > 0) {
+                matchPartials.forEach(partial => {
+                    var _a;
+                    const renderMap = Compiler.__renderMap(partial.rawFile);
+                    const scoped_insertion = (_a = insertMap['partialInput']) !== null && _a !== void 0 ? _a : {};
+                    const insertion = Object.assign(Object.assign({}, insertMap), scoped_insertion);
+                    const resolved = Compiler.resolve(partial.rawFile, renderMap, insertion);
+                    rc = rc.replace(partialSeg, resolved.render);
+                });
+            }
+        });
+        return rc;
+    }
+    static resolveDeclaredKeys(renMap, insertMap, rootCopy) {
+        let rc = rootCopy;
+        renMap.todo_keys.forEach(_ => {
+            const renderMap = Compiler.__renderMap(rootCopy);
+            const resolved = Compiler.resolve(rootCopy, renderMap, insertMap);
+            rc = resolved.render;
+        });
+        return rc;
+    }
+    static resolveDeclaredLoops(renMap, insertMap, rootCopy) {
+        let rc = rootCopy;
+        renMap.todo_loops.forEach(_ => {
+            const renderMap = Compiler.__renderMap(rootCopy);
+            rc = Compiler.resolve(rc, renderMap, insertMap).render;
+        });
+        return rc;
+    }
 }
 exports.default = Compiler;
 //# sourceMappingURL=compile.js.map

@@ -1,9 +1,11 @@
 import { 
 	kBUF,
 	vBUF,
+	FileInputMeta,
 	Insertion,
 	AST_TARGET,
 	Entry,
+	RenderMap,
 	UINSERT_MAP
 } from './internals/types';
 
@@ -94,4 +96,6 @@ export default class Parser {
 		} );
 		return copy;
 	}
+
+	
 }

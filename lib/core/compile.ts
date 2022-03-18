@@ -175,4 +175,55 @@ export default class Compiler {
 			render: copy
 		};
 	}
+
+	static resolveDeclaredPartials( 
+		renMap: RenderMap, 
+		declaredPartials: FileInputMeta[], 
+		insertMap: UINSERT_MAP,
+		rootCopy: string
+	): string {
+		let rc = rootCopy;
+		renMap.todo_partials.forEach( ( partialSeg: string ) => {
+            const p_name = partialSeg.split( `${Parser.__partialKey__}=` )[1].split( Parser.__CLOSE__ )[0];
+            const matchPartials = declaredPartials.filter( n => n.name === p_name );
+            if( matchPartials.length > 0 ) {
+                matchPartials.forEach( partial => {
+                    const renderMap = Compiler.__renderMap( partial.rawFile );
+                    const scoped_insertion = insertMap['partialInput'] ?? {};
+                    const insertion = {...insertMap, ...scoped_insertion};
+                    const resolved = Compiler.resolve( partial.rawFile, renderMap, insertion );
+                    rc = rc.replace( partialSeg, resolved.render );
+                } );
+            }
+        } );
+
+		return rc;
+	}
+
+	static resolveDeclaredKeys(
+		renMap: RenderMap, 
+		insertMap: UINSERT_MAP,
+		rootCopy: string
+	): string {
+		let rc = rootCopy;
+		renMap.todo_keys.forEach( _ => {
+            const renderMap = Compiler.__renderMap( rootCopy );
+            const resolved = Compiler.resolve( rootCopy, renderMap, insertMap );
+            rc = resolved.render;
+        } );
+		return rc;
+	}
+
+	static resolveDeclaredLoops(
+		renMap: RenderMap,
+		insertMap: UINSERT_MAP,
+		rootCopy: string
+	): string {
+		let rc = rootCopy;
+		renMap.todo_loops.forEach( _ => {
+            const renderMap = Compiler.__renderMap( rootCopy );
+            rc = Compiler.resolve( rc, renderMap, insertMap ).render;
+        } );
+		return rc;
+	}
 }

@@ -30,38 +30,16 @@ const render = (
     const renMap = Compiler.__renderMap( rootCopy );
     if( debug ) Debugger._registerMap( renMap, insertMap );
 
-    if( renMap.todo_partials && renMap.todo_partials.length > 0 ) {
-        renMap.todo_partials.forEach( ( partialSeg: string ) => {
-            const p_name = partialSeg.split( `${Parser.__partialKey__}=` )[1].split( Parser.__CLOSE__ )[0];
-            const matchPartials = declaredPartials.filter( n => n.name === p_name );
-            if( matchPartials.length > 0 ) {
-                matchPartials.forEach( partial => {
-                    const renderMap = Compiler.__renderMap( partial.rawFile );
-                    const scoped_insertion = insertMap['partialInput'] ?? {};
-                    const insertion = {...insertMap, ...scoped_insertion};
-                    const resolved = Compiler.resolve( partial.rawFile, renderMap, insertion, debug );
-                    if( debug ) Debugger._registerMap( renderMap, insertMap );
-                    rootCopy = rootCopy.replace( partialSeg, resolved.render );
-                } );
-            }
-        } );
-    }
+    if( renMap.todo_partials && renMap.todo_partials.length > 0 ) rootCopy = Compiler.resolveDeclaredPartials( renMap, declaredPartials, insertMap, rootCopy );
 
     if( renMap.todo_keys && renMap.todo_keys.length > 0 ) {
-        renMap.todo_keys.forEach( _ => {
-            const renderMap = Compiler.__renderMap( rootCopy );
-            const resolved = Compiler.resolve( rootCopy, renderMap, insertMap );
-			if( debug ) Debugger._registerMap( renderMap, insertMap );
-            rootCopy = resolved.render;
-        } );
+        const renderMap = Compiler.__renderMap( rootCopy );
+        rootCopy = Compiler.resolveDeclaredKeys( renderMap, insertMap, rootCopy );
     }
 
     if( renMap.todo_loops && renMap.todo_loops.length > 0 ) {
-        renMap.todo_loops.forEach( _ => {
-            const renderMap = Compiler.__renderMap( rootCopy );
-            if( debug ) Debugger._registerMap( renderMap, insertMap );
-            rootCopy = Compiler.resolve( rootCopy, renderMap, insertMap ).render;
-        } );
+        const renderMap = Compiler.__renderMap( rootCopy );
+        rootCopy = Compiler.resolveDeclaredLoops( renderMap, insertMap, rootCopy );
     }
 
     try {
