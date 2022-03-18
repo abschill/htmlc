@@ -28,7 +28,7 @@ string => {
 
     if( !copy.includes( BODY_OPEN ) ) {
         if( copy.includes( HEAD_OPEN ) ) {
-            let headCache = copy.substring( 0, copy.indexOf( HEAD_CLOSE ) + HEAD_CLOSE.length );
+            const headCache = copy.substring( 0, copy.indexOf( HEAD_CLOSE ) + HEAD_CLOSE.length );
             const bodyCache = copy.split( headCache ).pop();
             copy = headCache + BODY_OPEN_BLANK + bodyCache + BODY_CLOSE;
         }

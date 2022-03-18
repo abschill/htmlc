@@ -2,8 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import { fsUtil } from '../core/internals/util/file';
 import { DEFAULTS } from '../core/internals';
-import { internals } from '../core/internals';
-
+import { 
+    FileInputMeta
+} from '../core/internals/types';
 export function findConfig() {
     const o = JSON.parse( fs.readFileSync( path.resolve( process.cwd(), 'package.json' ) ).toString( 'utf-8' ) )?.static_config ?? DEFAULTS.static_config;
     return Object.keys( o ) === Object.keys( DEFAULTS.static_config ) ? 
@@ -34,7 +35,7 @@ export function getModuleFromBase(
 }
 
 export function pathify( 
-    template: internals.FileInputMeta,
+    template: FileInputMeta,
     contextPath: string
 ): string {
     const toName = `${template.name}.html`;

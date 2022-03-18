@@ -1,15 +1,25 @@
-import { core } from '.';
-import { compiler, internals } from './internals';
+/* eslint-disable no-case-declarations */
+
+import { 
+	FileInputMeta,
+	RenderMap,
+	Args,
+	RTemplate,
+	UINSERT_MAP,
+	compiledMap,
+	Resolved,
+	StackItem,
+} from './internals/types';
 import render from '.';
 import Debugger from './internals/debugger';
-import RESERVED_WORDS from "./abt";
-import Parser from "./parser";
+import RESERVED_WORDS from './abt';
+import Parser from './parser';
 
 export default class Compiler {
 	
-	static scanTemplate( args: compiler.Args ) {
+	static scanTemplate( args: Args ) {
 		try {
-			const fileData = args.ctx.templates.filter( ( temp: internals.FileInputMeta ) => temp.name === args.template_name )[0];
+			const fileData = args.ctx.templates.filter( ( temp: FileInputMeta ) => temp.name === args.template_name )[0];
 			return fileData.rawFile
 		}
 		catch( e ) {
@@ -18,7 +28,7 @@ export default class Compiler {
 	}
 
 	static __renderMap( content: string ) {
-		const __map__: compiler.RenderMap = {
+		const __map__: RenderMap = {
 			todo_keys: [],
 			todo_loops: [],
 			todo_partials: []
@@ -45,8 +55,8 @@ export default class Compiler {
 	}
 
 	static compile ( 
-		args: compiler.Args 
-	): core.RTemplate {
+		args: Args 
+	): RTemplate {
 		/**
 		 * If any data was keyed with the template name in the constructor, we will use as a secondary priority load value
 		 * these objects will default to {} if not entered
@@ -59,18 +69,18 @@ export default class Compiler {
 	
 		//if no data, load default input for template
 		const globalInsertions:
-		compiler.UINSERT_MAP = templateInput;
+		UINSERT_MAP = templateInput;
 		if( Object.keys( args.data ).length === 0 ) {
 			const insertions:
-			compiler.compiledMap = {...globalInsertions, partialInput};
+			compiledMap = {...globalInsertions, partialInput};
 			Debugger._registerEvent( 'template::insert:args', args.ctx, arguments );
 			return render( args.ctx.partials, Compiler.scanTemplate( args ), insertions, args.ctx.config.debug !== null );
 		}
 		else {
 			const scopedInsertions:
-			compiler.UINSERT_MAP = {...templateInput, ...args.data};
+			UINSERT_MAP = {...templateInput, ...args.data};
 			const insertions:
-			compiler.compiledMap = {...globalInsertions, ...scopedInsertions,
+			compiledMap = {...globalInsertions, ...scopedInsertions,
 				partialInput: {
 					...partialInput,
 					...args.data['partialInput']
@@ -84,13 +94,13 @@ export default class Compiler {
 	
 	static resolve (
 		file: string,
-		renderMap: compiler.RenderMap,
-		insertionMap: compiler.UINSERT_MAP,
+		renderMap: RenderMap,
+		insertionMap: UINSERT_MAP,
 		debug ?: boolean
-	): internals.Resolved<compiler.RenderMap> {
+	): Resolved<RenderMap> {
 		let copy = file;
-		const outVal: compiler.StackItem[] = [];
-		const outObj: compiler.StackItem[] = [];
+		const outVal: StackItem[] = [];
+		const outObj: StackItem[] = [];
 	
 		if( debug ) Debugger._registerMap( renderMap, insertionMap );
 		Object.entries( renderMap ).forEach( ( itemlist : [key: string, value: string[] | string[][]] ) => {
@@ -117,11 +127,11 @@ export default class Compiler {
 							break;
 						case 'todo_loops':
 							const loopName = r.split( '(' )[1]?.split( ')' )[0];
-							let toInsert = insertionMap[loopName];
-							let elChild = r.replace( Parser.LOOP_OPEN( loopName ), '' ).replace( Parser.LOOP_CLOSE, '' )
-								.trimStart().replace( /\s\s+/gi, '' );
+							const toInsert = insertionMap[loopName];
+							const elChild: string = r.replace( Parser.LOOP_OPEN( loopName ), '' ).replace( Parser.LOOP_CLOSE, '' )
+							.trimStart().replace( /\s\s+/gi, '' );
 	
-							toInsert?.forEach( ( insertion ?: string | compiler.UINSERT_MAP ) => {
+							toInsert?.forEach( ( insertion ?: string | UINSERT_MAP ) => {
 								if( typeof( insertion ) === 'string' ) {
 									//1d array
 									outVal.push( { 
@@ -153,10 +163,10 @@ export default class Compiler {
 			}
 		} );
 	
-		const valStr = outVal.map( ( val: compiler.StackItem ) => val.insertion ).join( '' );
-		const objStr = outObj.map( ( obj: compiler.StackItem ) => obj.insertion ).join( '' );
-		outVal.forEach( ( _out: compiler.StackItem ) => copy = copy.replace( _out.replacer, valStr ) );
-		outObj.forEach( ( _out: compiler.StackItem ) => copy = copy.replace( _out.replacer, objStr ) );
+		const valStr = outVal.map( ( val: StackItem ) => val.insertion ).join( '' );
+		const objStr = outObj.map( ( obj: StackItem ) => obj.insertion ).join( '' );
+		outVal.forEach( ( _out: StackItem ) => copy = copy.replace( _out.replacer, valStr ) );
+		outObj.forEach( ( _out: StackItem ) => copy = copy.replace( _out.replacer, objStr ) );
 
 		return {
 			raw: file, 

@@ -91,8 +91,8 @@ class Compiler {
                             break;
                         case 'todo_loops':
                             const loopName = (_a = r.split('(')[1]) === null || _a === void 0 ? void 0 : _a.split(')')[0];
-                            let toInsert = insertionMap[loopName];
-                            let elChild = r.replace(parser_1.default.LOOP_OPEN(loopName), '').replace(parser_1.default.LOOP_CLOSE, '')
+                            const toInsert = insertionMap[loopName];
+                            const elChild = r.replace(parser_1.default.LOOP_OPEN(loopName), '').replace(parser_1.default.LOOP_CLOSE, '')
                                 .trimStart().replace(/\s\s+/gi, '');
                             toInsert === null || toInsert === void 0 ? void 0 : toInsert.forEach((insertion) => {
                                 if (typeof (insertion) === 'string') {

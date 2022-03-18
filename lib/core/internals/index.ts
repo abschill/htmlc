@@ -1,117 +1,9 @@
-import { core } from '../';
 
-export declare namespace coreEvent {
-	export type Name = string;
-	export type Args<T> = [
-		T,
-		core.Context,
-		IArguments
-	]
-
-	export interface Trigger<T> {
-		name: string;
-		signature: Args<T>
-	}
-}
+import { Entity, Options } from './types';
 
 
-export declare namespace compiler {
-	export type ASTMatch = RegExpMatchArray | String[] | []
 
-	export interface Args {
-		template_name: string;
-		ctx: core.Context;
-		data ?: compiler.UINSERT_MAP;
-	}
-
-	export interface RenderMap {
-        todo_partials: ASTMatch;
-        todo_keys: ASTMatch;
-        todo_loops: ASTMatch;
-    }
-
-	export type Dictionary<ReservedWord> = Array<ReservedWord>
-
-	export type ReservedWord = {
-		key: string;
-		boolean: ( a: internals.kBUF ) => boolean;
-		array: ( a: internals.AST_TARGET ) => Array<string>;
-	}
-
-	export type StackItem = {
-        replacer: core.RTemplate;
-        insertion: core.RTemplate | core.RTemplate[] | core.RTemplate[][];
-    }
-
-	export type UINSERT_MAP = object;
-
-    export interface compiledMap extends UINSERT_MAP {
-        partialInput: UINSERT_MAP;
-    }
-}
-
-export declare namespace internals {
-
-	export type AST_TARGET = string;
-
-	//stores key value to test against ast target domstring
-	export type kBUF = {
-		target: AST_TARGET
-		key: string;
-	}
-
-	//stores value assigned to key to test against target domstring
-	export type vBUF = {
-		target: AST_TARGET;
-		key: string;
-		value: string;
-	}
-
-	export interface RLoopBUF {
-		head: number;
-		tail: number;
-	}
-
-    export type Entry = Array<string | compiler.UINSERT_MAP>;
-
-    export type Insertion = [
-        string|compiler.UINSERT_MAP,
-        Entry
-    ];
-
-    export type Resolved<RenderMap> = {
-        raw: string;
-        renderMap: RenderMap;
-        insertionMap: compiler.UINSERT_MAP;
-        render: string;
-    }
-
-    export type RenderTemplateArgs = {
-        _toInsert: Object;
-        raw: string;
-        conf: core.ROptions;
-    }
-
-	type TargetDirectoryTree = {
-        path: string;
-        files: string[];
-    }
-
-    type FileInputMeta = {
-        path: string;
-        name: string;
-        rawFile: string;
-    }
-
-    type fileUTF8 = string;
-
-    type fileJSON = object;
-
-	export type _templateInsert = object | {} | any | null;
-
-}
-
-export const _DEFAULTS: core.Entity<core.Options> = {
+export const _DEFAULTS: Entity<Options> = {
     pathRoot: 'views',
     templates: 'pages',
     partials: 'partials',
@@ -123,8 +15,8 @@ export const _DEFAULTS: core.Entity<core.Options> = {
 
 export const DEFAULTS = {
 	..._DEFAULTS,
-    _publishDefault : "dist",
-    outDefault: "public",
+    _publishDefault : 'dist',
+    outDefault: 'public',
     static_config: {
         pathRoot: 'views',
         partials: 'partials',

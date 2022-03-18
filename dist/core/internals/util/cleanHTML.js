@@ -18,7 +18,7 @@ const cleanHTML = (htmlCopy) => {
     const { CLOSE_HTML, OPEN_HTML, OPEN_HTML_BLANK, DOCTYPE, HEAD_OPEN, HEAD_CLOSE, BODY_OPEN, BODY_OPEN_BLANK, BODY_CLOSE } = enums;
     if (!copy.includes(BODY_OPEN)) {
         if (copy.includes(HEAD_OPEN)) {
-            let headCache = copy.substring(0, copy.indexOf(HEAD_CLOSE) + HEAD_CLOSE.length);
+            const headCache = copy.substring(0, copy.indexOf(HEAD_CLOSE) + HEAD_CLOSE.length);
             const bodyCache = copy.split(headCache).pop();
             copy = headCache + BODY_OPEN_BLANK + bodyCache + BODY_CLOSE;
         }

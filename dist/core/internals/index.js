@@ -10,7 +10,7 @@ exports._DEFAULTS = {
     watch: false,
     debug: false
 };
-exports.DEFAULTS = Object.assign(Object.assign({}, exports._DEFAULTS), { _publishDefault: "dist", outDefault: "public", static_config: {
+exports.DEFAULTS = Object.assign(Object.assign({}, exports._DEFAULTS), { _publishDefault: 'dist', outDefault: 'public', static_config: {
         pathRoot: 'views',
         partials: 'partials',
         templates: 'pages',

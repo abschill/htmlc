@@ -1,8 +1,8 @@
-import { compiler } from "./internals";
+import { Dictionary, ReservedWord } from './internals/types';
 import Parser from './parser';
 
 const RESERVED_WORDS:
-compiler.Dictionary<compiler.ReservedWord> = [
+Dictionary<ReservedWord> = [
     {
         key: Parser.__loopKey__,
         boolean: Parser.hasLoop,

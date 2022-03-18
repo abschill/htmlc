@@ -1,8 +1,7 @@
-import { core } from '.';
-import { compiler, internals } from './internals';
+import { RenderMap, Args, RTemplate, UINSERT_MAP, Resolved } from './internals/types';
 export default class Compiler {
-    static scanTemplate(args: compiler.Args): string;
-    static __renderMap(content: string): compiler.RenderMap;
-    static compile(args: compiler.Args): core.RTemplate;
-    static resolve(file: string, renderMap: compiler.RenderMap, insertionMap: compiler.UINSERT_MAP, debug?: boolean): internals.Resolved<compiler.RenderMap>;
+    static scanTemplate(args: Args): string;
+    static __renderMap(content: string): RenderMap;
+    static compile(args: Args): RTemplate;
+    static resolve(file: string, renderMap: RenderMap, insertionMap: UINSERT_MAP, debug?: boolean): Resolved<RenderMap>;
 }

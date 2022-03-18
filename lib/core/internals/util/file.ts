@@ -1,11 +1,15 @@
 /**
  * @module file internal file handling
  */
-import { core } from '../../';
+import {
+	fileUTF8,
+	fileJSON,
+	FileInputMeta,
+	Options
+} from '../types';
 import { DEFAULTS } from '..';
 import fs from 'fs';
 import path from 'path';
-import { internals } from '..';
 import Debugger from '../debugger';
 
 export class fsUtil {
@@ -19,18 +23,18 @@ export class fsUtil {
 	}
 
 	static toStringF( filePath: string ):
-		internals.fileUTF8 {
+		fileUTF8 {
 		return fs.readFileSync( filePath ).toString( 'utf-8' );
 	}
 
 	static toJSONF( 
 		filePath: string
-	): internals.fileJSON {
+	): fileJSON {
 		return fs.readFileSync( filePath ).toJSON();
 	}
 	
 	static mapData( filePath: string ):
-		internals.FileInputMeta {
+		FileInputMeta {
 		const n = filePath.split( '.html' );
 		if( process.platform === 'win32' ) {
 			const na = n[0].split( this.__WIN__ );
@@ -46,8 +50,8 @@ export class fsUtil {
 		}
 	}
 
-	static resolveTemplates( conf: core.Options ):
-		internals.FileInputMeta[] | void {
+	static resolveTemplates( conf: Options ):
+		FileInputMeta[] | void {
 		const {
 			templates = DEFAULTS.templates, 
 			pathRoot = DEFAULTS.pathRoot
@@ -58,8 +62,8 @@ export class fsUtil {
 
 	}
 
-	static resolvePartials( conf: core.Options ):
-		internals.FileInputMeta[] | void {
+	static resolvePartials( conf: Options ):
+		FileInputMeta[] | void {
 		const { 
 			partials = DEFAULTS.partials,
 			pathRoot = DEFAULTS.pathRoot 

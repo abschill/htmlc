@@ -1,5 +1,11 @@
-import { compiler, internals } from './internals';
-
+import { 
+	kBUF,
+	vBUF,
+	Insertion,
+	AST_TARGET,
+	Entry,
+	UINSERT_MAP
+} from './internals/types';
 export default class Parser {
 	static _delim = '{_}';
 	static __CLOSE__ = '-->';
@@ -32,35 +38,35 @@ export default class Parser {
 		}
 	}
 
-	static hasPartial( a: internals.kBUF ) {
+	static hasPartial( a: kBUF ) {
 		return a.target.includes( Parser._replaceSignature( Parser._partialKey, a.key ) );
 	}
 
-	static partialIndex( a: internals.kBUF ) {
+	static partialIndex( a: kBUF ) {
 		return a.target.indexOf( Parser._replaceSignature( Parser._partialKey, a.key ) );
 	}
 
-	static matchPartials( target: internals.AST_TARGET ) {
+	static matchPartials( target: AST_TARGET ) {
 		return target.match( Parser._partialReggie );
 	}
 
-	static replacePartial( a: internals.vBUF ) {
+	static replacePartial( a: vBUF ) {
 		return a.target.replace( Parser._replaceSignature( Parser._partialKey, a.key ), a.value );
 	}
 
-	static hasKey( a: internals.kBUF ) {
+	static hasKey( a: kBUF ) {
 		return a.target.includes( Parser._replaceSignature( Parser._renderKey, a.key ) );
 	}
 
-	static matchKeys( target: internals.AST_TARGET  ) {
+	static matchKeys( target: AST_TARGET  ) {
 		return target.match( Parser._keyReggie );
 	}
 
-	static hasLoop( a: internals.kBUF ) {
+	static hasLoop( a: kBUF ) {
 		return a.target.includes( `<!--${Parser.__loopKey__}(${a.key}){` );
 	}
 
-	static matchLoops( target: internals.AST_TARGET ) {
+	static matchLoops( target: AST_TARGET ) {
 		const out: Array<string> = [];
 		const _opener = /<!--@loop\(\w+\){/gi;
 		const opener = target.match( _opener );
@@ -76,13 +82,13 @@ export default class Parser {
 		return out;
 	}
 
-	static replaceAnonLoopBuf( a: internals.kBUF ) {
+	static replaceAnonLoopBuf( a: kBUF ) {
 		return a.target.replace( Parser._delim, a.key );
 	}
 
-	static replacedNamedLoopBuf( clone: string, insert: internals.Insertion | internals.Entry ) {
+	static replacedNamedLoopBuf( clone: string, insert: Insertion | Entry ) {
 		let copy = clone;
-		insert.forEach( ( insertion: string | compiler.UINSERT_MAP ) => {
+		insert.forEach( ( insertion: string | UINSERT_MAP ) => {
 			copy = copy.replace( `{${insertion[0]}}`, insertion[1] );
 		} );
 		return copy;

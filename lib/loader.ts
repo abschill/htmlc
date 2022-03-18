@@ -10,10 +10,16 @@
      * myLoader.template( 'home', { ...homeData } );
      * ```
  */
+ import { 
+    RuntimeState, 
+    Options, 
+    coreContext, 
+    RTemplate,
+    UINSERT_MAP
+} from './core/internals/types';
 import hydrateRuntime from './init';
 import { watch } from 'fs';
-import { core } from './core';
-import { compiler,  _DEFAULTS } from './core/internals';
+import { _DEFAULTS } from './core/internals';
 import Debugger from './core/internals/debugger';
 import Compiler from './core/compile';
 
@@ -23,10 +29,10 @@ import Compiler from './core/compile';
  * @returns Factory function for runtime context
  * @param config
  */
-export function Loader ( config ?: core.Options ):
-core.RuntimeState {
+export function Loader ( config ?: Options ):
+RuntimeState {
 
-    let ctx: core.Context = hydrateRuntime( config ?? _DEFAULTS );
+    let ctx: coreContext = hydrateRuntime( config ?? _DEFAULTS );
 
     if( ctx.config.watch ) {
         ctx.partials.forEach( file => {
@@ -59,8 +65,8 @@ core.RuntimeState {
 	 * @param name
 	 * @param data
 	 */
-    function template( name: string, data ?: compiler.UINSERT_MAP ):
-    core.RTemplate {
+    function template( name: string, data ?: UINSERT_MAP ):
+    RTemplate {
         return Compiler.compile( {template_name: name, ctx, data} );
     }
 

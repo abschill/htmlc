@@ -1,5 +1,10 @@
-import { coreEvent, compiler } from ".";
 
+import { 
+	RenderMap,
+	UINSERT_MAP,
+	coreEventArgs,
+	coreEventName
+} from './types';
 const { 
 	log, 
 	warn, 
@@ -9,7 +14,7 @@ const {
 
 export default class Debugger {
 
-	static _registerEvent( ...args: coreEvent.Args<coreEvent.Name> ) {
+	static _registerEvent( ...args: coreEventArgs<coreEventName> ) {
 		const eventName = args[0];
 		const templateName = args[2]['0'].template_name;
 		const contextData = args[2]['0'].ctx;
@@ -33,7 +38,7 @@ export default class Debugger {
 		timeEnd( label );
 	}
 
-	static _registerMap( rmap: compiler.RenderMap, imap: compiler.UINSERT_MAP ) {
+	static _registerMap( rmap: RenderMap, imap: UINSERT_MAP ) {
 		log( 'HCL_EVENT: map::register' );
 		log( rmap );
 		log( imap );

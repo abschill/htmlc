@@ -3,65 +3,15 @@
  * @description Handles Lexical Render Process for Internal Engine
  */
 import { cleanHTML } from './internals/util/cleanHTML';
-import { internals, compiler } from './internals';
 import Debugger from './internals/debugger';
 import Compiler  from './compile';
 import Parser from './parser';
-
-export declare namespace core {
-
-    export type Context = {
-        config: ROptions;
-        partials: internals.FileInputMeta[];
-        templates: internals.FileInputMeta[];
-    };
-
-	export interface RuntimeState {
-		ctx: core.Context;
-		template: ( name: string, data ?: object ) => core.RTemplate;
-	}
-
-    type RDebugOpts = boolean | {
-        logFile: string;
-        suppressFatal: boolean;
-    };
-
-	type Entity<Type> = {
-		[Property in keyof Type]-?: Type[Property];
-	}
-
-	export type Event<T> = {
-		( args: T ): T;
-	}
-
-    export type Options = {
-        pathRoot ?: string;
-        templates ?: string;
-        partials ?: string;
-        partialInput ?: compiler.UINSERT_MAP;
-        templateInput ?: compiler.UINSERT_MAP;
-        watch ?: boolean;
-        debug ?: RDebugOpts;
-    };
-
-	export type ROptions = Entity<Options>;
-    export type RTemplate = string;
-
-    export type SOptions = {
-        pathRoot ?: string;
-        templates ?: string;
-        partials ?: string;
-        partialInput ?: compiler.UINSERT_MAP;
-        templateInput ?: compiler.UINSERT_MAP;
-        debug ?: RDebugOpts;
-        outPath: string;
-        loaderFile: string;
-        cleanup: boolean;
-    }
-
-    export type SSGOptions = Entity<SOptions>;
-    export type STemplate = string;
-}
+import { 
+    RTemplate,
+    FileInputMeta,
+    fileUTF8,
+    UINSERT_MAP
+} from './internals/types';
 /**
  *
  * @param {Partial[]} declaredPartials array of partials declared in loader context
@@ -71,11 +21,11 @@ export declare namespace core {
  * @returns {string} The rendered template
  */
 const render = (
-    declaredPartials: internals.FileInputMeta[],
-    rawFile: internals.fileUTF8,
-    insertMap: compiler.UINSERT_MAP,
+    declaredPartials: FileInputMeta[],
+    rawFile: fileUTF8,
+    insertMap: UINSERT_MAP,
     debug ?: boolean
-): core.RTemplate => {
+): RTemplate => {
     let rootCopy = rawFile;
     const renMap = Compiler.__renderMap( rootCopy );
     if( debug ) Debugger._registerMap( renMap, insertMap );

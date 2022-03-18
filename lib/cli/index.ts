@@ -7,9 +7,8 @@ import {
     __write
 } from './tools';
 import { Loader } from '../loader';
-import { core } from '../core';
-
-const static_config: core.SOptions = findConfig();
+import { SOptions } from '../core/internals/types';
+const static_config: SOptions = findConfig();
 ensureOutPath( static_config.outPath );
 
 try {

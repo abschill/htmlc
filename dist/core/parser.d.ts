@@ -1,4 +1,4 @@
-import { internals } from './internals';
+import { kBUF, vBUF, Insertion, AST_TARGET, Entry } from './internals/types';
 export default class Parser {
     static _delim: string;
     static __CLOSE__: string;
@@ -16,14 +16,14 @@ export default class Parser {
     static _keyReggie: RegExp;
     static _partialReggie: RegExp;
     private static _replaceSignature;
-    static hasPartial(a: internals.kBUF): boolean;
-    static partialIndex(a: internals.kBUF): number;
-    static matchPartials(target: internals.AST_TARGET): RegExpMatchArray;
-    static replacePartial(a: internals.vBUF): string;
-    static hasKey(a: internals.kBUF): boolean;
-    static matchKeys(target: internals.AST_TARGET): RegExpMatchArray;
-    static hasLoop(a: internals.kBUF): boolean;
-    static matchLoops(target: internals.AST_TARGET): string[];
-    static replaceAnonLoopBuf(a: internals.kBUF): string;
-    static replacedNamedLoopBuf(clone: string, insert: internals.Insertion | internals.Entry): string;
+    static hasPartial(a: kBUF): boolean;
+    static partialIndex(a: kBUF): number;
+    static matchPartials(target: AST_TARGET): RegExpMatchArray;
+    static replacePartial(a: vBUF): string;
+    static hasKey(a: kBUF): boolean;
+    static matchKeys(target: AST_TARGET): RegExpMatchArray;
+    static hasLoop(a: kBUF): boolean;
+    static matchLoops(target: AST_TARGET): string[];
+    static replaceAnonLoopBuf(a: kBUF): string;
+    static replacedNamedLoopBuf(clone: string, insert: Insertion | Entry): string;
 }
