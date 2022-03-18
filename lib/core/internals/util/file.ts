@@ -9,6 +9,8 @@ import { internals } from '..';
 import Debugger from '../debugger';
 
 export class fsUtil {
+	static  __WIN__ = '\\';
+	static  __BSD__ = '/';
 
 	static readDir( dir: string ) {
 		return fs.readdirSync( dir )
@@ -16,24 +18,30 @@ export class fsUtil {
 			.map( x => path.resolve( dir, x ) );
 	}
 
-	static loadUTF8( filePath: string ):
+	static toStringF( filePath: string ):
 		internals.fileUTF8 {
 		return fs.readFileSync( filePath ).toString( 'utf-8' );
+	}
+
+	static toJSONF( 
+		filePath: string
+	): internals.fileJSON {
+		return fs.readFileSync( filePath ).toJSON();
 	}
 	
 	static mapData( filePath: string ):
 		internals.FileInputMeta {
 		const n = filePath.split( '.html' );
 		if( process.platform === 'win32' ) {
-			const na = n[0].split( '\\' );
-			const name = na[ na.length - 1 ];
-			const rawFile = this.loadUTF8( filePath );
+			const na = n[0].split( this.__WIN__ );
+			const name = na[na.length - 1];
+			const rawFile = this.toStringF( filePath );
 			return {path: filePath, name, rawFile};
 		}
 		else {
-			const na = n[0].split( '/' );
-			const name = na[ na.length - 1 ];
-			const rawFile = this.loadUTF8( filePath );
+			const na = n[0].split( this.__BSD__ );
+			const name = na[na.length - 1];
+			const rawFile = this.toStringF( filePath );
 			return {path: filePath, name, rawFile};
 		}
 	}

@@ -12,3 +12,4 @@ tests
 v0/**/*
 index.ts
 lib/**/*
+public

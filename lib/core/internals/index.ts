@@ -39,8 +39,8 @@ export declare namespace compiler {
 	}
 
 	export type StackItem = {
-        replacer: core.template;
-        insertion: core.template | core.template[] | core.template[][];
+        replacer: core.RTemplate;
+        insertion: core.RTemplate | core.RTemplate[] | core.RTemplate[][];
     }
 
 	export type UINSERT_MAP = object;
@@ -104,6 +104,8 @@ export declare namespace internals {
     }
 
     type fileUTF8 = string;
+
+    type fileJSON = object;
 
 	export type _templateInsert = object | {} | any | null;
 

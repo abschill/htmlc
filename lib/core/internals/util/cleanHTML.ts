@@ -26,7 +26,6 @@ string => {
         BODY_CLOSE
      } = enums;
 
-
     if( !copy.includes( BODY_OPEN ) ) {
         if( copy.includes( HEAD_OPEN ) ) {
             let headCache = copy.substring( 0, copy.indexOf( HEAD_CLOSE ) + HEAD_CLOSE.length );

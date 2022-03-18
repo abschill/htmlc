@@ -9,7 +9,8 @@ const i = Loader( {
     pathRoot,
     templates: templates,
     partialInput: partialData,
-    templateInput: templateData
+    templateInput: templateData,
+    debug: false
 } );
 
 describe( 'Internal TS Module Testing', () => {

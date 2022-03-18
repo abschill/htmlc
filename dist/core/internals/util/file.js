@@ -14,21 +14,24 @@ class fsUtil {
             .filter(x => fs_1.default.lstatSync(path_1.default.join(dir, x)).isFile())
             .map(x => path_1.default.resolve(dir, x));
     }
-    static loadUTF8(filePath) {
+    static toStringF(filePath) {
         return fs_1.default.readFileSync(filePath).toString('utf-8');
+    }
+    static toJSONF(filePath) {
+        return fs_1.default.readFileSync(filePath).toJSON();
     }
     static mapData(filePath) {
         const n = filePath.split('.html');
         if (process.platform === 'win32') {
-            const na = n[0].split('\\');
+            const na = n[0].split(this.__WIN__);
             const name = na[na.length - 1];
-            const rawFile = this.loadUTF8(filePath);
+            const rawFile = this.toStringF(filePath);
             return { path: filePath, name, rawFile };
         }
         else {
-            const na = n[0].split('/');
+            const na = n[0].split(this.__BSD__);
             const name = na[na.length - 1];
-            const rawFile = this.loadUTF8(filePath);
+            const rawFile = this.toStringF(filePath);
             return { path: filePath, name, rawFile };
         }
     }
@@ -47,4 +50,6 @@ class fsUtil {
     }
 }
 exports.fsUtil = fsUtil;
+fsUtil.__WIN__ = '\\';
+fsUtil.__BSD__ = '/';
 //# sourceMappingURL=file.js.map

@@ -9,6 +9,7 @@ import Compiler  from './compile';
 import Parser from './parser';
 
 export declare namespace core {
+
     export type Context = {
         config: ROptions;
         partials: internals.FileInputMeta[];
@@ -17,7 +18,7 @@ export declare namespace core {
 
 	export interface RuntimeState {
 		ctx: core.Context;
-		template: ( name: string, data ?: object ) => core.template;
+		template: ( name: string, data ?: object ) => core.RTemplate;
 	}
 
     type RDebugOpts = boolean | {
@@ -44,17 +45,22 @@ export declare namespace core {
     };
 
 	export type ROptions = Entity<Options>;
+    export type RTemplate = string;
 
-    export type template = string;
+    export type SOptions = {
+        pathRoot ?: string;
+        templates ?: string;
+        partials ?: string;
+        partialInput ?: compiler.UINSERT_MAP;
+        templateInput ?: compiler.UINSERT_MAP;
+        debug ?: RDebugOpts;
+        outPath: string;
+        loaderFile: string;
+        cleanup: boolean;
+    }
 
-    export type StaticOptions = {
-        load_options: ROptions;
-        static_options: {
-            cleanup: boolean;
-            outPath: string;
-            loaderFile: string | string[];
-        };
-    };
+    export type SSGOptions = Entity<SOptions>;
+    export type STemplate = string;
 }
 /**
  *
@@ -69,7 +75,7 @@ const render = (
     rawFile: internals.fileUTF8,
     insertMap: compiler.UINSERT_MAP,
     debug ?: boolean
-): core.template => {
+): core.RTemplate => {
     let rootCopy = rawFile;
     const renMap = Compiler.__renderMap( rootCopy );
     if( debug ) Debugger._registerMap( renMap, insertMap );
@@ -81,8 +87,8 @@ const render = (
             if( matchPartials.length > 0 ) {
                 matchPartials.forEach( partial => {
                     const renderMap = Compiler.__renderMap( partial.rawFile );
-                    const scoped_insertion = insertMap[ 'partialInput' ] ?? {};
-                    const insertion = { ...insertMap, ...scoped_insertion };
+                    const scoped_insertion = insertMap['partialInput'] ?? {};
+                    const insertion = {...insertMap, ...scoped_insertion};
                     const resolved = Compiler.resolve( partial.rawFile, renderMap, insertion, debug );
                     if( debug ) Debugger._registerMap( renderMap, insertMap );
                     rootCopy = rootCopy.replace( partialSeg, resolved.render );
@@ -96,7 +102,6 @@ const render = (
             const renderMap = Compiler.__renderMap( rootCopy );
             const resolved = Compiler.resolve( rootCopy, renderMap, insertMap );
 			if( debug ) Debugger._registerMap( renderMap, insertMap );
-
             rootCopy = resolved.render;
         } );
     }
@@ -111,7 +116,7 @@ const render = (
 
     try {
         const render = cleanHTML( rootCopy );
-        if( debug ) Debugger._finalize( { raw: rawFile, render } );
+        if( debug ) Debugger._finalize( {raw: rawFile, render} );
         return render;
     }
     catch( e ) {

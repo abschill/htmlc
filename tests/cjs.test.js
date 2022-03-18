@@ -7,7 +7,8 @@ const myLoader0 = Loader( {
     pathRoot: "test-pkg/def",
     templates: "templates",
     partialInput: partialData,
-    templateInput: templateData
+    templateInput: templateData,
+    debug: false
 } );
 
 const home = myLoader0.template( 'home' );

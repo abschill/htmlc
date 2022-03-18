@@ -3,7 +3,8 @@ import { Loader } from '../dist/loader.js';
 const myLoader = Loader( {
     pathRoot: 'test-pkg/barebones',
     partials: 'partials',
-    templates: 'templates'
+    templates: 'templates',
+    debug: false
 } );
 describe( 'Load Static Partial Data', () => {
     const home = myLoader.template( 'home' );

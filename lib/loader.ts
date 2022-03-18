@@ -60,7 +60,7 @@ core.RuntimeState {
 	 * @param data
 	 */
     function template( name: string, data ?: compiler.UINSERT_MAP ):
-    core.template {
+    core.RTemplate {
         return Compiler.compile( {template_name: name, ctx, data} );
     }
 

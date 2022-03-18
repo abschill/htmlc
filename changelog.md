@@ -1,5 +1,9 @@
+# 0.4.7
+### 03/17/22
+CLI updates with newer version of codebase & tidy some other types
+
 # 0.4.5
-### tba
+### 03/05/33
 ### Important 
 @render-partial is now @partial as of v0.4.5
 @for is now @loop as of v0.4.5

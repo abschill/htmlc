@@ -46,7 +46,7 @@ export default class Compiler {
 
 	static compile ( 
 		args: compiler.Args 
-	): core.template {
+	): core.RTemplate {
 		/**
 		 * If any data was keyed with the template name in the constructor, we will use as a secondary priority load value
 		 * these objects will default to {} if not entered
@@ -81,6 +81,7 @@ export default class Compiler {
 			return render( args.ctx.partials, Compiler.scanTemplate( args ), insertions, args.ctx.config.debug !== null );
 		}
 	}
+	
 	static resolve (
 		file: string,
 		renderMap: compiler.RenderMap,

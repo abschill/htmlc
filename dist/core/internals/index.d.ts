@@ -30,8 +30,8 @@ export declare namespace compiler {
         array: (a: internals.AST_TARGET) => Array<string>;
     };
     type StackItem = {
-        replacer: core.template;
-        insertion: core.template | core.template[] | core.template[][];
+        replacer: core.RTemplate;
+        insertion: core.RTemplate | core.RTemplate[] | core.RTemplate[][];
     };
     type UINSERT_MAP = object;
     interface compiledMap extends UINSERT_MAP {
@@ -79,6 +79,7 @@ export declare namespace internals {
         rawFile: string;
     };
     type fileUTF8 = string;
+    type fileJSON = object;
     type _templateInsert = object | {} | any | null;
 }
 export declare const _DEFAULTS: core.Entity<core.Options>;

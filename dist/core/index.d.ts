@@ -7,7 +7,7 @@ export declare namespace core {
     };
     interface RuntimeState {
         ctx: core.Context;
-        template: (name: string, data?: object) => core.template;
+        template: (name: string, data?: object) => core.RTemplate;
     }
     type RDebugOpts = boolean | {
         logFile: string;
@@ -29,15 +29,20 @@ export declare namespace core {
         debug?: RDebugOpts;
     };
     type ROptions = Entity<Options>;
-    type template = string;
-    type StaticOptions = {
-        load_options: ROptions;
-        static_options: {
-            cleanup: boolean;
-            outPath: string;
-            loaderFile: string | string[];
-        };
+    type RTemplate = string;
+    type SOptions = {
+        pathRoot?: string;
+        templates?: string;
+        partials?: string;
+        partialInput?: compiler.UINSERT_MAP;
+        templateInput?: compiler.UINSERT_MAP;
+        debug?: RDebugOpts;
+        outPath: string;
+        loaderFile: string;
+        cleanup: boolean;
     };
+    type SSGOptions = Entity<SOptions>;
+    type STemplate = string;
 }
-declare const render: (declaredPartials: internals.FileInputMeta[], rawFile: internals.fileUTF8, insertMap: compiler.UINSERT_MAP, debug?: boolean) => core.template;
+declare const render: (declaredPartials: internals.FileInputMeta[], rawFile: internals.fileUTF8, insertMap: compiler.UINSERT_MAP, debug?: boolean) => core.RTemplate;
 export default render;
