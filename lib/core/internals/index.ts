@@ -1,8 +1,6 @@
 
 import { Entity, Options } from './types';
 
-
-
 export const _DEFAULTS: Entity<Options> = {
     pathRoot: 'views',
     templates: 'pages',
@@ -11,7 +9,7 @@ export const _DEFAULTS: Entity<Options> = {
     partialInput: {},
     watch: false,
 	debug: false
-}
+};
 
 export const DEFAULTS = {
 	..._DEFAULTS,
@@ -25,4 +23,4 @@ export const DEFAULTS = {
         loaderFile: 'loader.js',
         cleanup: true
     }
-}
+};

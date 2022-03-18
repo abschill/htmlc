@@ -7,9 +7,16 @@ import {
 	FileInputMeta,
 	Options
 } from '../types';
+import {
+	lstatSync,
+	readdirSync,
+	readFileSync,
+} from 'fs';
+import {
+	join,
+	resolve
+} from 'path';
 import { DEFAULTS } from '..';
-import fs from 'fs';
-import path from 'path';
 import Debugger from '../debugger';
 
 export class fsUtil {
@@ -17,20 +24,20 @@ export class fsUtil {
 	static  __BSD__ = '/';
 
 	static readDir( dir: string ) {
-		return fs.readdirSync( dir )
-			.filter( x => fs.lstatSync( path.join( dir, x ) ).isFile() )
-			.map( x => path.resolve( dir, x ) );
+		return readdirSync( dir )
+			.filter( x => lstatSync( join( dir, x ) ).isFile() )
+			.map( x => resolve( dir, x ) );
 	}
 
 	static toStringF( filePath: string ):
 		fileUTF8 {
-		return fs.readFileSync( filePath ).toString( 'utf-8' );
+		return readFileSync( filePath ).toString( 'utf-8' );
 	}
 
 	static toJSONF( 
 		filePath: string
 	): fileJSON {
-		return fs.readFileSync( filePath ).toJSON();
+		return readFileSync( filePath ).toJSON();
 	}
 	
 	static mapData( filePath: string ):
@@ -56,7 +63,7 @@ export class fsUtil {
 			templates = DEFAULTS.templates, 
 			pathRoot = DEFAULTS.pathRoot
 		} = conf;
-		const _path = path.join( process.cwd(), pathRoot, templates );
+		const _path = join( process.cwd(), pathRoot, templates );
 		return _path ? this.readDir( _path ).map( p => this.mapData( p ) ) : 
 		Debugger.raise( `Error: finding templates in ${pathRoot}/${templates} `);
 
@@ -68,7 +75,7 @@ export class fsUtil {
 			partials = DEFAULTS.partials,
 			pathRoot = DEFAULTS.pathRoot 
 		} = conf;
-		const _path = path.join( process.cwd(), pathRoot, partials );
+		const _path = join( process.cwd(), pathRoot, partials );
 		return _path ?
 			this.readDir( _path ).map( p => this.mapData( p ) ) : 
 			Debugger.raise( `Error: finding templates in ${pathRoot}/${partials} `);

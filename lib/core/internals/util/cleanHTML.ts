@@ -49,4 +49,4 @@ string => {
     }
 
     return copy;
-}
+};

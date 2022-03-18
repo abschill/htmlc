@@ -6,6 +6,7 @@ import {
 	Entry,
 	UINSERT_MAP
 } from './internals/types';
+
 export default class Parser {
 	static _delim = '{_}';
 	static __CLOSE__ = '-->';
