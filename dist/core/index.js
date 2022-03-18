@@ -48,7 +48,7 @@ const render = (declaredPartials, rawFile, insertMap, debug) => {
         });
     }
     try {
-        const render = (0, cleanHTML_1.cleanHTML)(rootCopy);
+        const render = cleanHTML_1.cleanHTML(rootCopy);
         if (debug)
             debugger_1.default._finalize({ raw: rawFile, render });
         return render;

@@ -1,5 +1,4 @@
 "use strict";
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 class Parser {
     static _replaceSignature(type, val) {
@@ -61,20 +60,19 @@ class Parser {
     }
 }
 exports.default = Parser;
-_a = Parser;
 Parser._delim = '{_}';
 Parser.__CLOSE__ = '-->';
-Parser.LOOP_CLOSE = `}${_a.__CLOSE__}`;
-Parser.LOOP_OPEN = (key) => `<!--${_a.__loopKey__}(${key}){`;
+Parser.LOOP_CLOSE = `}${Parser.__CLOSE__}`;
+Parser.LOOP_OPEN = (key) => `<!--${Parser.__loopKey__}(${key}){`;
 Parser._renderKey = 'render';
-Parser.__renderKey__ = `@${_a._renderKey}`;
+Parser.__renderKey__ = `@${Parser._renderKey}`;
 Parser._partialKey = 'partial';
-Parser.__partialKey__ = `@${_a._partialKey}`;
+Parser.__partialKey__ = `@${Parser._partialKey}`;
 Parser._loopKey = 'loop';
-Parser.__loopKey__ = `@${_a._loopKey}`;
-Parser._loopSignature = `<!--${_a.__loopKey__}(${_a._delim}){}${_a.__CLOSE__}`;
-Parser._keySignature = `<!--${_a.__renderKey__}=${_a._delim}${_a.__CLOSE__}`;
-Parser._partialSignature = `<!--${_a.__partialKey__}=${_a._delim}${_a.__CLOSE__}`;
+Parser.__loopKey__ = `@${Parser._loopKey}`;
+Parser._loopSignature = `<!--${Parser.__loopKey__}(${Parser._delim}){}${Parser.__CLOSE__}`;
+Parser._keySignature = `<!--${Parser.__renderKey__}=${Parser._delim}${Parser.__CLOSE__}`;
+Parser._partialSignature = `<!--${Parser.__partialKey__}=${Parser._delim}${Parser.__CLOSE__}`;
 Parser._keyReggie = /<!--@render=[\w|\d]+-->/gi;
 Parser._partialReggie = /<!--@partial=[\w|\d]+-->/gi;
 //# sourceMappingURL=parser.js.map

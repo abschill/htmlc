@@ -1,25 +1,25 @@
-import { compiler, internals } from "./internals";
+import { compiler, internals } from './internals';
 
 export default class Parser {
-	static _delim: string = '{_}';
-	static __CLOSE__: string = '-->';
-	static LOOP_CLOSE: string = `}${this.__CLOSE__}`;
+	static _delim = '{_}';
+	static __CLOSE__ = '-->';
+	static LOOP_CLOSE = `}${Parser.__CLOSE__}`;
 	
-	static LOOP_OPEN = ( key: string ): string => `<!--${this.__loopKey__}(${key}){`;
+	static LOOP_OPEN = ( key: string ): string => `<!--${Parser.__loopKey__}(${key}){`;
 
 	static _renderKey = 'render';
-	static __renderKey__ = `@${this._renderKey}`;
+	static __renderKey__ = `@${Parser._renderKey}`;
 	static _partialKey = 'partial';
-	static __partialKey__ = `@${this._partialKey}`;
+	static __partialKey__ = `@${Parser._partialKey}`;
 	static _loopKey = 'loop';
-	static __loopKey__ = `@${this._loopKey}`;
+	static __loopKey__ = `@${Parser._loopKey}`;
 
-	static _loopSignature: string = `<!--${this.__loopKey__}(${this._delim}){}${this.__CLOSE__}`;
-	static _keySignature: string = `<!--${this.__renderKey__}=${this._delim}${this.__CLOSE__}`;
-	static _partialSignature: string = `<!--${this.__partialKey__}=${this._delim}${this.__CLOSE__}`;
+	static _loopSignature = `<!--${Parser.__loopKey__}(${Parser._delim}){}${Parser.__CLOSE__}`;
+	static _keySignature = `<!--${Parser.__renderKey__}=${Parser._delim}${Parser.__CLOSE__}`;
+	static _partialSignature = `<!--${Parser.__partialKey__}=${Parser._delim}${Parser.__CLOSE__}`;
 
-	static _keyReggie: RegExp = /<!--@render=[\w|\d]+-->/gi;
-	static _partialReggie: RegExp = /<!--@partial=[\w|\d]+-->/gi;
+	static _keyReggie = /<!--@render=[\w|\d]+-->/gi;
+	static _partialReggie = /<!--@partial=[\w|\d]+-->/gi;
 
 	private static _replaceSignature( type: string, val: string ) {
 		switch( type ) {

@@ -1,4 +1,4 @@
-import { internals } from "./internals";
+import { internals } from './internals';
 export default class Parser {
     static _delim: string;
     static __CLOSE__: string;
