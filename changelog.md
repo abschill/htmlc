@@ -1,3 +1,9 @@
+# 0.4.10
+### 03/18/22
+Fixed debugger deciding to ignore conditional running, will fix by 0.5.z
+
+add types to export for loader def
+
 # 0.4.7
 ### 03/17/22
 CLI updates with newer version of codebase & tidy some other types

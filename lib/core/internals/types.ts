@@ -1,7 +1,6 @@
 export type coreEventArgs<T> = [
     T,
-    coreContext,
-    IArguments
+    coreContext
 ];
 
 export type coreEventName = string;

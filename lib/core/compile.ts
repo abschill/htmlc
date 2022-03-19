@@ -16,11 +16,11 @@ import RESERVED_WORDS from './abt';
 import Parser from './parser';
 
 export default class Compiler {
-	
+
 	static scanTemplate( args: Args ) {
 		try {
 			const fileData = args.ctx.templates.filter( ( temp: FileInputMeta ) => temp.name === args.template_name )[0];
-			return fileData.rawFile
+			return fileData.rawFile;
 		}
 		catch( e ) {
 			Debugger.raise( `Template '${args.template_name} not found'` );
@@ -65,7 +65,6 @@ export default class Compiler {
 		// unset null data if applicable
 		if( !args.data ) args.data = {};
 	
-		Debugger._registerEvent( 'init', args.ctx, arguments );
 	
 		//if no data, load default input for template
 		const globalInsertions:
@@ -73,7 +72,7 @@ export default class Compiler {
 		if( Object.keys( args.data ).length === 0 ) {
 			const insertions:
 			compiledMap = {...globalInsertions, partialInput};
-			Debugger._registerEvent( 'template::insert:args', args.ctx, arguments );
+			// Debugger._registerEvent( 'template::insert:args', args.ctx );
 			return render( args.ctx.partials, Compiler.scanTemplate( args ), insertions, args.ctx.config.debug !== null );
 		}
 		else {
@@ -87,7 +86,7 @@ export default class Compiler {
 				}
 			};
 	
-			Debugger._registerEvent( 'insert', args.ctx, arguments );
+			// Debugger._registerEvent( 'insert', args.ctx );
 			return render( args.ctx.partials, Compiler.scanTemplate( args ), insertions, args.ctx.config.debug !== null );
 		}
 	}
@@ -101,8 +100,7 @@ export default class Compiler {
 		let copy = file;
 		const outVal: StackItem[] = [];
 		const outObj: StackItem[] = [];
-	
-		if( debug ) Debugger._registerMap( renderMap, insertionMap );
+
 		Object.entries( renderMap ).forEach( ( itemlist : [key: string, value: string[] | string[][]] ) => {
 			if ( !itemlist[1] ) {
 				if( debug ) Debugger.raise( `Passing ${itemlist[0]}` );

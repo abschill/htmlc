@@ -22,7 +22,7 @@ import { watch } from 'fs';
 import { _DEFAULTS } from './core/internals';
 import Debugger from './core/internals/debugger';
 import Compiler from './core/compile';
-
+export * from './core/internals/types';
 /**
  * @function Loader
  * @description Rendering Context for templates
@@ -38,7 +38,8 @@ RuntimeState {
         ctx.partials.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-                    Debugger._registerEvent( `Modified ${filename}, refresh browser to apply changes`, ctx, arguments );
+                    // eslint-disable-next-line prefer-rest-params
+                    Debugger._registerEvent( `Modified ${filename}, refresh browser to apply changes`, ctx );
 					ctx = hydrate( config ?? _DEFAULTS );
                 }
             } );
@@ -46,7 +47,7 @@ RuntimeState {
         ctx.templates.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-					Debugger._registerEvent( `Modified ${filename}, refresh browser to apply changes`, ctx, arguments );
+					Debugger._registerEvent( `Modified ${filename}, refresh browser to apply changes`, ctx );
 					ctx = hydrate( config ?? _DEFAULTS );
                 }
             } );

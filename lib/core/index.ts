@@ -28,7 +28,6 @@ const render = (
 ): RTemplate => {
     let rootCopy = rawFile;
     const renMap = Compiler.__renderMap( rootCopy );
-    if( debug ) Debugger._registerMap( renMap, insertMap );
 
     if( renMap.todo_partials && renMap.todo_partials.length > 0 ) rootCopy = Compiler.resolveDeclaredPartials( renMap, declaredPartials, insertMap, rootCopy );
 
@@ -43,14 +42,13 @@ const render = (
     }
 
     try {
-        const render = cleanHTML( rootCopy );
-        if( debug ) Debugger._finalize( {raw: rawFile, render} );
-        return render;
+        return cleanHTML( rootCopy );
     }
     catch( e ) {
 		Debugger.raise( 'Failed to Clean HTML' );
 		Debugger.raise( e );
         return rootCopy;
     }
-}
+};
+
 export default render;

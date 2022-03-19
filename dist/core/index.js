@@ -9,8 +9,6 @@ const compile_1 = __importDefault(require("./compile"));
 const render = (declaredPartials, rawFile, insertMap, debug) => {
     let rootCopy = rawFile;
     const renMap = compile_1.default.__renderMap(rootCopy);
-    if (debug)
-        debugger_1.default._registerMap(renMap, insertMap);
     if (renMap.todo_partials && renMap.todo_partials.length > 0)
         rootCopy = compile_1.default.resolveDeclaredPartials(renMap, declaredPartials, insertMap, rootCopy);
     if (renMap.todo_keys && renMap.todo_keys.length > 0) {
@@ -22,10 +20,7 @@ const render = (declaredPartials, rawFile, insertMap, debug) => {
         rootCopy = compile_1.default.resolveDeclaredLoops(renderMap, insertMap, rootCopy);
     }
     try {
-        const render = cleanHTML_1.cleanHTML(rootCopy);
-        if (debug)
-            debugger_1.default._finalize({ raw: rawFile, render });
-        return render;
+        return cleanHTML_1.cleanHTML(rootCopy);
     }
     catch (e) {
         debugger_1.default.raise('Failed to Clean HTML');

@@ -4,12 +4,11 @@ const { log, warn, time, timeEnd } = console;
 class Debugger {
     static _registerEvent(...args) {
         const eventName = args[0];
-        const templateName = args[2]['0'].template_name;
-        const contextData = args[2]['0'].ctx;
+        const meta = args[1];
         if (args[1].config.debug) {
             log('HCL_EVENT: ', eventName);
-            log('HCL_TEMPLATE: ', templateName);
-            log('HCL_CTX: ', contextData);
+            log('\n');
+            log('IEVENT_DATA:', meta);
         }
     }
     static raise(m) {

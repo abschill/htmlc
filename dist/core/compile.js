@@ -45,17 +45,14 @@ class Compiler {
         const { templateInput = {}, partialInput = {} } = args.ctx.config;
         if (!args.data)
             args.data = {};
-        debugger_1.default._registerEvent('init', args.ctx, arguments);
         const globalInsertions = templateInput;
         if (Object.keys(args.data).length === 0) {
             const insertions = Object.assign(Object.assign({}, globalInsertions), { partialInput });
-            debugger_1.default._registerEvent('template::insert:args', args.ctx, arguments);
             return _1.default(args.ctx.partials, Compiler.scanTemplate(args), insertions, args.ctx.config.debug !== null);
         }
         else {
             const scopedInsertions = Object.assign(Object.assign({}, templateInput), args.data);
             const insertions = Object.assign(Object.assign(Object.assign({}, globalInsertions), scopedInsertions), { partialInput: Object.assign(Object.assign({}, partialInput), args.data['partialInput']) });
-            debugger_1.default._registerEvent('insert', args.ctx, arguments);
             return _1.default(args.ctx.partials, Compiler.scanTemplate(args), insertions, args.ctx.config.debug !== null);
         }
     }
@@ -63,8 +60,6 @@ class Compiler {
         let copy = file;
         const outVal = [];
         const outObj = [];
-        if (debug)
-            debugger_1.default._registerMap(renderMap, insertionMap);
         Object.entries(renderMap).forEach((itemlist) => {
             if (!itemlist[1]) {
                 if (debug)

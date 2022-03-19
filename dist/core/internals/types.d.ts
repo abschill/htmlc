@@ -1,7 +1,6 @@
 export declare type coreEventArgs<T> = [
     T,
-    coreContext,
-    IArguments
+    coreContext
 ];
 export declare type coreEventName = string;
 export declare type ASTMatch = RegExpMatchArray | String[] | [];
