@@ -17,7 +17,7 @@ import {
  * @param {UINSERT_MAP} insertMap map to insert values into templates from
  * @returns {RTemplate} The processing template
  */
-const hydrateKeys = ( 
+const shimKeys = ( 
     copy: RTemplate,
     insertMap: UINSERT_MAP
 ): RTemplate => Compiler.resolveDeclaredKeys( Compiler.__renderMap( copy ), insertMap, copy );
@@ -28,7 +28,7 @@ const hydrateKeys = (
  * @param insertMap - map to insert values into templates from
  * @returns {RTemplate} process template
  */
-const hydratePartials = (
+const shimPartials = (
     copy: RTemplate,
     declaredPartials: FileInputMeta[],
     insertMap: UINSERT_MAP
@@ -39,7 +39,7 @@ const hydratePartials = (
  * @param insertMap - map to insert values from
  * @returns {RTemplate} The rendered template
  */
-const hydrateLoops = (
+const shimLoops = (
     copy: RTemplate,
     insertMap: UINSERT_MAP
 ): RTemplate => Compiler.resolveDeclaredLoops( Compiler.__renderMap( copy ), insertMap, copy );
@@ -60,16 +60,16 @@ function render (
     const renMap = Compiler.__renderMap( rootCopy );
     try {
         if( renMap.todo_partials && renMap.todo_partials.length > 0 ) {
-            rootCopy = hydratePartials( rootCopy, declaredPartials, insertMap );
+            rootCopy = shimPartials( rootCopy, declaredPartials, insertMap );
         }
     
         if( renMap.todo_keys && renMap.todo_keys.length > 0 ) {
-            rootCopy = hydrateKeys( rootCopy, insertMap );
+            rootCopy = shimKeys( rootCopy, insertMap );
         }
     
         if( renMap.todo_loops && renMap.todo_loops.length > 0 ) {
             // const renderMap = Compiler.__renderMap( rootCopy );
-            rootCopy = hydrateLoops( rootCopy, insertMap );
+            rootCopy = shimLoops( rootCopy, insertMap );
         }
         return cleanHTML( rootCopy );
     }

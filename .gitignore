@@ -4,7 +4,6 @@ examples/**/node_modules
 public
 new.js
 new1.js
-loader.js
 t.js
 yarn.lock
 mock

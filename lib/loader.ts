@@ -17,7 +17,7 @@
     FTemplate,
     UINSERT_MAP
 } from './core/internals/types';
-import hydrate from './init';
+import hydrate from './core/hydrate';
 import { watch } from 'fs';
 import { _DEFAULTS } from './core/internals';
 import Debugger from './core/internals/debugger';

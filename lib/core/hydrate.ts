@@ -3,13 +3,13 @@
  * @param { coreContext } config configuration file for engine
  * @returns context for engine
  */
- import { fsUtil } from './core/internals/util/file';
- import { _DEFAULTS } from './core/internals';
+ import { fsUtil } from './internals/util/file';
+ import { _DEFAULTS } from './internals';
  import { 
     Options, 
     coreContext, 
     ROptions
-} from './core/internals/types';
+} from './internals/types';
 
 const clean = ( config: Options ):
     ROptions =>
