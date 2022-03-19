@@ -48,12 +48,12 @@ class Compiler {
         const globalInsertions = templateInput;
         if (Object.keys(args.data).length === 0) {
             const insertions = Object.assign(Object.assign({}, globalInsertions), { partialInput });
-            return _1.default(args.ctx.partials, Compiler.scanTemplate(args), insertions);
+            return (0, _1.default)(args.ctx.partials, Compiler.scanTemplate(args), insertions);
         }
         else {
             const scopedInsertions = Object.assign(Object.assign({}, templateInput), args.data);
             const insertions = Object.assign(Object.assign(Object.assign({}, globalInsertions), scopedInsertions), { partialInput: Object.assign(Object.assign({}, partialInput), args.data['partialInput']) });
-            return _1.default(args.ctx.partials, Compiler.scanTemplate(args), insertions);
+            return (0, _1.default)(args.ctx.partials, Compiler.scanTemplate(args), insertions);
         }
     }
     static resolve(file, renderMap, insertionMap, debug) {
@@ -122,6 +122,7 @@ class Compiler {
         const objStr = outObj.map((obj) => obj.insertion).join('');
         outVal.forEach((_out) => copy = copy.replace(_out.replacer, valStr));
         outObj.forEach((_out) => copy = copy.replace(_out.replacer, objStr));
+        parser_1.default.checkDeprecation(copy);
         return {
             raw: file,
             renderMap,

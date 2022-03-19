@@ -5,11 +5,26 @@ import {
 	Insertion,
 	AST_TARGET,
 	Entry,
-	RenderMap,
+	DEP_TAG,
 	UINSERT_MAP
 } from './internals/types';
+import { emitWarning } from 'process';
 
 export default class Parser {
+
+	static DEPRECATED_TAGS: DEP_TAG[] = [
+		{ 
+			old: '@render-partial', 
+			new: '@partial',
+			v_change: '0.4.5'
+		},
+		{ 
+			old: '@for', 
+			new: '@loop',
+			v_change: '0.4.5'
+		}
+	];
+
 	static _delim = '{_}';
 	static __CLOSE__ = '-->';
 	static LOOP_CLOSE = `}${Parser.__CLOSE__}`;
@@ -95,5 +110,14 @@ export default class Parser {
 			copy = copy.replace( `{${insertion[0]}}`, insertion[1] );
 		} );
 		return copy;
+	}
+
+	static checkDeprecation( clone: string ) {
+		for( const tag of Parser.DEPRECATED_TAGS ) {
+			if( clone.includes( tag.old ) ) {
+				emitWarning( `Warning: ${tag.old} was deprecated in version ${tag.v_change}\n` );
+				emitWarning( `Replace ${tag.old} with ${tag.new} if you are using a version later than ${tag.v_change}` );
+			}
+		}
 	}
 }

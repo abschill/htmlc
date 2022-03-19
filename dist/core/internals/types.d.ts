@@ -1,7 +1,21 @@
+export declare type coreContext = {
+    config: ROptions;
+    partials: FileInputMeta[];
+    templates: FileInputMeta[];
+};
+export interface RuntimeState {
+    ctx: coreContext;
+    template: (name: string, data?: object) => FTemplate;
+}
 export declare type coreEventArgs<T> = [
     T,
     coreContext
 ];
+export interface DEP_TAG {
+    old: string;
+    new: string;
+    v_change: string;
+}
 export declare type coreEventName = string;
 export declare type ASTMatch = RegExpMatchArray | String[] | [];
 export interface Args {
@@ -70,15 +84,6 @@ export declare type FileInputMeta = {
 export declare type fileUTF8 = string;
 export declare type fileJSON = object;
 export declare type _templateInsert = object | {} | any | null;
-export interface RuntimeState {
-    ctx: coreContext;
-    template: (name: string, data?: object) => RTemplate;
-}
-export declare type coreContext = {
-    config: ROptions;
-    partials: FileInputMeta[];
-    templates: FileInputMeta[];
-};
 export declare type RDebugOpts = boolean | {
     logFile: string;
     suppressFatal: boolean;

@@ -10,15 +10,15 @@ const __1 = require("..");
 const debugger_1 = __importDefault(require("../debugger"));
 class fsUtil {
     static readDir(dir) {
-        return fs_1.readdirSync(dir)
-            .filter(x => fs_1.lstatSync(path_1.join(dir, x)).isFile())
-            .map(x => path_1.resolve(dir, x));
+        return (0, fs_1.readdirSync)(dir)
+            .filter(x => (0, fs_1.lstatSync)((0, path_1.join)(dir, x)).isFile())
+            .map(x => (0, path_1.resolve)(dir, x));
     }
     static toStringF(filePath) {
-        return fs_1.readFileSync(filePath).toString('utf-8');
+        return (0, fs_1.readFileSync)(filePath).toString('utf-8');
     }
     static toJSONF(filePath) {
-        return fs_1.readFileSync(filePath).toJSON();
+        return (0, fs_1.readFileSync)(filePath).toJSON();
     }
     static mapData(filePath) {
         const n = filePath.split('.html');
@@ -37,13 +37,13 @@ class fsUtil {
     }
     static resolveTemplates(conf) {
         const { templates = __1.DEFAULTS.templates, pathRoot = __1.DEFAULTS.pathRoot } = conf;
-        const _path = path_1.join(process.cwd(), pathRoot, templates);
+        const _path = (0, path_1.join)(process.cwd(), pathRoot, templates);
         return _path ? this.readDir(_path).map(p => this.mapData(p)) :
             debugger_1.default.raise(`Error: finding templates in ${pathRoot}/${templates} `);
     }
     static resolvePartials(conf) {
         const { partials = __1.DEFAULTS.partials, pathRoot = __1.DEFAULTS.pathRoot } = conf;
-        const _path = path_1.join(process.cwd(), pathRoot, partials);
+        const _path = (0, path_1.join)(process.cwd(), pathRoot, partials);
         return _path ?
             this.readDir(_path).map(p => this.mapData(p)) :
             debugger_1.default.raise(`Error: finding templates in ${pathRoot}/${partials} `);

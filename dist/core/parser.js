@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const process_1 = require("process");
 class Parser {
     static _replaceSignature(type, val) {
         switch (type) {
@@ -58,8 +59,28 @@ class Parser {
         });
         return copy;
     }
+    static checkDeprecation(clone) {
+        for (const tag of Parser.DEPRECATED_TAGS) {
+            if (clone.includes(tag.old)) {
+                (0, process_1.emitWarning)(`Warning: ${tag.old} was deprecated in version ${tag.v_change}\n`);
+                (0, process_1.emitWarning)(`Replace ${tag.old} with ${tag.new} if you are using a version later than ${tag.v_change}`);
+            }
+        }
+    }
 }
 exports.default = Parser;
+Parser.DEPRECATED_TAGS = [
+    {
+        old: '@render-partial',
+        new: '@partial',
+        v_change: '0.4.5'
+    },
+    {
+        old: '@for',
+        new: '@loop',
+        v_change: '0.4.5'
+    }
+];
 Parser._delim = '{_}';
 Parser.__CLOSE__ = '-->';
 Parser.LOOP_CLOSE = `}${Parser.__CLOSE__}`;

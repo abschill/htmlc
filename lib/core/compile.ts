@@ -165,7 +165,7 @@ export default class Compiler {
 		const objStr = outObj.map( ( obj: StackItem ) => obj.insertion ).join( '' );
 		outVal.forEach( ( _out: StackItem ) => copy = copy.replace( _out.replacer, valStr ) );
 		outObj.forEach( ( _out: StackItem ) => copy = copy.replace( _out.replacer, objStr ) );
-
+		Parser.checkDeprecation( copy );
 		return {
 			raw: file, 
 			renderMap, 

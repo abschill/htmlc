@@ -1,5 +1,6 @@
-import { kBUF, vBUF, Insertion, AST_TARGET, Entry } from './internals/types';
+import { kBUF, vBUF, Insertion, AST_TARGET, Entry, DEP_TAG } from './internals/types';
 export default class Parser {
+    static DEPRECATED_TAGS: DEP_TAG[];
     static _delim: string;
     static __CLOSE__: string;
     static LOOP_CLOSE: string;
@@ -26,4 +27,5 @@ export default class Parser {
     static matchLoops(target: AST_TARGET): string[];
     static replaceAnonLoopBuf(a: kBUF): string;
     static replacedNamedLoopBuf(clone: string, insert: Insertion | Entry): string;
+    static checkDeprecation(clone: string): void;
 }

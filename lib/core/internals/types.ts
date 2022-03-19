@@ -1,7 +1,24 @@
+export type coreContext = {
+    config: ROptions;
+    partials: FileInputMeta[];
+    templates: FileInputMeta[];
+};
+
+export interface RuntimeState {
+    ctx: coreContext;
+    template: ( name: string, data ?: object ) => FTemplate;
+}
+
 export type coreEventArgs<T> = [
     T,
     coreContext
 ];
+
+export interface DEP_TAG {
+    old: string;
+    new: string;
+    v_change: string;
+}
 
 export type coreEventName = string;
 
@@ -95,16 +112,9 @@ export type fileJSON = object;
 
 export type _templateInsert = object | {} | any | null;
 
-export interface RuntimeState {
-    ctx: coreContext;
-    template: ( name: string, data ?: object ) => RTemplate;
-}
 
-export type coreContext = {
-    config: ROptions;
-    partials: FileInputMeta[];
-    templates: FileInputMeta[];
-};
+
+
 
 export type RDebugOpts = boolean | {
     logFile: string;
