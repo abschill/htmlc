@@ -48,12 +48,12 @@ class Compiler {
         const globalInsertions = templateInput;
         if (Object.keys(args.data).length === 0) {
             const insertions = Object.assign(Object.assign({}, globalInsertions), { partialInput });
-            return _1.default(args.ctx.partials, Compiler.scanTemplate(args), insertions, args.ctx.config.debug !== null);
+            return _1.default(args.ctx.partials, Compiler.scanTemplate(args), insertions);
         }
         else {
             const scopedInsertions = Object.assign(Object.assign({}, templateInput), args.data);
             const insertions = Object.assign(Object.assign(Object.assign({}, globalInsertions), scopedInsertions), { partialInput: Object.assign(Object.assign({}, partialInput), args.data['partialInput']) });
-            return _1.default(args.ctx.partials, Compiler.scanTemplate(args), insertions, args.ctx.config.debug !== null);
+            return _1.default(args.ctx.partials, Compiler.scanTemplate(args), insertions);
         }
     }
     static resolve(file, renderMap, insertionMap, debug) {

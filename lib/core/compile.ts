@@ -73,7 +73,7 @@ export default class Compiler {
 			const insertions:
 			compiledMap = {...globalInsertions, partialInput};
 			// Debugger._registerEvent( 'template::insert:args', args.ctx );
-			return render( args.ctx.partials, Compiler.scanTemplate( args ), insertions, args.ctx.config.debug !== null );
+			return render( args.ctx.partials, Compiler.scanTemplate( args ), insertions );
 		}
 		else {
 			const scopedInsertions:
@@ -87,7 +87,7 @@ export default class Compiler {
 			};
 	
 			// Debugger._registerEvent( 'insert', args.ctx );
-			return render( args.ctx.partials, Compiler.scanTemplate( args ), insertions, args.ctx.config.debug !== null );
+			return render( args.ctx.partials, Compiler.scanTemplate( args ), insertions );
 		}
 	}
 	

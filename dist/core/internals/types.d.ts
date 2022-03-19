@@ -100,6 +100,7 @@ export declare type Options = {
 };
 export declare type ROptions = Entity<Options>;
 export declare type RTemplate = string;
+export declare type FTemplate = string;
 export declare type SOptions = {
     pathRoot?: string;
     templates?: string;

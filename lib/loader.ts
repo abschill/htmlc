@@ -14,7 +14,7 @@
     RuntimeState, 
     Options, 
     coreContext, 
-    RTemplate,
+    FTemplate,
     UINSERT_MAP
 } from './core/internals/types';
 import hydrate from './init';
@@ -67,7 +67,7 @@ RuntimeState {
 	 * @param data
 	 */
     function template( name: string, data ?: UINSERT_MAP ):
-    RTemplate {
+    FTemplate {
         return Compiler.compile( {template_name: name, ctx, data} );
     }
 

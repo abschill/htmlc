@@ -130,7 +130,9 @@ export type Options = {
 };
 
 export type ROptions = Entity<Options>;
+
 export type RTemplate = string;
+export type FTemplate = string;
 
 export type SOptions = {
     pathRoot ?: string;
