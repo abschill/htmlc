@@ -6,20 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.fsUtil = void 0;
 const fs_1 = require("fs");
 const path_1 = require("path");
+const process_1 = require("process");
 const __1 = require("..");
 const debugger_1 = __importDefault(require("../debugger"));
 class fsUtil {
-    static readDir(dir) {
-        return (0, fs_1.readdirSync)(dir)
-            .filter(x => (0, fs_1.lstatSync)((0, path_1.join)(dir, x)).isFile())
-            .map(x => (0, path_1.resolve)(dir, x));
-    }
-    static toStringF(filePath) {
-        return (0, fs_1.readFileSync)(filePath).toString('utf-8');
-    }
-    static toJSONF(filePath) {
-        return (0, fs_1.readFileSync)(filePath).toJSON();
-    }
     static mapData(filePath) {
         const n = filePath.split('.html');
         if (process.platform === 'win32') {
@@ -38,18 +28,34 @@ class fsUtil {
     static resolveTemplates(conf) {
         const { templates = __1.DEFAULTS.templates, pathRoot = __1.DEFAULTS.pathRoot } = conf;
         const _path = (0, path_1.join)(process.cwd(), pathRoot, templates);
-        return _path ? this.readDir(_path).map(p => this.mapData(p)) :
-            debugger_1.default.raise(`Error: finding templates in ${pathRoot}/${templates} `);
+        try {
+            return this.readDir(_path).map(p => this.mapData(p));
+        }
+        catch (e) {
+            debugger_1.default.emit('fs::error', `Error: finding templates in ${pathRoot}/${templates} `);
+            (0, process_1.emitWarning)(e);
+            return;
+        }
     }
     static resolvePartials(conf) {
         const { partials = __1.DEFAULTS.partials, pathRoot = __1.DEFAULTS.pathRoot } = conf;
         const _path = (0, path_1.join)(process.cwd(), pathRoot, partials);
-        return _path ?
-            this.readDir(_path).map(p => this.mapData(p)) :
-            debugger_1.default.raise(`Error: finding templates in ${pathRoot}/${partials} `);
+        try {
+            return this.readDir(_path).map(p => this.mapData(p));
+        }
+        catch (e) {
+            debugger_1.default.emit('fs::error', `Error: finding partials in ${pathRoot}/${partials}`);
+            (0, process_1.emitWarning)(e);
+            return;
+        }
     }
 }
 exports.fsUtil = fsUtil;
 fsUtil.__WIN__ = '\\';
 fsUtil.__BSD__ = '/';
+fsUtil.readDir = (dir) => (0, fs_1.readdirSync)(dir)
+    .filter(x => (0, fs_1.lstatSync)((0, path_1.join)(dir, x)).isFile())
+    .map(x => (0, path_1.resolve)(dir, x));
+fsUtil.toStringF = (filePath) => (0, fs_1.readFileSync)(filePath).toString('utf-8');
+fsUtil.toJSONF = (filePath) => (0, fs_1.readFileSync)(filePath).toJSON();
 //# sourceMappingURL=file.js.map

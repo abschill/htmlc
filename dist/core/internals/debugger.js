@@ -1,35 +1,13 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const events_1 = __importDefault(require("events"));
 const { log, warn, time, timeEnd } = console;
-class Debugger {
-    static _registerEvent(...args) {
-        const eventName = args[0];
-        const meta = args[1];
-        if (args[1].config.debug) {
-            log('HCL_EVENT: ', eventName);
-            log('\n');
-            log('IEVENT_DATA:', meta);
-        }
-    }
-    static raise(m) {
-        warn(m);
-    }
-    static stamp(msg, label) {
-        time(label);
-        log('\n');
-        log('~~~~~~~~~~~~~~~~~~');
-        log(msg);
-        log('\n');
-        timeEnd(label);
-    }
-    static _registerMap(rmap, imap) {
-        log('HCL_EVENT: map::register');
-        log(rmap);
-        log(imap);
-    }
-    static _finalize(args) {
-        log(args);
-    }
-}
-exports.default = Debugger;
+const deb = new events_1.default();
+deb.on('start', () => log('HCL::debug - started'));
+deb.on('file::change', (e) => log(e));
+deb.on('fs::error', (e) => warn(e));
+exports.default = deb;
 //# sourceMappingURL=debugger.js.map

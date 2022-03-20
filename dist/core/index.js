@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const cleanHTML_1 = require("./internals/util/cleanHTML");
-const debugger_1 = __importDefault(require("./internals/debugger"));
 const compile_1 = __importDefault(require("./compile"));
 const shimKeys = (copy, insertMap) => compile_1.default.resolveDeclaredKeys(compile_1.default.__renderMap(copy), insertMap, copy);
 const shimPartials = (copy, declaredPartials, insertMap) => compile_1.default.resolveDeclaredPartials(compile_1.default.__renderMap(copy), declaredPartials, insertMap, copy);
@@ -25,8 +24,6 @@ function render(declaredPartials, rawFile, insertMap) {
         return (0, cleanHTML_1.cleanHTML)(rootCopy);
     }
     catch (e) {
-        debugger_1.default.raise('Failed in Runtime');
-        debugger_1.default.raise(e);
         return rootCopy;
     }
 }

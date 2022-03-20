@@ -112,10 +112,6 @@ export type fileJSON = object;
 
 export type _templateInsert = object | {} | any | null;
 
-
-
-
-
 export type RDebugOpts = boolean | {
     logFile: string;
     suppressFatal: boolean;

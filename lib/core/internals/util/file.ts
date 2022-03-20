@@ -16,6 +16,7 @@ import {
 	join,
 	resolve
 } from 'path';
+import { emitWarning } from 'process';
 import { DEFAULTS } from '..';
 import Debugger from '../debugger';
 
@@ -23,22 +24,15 @@ export class fsUtil {
 	static  __WIN__ = '\\';
 	static  __BSD__ = '/';
 
-	static readDir( dir: string ) {
-		return readdirSync( dir )
+	static readDir = ( dir: string ) => readdirSync( dir )
 			.filter( x => lstatSync( join( dir, x ) ).isFile() )
 			.map( x => resolve( dir, x ) );
-	}
 
-	static toStringF( filePath: string ):
-		fileUTF8 {
-		return readFileSync( filePath ).toString( 'utf-8' );
-	}
+	static toStringF = ( filePath: string ): fileUTF8 => readFileSync( filePath ).toString( 'utf-8' );
 
-	static toJSONF( 
+	static toJSONF =( 
 		filePath: string
-	): fileJSON {
-		return readFileSync( filePath ).toJSON();
-	}
+	): fileJSON => readFileSync( filePath ).toJSON();
 	
 	static mapData( filePath: string ):
 		FileInputMeta {
@@ -58,27 +52,37 @@ export class fsUtil {
 	}
 
 	static resolveTemplates( conf: Options ):
-		FileInputMeta[] | void {
+		FileInputMeta[] | null {
 		const {
 			templates = DEFAULTS.templates, 
 			pathRoot = DEFAULTS.pathRoot
 		} = conf;
 		const _path = join( process.cwd(), pathRoot, templates );
-		return _path ? this.readDir( _path ).map( p => this.mapData( p ) ) : 
-		Debugger.raise( `Error: finding templates in ${pathRoot}/${templates} `);
-
+		try {
+			return this.readDir( _path ).map( p => this.mapData( p ) );
+		}
+		catch( e ) {
+			Debugger.emit( 'fs::error', `Error: finding templates in ${pathRoot}/${templates} ` );
+			emitWarning( e );
+			return;
+		}
+		
 	}
 
 	static resolvePartials( conf: Options ):
-		FileInputMeta[] | void {
+		FileInputMeta[] | null {
 		const { 
 			partials = DEFAULTS.partials,
 			pathRoot = DEFAULTS.pathRoot 
 		} = conf;
 		const _path = join( process.cwd(), pathRoot, partials );
-		return _path ?
-			this.readDir( _path ).map( p => this.mapData( p ) ) : 
-			Debugger.raise( `Error: finding templates in ${pathRoot}/${partials} `);
-		
+		try {
+			return this.readDir( _path ).map( p => this.mapData( p ) ) 
+		}
+		catch( e ) {
+			Debugger.emit( 'fs::error', `Error: finding partials in ${pathRoot}/${partials}` );
+			emitWarning( e );
+			return;
+		}	
 	}
 }

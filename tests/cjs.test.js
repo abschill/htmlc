@@ -8,7 +8,7 @@ const myLoader0 = Loader( {
     templates: "templates",
     partialInput: partialData,
     templateInput: templateData,
-    debug: false
+    debug: true
 } );
 
 const home = myLoader0.template( 'home' );

@@ -26,11 +26,14 @@ const compile_1 = __importDefault(require("./core/compile"));
 __exportStar(require("./core/internals/types"), exports);
 function Loader(config) {
     let ctx = (0, hydrate_1.default)(config !== null && config !== void 0 ? config : internals_1._DEFAULTS);
+    if (ctx.config.debug) {
+        debugger_1.default.emit('start');
+    }
     if (ctx.config.watch) {
         ctx.partials.forEach(file => {
             (0, fs_1.watch)(file.path, (eventType, filename) => {
                 if (eventType === 'change') {
-                    debugger_1.default._registerEvent(`Modified ${filename}, refresh browser to apply changes`, ctx);
+                    debugger_1.default.emit('file::change', filename);
                     ctx = (0, hydrate_1.default)(config !== null && config !== void 0 ? config : internals_1._DEFAULTS);
                 }
             });
@@ -38,7 +41,7 @@ function Loader(config) {
         ctx.templates.forEach(file => {
             (0, fs_1.watch)(file.path, (eventType, filename) => {
                 if (eventType === 'change') {
-                    debugger_1.default._registerEvent(`Modified ${filename}, refresh browser to apply changes`, ctx);
+                    debugger_1.default.emit('file::change', filename);
                     ctx = (0, hydrate_1.default)(config !== null && config !== void 0 ? config : internals_1._DEFAULTS);
                 }
             });

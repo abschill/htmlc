@@ -12,27 +12,6 @@ class Parser {
                 return Parser._keySignature.replace(Parser._delim, val);
         }
     }
-    static hasPartial(a) {
-        return a.target.includes(Parser._replaceSignature(Parser._partialKey, a.key));
-    }
-    static partialIndex(a) {
-        return a.target.indexOf(Parser._replaceSignature(Parser._partialKey, a.key));
-    }
-    static matchPartials(target) {
-        return target.match(Parser._partialReggie);
-    }
-    static replacePartial(a) {
-        return a.target.replace(Parser._replaceSignature(Parser._partialKey, a.key), a.value);
-    }
-    static hasKey(a) {
-        return a.target.includes(Parser._replaceSignature(Parser._renderKey, a.key));
-    }
-    static matchKeys(target) {
-        return target.match(Parser._keyReggie);
-    }
-    static hasLoop(a) {
-        return a.target.includes(`<!--${Parser.__loopKey__}(${a.key}){`);
-    }
     static matchLoops(target) {
         const out = [];
         const _opener = /<!--@loop\(\w+\){/gi;
@@ -48,9 +27,6 @@ class Parser {
             });
         }
         return out;
-    }
-    static replaceAnonLoopBuf(a) {
-        return a.target.replace(Parser._delim, a.key);
     }
     static replacedNamedLoopBuf(clone, insert) {
         let copy = clone;
@@ -96,4 +72,12 @@ Parser._keySignature = `<!--${Parser.__renderKey__}=${Parser._delim}${Parser.__C
 Parser._partialSignature = `<!--${Parser.__partialKey__}=${Parser._delim}${Parser.__CLOSE__}`;
 Parser._keyReggie = /<!--@render=[\w|\d]+-->/gi;
 Parser._partialReggie = /<!--@partial=[\w|\d]+-->/gi;
+Parser.hasPartial = (a) => a.target.includes(Parser._replaceSignature(Parser._partialKey, a.key));
+Parser.partialIndex = (a) => a.target.indexOf(Parser._replaceSignature(Parser._partialKey, a.key));
+Parser.matchPartials = (target) => target.match(Parser._partialReggie);
+Parser.replacePartial = (a) => a.target.replace(Parser._replaceSignature(Parser._partialKey, a.key), a.value);
+Parser.hasKey = (a) => a.target.includes(Parser._replaceSignature(Parser._renderKey, a.key));
+Parser.matchKeys = (target) => target.match(Parser._keyReggie);
+Parser.hasLoop = (a) => a.target.includes(`<!--${Parser.__loopKey__}(${a.key}){`);
+Parser.replaceAnonLoopBuf = (a) => a.target.replace(Parser._delim, a.key);
 //# sourceMappingURL=parser.js.map

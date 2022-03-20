@@ -34,12 +34,15 @@ RuntimeState {
 
     let ctx: coreContext = hydrate( config ?? _DEFAULTS );
 
+    if( ctx.config.debug ) {
+        Debugger.emit( 'start' );
+    }
+
     if( ctx.config.watch ) {
         ctx.partials.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-                    // eslint-disable-next-line prefer-rest-params
-                    Debugger._registerEvent( `Modified ${filename}, refresh browser to apply changes`, ctx );
+                    Debugger.emit( 'file::change', filename );
 					ctx = hydrate( config ?? _DEFAULTS );
                 }
             } );
@@ -47,7 +50,7 @@ RuntimeState {
         ctx.templates.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-					Debugger._registerEvent( `Modified ${filename}, refresh browser to apply changes`, ctx );
+					Debugger.emit( 'file::change', filename );
 					ctx = hydrate( config ?? _DEFAULTS );
                 }
             } );

@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = __importDefault(require("."));
-const debugger_1 = __importDefault(require("./internals/debugger"));
 const abt_1 = __importDefault(require("./abt"));
 const parser_1 = __importDefault(require("./parser"));
 class Compiler {
@@ -14,7 +13,6 @@ class Compiler {
             return fileData.rawFile;
         }
         catch (e) {
-            debugger_1.default.raise(`Template '${args.template_name} not found'`);
         }
     }
     static __renderMap(content) {
@@ -62,8 +60,6 @@ class Compiler {
         const outObj = [];
         Object.entries(renderMap).forEach((itemlist) => {
             if (!itemlist[1]) {
-                if (debug)
-                    debugger_1.default.raise(`Passing ${itemlist[0]}`);
             }
             else {
                 itemlist[1].forEach(r => {
@@ -78,7 +74,6 @@ class Compiler {
                                     replaceVal = globals[name];
                                 }
                                 catch (e) {
-                                    debugger_1.default.raise(`Failed to find ${name} to insert into ${file}`);
                                     replaceVal = '';
                                 }
                             }
@@ -105,8 +100,6 @@ class Compiler {
                                         });
                                 }
                                 else {
-                                    debugger_1.default.raise(`warning: insertion ${loopName} has an unrecognized value of:\n`);
-                                    debugger_1.default.raise(insertion);
                                 }
                             });
                             break;

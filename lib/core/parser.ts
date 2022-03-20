@@ -56,34 +56,15 @@ export default class Parser {
 		}
 	}
 
-	static hasPartial( a: kBUF ) {
-		return a.target.includes( Parser._replaceSignature( Parser._partialKey, a.key ) );
-	}
+	static hasPartial = ( a: kBUF ) => a.target.includes( Parser._replaceSignature( Parser._partialKey, a.key ) );
+	static partialIndex = ( a: kBUF ) => a.target.indexOf( Parser._replaceSignature( Parser._partialKey, a.key ) );
+	static matchPartials = ( target: AST_TARGET ) => target.match( Parser._partialReggie );
+	static replacePartial = ( a: vBUF ) => a.target.replace( Parser._replaceSignature( Parser._partialKey, a.key ), a.value );
 
-	static partialIndex( a: kBUF ) {
-		return a.target.indexOf( Parser._replaceSignature( Parser._partialKey, a.key ) );
-	}
+	static hasKey = ( a: kBUF ) => a.target.includes( Parser._replaceSignature( Parser._renderKey, a.key ) );
+	static matchKeys = ( target: AST_TARGET  ) => target.match( Parser._keyReggie );
 
-	static matchPartials( target: AST_TARGET ) {
-		return target.match( Parser._partialReggie );
-	}
-
-	static replacePartial( a: vBUF ) {
-		return a.target.replace( Parser._replaceSignature( Parser._partialKey, a.key ), a.value );
-	}
-
-	static hasKey( a: kBUF ) {
-		return a.target.includes( Parser._replaceSignature( Parser._renderKey, a.key ) );
-	}
-
-	static matchKeys( target: AST_TARGET  ) {
-		return target.match( Parser._keyReggie );
-	}
-
-	static hasLoop( a: kBUF ) {
-		return a.target.includes( `<!--${Parser.__loopKey__}(${a.key}){` );
-	}
-
+	static hasLoop = ( a: kBUF ) => a.target.includes( `<!--${Parser.__loopKey__}(${a.key}){` );
 	static matchLoops( target: AST_TARGET ) {
 		const out: Array<string> = [];
 		const _opener = /<!--@loop\(\w+\){/gi;
@@ -100,10 +81,7 @@ export default class Parser {
 		return out;
 	}
 
-	static replaceAnonLoopBuf( a: kBUF ) {
-		return a.target.replace( Parser._delim, a.key );
-	}
-
+	static replaceAnonLoopBuf = ( a: kBUF ) => a.target.replace( Parser._delim, a.key );
 	static replacedNamedLoopBuf( clone: string, insert: Insertion | Entry ) {
 		let copy = clone;
 		insert.forEach( ( insertion: string | UINSERT_MAP ) => {

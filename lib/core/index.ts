@@ -74,8 +74,8 @@ function render (
         return cleanHTML( rootCopy );
     }
     catch( e ) {
-		Debugger.raise( 'Failed in Runtime' );
-		Debugger.raise( e );
+		//Debugger.raise( 'Failed in Runtime' );
+		//Debugger.raise( e );
         return rootCopy;
     }
 }

@@ -23,7 +23,7 @@ export default class Compiler {
 			return fileData.rawFile;
 		}
 		catch( e ) {
-			Debugger.raise( `Template '${args.template_name} not found'` );
+			// Debugger.raise( `Template '${args.template_name} not found'` );
 		}	
 	}
 
@@ -54,7 +54,7 @@ export default class Compiler {
 		return __map__;
 	}
 
-	static compile ( 
+	static compile( 
 		args: Args 
 	): RTemplate {
 		/**
@@ -103,7 +103,7 @@ export default class Compiler {
 
 		Object.entries( renderMap ).forEach( ( itemlist : [key: string, value: string[] | string[][]] ) => {
 			if ( !itemlist[1] ) {
-				if( debug ) Debugger.raise( `Passing ${itemlist[0]}` );
+				// if( debug ) Debugger.raise( `Passing ${itemlist[0]}` );
 			}
 			else {
 				itemlist[1].forEach( r => {
@@ -117,7 +117,7 @@ export default class Compiler {
 									replaceVal = globals[name];
 								}
 								catch( e ) {
-									Debugger.raise( `Failed to find ${name} to insert into ${file}`);
+									// Debugger.raise( `Failed to find ${name} to insert into ${file}`);
 									replaceVal = '';
 								}
 							}
@@ -146,8 +146,8 @@ export default class Compiler {
 									} );
 								}
 								else {
-									Debugger.raise( `warning: insertion ${loopName} has an unrecognized value of:\n` );
-									Debugger.raise( insertion );
+									// Debugger.raise( `warning: insertion ${loopName} has an unrecognized value of:\n` );
+									// Debugger.raise( insertion );
 								}
 							} );
 							break;
