@@ -1,19 +1,19 @@
-import { Loader } from '../dist/loader.js';
+import { Loader } from '../lib/loader';
 import partialData from './customPartial.json';
-import templateData from './customTemplate';
+import templateData from './customTemplate.js';
 
 const myLoader0 = Loader( {
     pathRoot: 'test-pkg/custom',
-    partials: "layout",
-    templates: "pages",
+    partials: 'layout',
+    templates: 'pages',
     partialInput: partialData,
     debug: false
 } );
 
 const myLoader1 = Loader( {
     pathRoot: 'test-pkg/custom',
-    partials: "layout",
-    templates: "pages",
+    partials: 'layout',
+    templates: 'pages',
     partialInput: partialData,
     templateInput: templateData,
     debug: false
@@ -22,8 +22,8 @@ const myLoader1 = Loader( {
 
 const myLoader2 = Loader( {
     pathRoot: 'test-pkg/custom',
-    partials: "layout",
-    templates: "pages",
+    partials: 'layout',
+    templates: 'pages',
     partialInput: {},
     templateInput: {},
     debug: false

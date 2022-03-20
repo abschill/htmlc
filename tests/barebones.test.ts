@@ -1,4 +1,4 @@
-import { Loader } from '../dist/loader.js';
+import { Loader } from '../lib/loader';
 
 const myLoader = Loader( {
     pathRoot: 'test-pkg/barebones',
@@ -6,6 +6,7 @@ const myLoader = Loader( {
     templates: 'templates',
     debug: false
 } );
+
 describe( 'Load Static Partial Data', () => {
     const home = myLoader.template( 'home' );
     

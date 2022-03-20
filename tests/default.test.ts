@@ -1,11 +1,11 @@
 
-import { Loader } from '../dist/loader.js';
+import { Loader } from '../lib/loader';
 import partialData from './partialData.json';
 import templateData from './templateData.json';
 
 const myLoader = Loader( {
-    pathRoot: "test-pkg/def",
-    templates: "templates",
+    pathRoot: 'test-pkg/def',
+    templates: 'templates',
     partialInput: partialData,
     templateInput: templateData
 } );
