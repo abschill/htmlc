@@ -48,7 +48,7 @@ describe( 'Load Constructed Partial Data', () => {
         expect( data ).toMatch( 'Prismic' );
     } );
 
-});
+} );
 
 describe( 'Load Empty Input FF', () => {
     it( 'Gets Empty Constructor Inline', () => {
