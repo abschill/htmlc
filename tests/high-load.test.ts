@@ -21,22 +21,27 @@ const chonk = myLoader.template( 'chonk', {
     chonk2: 'chonk2',
     chonk3: 'chonk3',
     chonk4: 'chonk4',
+    chonk5: 'chonk5',
+    chonk6: 'chonk6',
+    chonk7: 'chonk7',
+    chonk8: 'chonk8'
 } );
 
 describe( 'Handles high volume data renders', () => {
     it( 'Loads Partial Inline w/ constructor', () => {
         expect( chonk ).toMatch( 'Partial One' );
         expect( chonk ).toMatch( 'Hello World' );
+        expect( chonk ).toMatch( 'Partial Two' );
         expect( chonk ).toMatch( 'Partial four' );
     } );
 
     it( 'Loads without crashing or dropping input', () => {
         expect( chonk ).toMatch( 'chonk' );
-        expect( chonk ).toMatch( 'chonk1' );
-        expect( chonk ).toMatch( 'chonk2' );
-        expect( chonk ).toMatch( 'chonk3' );
-        expect( chonk ).toMatch( 'chonk4' );
         expect( chonk ).toMatch( 'Generic Page Content' );
+        for( const num of [1,2,3,4,5,6,7,8] ) {
+            expect( chonk ).toMatch( `chonk${num}` );
+        }
+        
     } );
 
     it( 'Has no silent errors', () => {
