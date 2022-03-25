@@ -1,3 +1,9 @@
+# 0.4.11
+### 03/24/22
+another minor patch bump for some internal changes & added unit tests
+
+debugger still out of comission until v0.5.z
+
 # 0.4.10
 ### 03/18/22
 Fixed debugger deciding to ignore conditional running, will fix by 0.5.z
