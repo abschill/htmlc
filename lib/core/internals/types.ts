@@ -154,3 +154,10 @@ export type SOptions = {
 
 export type SSGOptions = Entity<SOptions>;
 export type STemplate = string;
+
+export type MappedEntry = [
+	key: string,
+	value: string[] | string[][]
+];
+
+export type MappedValue = string | string[];

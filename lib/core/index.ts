@@ -56,27 +56,26 @@ function render (
     rawFile: fileUTF8,
     insertMap: UINSERT_MAP
 ): RTemplate {
-    let rootCopy = rawFile;
-    const renMap = Compiler.__renderMap( rootCopy );
+    const renMap = Compiler.__renderMap( rawFile );
     try {
         if( renMap.todo_partials && renMap.todo_partials.length > 0 ) {
-            rootCopy = shimPartials( rootCopy, declaredPartials, insertMap );
+            rawFile = shimPartials( rawFile, declaredPartials, insertMap );
         }
     
         if( renMap.todo_keys && renMap.todo_keys.length > 0 ) {
-            rootCopy = shimKeys( rootCopy, insertMap );
+            rawFile = shimKeys( rawFile, insertMap );
         }
     
         if( renMap.todo_loops && renMap.todo_loops.length > 0 ) {
             // const renderMap = Compiler.__renderMap( rootCopy );
-            rootCopy = shimLoops( rootCopy, insertMap );
+            rawFile = shimLoops( rawFile, insertMap );
         }
-        return cleanHTML( rootCopy );
+        return cleanHTML( rawFile );
     }
     catch( e ) {
 		//Debugger.raise( 'Failed in Runtime' );
 		//Debugger.raise( e );
-        return rootCopy;
+        return rawFile;
     }
 }
 

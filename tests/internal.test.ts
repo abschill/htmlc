@@ -1,7 +1,6 @@
 import { Loader } from '../lib/loader';
 import partialData from './partialData.json';
 import templateData from './templateData.json';
-
 const pathRoot = 'test-pkg/def';
 const templates = 'templates';
 const i = Loader( {
@@ -12,7 +11,7 @@ const i = Loader( {
     debug: false
 } );
 
-describe( 'Internal TS Module Testing', () => {
+describe( 'Internal Module Testing', () => {
     
     it( 'Loads Conf Root', () => {
         expect( i.ctx.config.pathRoot ).toBe( 'test-pkg/def' );
@@ -24,4 +23,3 @@ describe( 'Internal TS Module Testing', () => {
 
     it( 'Load constructor data', () => expect( Object.keys( i.ctx.config.templateInput ).length ).toBeGreaterThan( 0 ) );
 } );
-

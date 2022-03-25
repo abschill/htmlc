@@ -14,6 +14,8 @@ import render from '.';
 import Debugger from './internals/debugger';
 import RESERVED_WORDS from './abt';
 import Parser from './parser';
+import { MappedEntry, MappedValue } from '../loader';
+
 
 export default class Compiler {
 
@@ -97,80 +99,86 @@ export default class Compiler {
 		insertionMap: UINSERT_MAP,
 		debug ?: boolean
 	): Resolved<RenderMap> {
-		let copy = file;
+		let render = file;
 		const outVal: StackItem[] = [];
 		const outObj: StackItem[] = [];
 
-		Object.entries( renderMap ).forEach( ( itemlist : [key: string, value: string[] | string[][]] ) => {
-			if ( !itemlist[1] ) {
-				// if( debug ) Debugger.raise( `Passing ${itemlist[0]}` );
-			}
-			else {
-				itemlist[1].forEach( r => {
-					switch( itemlist[0] ) {
-						case 'todo_keys':
-							const name = r.split( `${Parser.__renderKey__}=` )[1].split( Parser.__CLOSE__ )[0];
-							const globals = insertionMap;
-							let replaceVal = insertionMap[name];
-							if( !replaceVal ) {
-								try {
-									replaceVal = globals[name];
-								}
-								catch( e ) {
-									// Debugger.raise( `Failed to find ${name} to insert into ${file}`);
-									replaceVal = '';
-								}
+		// console.log( insertionMap );
+		// console.log( renderMap );
+
+		/**  this is an entry in render map, as a tuple in the form of
+		 * [ ENTRY_TYPE, ENTRY_LIST ]
+		 * ENTRY_TYPE will be either todo_keys, todo_loops, todo_partials
+		**/
+		for( const [ key, value ] of Object.entries( renderMap ) ) {
+			const itemlist = [ key, value ] as MappedEntry;
+			itemlist[1].forEach( ( r: MappedValue ) => {
+				switch( itemlist[0] ) {
+					case 'todo_keys':
+						r = r as string;
+						const name = r.split( `${Parser.__renderKey__}=` )[1].split( Parser.__CLOSE__ )[0];
+						const globals = insertionMap;
+						let replaceVal = insertionMap[name];
+						if( !replaceVal ) {
+							try {
+								replaceVal = globals[name];
 							}
-							copy = copy.replace( r, replaceVal );
-							break;
-						case 'todo_loops':
-							const loopName = r.split( '(' )[1]?.split( ')' )[0];
-							const toInsert = insertionMap[loopName];
-							const elChild: string = r.replace( Parser.LOOP_OPEN( loopName ), '' ).replace( Parser.LOOP_CLOSE, '' )
-							.trimStart().replace( /\s\s+/gi, '' );
-	
-							toInsert?.forEach( ( insertion ?: string | UINSERT_MAP ) => {
-								if( typeof( insertion ) === 'string' ) {
-									//1d array
-									outVal.push( { 
-										replacer: r, 
-										insertion: Parser.replaceAnonLoopBuf( {target: elChild, key: insertion as string} ) 
-									} );
-								}
-								else if ( typeof( insertion ) === 'object' ) {
-									//key/val
-									const entries = Object.entries( insertion );
-									if ( entries.length > 0  ) outObj.push( { 
-										replacer: r, 
-										insertion: Parser.replacedNamedLoopBuf( elChild, entries ) 
-									} );
-								}
-								else {
-									// Debugger.raise( `warning: insertion ${loopName} has an unrecognized value of:\n` );
-									// Debugger.raise( insertion );
-								}
-							} );
-							break;
-						case 'todo_partials':
-							//for partials nested in partials - WIP feature
-							break;
-						default:
-							break;
-					}
-				} );
-			}
-		} );
-	
+							catch( e ) {
+								// Debugger.raise( `Failed to find ${name} to insert into ${file}`);
+								replaceVal = '';
+							}
+						}
+						render = render.replace( r, replaceVal );
+						break;
+					case 'todo_loops':
+						r = r as string;
+						const loopName = r.split( '(' )[1]?.split( ')' )[0];
+						const toInsert = insertionMap[loopName];
+						const elChild: string = r.replace( Parser.LOOP_OPEN( loopName ), '' ).replace( Parser.LOOP_CLOSE, '' )
+						.trimStart().replace( /\s\s+/gi, '' );
+
+						toInsert?.forEach( ( insertion ?: string | UINSERT_MAP ) => {
+							r = r as string;
+							if( typeof( insertion ) === 'string' ) {
+								//1d array
+								outVal.push( { 
+									replacer: r, 
+									insertion: Parser.replaceAnonLoopBuf( {target: elChild, key: insertion as string} ) 
+								} );
+							}
+							else if ( typeof( insertion ) === 'object' ) {
+								//key/val
+								const entries = Object.entries( insertion );
+								if ( entries.length > 0  ) outObj.push( { 
+									replacer: r, 
+									insertion: Parser.replacedNamedLoopBuf( elChild, entries ) 
+								} );
+							}
+							else {
+								// Debugger.raise( `warning: insertion ${loopName} has an unrecognized value of:\n` );
+								// Debugger.raise( insertion );
+							}
+						} );
+						break;
+					case 'todo_partials':
+						//for partials nested in partials - WIP feature
+						break;
+					default:
+						break;
+				}
+			} );
+		}
+
 		const valStr = outVal.map( ( val: StackItem ) => val.insertion ).join( '' );
 		const objStr = outObj.map( ( obj: StackItem ) => obj.insertion ).join( '' );
-		outVal.forEach( ( _out: StackItem ) => copy = copy.replace( _out.replacer, valStr ) );
-		outObj.forEach( ( _out: StackItem ) => copy = copy.replace( _out.replacer, objStr ) );
-		Parser.checkDeprecation( copy );
+		outVal.forEach( ( _out: StackItem ) => render = render.replace( _out.replacer, valStr ) );
+		outObj.forEach( ( _out: StackItem ) => render = render.replace( _out.replacer, objStr ) );
+		Parser.checkDeprecation( render );
 		return {
 			raw: file, 
 			renderMap, 
 			insertionMap, 
-			render: copy
+			render
 		};
 	}
 
