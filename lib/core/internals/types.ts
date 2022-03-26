@@ -84,8 +84,6 @@ export type Insertion = [
 
 export type Resolved<RenderMap> = {
     raw: string;
-    renderMap: RenderMap;
-    insertionMap: UINSERT_MAP;
     render: string;
 }
 
@@ -155,8 +153,11 @@ export type SOptions = {
 export type SSGOptions = Entity<SOptions>;
 export type STemplate = string;
 
+
+export type MapType = 'todo_partials' | 'todo_keys' | 'todo_loops';
+
 export type MappedEntry = [
-	key: string,
+	key: MapType,
 	value: string[] | string[][]
 ];
 

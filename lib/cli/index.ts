@@ -24,7 +24,7 @@ try {
         const fileData = {
             toName: pathify( template, static_config.outPath ),
             toWrite: ctx.template( template.name )
-        }
+        };
         __write( fileData );
         return;
     } );

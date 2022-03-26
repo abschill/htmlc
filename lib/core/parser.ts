@@ -144,6 +144,4 @@ export default class Parser {
 			}
 		}
 	}
-
-	
 }

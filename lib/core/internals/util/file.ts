@@ -16,9 +16,7 @@ import {
 	join,
 	resolve
 } from 'path';
-import { emitWarning } from 'process';
 import { DEFAULTS } from '..';
-import Debugger from '../debugger';
 
 export class fsUtil {
 	static  __WIN__ = '\\';
@@ -38,16 +36,19 @@ export class fsUtil {
 		FileInputMeta {
 		const n = filePath.split( '.html' );
 		if( process.platform === 'win32' ) {
-			const na = n[0].split( this.__WIN__ );
-			const name = na[na.length - 1];
-			const rawFile = this.toStringF( filePath );
-			return {path: filePath, name, rawFile};
+			const na = n[0].split( fsUtil.__WIN__ );
+			return {
+				path: filePath, 
+				name: na[na.length - 1], 
+				rawFile: fsUtil.toStringF( filePath )
+			};
 		}
 		else {
-			const na = n[0].split( this.__BSD__ );
-			const name = na[na.length - 1];
-			const rawFile = this.toStringF( filePath );
-			return {path: filePath, name, rawFile};
+			const na = n[0].split( fsUtil.__BSD__ );
+			return {
+				path: filePath, 
+				name: na[na.length - 1], 
+				rawFile: fsUtil.toStringF( filePath )};
 		}
 	}
 
@@ -57,16 +58,7 @@ export class fsUtil {
 			templates = DEFAULTS.templates, 
 			pathRoot = DEFAULTS.pathRoot
 		} = conf;
-		const _path = join( process.cwd(), pathRoot, templates );
-		try {
-			return this.readDir( _path ).map( p => this.mapData( p ) );
-		}
-		catch( e ) {
-			Debugger.emit( 'fs::error', `Error: finding templates in ${pathRoot}/${templates} ` );
-			emitWarning( e );
-			return;
-		}
-		
+		return fsUtil.readDir( join( process.cwd(), pathRoot, templates ) ).map( p => fsUtil.mapData( p ) );
 	}
 
 	static resolvePartials( conf: Options ):
@@ -75,14 +67,6 @@ export class fsUtil {
 			partials = DEFAULTS.partials,
 			pathRoot = DEFAULTS.pathRoot 
 		} = conf;
-		const _path = join( process.cwd(), pathRoot, partials );
-		try {
-			return this.readDir( _path ).map( p => this.mapData( p ) ) 
-		}
-		catch( e ) {
-			Debugger.emit( 'fs::error', `Error: finding partials in ${pathRoot}/${partials}` );
-			emitWarning( e );
-			return;
-		}	
+		return fsUtil.readDir( join( process.cwd(), pathRoot, partials ) ).map( p => fsUtil.mapData( p ) ); 
 	}
 }

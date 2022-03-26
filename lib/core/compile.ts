@@ -137,8 +137,6 @@ export default class Compiler {
 
 		return {
 			raw: file, 
-			renderMap, 
-			insertionMap, 
 			render
 		};
 	}

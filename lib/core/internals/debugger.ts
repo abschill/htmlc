@@ -14,6 +14,6 @@ const {
 } = console;
 const deb = new EventEmitter();
 deb.on( 'start', () => log( 'HCL::debug - started' ) );
-deb.on( 'file::change', ( e: coreEventArgs<coreEventName> ) => log( e ) );
+deb.on( 'file::change', ( e: string ) => log( e ) );
 deb.on( 'fs::error', ( e ) => warn( e ) );
 export default deb;
