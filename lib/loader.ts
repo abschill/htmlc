@@ -42,7 +42,7 @@ RuntimeState {
         ctx.partials.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-                    Debugger.emit( 'file::change', filename );
+                    Debugger.emit( 'file::change', `File Change: ${filename}` );
 					ctx = hydrate( config ?? _DEFAULTS );
                 }
             } );
@@ -50,7 +50,7 @@ RuntimeState {
         ctx.templates.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-					Debugger.emit( 'file::change', filename );
+					Debugger.emit( 'file::change', `File Change: ${filename}` );
 					ctx = hydrate( config ?? _DEFAULTS );
                 }
             } );

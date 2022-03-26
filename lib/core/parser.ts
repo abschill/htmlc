@@ -1,14 +1,15 @@
 import { 
 	kBUF,
 	vBUF,
-	FileInputMeta,
 	Insertion,
 	AST_TARGET,
 	Entry,
 	DEP_TAG,
-	UINSERT_MAP
+	UINSERT_MAP,
+	RenderMap
 } from './internals/types';
 import { emitWarning } from 'process';
+import { Dictionary, ReservedWord } from './internals/types';
 
 export default class Parser {
 
@@ -89,6 +90,52 @@ export default class Parser {
 		return copy;
 	}
 
+	static ABT:
+	Dictionary<ReservedWord> = [
+		{
+			key: Parser.__loopKey__,
+			boolean: Parser.hasLoop,
+			array: Parser.matchLoops
+		},
+		{
+			key: Parser.__renderKey__,
+			boolean: Parser.hasKey,
+			array: Parser.matchKeys
+		},
+		{
+			key: Parser.__partialKey__,
+			boolean: Parser.hasPartial,
+			array: Parser.matchPartials
+		}
+	];
+
+	static __renderMap( content: string ) {
+		const __map__: RenderMap = {
+			todo_keys: [],
+			todo_loops: [],
+			todo_partials: []
+		};
+
+		Parser.ABT.forEach( token => {
+			const keymap = token.array( content );
+			switch( token.key ) {
+				case Parser.__renderKey__:
+					keymap ? __map__.todo_keys = keymap: __map__.todo_keys = [];
+					break;
+				case Parser.__loopKey__:
+					keymap ? __map__.todo_loops = keymap: __map__.todo_loops = [];
+					break;
+				case Parser.__partialKey__:
+					keymap ? __map__.todo_partials = keymap: __map__.todo_partials = [];
+					break;
+				default:
+					break;
+			}
+		} );
+	
+		return __map__;
+	}
+
 	static checkDeprecation( clone: string ) {
 		for( const tag of Parser.DEPRECATED_TAGS ) {
 			if( clone.includes( tag.old ) ) {
@@ -97,4 +144,6 @@ export default class Parser {
 			}
 		}
 	}
+
+	
 }

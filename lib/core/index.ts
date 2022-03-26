@@ -3,46 +3,14 @@
  * @description Handles Lexical Render Process for Internal Engine
  */
 import { cleanHTML } from './internals/util/cleanHTML';
-import Debugger from './internals/debugger';
 import Compiler  from './compile';
+import Parser from './parser';
 import { 
     RTemplate,
     FileInputMeta,
     fileUTF8,
     UINSERT_MAP
 } from './internals/types';
-
-/**
- * @param 
- * @param {UINSERT_MAP} insertMap map to insert values into templates from
- * @returns {RTemplate} The processing template
- */
-const shimKeys = ( 
-    copy: RTemplate,
-    insertMap: UINSERT_MAP
-): RTemplate => Compiler.resolveDeclaredKeys( Compiler.__renderMap( copy ), insertMap, copy );
-
-/**
- * @param copy - process template
- * @param declaredPartials - partial set from the initializer ff
- * @param insertMap - map to insert values into templates from
- * @returns {RTemplate} process template
- */
-const shimPartials = (
-    copy: RTemplate,
-    declaredPartials: FileInputMeta[],
-    insertMap: UINSERT_MAP
-): RTemplate => Compiler.resolveDeclaredPartials( Compiler.__renderMap( copy ), declaredPartials, insertMap, copy );
-
-/**
- * @param copy - process template
- * @param insertMap - map to insert values from
- * @returns {RTemplate} The rendered template
- */
-const shimLoops = (
-    copy: RTemplate,
-    insertMap: UINSERT_MAP
-): RTemplate => Compiler.resolveDeclaredLoops( Compiler.__renderMap( copy ), insertMap, copy );
 
 /**
  *
@@ -56,19 +24,18 @@ function render (
     rawFile: fileUTF8,
     insertMap: UINSERT_MAP
 ): RTemplate {
-    const renMap = Compiler.__renderMap( rawFile );
+    const renMap = Parser.__renderMap( rawFile );
     try {
         if( renMap.todo_partials && renMap.todo_partials.length > 0 ) {
-            rawFile = shimPartials( rawFile, declaredPartials, insertMap );
+            rawFile = Compiler.shimPartials( rawFile, declaredPartials, insertMap );
         }
     
         if( renMap.todo_keys && renMap.todo_keys.length > 0 ) {
-            rawFile = shimKeys( rawFile, insertMap );
+            rawFile = Compiler.shimKeys( rawFile, insertMap );
         }
     
         if( renMap.todo_loops && renMap.todo_loops.length > 0 ) {
-            // const renderMap = Compiler.__renderMap( rootCopy );
-            rawFile = shimLoops( rawFile, insertMap );
+            rawFile = Compiler.shimLoops( rawFile, insertMap );
         }
         return cleanHTML( rawFile );
     }

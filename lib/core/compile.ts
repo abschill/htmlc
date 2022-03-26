@@ -11,8 +11,6 @@ import {
 	StackItem,
 } from './internals/types';
 import render from '.';
-import Debugger from './internals/debugger';
-import RESERVED_WORDS from './abt';
 import Parser from './parser';
 import { MappedEntry, MappedValue } from '../loader';
 
@@ -20,40 +18,8 @@ import { MappedEntry, MappedValue } from '../loader';
 export default class Compiler {
 
 	static scanTemplate( args: Args ) {
-		try {
-			const fileData = args.ctx.templates.filter( ( temp: FileInputMeta ) => temp.name === args.template_name )[0];
-			return fileData.rawFile;
-		}
-		catch( e ) {
-			// Debugger.raise( `Template '${args.template_name} not found'` );
-		}	
-	}
-
-	static __renderMap( content: string ) {
-		const __map__: RenderMap = {
-			todo_keys: [],
-			todo_loops: [],
-			todo_partials: []
-		};
-
-		RESERVED_WORDS.forEach( token => {
-			const keymap = token.array( content );
-			switch( token.key ) {
-				case Parser.__renderKey__:
-					keymap ? __map__.todo_keys = keymap: __map__.todo_keys = [];
-					break;
-				case Parser.__loopKey__:
-					keymap ? __map__.todo_loops = keymap: __map__.todo_loops = [];
-					break;
-				case Parser.__partialKey__:
-					keymap ? __map__.todo_partials = keymap: __map__.todo_partials = [];
-					break;
-				default:
-					break;
-			}
-		} );
-	
-		return __map__;
+		const fileData = args.ctx.templates.filter( ( temp: FileInputMeta ) => temp.name === args.template_name )[0];
+		return fileData.rawFile;
 	}
 
 	static compile( 
@@ -96,15 +62,11 @@ export default class Compiler {
 	static resolve (
 		file: string,
 		renderMap: RenderMap,
-		insertionMap: UINSERT_MAP,
-		debug ?: boolean
+		insertionMap: UINSERT_MAP
 	): Resolved<RenderMap> {
 		let render = file;
 		const outVal: StackItem[] = [];
 		const outObj: StackItem[] = [];
-
-		// console.log( insertionMap );
-		// console.log( renderMap );
 
 		/**  this is an entry in render map, as a tuple in the form of
 		 * [ ENTRY_TYPE, ENTRY_LIST ]
@@ -154,10 +116,6 @@ export default class Compiler {
 									insertion: Parser.replacedNamedLoopBuf( elChild, entries ) 
 								} );
 							}
-							else {
-								// Debugger.raise( `warning: insertion ${loopName} has an unrecognized value of:\n` );
-								// Debugger.raise( insertion );
-							}
 						} );
 						break;
 					case 'todo_partials':
@@ -169,11 +127,14 @@ export default class Compiler {
 			} );
 		}
 
-		const valStr = outVal.map( ( val: StackItem ) => val.insertion ).join( '' );
-		const objStr = outObj.map( ( obj: StackItem ) => obj.insertion ).join( '' );
+		const valStr: RTemplate = outVal.map( ( val: StackItem ) => val.insertion ).join( '' );
+		const objStr: RTemplate = outObj.map( ( obj: StackItem ) => obj.insertion ).join( '' );
+
 		outVal.forEach( ( _out: StackItem ) => render = render.replace( _out.replacer, valStr ) );
 		outObj.forEach( ( _out: StackItem ) => render = render.replace( _out.replacer, objStr ) );
+
 		Parser.checkDeprecation( render );
+
 		return {
 			raw: file, 
 			renderMap, 
@@ -188,22 +149,21 @@ export default class Compiler {
 		insertMap: UINSERT_MAP,
 		rootCopy: string
 	): string {
-		let rc = rootCopy;
 		renMap.todo_partials.forEach( ( partialSeg: string ) => {
             const p_name = partialSeg.split( `${Parser.__partialKey__}=` )[1].split( Parser.__CLOSE__ )[0];
             const matchPartials = declaredPartials.filter( n => n.name === p_name );
             if( matchPartials.length > 0 ) {
                 matchPartials.forEach( partial => {
-                    const renderMap = Compiler.__renderMap( partial.rawFile );
                     const scoped_insertion = insertMap['partialInput'] ?? {};
                     const insertion = {...insertMap, ...scoped_insertion};
-                    const resolved = Compiler.resolve( partial.rawFile, renderMap, insertion );
-                    rc = rc.replace( partialSeg, resolved.render );
+                    rootCopy = rootCopy.replace( 
+						partialSeg, 
+						Compiler.resolve( partial.rawFile, Parser.__renderMap( partial.rawFile ), insertion ).render 
+					);
                 } );
             }
         } );
-
-		return rc;
+		return rootCopy;
 	}
 
 	static resolveDeclaredKeys(
@@ -211,13 +171,8 @@ export default class Compiler {
 		insertMap: UINSERT_MAP,
 		rootCopy: string
 	): string {
-		let rc = rootCopy;
-		renMap.todo_keys.forEach( _ => {
-            const renderMap = Compiler.__renderMap( rootCopy );
-            const resolved = Compiler.resolve( rootCopy, renderMap, insertMap );
-            rc = resolved.render;
-        } );
-		return rc;
+		renMap.todo_keys.forEach( _ => rootCopy = Compiler.resolve( rootCopy, Parser.__renderMap( rootCopy ), insertMap ).render );
+		return rootCopy;
 	}
 
 	static resolveDeclaredLoops(
@@ -225,11 +180,39 @@ export default class Compiler {
 		insertMap: UINSERT_MAP,
 		rootCopy: string
 	): string {
-		let rc = rootCopy;
-		renMap.todo_loops.forEach( _ => {
-            const renderMap = Compiler.__renderMap( rootCopy );
-            rc = Compiler.resolve( rc, renderMap, insertMap ).render;
-        } );
-		return rc;
+		renMap.todo_loops.forEach( _ => rootCopy = Compiler.resolve( rootCopy, Parser.__renderMap( rootCopy ), insertMap ).render );
+		return rootCopy;
 	}
+
+	/**
+	 * @param 
+	 * @param {UINSERT_MAP} insertMap map to insert values into templates from
+	 * @returns {RTemplate} The processing template
+	 */
+	static shimKeys = ( 
+		copy: RTemplate,
+		insertMap: UINSERT_MAP
+	): RTemplate => Compiler.resolveDeclaredKeys( Parser.__renderMap( copy ), insertMap, copy );
+
+	/**
+	 * @param copy - process template
+	 * @param declaredPartials - partial set from the initializer ff
+	 * @param insertMap - map to insert values into templates from
+	 * @returns {RTemplate} process template
+	 */
+	static shimPartials = (
+		copy: RTemplate,
+		declaredPartials: FileInputMeta[],
+		insertMap: UINSERT_MAP
+	): RTemplate => Compiler.resolveDeclaredPartials( Parser.__renderMap( copy ), declaredPartials, insertMap, copy );
+
+	/**
+	 * @param copy - process template
+	 * @param insertMap - map to insert values from
+	 * @returns {RTemplate} The rendered template
+	 */
+	static shimLoops = (
+		copy: RTemplate,
+		insertMap: UINSERT_MAP
+	): RTemplate => Compiler.resolveDeclaredLoops( Parser.__renderMap( copy ), insertMap, copy );
 }
