@@ -35,6 +35,7 @@ enum BG_COLOR_ESCAPES {
 	white = '\x1b[47m%s\x1b[0m',
 }
 
+type EVENT_NAMES = 'watch:init' | 'file:change';
 
 export default class Debugger {
 
@@ -69,11 +70,11 @@ export default class Debugger {
 		this.logStrategy = 'stdout';
 	}
 
-	success( msg ) {
+	success( msg: string ) {
 		log( FG_COLOR_ESCAPES.green, msg );
 	}
 
-	status( msg ) {
+	status( msg: string ) {
 		log( FG_COLOR_ESCAPES.blue, msg );
 	}
 
@@ -82,13 +83,15 @@ export default class Debugger {
 		if( !this.silent ) this.success( 'HCL Debug started' );
 	}
 
-	event( name, ex ) {
+	event( name: EVENT_NAMES, ex ?: string | object ) {
 		if( !this.silent ) {
 			this.status( `Debugger|-Event: ${name}\n` );
-			this.status( 'Debugger|-Event-Data: \n' );
-			log( ex );
-			log();
-			log();
+			if( ex ) {
+				this.status( 'Debugger|-Event-Data: \n' );
+				log( ex );
+				log();
+				log();
+			}
 		}
 	}
 }

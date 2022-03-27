@@ -12,9 +12,7 @@
  */
  import { 
     RuntimeState, 
-    Options, 
     LoadOptions,
-    CoreOptions,
     CoreContext, 
     FTemplate,
     DirtyMap
@@ -49,7 +47,7 @@ RuntimeState {
         ctx.partials.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-                    dbg.event( 'file-change', filename );
+                    dbg.event( 'file:change', filename );
 					ctx = hydrate( config );
                 }
             } );
@@ -57,7 +55,7 @@ RuntimeState {
         ctx.templates.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-                    dbg.event( 'file-change', filename );
+                    dbg.event( 'file:change', filename );
 					ctx = hydrate( config );
                 }
             } );
