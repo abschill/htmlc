@@ -40,8 +40,6 @@ function render (
         return cleanHTML( rawFile );
     }
     catch( e ) {
-		//Debugger.raise( 'Failed in Runtime' );
-		//Debugger.raise( e );
         return rawFile;
     }
 }

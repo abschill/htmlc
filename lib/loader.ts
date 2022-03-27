@@ -31,26 +31,26 @@ export * from './core/internals/types';
  */
 export function Loader ( config ?: Options ):
 RuntimeState {
+    config = config ?? _DEFAULTS;
 
-    let ctx: coreContext = hydrate( config ?? _DEFAULTS );
+    const dbg = new Debugger( config );
 
-    if( ctx.config.debug ) {
-        Debugger.emit( 'start' );
-    }
+    let ctx: coreContext = hydrate( config );
 
     if( ctx.config.watch ) {
+        dbg.event( 'watch:init', 'watch enabled' );
         ctx.partials.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-                    Debugger.emit( 'file::change', `File Change: ${filename}` );
-					ctx = hydrate( config ?? _DEFAULTS );
+                    dbg.event( 'file-change', filename );
+					ctx = hydrate( config );
                 }
             } );
         } );
         ctx.templates.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-					Debugger.emit( 'file::change', `File Change: ${filename}` );
+                    dbg.event( 'file-change', filename );
 					ctx = hydrate( config ?? _DEFAULTS );
                 }
             } );
@@ -71,7 +71,11 @@ RuntimeState {
 	 */
     function template( name: string, data ?: UINSERT_MAP ):
     FTemplate {
-        return Compiler.compile( {template_name: name, ctx, data} );
+        return Compiler.compile( {
+            template_name: name, 
+            ctx, 
+            data
+        } );
     }
 
     return {ctx, template};

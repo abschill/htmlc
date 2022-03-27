@@ -9,7 +9,7 @@ const enums = {
     BODY_OPEN: '<body',
     BODY_OPEN_BLANK: '<body>',
     BODY_CLOSE: '</body>'
-}
+};
 
 export const cleanHTML = ( copy: string ):
 string => {

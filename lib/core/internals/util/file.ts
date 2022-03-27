@@ -58,7 +58,7 @@ export class fsUtil {
 			templates = DEFAULTS.templates, 
 			pathRoot = DEFAULTS.pathRoot
 		} = conf;
-		return fsUtil.readDir( join( process.cwd(), pathRoot, templates ) ).map( p => fsUtil.mapData( p ) );
+		return fsUtil.readDir( join( process.cwd(), pathRoot, templates ) ).map( fsUtil.mapData );
 	}
 
 	static resolvePartials( conf: Options ):
@@ -67,6 +67,6 @@ export class fsUtil {
 			partials = DEFAULTS.partials,
 			pathRoot = DEFAULTS.pathRoot 
 		} = conf;
-		return fsUtil.readDir( join( process.cwd(), pathRoot, partials ) ).map( p => fsUtil.mapData( p ) ); 
+		return fsUtil.readDir( join( process.cwd(), pathRoot, partials ) ).map( fsUtil.mapData ); 
 	}
 }

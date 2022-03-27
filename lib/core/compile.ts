@@ -6,8 +6,8 @@ import {
 	Args,
 	RTemplate,
 	UINSERT_MAP,
-	compiledMap,
-	Resolved,
+	RMap,
+	ResolvedMap,
 	StackItem,
 } from './internals/types';
 import render from '.';
@@ -39,22 +39,19 @@ export default class Compiler {
 		UINSERT_MAP = templateInput;
 		if( Object.keys( args.data ).length === 0 ) {
 			const insertions:
-			compiledMap = {...globalInsertions, partialInput};
-			// Debugger._registerEvent( 'template::insert:args', args.ctx );
+			RMap = {...globalInsertions, partialInput};
 			return render( args.ctx.partials, Compiler.scanTemplate( args ), insertions );
 		}
 		else {
 			const scopedInsertions:
 			UINSERT_MAP = {...templateInput, ...args.data};
 			const insertions:
-			compiledMap = {...globalInsertions, ...scopedInsertions,
+			RMap = {...globalInsertions, ...scopedInsertions,
 				partialInput: {
 					...partialInput,
 					...args.data['partialInput']
 				}
 			};
-	
-			// Debugger._registerEvent( 'insert', args.ctx );
 			return render( args.ctx.partials, Compiler.scanTemplate( args ), insertions );
 		}
 	}
@@ -63,7 +60,7 @@ export default class Compiler {
 		file: string,
 		renderMap: RenderMap,
 		insertionMap: UINSERT_MAP
-	): Resolved<RenderMap> {
+	): ResolvedMap {
 		let render = file;
 		const outVal: StackItem[] = [];
 		const outObj: StackItem[] = [];
@@ -86,7 +83,6 @@ export default class Compiler {
 								replaceVal = globals[name];
 							}
 							catch( e ) {
-								// Debugger.raise( `Failed to find ${name} to insert into ${file}`);
 								replaceVal = '';
 							}
 						}

@@ -9,18 +9,12 @@ export interface RuntimeState {
     template: ( name: string, data ?: object ) => FTemplate;
 }
 
-export type coreEventArgs<T> = [
-    T,
-    coreContext
-];
-
 export interface DEP_TAG {
     old: string;
     new: string;
     v_change: string;
 }
 
-export type coreEventName = string;
 
 export type ASTMatch = RegExpMatchArray | String[] | []
 
@@ -51,7 +45,7 @@ export type StackItem = {
 
 export type UINSERT_MAP = object;
 
-export interface compiledMap extends UINSERT_MAP {
+export interface RMap extends UINSERT_MAP {
     partialInput: UINSERT_MAP;
 }
 
@@ -82,7 +76,7 @@ export type Insertion = [
     Entry
 ];
 
-export type Resolved<RenderMap> = {
+export type ResolvedMap = {
     raw: string;
     render: string;
 }
@@ -111,16 +105,13 @@ export type fileJSON = object;
 export type _templateInsert = object | {} | any | null;
 
 export type RDebugOpts = boolean | {
-    logFile: string;
-    suppressFatal: boolean;
+    logFile ?: string;
+    logMode ?: LogMode;
+    logStrategy ?: LogStrategy;
 };
 
 export type Entity<Type> = {
     [Property in keyof Type]-?: Type[Property];
-}
-
-export type Event<T> = {
-    ( args: T ): T;
 }
 
 export type Options = {
@@ -153,7 +144,6 @@ export type SOptions = {
 export type SSGOptions = Entity<SOptions>;
 export type STemplate = string;
 
-
 export type MapType = 'todo_partials' | 'todo_keys' | 'todo_loops';
 
 export type MappedEntry = [
@@ -162,3 +152,7 @@ export type MappedEntry = [
 ];
 
 export type MappedValue = string | string[];
+
+export type LogMode = 'silent' | 'normal' | 'verbose';
+
+export type LogStrategy = 'fs' | 'stdout' | 'both';
