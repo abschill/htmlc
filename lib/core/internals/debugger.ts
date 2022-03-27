@@ -1,5 +1,6 @@
 import { Options, CoreOptions, LogStrategy, LogMode, HCL_EVENT, HCL_EVENT_SIGNATURE, HCL_RUNTIME_EVENT, RT_EVENT_DATA } from './types';
 import { join, resolve } from 'path';
+import { __write } from '../../cli/tools';
 import { FG_COLOR_ESCAPES } from '.';
 import { DEFAULTS } from '.';
 const { 
@@ -65,11 +66,9 @@ export default class Debugger {
 		}
 		else {
 			this.logMode = debugOpt?.logMode ?? 'silent'; 
-			const temp = debugOpt?.logStrategy;
-			this.logStrategy = temp ? temp : 'none';
+			this.logStrategy = debugOpt?.logStrategy ?? 'none';
 			this.silent = this.logMode === 'silent';
 		}
-
 		this.init();
 	}
 
@@ -77,15 +76,21 @@ export default class Debugger {
 	success( 
 		e: HCL_RUNTIME_EVENT
 	): void {
-		log( green, 'html-chunk-loader:', e.event_data ?? e.signature );
-		if( e.signature === 'loader:init' ) {
-			const path_root = join( process.cwd(), this.runtimeOptions.pathRoot ?? DEFAULTS.pathRoot );
-			const t_root = join( path_root, this.runtimeOptions.templates ?? DEFAULTS.templates );
-			const p_root = join( path_root, this.runtimeOptions.partials ?? DEFAULTS.partials );
-			log( green, 'hcl:pathRoot:', path_root );
-			log( green, 'hcl:templates:', t_root );
-			log( green, 'hcl:partials:', p_root );
+		switch( e.signature ) {
+			case 'loader:init':
+				return this.log_init_success();
+			default:
+				return log( green, 'html-chunk-loader:', e.event_data ?? e.signature );
 		}
+	}
+
+	log_init_success() {
+		const path_root = join( process.cwd(), this.runtimeOptions.pathRoot ?? DEFAULTS.pathRoot );
+		const t_root = join( path_root, this.runtimeOptions.templates ?? DEFAULTS.templates );
+		const p_root = join( path_root, this.runtimeOptions.partials ?? DEFAULTS.partials );
+		log( green, 'hcl:pathRoot:', path_root );
+		log( green, 'hcl:templates:', t_root );
+		log( green, 'hcl:partials:', p_root );
 	}
 
 	status( 
