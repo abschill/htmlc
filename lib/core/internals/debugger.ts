@@ -94,10 +94,10 @@ export default class Debugger {
 	): void {
 		if( !isEvent ) return log( e );
 		const { signature, event_data } = e as HCL_RUNTIME_EVENT; 
-		log( FG_COLOR_ESCAPES.blue, 'html-chunk-loader:', signature );
+		log( blue, 'html-chunk-loader:', signature );
 		
 		if( signature !== 'template:load' ) {
-			log( FG_COLOR_ESCAPES.blue, 'hcl:', event_data );
+			log( blue, 'hcl:', event_data );
 		}
 		else {
 			const { template_name, u_insert_map, c_insert_map } = event_data as RT_EVENT_DATA;
