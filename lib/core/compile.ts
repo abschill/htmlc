@@ -10,10 +10,12 @@ import {
 	ResolvedMap,
 	ResolvedMapItem,
 	MappedEntry, 
-	MappedValue
+	MappedValue,
+    fileUTF8,
 } from './internals/types';
-import render from '.';
 import Parser from './parser';
+import { cleanHTML } from './internals/util/cleanHTML';
+
 export default class Compiler {
 
 	static scanTemplate( 
@@ -46,7 +48,7 @@ export default class Compiler {
 				u_insert_map: args.template_data, 
 				c_insert_map: insertions 
 			} );
-			return render( args.template_ctx.partials, Compiler.scanTemplate( args ), insertions );
+			return Compiler.render( args.template_ctx.partials, Compiler.scanTemplate( args ), insertions );
 		}
 		else {
 			const scopedInsertions:
@@ -63,7 +65,32 @@ export default class Compiler {
 				u_insert_map: args.template_data, 
 				c_insert_map: insertions 
 			} );
-			return render( args.template_ctx.partials, Compiler.scanTemplate( args ), insertions );
+			return Compiler.render( args.template_ctx.partials, Compiler.scanTemplate( args ), insertions );
+		}
+	}
+
+	static render (
+		declaredPartials: FileInputMeta[],
+		rawFile: fileUTF8,
+		insertMap: DirtyMap
+	): RTemplate {
+		const renMap = Parser.__renderMap( rawFile );
+		try {
+			if( renMap.todo_partials && renMap.todo_partials.length > 0 ) {
+				rawFile = Compiler.shimPartials( rawFile, declaredPartials, insertMap );
+			}
+		
+			if( renMap.todo_keys && renMap.todo_keys.length > 0 ) {
+				rawFile = Compiler.shimKeys( rawFile, insertMap );
+			}
+		
+			if( renMap.todo_loops && renMap.todo_loops.length > 0 ) {
+				rawFile = Compiler.shimLoops( rawFile, insertMap );
+			}
+			return cleanHTML( rawFile );
+		}
+		catch( e ) {
+			return rawFile;
 		}
 	}
 	
