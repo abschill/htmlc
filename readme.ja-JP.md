@@ -26,7 +26,7 @@ ES6/Typescriptで正しいモジュールをインポートするには、次の
 import { Loader } from 'html-chunk-loader/dist/loader.js';
 ```
 
-[参考文献](https://github.com/abschill/html-chunk-loader/tree/0.5.x/docs/modules.md)
+[参考文献](https://github.com/abschill/html-chunk-loader/blob/0.5.x/docs/modules.md)
 
 [例](https://github.com/abschill/html-chunk-loader-examples)
 
