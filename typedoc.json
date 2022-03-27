@@ -1,6 +1,7 @@
 {
     "entryPoints": [
-        "./lib/loader.ts"
+        "./lib/loader.ts",
+        "./lib/cli/index.ts"
     ],
     "out": "docs"
 }

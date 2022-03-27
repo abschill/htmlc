@@ -11,8 +11,10 @@ A <strong>Partial</strong> includes data
 
 Data can be iterated over, or directly inserted by name into a template which is loaded from the initialized loader object, which will be the default export when using commonjs
 
+## CommonJS
+
 ```
-const Loader = require( 'html-chunk-loader' );
+const Loader = require('html-chunk-loader');
 ```
 
 
@@ -26,7 +28,7 @@ import { Loader } from 'html-chunk-loader/dist/loader.js';
 ```
 
 
-[API Reference](https://github.com/abschill/html-chunk-loader/tree/master/docs/modules.md)
+[API Reference](https://github.com/abschill/html-chunk-loader/tree/0.5.x/docs/modules.md)
 
 [Example Repos](https://github.com/abschill/html-chunk-loader-examples)
 

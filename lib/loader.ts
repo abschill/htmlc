@@ -1,4 +1,3 @@
-
 /**
  * @module loader
  *  @example Calling the imported Loader module factory function
