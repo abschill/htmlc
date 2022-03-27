@@ -1,20 +1,25 @@
-import { Options, CoreOptions, LogStrategy, LogMode, HCL_EVENT, HCL_EVENT_SIGNATURE, HCL_RUNTIME_EVENT, RT_EVENT_DATA } from './types';
-import { join, resolve } from 'path';
+import { 
+	Options, 
+	CoreOptions, 
+	LogStrategy, 
+	LogMode, 
+	HCL_EVENT, 
+	HCL_EVENT_SIGNATURE, 
+	HCL_RUNTIME_EVENT, 
+	RT_EVENT_DATA,
+	WriteLogFileArgs
+} from './types';
+import { 
+	join, 
+	resolve 
+} from 'path';
 import { __write } from '../../cli/tools';
-import { FG_COLOR_ESCAPES } from '.';
+import { FG_COLOR_ESCAPES } from './types/util';
 import { DEFAULTS } from '.';
 const { 
 	log, 
 	warn, 
-	error, 
-	time, 
-	timeEnd, 
-	table, 
-	profile, 
-	profileEnd, 
-	timeLog, 
-	timeStamp, 
-	trace 
+	error
 } = console;
 const {
 	blue, green
@@ -72,6 +77,16 @@ export default class Debugger {
 		this.init();
 	}
 
+	get_logpath() {
+		return resolve( process.cwd(), this.logFile ?? 'hcl.log' );
+	}
+
+	_write(
+		args: WriteLogFileArgs
+	): void {
+		//todo
+	}
+
 
 	success( 
 		e: HCL_RUNTIME_EVENT
@@ -91,6 +106,8 @@ export default class Debugger {
 		log( green, 'hcl:pathRoot:', path_root );
 		log( green, 'hcl:templates:', t_root );
 		log( green, 'hcl:partials:', p_root );
+		log( green, 'hcl:',  'Loaded Config Successfully' );
+		log( '\n' );
 	}
 
 	std_load_template(
@@ -100,7 +117,7 @@ export default class Debugger {
 		log( blue, 'hcl:template: ', template_name );
 		log( blue, 'hcl:umap: ', u_insert_map );
 		log( blue, 'hcl:cmap: ', c_insert_map );
-		log();
+		log( '\n' );
 	}
 
 	status( 
