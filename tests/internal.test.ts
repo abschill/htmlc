@@ -8,8 +8,7 @@ const i = Loader( {
     pathRoot,
     templates: templates,
     partialInput: partialData,
-    templateInput: templateData,
-    debug: false
+    templateInput: templateData
 } );
 
 
@@ -26,6 +25,8 @@ describe( 'Internal Config Testing', () => {
     it( 'Loads Conf Root', () => {
         expect( i.ctx.config.pathRoot ).toBe( 'test-pkg/def' );
     } );
+
+    // it( 'Sets correct default debug options', () => expect( i.ctx.config.debug ) );
 
     it( 'Loads Conf Templates', () => {
         expect( i.ctx.config.templates ).toBe( templates );

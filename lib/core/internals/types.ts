@@ -153,7 +153,7 @@ export type MappedEntry = [
 
 export type MappedValue = string | string[];
 
-export type LogMode = 'silent' | 'normal' | 'verbose';
+export type LogMode = 'silent' | 'verbose';
 
 export type LogStrategy = 'none' | 'fs' | 'stdout' | 'both';
 

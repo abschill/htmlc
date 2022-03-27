@@ -49,42 +49,30 @@ const HCL_EVENT_MAP: HCL_EVENT[] = [
 export default class Debugger {
 
 	runtimeOptions: CoreOptions;
-	logMode: LogMode = 'normal';
-	logStrategy: LogStrategy = 'stdout';
+	logMode: LogMode = 'silent';
+	logStrategy: LogStrategy = 'none';
 	logFile ?: string;
 	silent: boolean;
 
 	constructor( conf: Options ) {
 		this.runtimeOptions = conf as CoreOptions;
-		try {
-			const debugOpt = this.runtimeOptions.debug;
-			if( typeof( debugOpt ) === 'boolean' ) {
-				if( debugOpt === true ) {
-					this.logMode = 'normal';
-					this.logStrategy = 'stdout';
-				}
-				else {
-					this._setDefaults();
-				}
-				
-			}
-			else {
-				this.logMode = debugOpt?.logMode ?? 'silent'; 
-				this.logStrategy = debugOpt?.logStrategy ?? 'stdout';
-				this.silent = this.logMode === 'silent';
+		const debugOpt = this.runtimeOptions.debug;
+		if( typeof( debugOpt ) === 'boolean' ) {
+			if( debugOpt === true ) {
+				this.logMode = 'verbose';
+				this.logStrategy = 'stdout';
 			}
 		}
-		catch( e ) {
-			this._setDefaults();
+		else {
+			this.logMode = debugOpt?.logMode ?? 'silent'; 
+			const temp = debugOpt?.logStrategy;
+			this.logStrategy = temp ? temp : 'none';
+			this.silent = this.logMode === 'silent';
 		}
 
 		this.init();
 	}
 
-	_setDefaults() {
-		this.logMode = 'normal';
-		this.logStrategy = 'none';
-	}
 
 	success( 
 		e: HCL_RUNTIME_EVENT
@@ -119,7 +107,12 @@ export default class Debugger {
 		}
 
 		log();
-		
+	}
+
+	event_to_file(
+		e: HCL_RUNTIME_EVENT
+	): void {
+		//
 	}
 	
 
@@ -136,7 +129,7 @@ export default class Debugger {
 	}
 
 	logEventNormal( 
-		e: HCL_RUNTIME_EVENT
+		e: HCL_RUNTIME_EVENT | string
 	): void {
 		return this.status( e );
 	}
@@ -144,7 +137,7 @@ export default class Debugger {
 	logEventFile( 
 		e: HCL_RUNTIME_EVENT
 	): void {
-		//
+		return this.event_to_file( e );
 	}
 
 	event( 

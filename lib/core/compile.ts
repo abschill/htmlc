@@ -1,5 +1,4 @@
 /* eslint-disable no-case-declarations */
-
 import { 
 	FileInputMeta,
 	RenderMap,

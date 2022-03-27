@@ -8,7 +8,10 @@ export const DEFAULTS: CoreOptions = {
     templateInput: {},
     partialInput: {},
     watch: false,
-	debug: false
+	debug: {
+		logMode: 'silent',
+		logStrategy: 'none'
+	}
 };
 
 export const __DEFAULTS = {

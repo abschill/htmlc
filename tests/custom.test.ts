@@ -6,8 +6,7 @@ const myLoader0 = Loader( {
     pathRoot: 'test-pkg/custom',
     partials: 'layout',
     templates: 'pages',
-    partialInput: partialData,
-    debug: false
+    partialInput: partialData
 } );
 
 const myLoader1 = Loader( {
@@ -15,8 +14,7 @@ const myLoader1 = Loader( {
     partials: 'layout',
     templates: 'pages',
     partialInput: partialData,
-    templateInput: templateData,
-    debug: false
+    templateInput: templateData
 } );
 
 
@@ -25,8 +23,7 @@ const myLoader2 = Loader( {
     partials: 'layout',
     templates: 'pages',
     partialInput: {},
-    templateInput: {},
-    debug: false
+    templateInput: {}
 } );
 
 describe( 'Load Constructed Partial Data', () => {
