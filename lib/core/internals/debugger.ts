@@ -1,5 +1,5 @@
 import { 
-	Options, 
+	LoaderOptions, 
 	CoreOptions, 
 	LogStrategy, 
 	LogMode, 
@@ -60,7 +60,7 @@ export default class Debugger {
 	logFile ?: string;
 	silent: boolean;
 
-	constructor( conf: Options ) {
+	constructor( conf: LoaderOptions ) {
 		this.runtimeOptions = conf as CoreOptions;
 		const debugOpt = this.runtimeOptions.debug;
 		if( typeof( debugOpt ) === 'boolean' ) {

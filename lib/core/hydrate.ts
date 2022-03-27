@@ -6,19 +6,18 @@
  import { fsUtil } from './internals/util/file';
  import { DEFAULTS } from './internals';
  import { 
-    Options,
-    LoadOptions, 
+    LoaderOptions,
     CoreContext, 
     CoreOptions
 } from './internals/types';
 
-const clean = ( config: Options ):
+const clean = ( config: LoaderOptions ):
     CoreOptions =>
     Object.keys( config ) === Object.keys( DEFAULTS ) ?
         config as CoreOptions:
         {...DEFAULTS, ...config} as CoreOptions;
 
-export default ( config: Options ):
+export default ( config: LoaderOptions ):
     CoreContext => {
     const hydrated = clean( config );
     const partials = fsUtil.resolvePartials( config as CoreOptions );

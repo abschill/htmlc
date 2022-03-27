@@ -1,36 +1,40 @@
 import { DirtyMap } from './map';
-import { CoreContext } from '.';
-import Debugger from '../debugger';
-import { LIST_OR_VALUE } from './util';
-import { Entity, FG_COLOR_ESCAPES } from './util';
-import { HCL_EVENT } from './event';
+import { Entity } from './util';
 
+// the log level
 export type LogMode = 'silent' | 'verbose';
 
+// the method by which the debugger will process logging
 export type LogStrategy = 'none' | 'fs' | 'stdout' | 'both';
 
-export type Options = CoreOptions | LoadOptions;
-
-export type DebugOptions = boolean | {
+// boolean to set true for defaults, leaving it blank in FF / constructor will just have the same effect as false
+export type DebugConfig = boolean | {
     logFile ?: string;
     logMode ?: LogMode;
     logStrategy ?: LogStrategy;
 };
 
+// ssg cli options
 export type SOptions = {
     pathRoot ?: string;
     templates ?: string;
     partials ?: string;
     partialInput ?: DirtyMap;
     templateInput ?: DirtyMap;
-    debug ?: DebugOptions;
+    debug ?: DebugConfig;
     outPath: string;
     loaderFile: string;
     cleanup: boolean;
 }
 
+// cleaned ssg cli optoins
 export type SSGOptions = Entity<SOptions>;
 
+
+// determines if the optoins have been cleaned or still unclead from the function arguments
+export type LoaderOptions = CoreOptions | LoadOptions;
+
+// optional arguments for the factory function itself
 export type LoadOptions = {
     pathRoot ?: string;
     templates ?: string;
@@ -38,42 +42,8 @@ export type LoadOptions = {
     partialInput ?: DirtyMap;
     templateInput ?: DirtyMap;
     watch ?: boolean;
-    debug ?: DebugOptions;
+    debug ?: DebugConfig;
 };
 
-export type RenderTemplateArgs = {
-    _toInsert: Object;
-    raw: string;
-    conf: CoreOptions;
-}
+// cleaned arguments submitted to constructor, defaulted if nonexistent
 export type CoreOptions = Entity<LoadOptions>;
-
-export interface CompilerArgs {
-    template_name: string;
-    template_ctx: CoreContext;
-    template_data ?: DirtyMap;
-    _debugger: Debugger;
-}
-
-
-export type TargetDirectoryTree = {
-    path: string;
-    files: string[];
-}
-
-export type FileInputMeta = {
-    path: string;
-    name: string;
-    rawFile: string;
-}
-
-export type fileUTF8 = string;
-
-export type fileJSON = object;
-
-
-
-export type WriteLogFileArgs = {
-    style: LIST_OR_VALUE<FG_COLOR_ESCAPES>;
-    e: HCL_EVENT
-}

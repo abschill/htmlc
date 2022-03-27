@@ -10,7 +10,9 @@ describe( 'Load Static Partial Data', () => {
     const home = myLoader.template( 'home' );
     
     it( 'Loads Head', () => {
-        expect( home ).toMatch( '<title>Hello World</title>' );   
+        expect( home ).toMatch( '<h1>Home Page</h1>' );  
+        expect( home ).toMatch( '<li>Nav 1</li>' ); 
+        expect( home ).toMatch( '<li>Nav 2</li>' ); 
     } );
 
     it( 'Loads Nav', () => {
@@ -19,10 +21,15 @@ describe( 'Load Static Partial Data', () => {
     } );
 
     it( 'Loads Page Content', () => {
-        expect( home ).toMatch( '<main>Home Page</main>' );
+        expect( home ).toMatch( '<h1>Home Page</h1>' );
     } );
 
     it( 'Loads Footer', () => {
         expect( home ).toMatch( '<footer>Footer</footer>' );
+    } );
+
+    it( 'Body Open/Close Tags', () => {
+        expect( home ).toMatch( '<body' ); 
+        expect( home ).toMatch( '</body>' );
     } );
 } );

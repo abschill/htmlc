@@ -11,7 +11,7 @@
  */
  import { 
     HCL_Runtime, 
-    LoadOptions,
+    LoaderOptions,
     CoreContext, 
     Template,
     DirtyMap
@@ -24,9 +24,9 @@ import Compiler from './core/compile';
 export {  
     HCL_Runtime, 
     CoreContext, 
-    LoadOptions,
+    LoaderOptions,
     CoreOptions,
-    DebugOptions 
+    DebugConfig 
 } from './core/internals/types';
 /**
  * @function Loader
@@ -34,7 +34,7 @@ export {
  * @returns Factory function for runtime context
  * @param config
  */
-export function Loader ( config ?: LoadOptions ):
+export function Loader ( config ?: LoaderOptions ):
 HCL_Runtime {
     config =  config ?? DEFAULTS;
 

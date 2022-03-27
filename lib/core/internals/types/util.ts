@@ -6,6 +6,11 @@ export type LIST_OR_VALUE<T> = T | T[];
 export type MAP_OR_LIST<T> = T[] | T[][];
 export type MAP_OR_LIST_OR_VALUE<T> = LIST_OR_VALUE<T> | T[][][];
 
+export type FileInputMeta = {
+    path: string;
+    name: string;
+    rawFile: string;
+}
 export enum FG_COLOR_ESCAPES {
 	black = '\x1b[30m%s\x1b[0m',
 	red = '\u001b[31m%s\x1b[0m',
