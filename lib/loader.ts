@@ -78,8 +78,8 @@ HCL_Runtime {
     Template {
         return Compiler.compile( {
             template_name: name, 
-            ctx, 
-            data
+            template_ctx: ctx, 
+            template_data: data
         } );
     }
 

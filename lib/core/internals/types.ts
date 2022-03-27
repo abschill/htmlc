@@ -19,8 +19,8 @@ export type ASTMatch = RegExpMatchArray | String[] | []
 
 export interface CompilerArgs {
     template_name: string;
-    ctx: CoreContext;
-    data ?: DirtyMap;
+    template_ctx: CoreContext;
+    template_data ?: DirtyMap;
 }
 
 export interface RenderMap {

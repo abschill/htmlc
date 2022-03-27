@@ -20,7 +20,7 @@ export default class Compiler {
 	static scanTemplate( 
 		args: CompilerArgs 
 	) {
-		const fileData = args.ctx.templates.filter( ( temp: FileInputMeta ) => temp.name === args.template_name )[0];
+		const fileData = args.template_ctx.templates.filter( ( temp: FileInputMeta ) => temp.name === args.template_name )[0];
 		return fileData.rawFile;
 	}
 
@@ -31,30 +31,30 @@ export default class Compiler {
 		 * If any data was keyed with the template name in the constructor, we will use as a secondary priority load value
 		 * these objects will default to {} if not entered
 		 */
-		const {templateInput = {}, partialInput = {}} = args.ctx.config;
+		const {templateInput = {}, partialInput = {}} = args.template_ctx.config;
 		// unset null data if applicable
-		if( !args.data ) args.data = {};
+		if( !args.template_data ) args.template_data = {};
 	
 	
 		//if no data, load default input for template
 		const globalInsertions:
 		DirtyMap = templateInput;
-		if( Object.keys( args.data ).length === 0 ) {
+		if( Object.keys( args.template_data ).length === 0 ) {
 			const insertions:
 			RMap = {...globalInsertions, partialInput};
-			return render( args.ctx.partials, Compiler.scanTemplate( args ), insertions );
+			return render( args.template_ctx.partials, Compiler.scanTemplate( args ), insertions );
 		}
 		else {
 			const scopedInsertions:
-			DirtyMap = {...templateInput, ...args.data};
+			DirtyMap = {...templateInput, ...args.template_data};
 			const insertions:
 			RMap = {...globalInsertions, ...scopedInsertions,
 				partialInput: {
 					...partialInput,
-					...args.data['partialInput']
+					...args.template_data['partialInput']
 				}
 			};
-			return render( args.ctx.partials, Compiler.scanTemplate( args ), insertions );
+			return render( args.template_ctx.partials, Compiler.scanTemplate( args ), insertions );
 		}
 	}
 	
