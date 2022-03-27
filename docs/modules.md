@@ -16,13 +16,14 @@ myLoader.template( 'home', { ...homeData } );
 
 ### Interfaces
 
-- [RuntimeState](interfaces/RuntimeState.md)
+- [HCL\_Runtime](interfaces/HCL_Runtime.md)
 
 ### Type aliases
 
 - [CoreContext](modules.md#corecontext)
 - [CoreOptions](modules.md#coreoptions)
 - [DebugOptions](modules.md#debugoptions)
+- [LoadOptions](modules.md#loadoptions)
 
 ### Functions
 
@@ -44,17 +45,17 @@ myLoader.template( 'home', { ...homeData } );
 
 #### Defined in
 
-[core/internals/types.ts:1](https://github.com/abschill/html-chunk-loader/blob/8c234a3/lib/core/internals/types.ts#L1)
+[core/internals/types.ts:1](https://github.com/abschill/html-chunk-loader/blob/a6a05f2/lib/core/internals/types.ts#L1)
 
 ___
 
 ### CoreOptions
 
-Ƭ **CoreOptions**: `Entity`<`LoadOptions`\>
+Ƭ **CoreOptions**: `Entity`<[`LoadOptions`](modules.md#loadoptions)\>
 
 #### Defined in
 
-[core/internals/types.ts:124](https://github.com/abschill/html-chunk-loader/blob/8c234a3/lib/core/internals/types.ts#L124)
+[core/internals/types.ts:124](https://github.com/abschill/html-chunk-loader/blob/a6a05f2/lib/core/internals/types.ts#L124)
 
 ___
 
@@ -64,13 +65,35 @@ ___
 
 #### Defined in
 
-[core/internals/types.ts:104](https://github.com/abschill/html-chunk-loader/blob/8c234a3/lib/core/internals/types.ts#L104)
+[core/internals/types.ts:104](https://github.com/abschill/html-chunk-loader/blob/a6a05f2/lib/core/internals/types.ts#L104)
+
+___
+
+### LoadOptions
+
+Ƭ **LoadOptions**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `debug?` | [`DebugOptions`](modules.md#debugoptions) |
+| `partialInput?` | `DirtyMap` |
+| `partials?` | `string` |
+| `pathRoot?` | `string` |
+| `templateInput?` | `DirtyMap` |
+| `templates?` | `string` |
+| `watch?` | `boolean` |
+
+#### Defined in
+
+[core/internals/types.ts:114](https://github.com/abschill/html-chunk-loader/blob/a6a05f2/lib/core/internals/types.ts#L114)
 
 ## Functions
 
 ### Loader
 
-▸ **Loader**(`config?`): [`RuntimeState`](interfaces/RuntimeState.md)
+▸ **Loader**(`config?`): [`HCL_Runtime`](interfaces/HCL_Runtime.md)
 
 **`function`** Loader
 
@@ -80,14 +103,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `config?` | `LoadOptions` |
+| `config?` | [`LoadOptions`](modules.md#loadoptions) |
 
 #### Returns
 
-[`RuntimeState`](interfaces/RuntimeState.md)
+[`HCL_Runtime`](interfaces/HCL_Runtime.md)
 
 Factory function for runtime context
 
 #### Defined in
 
-[loader.ts:39](https://github.com/abschill/html-chunk-loader/blob/8c234a3/lib/loader.ts#L39)
+[loader.ts:38](https://github.com/abschill/html-chunk-loader/blob/a6a05f2/lib/loader.ts#L38)

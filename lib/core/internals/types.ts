@@ -4,9 +4,9 @@ export type CoreContext = {
     templates: FileInputMeta[];
 };
 
-export interface RuntimeState {
+export interface HCL_Runtime {
     ctx: CoreContext;
-    template: ( name: string, data ?: object ) => FTemplate;
+    template: ( name: string, data ?: object ) => Template;
 }
 
 export interface DEP_TAG {
@@ -124,7 +124,7 @@ export type LoadOptions = {
 export type CoreOptions = Entity<LoadOptions>;
 
 export type RTemplate = string;
-export type FTemplate = string;
+export type Template = string;
 
 export type SOptions = {
     pathRoot ?: string;

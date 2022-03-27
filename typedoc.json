@@ -1,0 +1,6 @@
+{
+    "entryPoints": [
+        "./lib/loader.ts"
+    ],
+    "out": "docs"
+}

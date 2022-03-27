@@ -11,10 +11,10 @@
      * ```
  */
  import { 
-    RuntimeState, 
+    HCL_Runtime, 
     LoadOptions,
     CoreContext, 
-    FTemplate,
+    Template,
     DirtyMap
 } from './core/internals/types';
 import hydrate from './core/hydrate';
@@ -23,8 +23,9 @@ import { DEFAULTS } from './core/internals';
 import Debugger from './core/internals/debugger';
 import Compiler from './core/compile';
 export {  
-    RuntimeState, 
+    HCL_Runtime, 
     CoreContext, 
+    LoadOptions,
     CoreOptions,
     DebugOptions 
 } from './core/internals/types';
@@ -35,7 +36,7 @@ export {
  * @param config
  */
 export function Loader ( config ?: LoadOptions ):
-RuntimeState {
+HCL_Runtime {
     config =  config ?? DEFAULTS;
 
     const dbg = new Debugger( config );
@@ -75,7 +76,7 @@ RuntimeState {
 	 * @param data
 	 */
     function template( name: string, data ?: DirtyMap ):
-    FTemplate {
+    Template {
         return Compiler.compile( {
             template_name: name, 
             ctx, 

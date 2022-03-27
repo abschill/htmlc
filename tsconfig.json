@@ -19,11 +19,5 @@
     "exclude":[
         "./tests/**/*",
         "./dist/**/*"
-    ],
-    "typedocOptions": {
-        "entryPoints": [
-            "./lib/loader.ts"
-        ],
-        "out": "docs"
-    }
+    ]
 }

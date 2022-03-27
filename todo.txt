@@ -1,3 +1,0 @@
-0.5.z
-
-- set up logFile config option to write runtime logs to given file path
