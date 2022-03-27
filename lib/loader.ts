@@ -79,7 +79,8 @@ HCL_Runtime {
         return Compiler.compile( {
             template_name: name, 
             template_ctx: ctx, 
-            template_data: data
+            template_data: data,
+            _debugger: dbg
         } );
     }
 

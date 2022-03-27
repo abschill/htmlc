@@ -1,4 +1,4 @@
-import { Options, CoreOptions, LogStrategy, LogMode, HCL_EVENT, HCL_EVENT_SIGNATURE, HCL_RUNTIME_EVENT } from './types';
+import { Options, CoreOptions, LogStrategy, LogMode, HCL_EVENT, HCL_EVENT_SIGNATURE, HCL_RUNTIME_EVENT, RT_EVENT_DATA } from './types';
 import { join, resolve } from 'path';
 import { FG_COLOR_ESCAPES } from '.';
 import { DEFAULTS } from '.';
@@ -15,6 +15,9 @@ const {
 	timeStamp, 
 	trace 
 } = console;
+const {
+	blue, green
+} = FG_COLOR_ESCAPES;
 
 const HCL_EVENT_MAP: HCL_EVENT[] = [
 	{
@@ -34,6 +37,12 @@ const HCL_EVENT_MAP: HCL_EVENT[] = [
 		type: 1,
 		signature: 'file:change',
 		fatal: false 
+	},
+	{
+		phase: 1,
+		type: 1,
+		signature: 'template:load',
+		fatal: false
 	}
 ];
 
@@ -67,20 +76,20 @@ export default class Debugger {
 
 	_setDefaults() {
 		this.logMode = 'normal';
-		this.logStrategy = 'none';
+		this.logStrategy = 'stdout';
 	}
 
 	success( 
 		e: HCL_RUNTIME_EVENT
 	): void {
-		log( FG_COLOR_ESCAPES.green, 'html-chunk-loader:', e.event_data ?? e.signature );
+		log( green, 'html-chunk-loader:', e.event_data ?? e.signature );
 		if( e.signature === 'loader:init' ) {
 			const path_root = join( process.cwd(), this.runtimeOptions.pathRoot ?? DEFAULTS.pathRoot );
 			const t_root = join( path_root, this.runtimeOptions.templates ?? DEFAULTS.templates );
 			const p_root = join( path_root, this.runtimeOptions.partials ?? DEFAULTS.partials );
-			log( FG_COLOR_ESCAPES.green, 'html-chunk-loader:pathRoot:', path_root );
-			log( FG_COLOR_ESCAPES.green, 'html-chunk-loader:templates:', t_root );
-			log( FG_COLOR_ESCAPES.green, 'html-chunk-loader:partials:', p_root );
+			log( green, 'hcl:pathRoot:', path_root );
+			log( green, 'hcl:templates:', t_root );
+			log( green, 'hcl:partials:', p_root );
 		}
 	}
 
@@ -91,8 +100,19 @@ export default class Debugger {
 		if( !isEvent ) return log( e );
 		const { signature, event_data } = e as HCL_RUNTIME_EVENT; 
 		log( FG_COLOR_ESCAPES.blue, 'html-chunk-loader:', signature );
-		log( FG_COLOR_ESCAPES.blue, 'html-chunk-loader:', event_data );
+		
+		if( signature !== 'template:load' ) {
+			log( FG_COLOR_ESCAPES.blue, 'hcl:', event_data );
+		}
+		else {
+			const { template_name, u_insert_map, c_insert_map } = event_data as RT_EVENT_DATA;
+			log( blue, 'hcl:template: ', template_name );
+			log( blue, 'hcl:umap: ', u_insert_map );
+			log( blue, 'hcl:cmap: ', c_insert_map );
+		}
+
 		log();
+		
 	}
 	
 

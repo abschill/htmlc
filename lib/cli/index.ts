@@ -16,7 +16,7 @@ import { SOptions } from '../core/internals/types';
  * @function ssg 
  * @description command line interface for ssg templates
  * @example 
- * ```npx html-chunk-loader```
+ * ```npx html-chunk-loader ssg```
 */
 export function ssg():
 void {

@@ -1,3 +1,5 @@
+import Debugger from './debugger';
+
 export type CoreContext = {
     config: CoreOptions;
     partials: FileInputMeta[];
@@ -21,6 +23,7 @@ export interface CompilerArgs {
     template_name: string;
     template_ctx: CoreContext;
     template_data ?: DirtyMap;
+    _debugger: Debugger;
 }
 
 export interface RenderMap {
@@ -157,7 +160,7 @@ export type LogStrategy = 'none' | 'fs' | 'stdout' | 'both';
 export type Options = CoreOptions | LoadOptions;
 
 
-export type HCL_EVENT_SIGNATURE = 'file:change' | 'watch:init' | 'loader:init';
+export type HCL_EVENT_SIGNATURE = 'file:change' | 'watch:init' | 'loader:init' | 'template:load';
 
 export type HCL_EVENT = {
 	phase: number;
@@ -168,4 +171,10 @@ export type HCL_EVENT = {
 
 export interface HCL_RUNTIME_EVENT extends HCL_EVENT {
     event_data: string | object;
+}
+
+export type RT_EVENT_DATA = {
+    template_name: string; 
+    u_insert_map: object; 
+    c_insert_map: RMap;
 }

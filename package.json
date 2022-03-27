@@ -3,7 +3,9 @@
   "version": "0.5.1",
   "description": "Node Template Engine using HTML Comments",
   "main": "dist/index.js",
-  "bin": "dist/cli/index.js",
+  "bin": {
+    "ssg": "dist/cli/index.js"
+  },
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",

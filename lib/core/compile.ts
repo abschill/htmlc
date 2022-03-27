@@ -14,7 +14,6 @@ import {
 } from './internals/types';
 import render from '.';
 import Parser from './parser';
-
 export default class Compiler {
 
 	static scanTemplate( 
@@ -42,6 +41,11 @@ export default class Compiler {
 		if( Object.keys( args.template_data ).length === 0 ) {
 			const insertions:
 			RMap = {...globalInsertions, partialInput};
+			args._debugger.event( 'template:load', {
+				template_name: args.template_name, 
+				u_insert_map: args.template_data, 
+				c_insert_map: insertions 
+			} );
 			return render( args.template_ctx.partials, Compiler.scanTemplate( args ), insertions );
 		}
 		else {
@@ -54,6 +58,11 @@ export default class Compiler {
 					...args.template_data['partialInput']
 				}
 			};
+			args._debugger.event( 'template:load', { 
+				template_name: args.template_name, 
+				u_insert_map: args.template_data, 
+				c_insert_map: insertions 
+			} );
 			return render( args.template_ctx.partials, Compiler.scanTemplate( args ), insertions );
 		}
 	}
