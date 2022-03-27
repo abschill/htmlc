@@ -5,7 +5,7 @@ import {
 	AST_TARGET,
 	Entry,
 	DEP_TAG,
-	UINSERT_MAP,
+	DirtyMap,
 	RenderMap
 } from './internals/types';
 import { emitWarning } from 'process';
@@ -84,7 +84,7 @@ export default class Parser {
 
 	static replaceAnonLoopBuf = ( a: kBUF ) => a.target.replace( Parser._delim, a.key );
 	static replacedNamedLoopBuf( copy: string, insert: Insertion | Entry ) {
-		insert.forEach( ( insertion: string | UINSERT_MAP ) => copy = copy.replace( `{${insertion[0]}}`, insertion[1] ) );
+		insert.forEach( ( insertion: string | DirtyMap ) => copy = copy.replace( `{${insertion[0]}}`, insertion[1] ) );
 		return copy;
 	}
 

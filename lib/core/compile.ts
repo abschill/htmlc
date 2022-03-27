@@ -5,15 +5,15 @@ import {
 	RenderMap,
 	Args,
 	RTemplate,
-	UINSERT_MAP,
+	DirtyMap,
 	RMap,
 	ResolvedMap,
-	StackItem,
+	ResolvedMapItem,
+	MappedEntry, 
+	MappedValue
 } from './internals/types';
 import render from '.';
 import Parser from './parser';
-import { MappedEntry, MappedValue } from '../loader';
-
 
 export default class Compiler {
 
@@ -36,7 +36,7 @@ export default class Compiler {
 	
 		//if no data, load default input for template
 		const globalInsertions:
-		UINSERT_MAP = templateInput;
+		DirtyMap = templateInput;
 		if( Object.keys( args.data ).length === 0 ) {
 			const insertions:
 			RMap = {...globalInsertions, partialInput};
@@ -44,7 +44,7 @@ export default class Compiler {
 		}
 		else {
 			const scopedInsertions:
-			UINSERT_MAP = {...templateInput, ...args.data};
+			DirtyMap = {...templateInput, ...args.data};
 			const insertions:
 			RMap = {...globalInsertions, ...scopedInsertions,
 				partialInput: {
@@ -59,11 +59,11 @@ export default class Compiler {
 	static resolve (
 		file: string,
 		renderMap: RenderMap,
-		insertionMap: UINSERT_MAP
+		insertionMap: DirtyMap
 	): ResolvedMap {
 		let render = file;
-		const outVal: StackItem[] = [];
-		const outObj: StackItem[] = [];
+		const outVal: ResolvedMapItem[] = [];
+		const outObj: ResolvedMapItem[] = [];
 
 		/**  this is an entry in render map, as a tuple in the form of
 		 * [ ENTRY_TYPE, ENTRY_LIST ]
@@ -95,7 +95,7 @@ export default class Compiler {
 						const elChild: string = r.replace( Parser.LOOP_OPEN( loopName ), '' ).replace( Parser.LOOP_CLOSE, '' )
 						.trimStart().replace( /\s\s+/gi, '' );
 
-						toInsert?.forEach( ( insertion ?: string | UINSERT_MAP ) => {
+						toInsert?.forEach( ( insertion ?: string | DirtyMap ) => {
 							r = r as string;
 							if( typeof( insertion ) === 'string' ) {
 								//1d array
@@ -123,11 +123,11 @@ export default class Compiler {
 			} );
 		}
 
-		const valStr: RTemplate = outVal.map( ( val: StackItem ) => val.insertion ).join( '' );
-		const objStr: RTemplate = outObj.map( ( obj: StackItem ) => obj.insertion ).join( '' );
+		const valStr: RTemplate = outVal.map( ( val: ResolvedMapItem ) => val.insertion ).join( '' );
+		const objStr: RTemplate = outObj.map( ( obj: ResolvedMapItem ) => obj.insertion ).join( '' );
 
-		outVal.forEach( ( _out: StackItem ) => render = render.replace( _out.replacer, valStr ) );
-		outObj.forEach( ( _out: StackItem ) => render = render.replace( _out.replacer, objStr ) );
+		outVal.forEach( ( _out: ResolvedMapItem ) => render = render.replace( _out.replacer, valStr ) );
+		outObj.forEach( ( _out: ResolvedMapItem ) => render = render.replace( _out.replacer, objStr ) );
 
 		Parser.checkDeprecation( render );
 
@@ -140,7 +140,7 @@ export default class Compiler {
 	static resolveDeclaredPartials( 
 		renMap: RenderMap, 
 		declaredPartials: FileInputMeta[], 
-		insertMap: UINSERT_MAP,
+		insertMap: DirtyMap,
 		rootCopy: string
 	): string {
 		renMap.todo_partials.forEach( ( partialSeg: string ) => {
@@ -162,7 +162,7 @@ export default class Compiler {
 
 	static resolveDeclaredKeys(
 		renMap: RenderMap, 
-		insertMap: UINSERT_MAP,
+		insertMap: DirtyMap,
 		rootCopy: string
 	): string {
 		renMap.todo_keys.forEach( _ => rootCopy = Compiler.resolve( rootCopy, Parser.__renderMap( rootCopy ), insertMap ).render );
@@ -171,7 +171,7 @@ export default class Compiler {
 
 	static resolveDeclaredLoops(
 		renMap: RenderMap,
-		insertMap: UINSERT_MAP,
+		insertMap: DirtyMap,
 		rootCopy: string
 	): string {
 		renMap.todo_loops.forEach( _ => rootCopy = Compiler.resolve( rootCopy, Parser.__renderMap( rootCopy ), insertMap ).render );
@@ -180,12 +180,12 @@ export default class Compiler {
 
 	/**
 	 * @param 
-	 * @param {UINSERT_MAP} insertMap map to insert values into templates from
+	 * @param {DirtyMap} insertMap map to insert values into templates from
 	 * @returns {RTemplate} The processing template
 	 */
 	static shimKeys = ( 
 		copy: RTemplate,
-		insertMap: UINSERT_MAP
+		insertMap: DirtyMap
 	): RTemplate => Compiler.resolveDeclaredKeys( Parser.__renderMap( copy ), insertMap, copy );
 
 	/**
@@ -197,7 +197,7 @@ export default class Compiler {
 	static shimPartials = (
 		copy: RTemplate,
 		declaredPartials: FileInputMeta[],
-		insertMap: UINSERT_MAP
+		insertMap: DirtyMap
 	): RTemplate => Compiler.resolveDeclaredPartials( Parser.__renderMap( copy ), declaredPartials, insertMap, copy );
 
 	/**
@@ -207,6 +207,6 @@ export default class Compiler {
 	 */
 	static shimLoops = (
 		copy: RTemplate,
-		insertMap: UINSERT_MAP
+		insertMap: DirtyMap
 	): RTemplate => Compiler.resolveDeclaredLoops( Parser.__renderMap( copy ), insertMap, copy );
 }

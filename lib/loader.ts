@@ -15,14 +15,14 @@
     Options, 
     coreContext, 
     FTemplate,
-    UINSERT_MAP
+    DirtyMap
 } from './core/internals/types';
 import hydrate from './core/hydrate';
 import { watch } from 'fs';
 import { _DEFAULTS } from './core/internals';
 import Debugger from './core/internals/debugger';
 import Compiler from './core/compile';
-export * from './core/internals/types';
+export { Options, RuntimeState, coreContext } from './core/internals/types';
 /**
  * @function Loader
  * @description Rendering Context for templates
@@ -69,7 +69,7 @@ RuntimeState {
 	 * @param name
 	 * @param data
 	 */
-    function template( name: string, data ?: UINSERT_MAP ):
+    function template( name: string, data ?: DirtyMap ):
     FTemplate {
         return Compiler.compile( {
             template_name: name, 

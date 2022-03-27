@@ -21,7 +21,7 @@ export type ASTMatch = RegExpMatchArray | String[] | []
 export interface Args {
     template_name: string;
     ctx: coreContext;
-    data ?: UINSERT_MAP;
+    data ?: DirtyMap;
 }
 
 export interface RenderMap {
@@ -38,15 +38,15 @@ export type ReservedWord = {
     array: ( a: AST_TARGET ) => Array<string>;
 }
 
-export type StackItem = {
+export type ResolvedMapItem = {
     replacer: RTemplate;
     insertion: RTemplate | RTemplate[] | RTemplate[][];
 }
 
-export type UINSERT_MAP = object;
+export type DirtyMap = object;
 
-export interface RMap extends UINSERT_MAP {
-    partialInput: UINSERT_MAP;
+export interface RMap extends DirtyMap {
+    partialInput: DirtyMap;
 }
 
 export type AST_TARGET = string;
@@ -69,10 +69,10 @@ export interface RLoopBUF {
     tail: number;
 }
 
-export type Entry = Array<string | UINSERT_MAP>;
+export type Entry = Array<string | DirtyMap>;
 
 export type Insertion = [
-    string | UINSERT_MAP,
+    string | DirtyMap,
     Entry
 ];
 
@@ -118,8 +118,8 @@ export type Options = {
     pathRoot ?: string;
     templates ?: string;
     partials ?: string;
-    partialInput ?: UINSERT_MAP;
-    templateInput ?: UINSERT_MAP;
+    partialInput ?: DirtyMap;
+    templateInput ?: DirtyMap;
     watch ?: boolean;
     debug ?: RDebugOpts;
 };
@@ -133,8 +133,8 @@ export type SOptions = {
     pathRoot ?: string;
     templates ?: string;
     partials ?: string;
-    partialInput ?: UINSERT_MAP;
-    templateInput ?: UINSERT_MAP;
+    partialInput ?: DirtyMap;
+    templateInput ?: DirtyMap;
     debug ?: RDebugOpts;
     outPath: string;
     loaderFile: string;

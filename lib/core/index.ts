@@ -9,20 +9,20 @@ import {
     RTemplate,
     FileInputMeta,
     fileUTF8,
-    UINSERT_MAP
+    DirtyMap
 } from './internals/types';
 
 /**
  *
  * @param {FileInputMeta[]} declaredPartials array of partials declared in loader context
  * @param {fileUTF8} rawFile raw file contents to insert to
- * @param {UINSERT_MAP} insertMap map to insert values into templates from
+ * @param {DirtyMap} insertMap map to insert values into templates from
  * @returns {RTemplate} The rendered template
  */
 function render (
     declaredPartials: FileInputMeta[],
     rawFile: fileUTF8,
-    insertMap: UINSERT_MAP
+    insertMap: DirtyMap
 ): RTemplate {
     const renMap = Parser.__renderMap( rawFile );
     try {

@@ -14,19 +14,64 @@ myLoader.template( 'home', { ...homeData } );
 
 ## Table of contents
 
-### Namespaces
+### Interfaces
 
-- [Runtime](modules/Runtime.md)
+- [RuntimeState](interfaces/RuntimeState.md)
+
+### Type aliases
+
+- [Options](modules.md#options)
+- [coreContext](modules.md#corecontext)
 
 ### Functions
 
 - [Loader](modules.md#loader)
 
+## Type aliases
+
+### Options
+
+Ƭ **Options**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `debug?` | `RDebugOpts` |
+| `partialInput?` | `DirtyMap` |
+| `partials?` | `string` |
+| `pathRoot?` | `string` |
+| `templateInput?` | `DirtyMap` |
+| `templates?` | `string` |
+| `watch?` | `boolean` |
+
+#### Defined in
+
+[core/internals/types.ts:117](https://github.com/abschill/html-chunk-loader/blob/48445bb/lib/core/internals/types.ts#L117)
+
+___
+
+### coreContext
+
+Ƭ **coreContext**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `config` | `ROptions` |
+| `partials` | `FileInputMeta`[] |
+| `templates` | `FileInputMeta`[] |
+
+#### Defined in
+
+[core/internals/types.ts:1](https://github.com/abschill/html-chunk-loader/blob/48445bb/lib/core/internals/types.ts#L1)
+
 ## Functions
 
 ### Loader
 
-▸ `Const` **Loader**(`__namedParameters`): `Object`
+▸ **Loader**(`config?`): [`RuntimeState`](interfaces/RuntimeState.md)
 
 **`function`** Loader
 
@@ -36,18 +81,14 @@ myLoader.template( 'home', { ...homeData } );
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`Options`](modules/Runtime.md#options) |
+| `config?` | [`Options`](modules.md#options) |
 
 #### Returns
 
-`Object`
+[`RuntimeState`](interfaces/RuntimeState.md)
 
-Loader for application
-
-| Name | Type |
-| :------ | :------ |
-| `template` | (`name`: `string`, `__namedParameters?`: `object`) => `string` |
+Factory function for runtime context
 
 #### Defined in
 
-[loader.ts:54](https://github.com/abschill/html-chunk-loader/blob/11112b4/lib/loader.ts#L54)
+[loader.ts:32](https://github.com/abschill/html-chunk-loader/blob/48445bb/lib/loader.ts#L32)
