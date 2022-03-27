@@ -76,17 +76,9 @@ export default class Compiler {
 	): RTemplate {
 		const renMap = Parser.__renderMap( rawFile );
 		try {
-			if( renMap.todo_partials && renMap.todo_partials.length > 0 ) {
-				rawFile = Compiler.shimPartials( rawFile, declaredPartials, insertMap );
-			}
-		
-			if( renMap.todo_keys && renMap.todo_keys.length > 0 ) {
-				rawFile = Compiler.shimKeys( rawFile, insertMap );
-			}
-		
-			if( renMap.todo_loops && renMap.todo_loops.length > 0 ) {
-				rawFile = Compiler.shimLoops( rawFile, insertMap );
-			}
+			if( renMap.todo_partials && renMap.todo_partials.length > 0 ) rawFile = Compiler.shimPartials( rawFile, declaredPartials, insertMap );
+			if( renMap.todo_keys && renMap.todo_keys.length > 0 ) rawFile = Compiler.shimKeys( rawFile, insertMap );
+			if( renMap.todo_loops && renMap.todo_loops.length > 0 ) rawFile = Compiler.shimLoops( rawFile, insertMap );
 			return cleanHTML( rawFile );
 		}
 		catch( e ) {
