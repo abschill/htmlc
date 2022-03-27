@@ -2,12 +2,12 @@
 
 # html-chunk-loader
 
-**`example`** Initialization
+**`example`** Calling the imported Loader module factory function
 ```javascript
 const myLoader = Loader( { pathRoot: 'views', templates: 'pages', partials: 'partials' } );
 ```
 
-**`example`** Render
+**`example`** Render templates by name from the loader, and optionally apply / override data from the constructor
 ```javascript
 myLoader.template( 'home', { ...homeData } );
 ```
@@ -47,7 +47,7 @@ myLoader.template( 'home', { ...homeData } );
 
 #### Defined in
 
-[core/internals/types.ts:117](https://github.com/abschill/html-chunk-loader/blob/48445bb/lib/core/internals/types.ts#L117)
+[core/internals/types.ts:117](https://github.com/abschill/html-chunk-loader/blob/60dee54/lib/core/internals/types.ts#L117)
 
 ___
 
@@ -65,7 +65,7 @@ ___
 
 #### Defined in
 
-[core/internals/types.ts:1](https://github.com/abschill/html-chunk-loader/blob/48445bb/lib/core/internals/types.ts#L1)
+[core/internals/types.ts:1](https://github.com/abschill/html-chunk-loader/blob/60dee54/lib/core/internals/types.ts#L1)
 
 ## Functions
 
@@ -91,4 +91,4 @@ Factory function for runtime context
 
 #### Defined in
 
-[loader.ts:32](https://github.com/abschill/html-chunk-loader/blob/48445bb/lib/loader.ts#L32)
+[loader.ts:32](https://github.com/abschill/html-chunk-loader/blob/60dee54/lib/loader.ts#L32)

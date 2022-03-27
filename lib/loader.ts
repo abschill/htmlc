@@ -1,11 +1,11 @@
 
 /**
  * @module loader
- *  @example Initialization
+ *  @example Calling the imported Loader module factory function
  * ```javascript
  * const myLoader = Loader( { pathRoot: 'views', templates: 'pages', partials: 'partials' } );
  * ```
- * @example Render
+ * @example Render templates by name from the loader, and optionally apply / override data from the constructor
      * ```javascript
      * myLoader.template( 'home', { ...homeData } );
      * ```
