@@ -152,6 +152,20 @@ export type MappedValue = string | string[];
 
 export type LogMode = 'silent' | 'normal' | 'verbose';
 
-export type LogStrategy = 'fs' | 'stdout' | 'both';
+export type LogStrategy = 'none' | 'fs' | 'stdout' | 'both';
 
 export type Options = CoreOptions | LoadOptions;
+
+
+export type HCL_EVENT_SIGNATURE = 'file:change' | 'watch:init' | 'loader:init';
+
+export type HCL_EVENT = {
+	phase: number;
+	type: number;
+	signature: HCL_EVENT_SIGNATURE;
+	fatal: boolean;
+}
+
+export interface HCL_RUNTIME_EVENT extends HCL_EVENT {
+    event_data: string | object;
+}
