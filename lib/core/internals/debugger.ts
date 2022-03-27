@@ -59,7 +59,14 @@ export default class Debugger {
 		try {
 			const debugOpt = this.runtimeOptions.debug;
 			if( typeof( debugOpt ) === 'boolean' ) {
-				this._setDefaults();
+				if( debugOpt === true ) {
+					this.logMode = 'normal';
+					this.logStrategy = 'stdout';
+				}
+				else {
+					this._setDefaults();
+				}
+				
 			}
 			else {
 				this.logMode = debugOpt?.logMode ?? 'silent'; 
@@ -76,7 +83,7 @@ export default class Debugger {
 
 	_setDefaults() {
 		this.logMode = 'normal';
-		this.logStrategy = 'stdout';
+		this.logStrategy = 'none';
 	}
 
 	success( 
