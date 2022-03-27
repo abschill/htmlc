@@ -5,7 +5,7 @@ import {
 	fileUTF8,
 	fileJSON,
 	FileInputMeta,
-	Options
+	CoreOptions
 } from '../types';
 import {
 	lstatSync,
@@ -52,7 +52,7 @@ export class fsUtil {
 		}
 	}
 
-	static resolveTemplates( conf: Options ):
+	static resolveTemplates( conf: CoreOptions ):
 		FileInputMeta[] | null {
 		const {
 			templates = DEFAULTS.templates, 
@@ -61,7 +61,7 @@ export class fsUtil {
 		return fsUtil.readDir( join( process.cwd(), pathRoot, templates ) ).map( fsUtil.mapData );
 	}
 
-	static resolvePartials( conf: Options ):
+	static resolvePartials( conf: CoreOptions ):
 		FileInputMeta[] | null {
 		const { 
 			partials = DEFAULTS.partials,

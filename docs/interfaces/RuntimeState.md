@@ -16,11 +16,11 @@
 
 ### ctx
 
-• **ctx**: [`coreContext`](../modules.md#corecontext)
+• **ctx**: [`CoreContext`](../modules.md#corecontext)
 
 #### Defined in
 
-[core/internals/types.ts:8](https://github.com/abschill/html-chunk-loader/blob/60dee54/lib/core/internals/types.ts#L8)
+[core/internals/types.ts:8](https://github.com/abschill/html-chunk-loader/blob/8c234a3/lib/core/internals/types.ts#L8)
 
 ## Methods
 
@@ -41,4 +41,4 @@
 
 #### Defined in
 
-[core/internals/types.ts:9](https://github.com/abschill/html-chunk-loader/blob/60dee54/lib/core/internals/types.ts#L9)
+[core/internals/types.ts:9](https://github.com/abschill/html-chunk-loader/blob/8c234a3/lib/core/internals/types.ts#L9)

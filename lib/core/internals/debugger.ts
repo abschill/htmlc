@@ -1,4 +1,4 @@
-import { Options, LogStrategy, LogMode } from './types';
+import { Options, CoreOptions, LogStrategy, LogMode } from './types';
 const { 
 	log, 
 	warn, 
@@ -38,14 +38,14 @@ enum BG_COLOR_ESCAPES {
 
 export default class Debugger {
 
-	runtimeOptions: Options;
+	runtimeOptions: CoreOptions;
 	logMode: LogMode = 'normal';
 	logStrategy: LogStrategy = 'stdout';
 	logFile ?: string = 'hcl.log';
 	silent: boolean;
 
 	constructor( conf: Options ) {
-		this.runtimeOptions = conf;
+		this.runtimeOptions = conf as CoreOptions;
 		try {
 			const debugOpt = this.runtimeOptions.debug;
 			if( typeof( debugOpt ) === 'boolean' ) {

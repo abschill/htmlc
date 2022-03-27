@@ -1,7 +1,7 @@
 
-import { Entity, Options } from './types';
+import { CoreOptions } from './types';
 
-export const _DEFAULTS: Entity<Options> = {
+export const DEFAULTS: CoreOptions = {
     pathRoot: 'views',
     templates: 'pages',
     partials: 'partials',
@@ -11,8 +11,8 @@ export const _DEFAULTS: Entity<Options> = {
 	debug: false
 };
 
-export const DEFAULTS = {
-	..._DEFAULTS,
+export const __DEFAULTS = {
+	...DEFAULTS,
     _publishDefault : 'dist',
     outDefault: 'public',
     static_config: {

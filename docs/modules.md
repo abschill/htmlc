@@ -20,8 +20,9 @@ myLoader.template( 'home', { ...homeData } );
 
 ### Type aliases
 
-- [Options](modules.md#options)
-- [coreContext](modules.md#corecontext)
+- [CoreContext](modules.md#corecontext)
+- [CoreOptions](modules.md#coreoptions)
+- [DebugOptions](modules.md#debugoptions)
 
 ### Functions
 
@@ -29,43 +30,41 @@ myLoader.template( 'home', { ...homeData } );
 
 ## Type aliases
 
-### Options
+### CoreContext
 
-Ƭ **Options**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `debug?` | `RDebugOpts` |
-| `partialInput?` | `DirtyMap` |
-| `partials?` | `string` |
-| `pathRoot?` | `string` |
-| `templateInput?` | `DirtyMap` |
-| `templates?` | `string` |
-| `watch?` | `boolean` |
-
-#### Defined in
-
-[core/internals/types.ts:117](https://github.com/abschill/html-chunk-loader/blob/60dee54/lib/core/internals/types.ts#L117)
-
-___
-
-### coreContext
-
-Ƭ **coreContext**: `Object`
+Ƭ **CoreContext**: `Object`
 
 #### Type declaration
 
 | Name | Type |
 | :------ | :------ |
-| `config` | `ROptions` |
+| `config` | [`CoreOptions`](modules.md#coreoptions) |
 | `partials` | `FileInputMeta`[] |
 | `templates` | `FileInputMeta`[] |
 
 #### Defined in
 
-[core/internals/types.ts:1](https://github.com/abschill/html-chunk-loader/blob/60dee54/lib/core/internals/types.ts#L1)
+[core/internals/types.ts:1](https://github.com/abschill/html-chunk-loader/blob/8c234a3/lib/core/internals/types.ts#L1)
+
+___
+
+### CoreOptions
+
+Ƭ **CoreOptions**: `Entity`<`LoadOptions`\>
+
+#### Defined in
+
+[core/internals/types.ts:124](https://github.com/abschill/html-chunk-loader/blob/8c234a3/lib/core/internals/types.ts#L124)
+
+___
+
+### DebugOptions
+
+Ƭ **DebugOptions**: `boolean` \| { `logFile?`: `string` ; `logMode?`: `LogMode` ; `logStrategy?`: `LogStrategy`  }
+
+#### Defined in
+
+[core/internals/types.ts:104](https://github.com/abschill/html-chunk-loader/blob/8c234a3/lib/core/internals/types.ts#L104)
 
 ## Functions
 
@@ -81,7 +80,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `config?` | [`Options`](modules.md#options) |
+| `config?` | `LoadOptions` |
 
 #### Returns
 
@@ -91,4 +90,4 @@ Factory function for runtime context
 
 #### Defined in
 
-[loader.ts:32](https://github.com/abschill/html-chunk-loader/blob/60dee54/lib/loader.ts#L32)
+[loader.ts:39](https://github.com/abschill/html-chunk-loader/blob/8c234a3/lib/loader.ts#L39)

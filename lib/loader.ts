@@ -13,29 +13,36 @@
  import { 
     RuntimeState, 
     Options, 
-    coreContext, 
+    LoadOptions,
+    CoreOptions,
+    CoreContext, 
     FTemplate,
     DirtyMap
 } from './core/internals/types';
 import hydrate from './core/hydrate';
 import { watch } from 'fs';
-import { _DEFAULTS } from './core/internals';
+import { DEFAULTS } from './core/internals';
 import Debugger from './core/internals/debugger';
 import Compiler from './core/compile';
-export { Options, RuntimeState, coreContext } from './core/internals/types';
+export {  
+    RuntimeState, 
+    CoreContext, 
+    CoreOptions,
+    DebugOptions 
+} from './core/internals/types';
 /**
  * @function Loader
  * @description Rendering Context for templates
  * @returns Factory function for runtime context
  * @param config
  */
-export function Loader ( config ?: Options ):
+export function Loader ( config ?: LoadOptions ):
 RuntimeState {
-    config = config ?? _DEFAULTS;
+    config =  config ?? DEFAULTS;
 
     const dbg = new Debugger( config );
 
-    let ctx: coreContext = hydrate( config );
+    let ctx: CoreContext = hydrate( config );
 
     if( ctx.config.watch ) {
         dbg.event( 'watch:init', 'watch enabled' );
@@ -51,7 +58,7 @@ RuntimeState {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
                     dbg.event( 'file-change', filename );
-					ctx = hydrate( config ?? _DEFAULTS );
+					ctx = hydrate( config );
                 }
             } );
         } );

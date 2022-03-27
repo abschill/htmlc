@@ -4,24 +4,25 @@
  * @returns context for engine
  */
  import { fsUtil } from './internals/util/file';
- import { _DEFAULTS } from './internals';
+ import { DEFAULTS } from './internals';
  import { 
-    Options, 
-    coreContext, 
-    ROptions
+    Options,
+    LoadOptions, 
+    CoreContext, 
+    CoreOptions
 } from './internals/types';
 
 const clean = ( config: Options ):
-    ROptions =>
-    Object.keys( config ) === Object.keys( _DEFAULTS ) ?
-        config as ROptions:
-        {..._DEFAULTS, ...config} as ROptions;
+    CoreOptions =>
+    Object.keys( config ) === Object.keys( DEFAULTS ) ?
+        config as CoreOptions:
+        {...DEFAULTS, ...config} as CoreOptions;
 
 export default ( config: Options ):
-    coreContext => {
+    CoreContext => {
     const hydrated = clean( config );
-    const partials = fsUtil.resolvePartials( config );
-    const templates = fsUtil.resolveTemplates( config );
+    const partials = fsUtil.resolvePartials( config as CoreOptions );
+    const templates = fsUtil.resolveTemplates( config as CoreOptions );
     return ( partials && templates ) ? {
         config: hydrated,
         partials,

@@ -1,14 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 import { fsUtil } from '../core/internals/util/file';
-import { DEFAULTS } from '../core/internals';
+import { __DEFAULTS } from '../core/internals';
 import { 
     FileInputMeta
 } from '../core/internals/types';
 export function findConfig() {
-    const o = JSON.parse( fs.readFileSync( path.resolve( process.cwd(), 'package.json' ) ).toString( 'utf-8' ) )?.static_config ?? DEFAULTS.static_config;
-    return Object.keys( o ) === Object.keys( DEFAULTS.static_config ) ? 
-    o : {...DEFAULTS.static_config, ...o};
+    const o = JSON.parse( fs.readFileSync( path.resolve( process.cwd(), 'package.json' ) ).toString( 'utf-8' ) )?.static_config ?? __DEFAULTS.static_config;
+    return Object.keys( o ) === Object.keys( __DEFAULTS.static_config ) ? 
+    o : {...__DEFAULTS.static_config, ...o};
 }
 
 export function ensureOutPath( 

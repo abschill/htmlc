@@ -1,11 +1,11 @@
-export type coreContext = {
-    config: ROptions;
+export type CoreContext = {
+    config: CoreOptions;
     partials: FileInputMeta[];
     templates: FileInputMeta[];
 };
 
 export interface RuntimeState {
-    ctx: coreContext;
+    ctx: CoreContext;
     template: ( name: string, data ?: object ) => FTemplate;
 }
 
@@ -15,12 +15,11 @@ export interface DEP_TAG {
     v_change: string;
 }
 
-
 export type ASTMatch = RegExpMatchArray | String[] | []
 
-export interface Args {
+export interface CompilerArgs {
     template_name: string;
-    ctx: coreContext;
+    ctx: CoreContext;
     data ?: DirtyMap;
 }
 
@@ -84,7 +83,7 @@ export type ResolvedMap = {
 export type RenderTemplateArgs = {
     _toInsert: Object;
     raw: string;
-    conf: ROptions;
+    conf: CoreOptions;
 }
 
 export type TargetDirectoryTree = {
@@ -102,9 +101,7 @@ export type fileUTF8 = string;
 
 export type fileJSON = object;
 
-export type _templateInsert = object | {} | any | null;
-
-export type RDebugOpts = boolean | {
+export type DebugOptions = boolean | {
     logFile ?: string;
     logMode ?: LogMode;
     logStrategy ?: LogStrategy;
@@ -114,17 +111,17 @@ export type Entity<Type> = {
     [Property in keyof Type]-?: Type[Property];
 }
 
-export type Options = {
+export type LoadOptions = {
     pathRoot ?: string;
     templates ?: string;
     partials ?: string;
     partialInput ?: DirtyMap;
     templateInput ?: DirtyMap;
     watch ?: boolean;
-    debug ?: RDebugOpts;
+    debug ?: DebugOptions;
 };
 
-export type ROptions = Entity<Options>;
+export type CoreOptions = Entity<LoadOptions>;
 
 export type RTemplate = string;
 export type FTemplate = string;
@@ -135,7 +132,7 @@ export type SOptions = {
     partials ?: string;
     partialInput ?: DirtyMap;
     templateInput ?: DirtyMap;
-    debug ?: RDebugOpts;
+    debug ?: DebugOptions;
     outPath: string;
     loaderFile: string;
     cleanup: boolean;
@@ -156,3 +153,5 @@ export type MappedValue = string | string[];
 export type LogMode = 'silent' | 'normal' | 'verbose';
 
 export type LogStrategy = 'fs' | 'stdout' | 'both';
+
+export type Options = CoreOptions | LoadOptions;

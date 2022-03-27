@@ -3,7 +3,7 @@
 import { 
 	FileInputMeta,
 	RenderMap,
-	Args,
+	CompilerArgs,
 	RTemplate,
 	DirtyMap,
 	RMap,
@@ -17,13 +17,15 @@ import Parser from './parser';
 
 export default class Compiler {
 
-	static scanTemplate( args: Args ) {
+	static scanTemplate( 
+		args: CompilerArgs 
+	) {
 		const fileData = args.ctx.templates.filter( ( temp: FileInputMeta ) => temp.name === args.template_name )[0];
 		return fileData.rawFile;
 	}
 
 	static compile( 
-		args: Args 
+		args: CompilerArgs 
 	): RTemplate {
 		/**
 		 * If any data was keyed with the template name in the constructor, we will use as a secondary priority load value
