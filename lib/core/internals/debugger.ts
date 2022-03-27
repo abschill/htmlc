@@ -78,19 +78,29 @@ export default class Debugger {
 	): void {
 		switch( e.signature ) {
 			case 'loader:init':
-				return this.log_init_success();
+				return this.std_init_success();
 			default:
 				return log( green, 'html-chunk-loader:', e.event_data ?? e.signature );
 		}
 	}
 
-	log_init_success() {
+	std_init_success() {
 		const path_root = join( process.cwd(), this.runtimeOptions.pathRoot ?? DEFAULTS.pathRoot );
 		const t_root = join( path_root, this.runtimeOptions.templates ?? DEFAULTS.templates );
 		const p_root = join( path_root, this.runtimeOptions.partials ?? DEFAULTS.partials );
 		log( green, 'hcl:pathRoot:', path_root );
 		log( green, 'hcl:templates:', t_root );
 		log( green, 'hcl:partials:', p_root );
+	}
+
+	std_load_template(
+		event_data: RT_EVENT_DATA
+	) {
+		const { template_name, u_insert_map, c_insert_map } = event_data;
+		log( blue, 'hcl:template: ', template_name );
+		log( blue, 'hcl:umap: ', u_insert_map );
+		log( blue, 'hcl:cmap: ', c_insert_map );
+		log();
 	}
 
 	status( 
@@ -100,18 +110,12 @@ export default class Debugger {
 		if( !isEvent ) return log( e );
 		const { signature, event_data } = e as HCL_RUNTIME_EVENT; 
 		log( blue, 'html-chunk-loader:', signature );
-		
-		if( signature !== 'template:load' ) {
-			log( blue, 'hcl:', event_data );
+		switch( signature ) {
+			case 'template:load':
+				return this.std_load_template( event_data as RT_EVENT_DATA );
+			default: 
+				return log( blue, 'hcl:', event_data );
 		}
-		else {
-			const { template_name, u_insert_map, c_insert_map } = event_data as RT_EVENT_DATA;
-			log( blue, 'hcl:template: ', template_name );
-			log( blue, 'hcl:umap: ', u_insert_map );
-			log( blue, 'hcl:cmap: ', c_insert_map );
-		}
-
-		log();
 	}
 
 	event_to_file(
