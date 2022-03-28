@@ -18,7 +18,7 @@ Data can be iterated over, or directly inserted by name into a template which is
 const Loader = require('html-chunk-loader');
 ```
 
-## Typescript / ES6
+## Typescript / ES6+
 
 To import the correct module in ES6/Typescript, make sure to import from the path as follows
 

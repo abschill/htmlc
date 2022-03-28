@@ -1,0 +1,3 @@
+# Introduction
+
+When writing HTML, you have probably come across the issue of rewriting a lot of the same logic, or seeking to compartmentalize your semantic HTML markup into modules that can be called programmatically on the server, or generated for static serving at runtime. You may even want to do a bit of both! I had such desires when making this package, with a 90% reduction in bundle size compared to alternatives like handlebars, and the freedom to control the full cycle the way I wanted was not something I came to regret. 

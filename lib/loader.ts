@@ -1,5 +1,5 @@
 /**
- * @module loader
+ * @module ssr-loader
  *  @example Calling the imported Loader module factory function
  * ```javascript
  * const myLoader = Loader( { pathRoot: 'views', templates: 'pages', partials: 'partials' } );

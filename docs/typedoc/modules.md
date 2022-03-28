@@ -6,5 +6,5 @@
 
 ### Modules
 
-- [cli](modules/cli.md)
-- [loader](modules/loader.md)
+- [ssg-cli](modules/ssg_cli.md)
+- [ssr-loader](modules/ssr_loader.md)

@@ -3,5 +3,6 @@
         "./lib/loader.ts",
         "./lib/cli/index.ts"
     ],
-    "out": "docs"
+    "darkHighlightTheme": "dark-plus",
+    "out": "docs/typedoc"
 }

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * @module cli
+ * @module ssg-cli
  */
 import { 
     findConfig, 

@@ -1,5 +1,4 @@
 # HTML Chunk Loader
-## Configurable Template Engine for Node
 
 html-chunk-loader is a simple, lightweight template engine for Node. It has support for ssr/ssg depending on what your goal is.
 
