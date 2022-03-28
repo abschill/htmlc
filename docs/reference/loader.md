@@ -31,8 +31,8 @@ If you do not specify any arguments, they take the following defaults in the fol
     debug: {
         logMode: 'silent',
         logStrategy: 'none',
-            logFile: null
-        }
+        logFile: null
+    }
     }
 ```
 
