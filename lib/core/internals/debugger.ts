@@ -168,7 +168,6 @@ export default class Debugger {
 	void {
 		if( this.silent ) return;
 		const ev = HCL_EVENT_MAP[0] as HCL_RUNTIME_EVENT;
-		console.log( this.logFile );
 		if( this.logFile ) this.event_to_file( ev );
 		return this.success( ev ); 
 	}

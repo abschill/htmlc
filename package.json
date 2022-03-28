@@ -1,6 +1,6 @@
 {
   "name": "html-chunk-loader",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Node Template Engine using HTML Comments",
   "main": "dist/index.js",
   "bin": {
