@@ -10,7 +10,8 @@ export const DEFAULTS: CoreOptions = {
     watch: false,
 	debug: {
 		logMode: 'silent',
-		logStrategy: 'none'
+		logStrategy: 'none',
+        logFile: null
 	}
 };
 

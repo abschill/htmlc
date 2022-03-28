@@ -1,7 +1,6 @@
 import { CoreOptions } from './config';
 import { Template, DirtyMap } from './map';
-import { FG_COLOR_ESCAPES, FileInputMeta, LIST_OR_VALUE } from './util';
-import { HCL_EVENT } from './event';
+import { FileInputMeta } from './util';
 import Debugger from '../debugger';
 
 export type CoreContext = {
@@ -33,9 +32,7 @@ export type TargetDirectoryTree = {
     files: string[];
 }
 
-
 export type fileUTF8 = string;
-
 export type fileJSON = object;
 
 export * from './config';

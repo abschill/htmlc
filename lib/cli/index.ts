@@ -10,7 +10,7 @@ import {
     __write
 } from './tools';
 import { Loader } from '../loader';
-import { SOptions } from '../core/internals/types';
+import { UserSSGOptions } from '../core/internals/types';
 
 /** 
  * @function ssg 
@@ -20,7 +20,7 @@ import { SOptions } from '../core/internals/types';
 */
 export function ssg():
 void {
-    const static_config: SOptions = findConfig();
+    const static_config: UserSSGOptions = findConfig();
     ensureOutPath( static_config.outPath );
     
     try {

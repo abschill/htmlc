@@ -8,28 +8,29 @@ export type LogMode = 'silent' | 'verbose';
 export type LogStrategy = 'none' | 'fs' | 'stdout' | 'both';
 
 // boolean to set true for defaults, leaving it blank in FF / constructor will just have the same effect as false
-export type DebugConfig = boolean | {
+export type UserDebugConfig = boolean | DebugConfig;
+
+export interface DebugConfig {
     logFile ?: string;
     logMode ?: LogMode;
     logStrategy ?: LogStrategy;
-};
+}
+export type E_DebugConfig = Entity<DebugConfig>;
 
 // ssg cli options
-export type SOptions = {
+export type UserSSGOptions = {
     pathRoot ?: string;
     templates ?: string;
     partials ?: string;
     partialInput ?: DirtyMap;
     templateInput ?: DirtyMap;
-    debug ?: DebugConfig;
+    debug ?: UserDebugConfig;
     outPath: string;
     loaderFile: string;
     cleanup: boolean;
 }
-
 // cleaned ssg cli optoins
-export type SSGOptions = Entity<SOptions>;
-
+export type E_SSGOptions = Entity<UserSSGOptions>;
 
 // determines if the optoins have been cleaned or still unclead from the function arguments
 export type LoaderOptions = CoreOptions | LoadOptions;
@@ -42,8 +43,9 @@ export type LoadOptions = {
     partialInput ?: DirtyMap;
     templateInput ?: DirtyMap;
     watch ?: boolean;
-    debug ?: DebugConfig;
+    debug ?: UserDebugConfig;
 };
 
 // cleaned arguments submitted to constructor, defaulted if nonexistent
+// only used the E_ENTITYNAME convention for internals, this one will be exposed to the public api
 export type CoreOptions = Entity<LoadOptions>;

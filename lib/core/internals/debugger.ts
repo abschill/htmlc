@@ -75,10 +75,12 @@ export default class Debugger {
 		else {
 			this.logMode = debugOpt?.logMode ?? 'silent'; 
 			this.logStrategy = debugOpt?.logStrategy ?? 'none';
+			this.logFile = debugOpt?.logFile;
 			this.silent = this.logMode === 'silent';
 		}
 		this.init();
 	}
+
 
 	get_logpath() {
 		return resolve( process.cwd(), this.logFile ?? 'hcl.log' );
@@ -132,7 +134,7 @@ export default class Debugger {
 	}
 
 	append_line( __path: string, s ?: string ) {
-		return appendFileSync( __path, `${s ?? '~~~~~~~~~~~~~~~~~'}\n` );
+		appendFileSync( __path, `${s ?? '~~~~~~~~~~~~~~~~~'}\n` );
 	}
 
 
@@ -146,6 +148,9 @@ export default class Debugger {
 			phase, 
 			type 
 		} = e;
+		const date = new Date();
+		const timeStamp = date.toUTCString();
+		console.log( logFilePath );
 
 		if( !existsSync( logFilePath ) ) writeFileSync( logFilePath, '' );
 
@@ -154,18 +159,19 @@ export default class Debugger {
 				this.append_line( logFilePath, `HCL_EVENT: ${signature}` );
 				this.append_line( logFilePath, `HCL_EVENT_TYPE: ${type}` );
 				this.append_line( logFilePath, `HCL_EVENT_PHASE: ${phase}` );
-				this.append_line( logFilePath, `HCL_EVENT_DATA: ${event_data}` );
+				this.append_line( logFilePath, `${timeStamp}` );
 				this.append_line( logFilePath );
+				break;
 		}
-
-		
 	}
 	
-
 	init():
 	void {
 		if( this.silent ) return;
-		return this.success( HCL_EVENT_MAP[0] as HCL_RUNTIME_EVENT ); 
+		const ev = HCL_EVENT_MAP[0] as HCL_RUNTIME_EVENT;
+		console.log( this.logFile );
+		if( this.logFile ) this.event_to_file( ev );
+		return this.success( ev ); 
 	}
 
 	handleEvent( sig: HCL_EVENT_SIGNATURE, data ?: any ) {

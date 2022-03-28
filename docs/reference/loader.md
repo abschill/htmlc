@@ -29,11 +29,11 @@ If you do not specify any arguments, they take the following defaults in the fol
     templateInput: {},
     watch: false,
     debug: {
-		logMode: 'silent',
-		logStrategy: 'none',
-        logFile: null
-	}
-}
+        logMode: 'silent',
+        logStrategy: 'none',
+            logFile: null
+        }
+    }
 ```
 
 For each value specified in the constructor object, the default value will be overridden. the ```debug``` property can be either a boolean, null, or an object. ```debug``` being omitted or equal to false compiles to the same result shown above. The ```logFile``` property is used if logStrategy is set to 'fs' or 'both'. 
