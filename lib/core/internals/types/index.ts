@@ -38,11 +38,6 @@ export type fileUTF8 = string;
 
 export type fileJSON = object;
 
-export type WriteLogFileArgs = {
-    style: LIST_OR_VALUE<FG_COLOR_ESCAPES>;
-    e: HCL_EVENT
-}
-
 export * from './config';
 export * from './map';
 export * from './event';

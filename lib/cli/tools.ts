@@ -1,12 +1,18 @@
-import fs from 'fs';
+import { 
+    readFileSync, 
+    writeFileSync, 
+    existsSync, 
+    mkdirSync 
+} from 'fs';
 import path from 'path';
 import { fsUtil } from '../core/internals/util/file';
 import { __DEFAULTS } from '../core/internals';
 import { 
     FileInputMeta
 } from '../core/internals/types';
+
 export function findConfig() {
-    const o = JSON.parse( fs.readFileSync( path.resolve( process.cwd(), 'package.json' ) ).toString( 'utf-8' ) )?.static_config ?? __DEFAULTS.static_config;
+    const o = JSON.parse( readFileSync( path.resolve( process.cwd(), 'package.json' ) ).toString( 'utf-8' ) )?.static_config ?? __DEFAULTS.static_config;
     return Object.keys( o ) === Object.keys( __DEFAULTS.static_config ) ? 
     o : {...__DEFAULTS.static_config, ...o};
 }
@@ -14,8 +20,8 @@ export function findConfig() {
 export function ensureOutPath( 
     outPath: string 
 ): void {
-    return fs.existsSync( outPath ) ? 
-    null : fs.mkdirSync( outPath );
+    return existsSync( outPath ) ? 
+    null : mkdirSync( outPath );
 }
 
 export function readNameData( 
@@ -48,6 +54,6 @@ export function __write(
         toWrite: string
     }
 ): number {
-    fs.writeFileSync( args.toName, args.toWrite );
+    writeFileSync( args.toName, args.toWrite );
     return 0;
 }

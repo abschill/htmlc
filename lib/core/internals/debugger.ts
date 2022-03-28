@@ -6,14 +6,17 @@ import {
 	HCL_EVENT, 
 	HCL_EVENT_SIGNATURE, 
 	HCL_RUNTIME_EVENT, 
-	RT_EVENT_DATA,
-	WriteLogFileArgs
+	RT_EVENT_DATA
 } from './types';
 import { 
 	join, 
 	resolve 
 } from 'path';
-import { __write } from '../../cli/tools';
+import { 
+	writeFileSync, 
+	appendFileSync, 
+	existsSync 
+} from 'fs';
 import { FG_COLOR_ESCAPES } from './types/util';
 import { DEFAULTS } from '.';
 const { 
@@ -81,13 +84,6 @@ export default class Debugger {
 		return resolve( process.cwd(), this.logFile ?? 'hcl.log' );
 	}
 
-	_write(
-		args: WriteLogFileArgs
-	): void {
-		//todo
-	}
-
-
 	success( 
 		e: HCL_RUNTIME_EVENT
 	): void {
@@ -135,10 +131,34 @@ export default class Debugger {
 		}
 	}
 
+	append_line( __path: string, s ?: string ) {
+		return appendFileSync( __path, `${s ?? '~~~~~~~~~~~~~~~~~'}\n` );
+	}
+
+
 	event_to_file(
 		e: HCL_RUNTIME_EVENT
 	): void {
-		//
+		const logFilePath = resolve( process.cwd(), this.logFile );
+		const { 
+			signature, 
+			event_data, 
+			phase, 
+			type 
+		} = e;
+
+		if( !existsSync( logFilePath ) ) writeFileSync( logFilePath, '' );
+
+		switch( signature ) {
+			default:
+				this.append_line( logFilePath, `HCL_EVENT: ${signature}` );
+				this.append_line( logFilePath, `HCL_EVENT_TYPE: ${type}` );
+				this.append_line( logFilePath, `HCL_EVENT_PHASE: ${phase}` );
+				this.append_line( logFilePath, `HCL_EVENT_DATA: ${event_data}` );
+				this.append_line( logFilePath );
+		}
+
+		
 	}
 	
 
