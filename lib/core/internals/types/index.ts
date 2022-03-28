@@ -177,10 +177,6 @@ export type HCL_EVENT = {
 export interface HCL_RUNTIME_EVENT extends HCL_EVENT {
     event_data: string | object;
 }
-
-export type STDColorType = FG_COLOR_ESCAPES | BG_COLOR_ESCAPES;
-
-export type STDColorInput = STDColorType | STDColorType[];
 export type Entity<T> = {
     [Property in keyof T]-?: T[Property];
 }
@@ -193,25 +189,4 @@ export type FileInputMeta = {
     path: string;
     name: string;
     rawFile: string;
-}
-export enum FG_COLOR_ESCAPES {
-	black = '\x1b[30m%s\x1b[0m',
-	red = '\u001b[31m%s\x1b[0m',
-	green = '\x1b[32m%s\x1b[0m',
-	yellow = '\x1b[33m%s\x1b[0m',
-	blue = '\x1b[34m%s\x1b[0m',
-	magenta = '\x1b[35m%s\x1b[0m',
-	cyan = '\x1b[36m%s\x1b[0m',
-	white = '\x1b[37m%s\x1b[0m'
-}
-
-export enum BG_COLOR_ESCAPES {
-	black = '\x1b[40m%s\x1b[0m',
-	red = '\x1b[41m%s\x1b[0m',
-	green = '\x1b[42m%s\x1b[0m',
-	yellow = '\x1b[43m%s\x1b[0m',
-	blue = '\x1b[44m%s\x1b[0m',
-	magenta = '\x1b[45m%s\x1b[0m',
-	cyan = '\x1b[46m%s\x1b[0m',
-	white = '\x1b[47m%s\x1b[0m',
 }
