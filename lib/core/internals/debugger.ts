@@ -150,7 +150,6 @@ export default class Debugger {
 		} = e;
 		const date = new Date();
 		const timeStamp = date.toUTCString();
-		console.log( logFilePath );
 
 		if( !existsSync( logFilePath ) ) writeFileSync( logFilePath, '' );
 
