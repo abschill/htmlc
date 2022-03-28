@@ -27,7 +27,7 @@ import { Loader } from 'html-chunk-loader/dist/loader.js';
 ```
 
 
-[API Reference](https://github.com/abschill/html-chunk-loader/tree/0.5.x/docs/modules.md)
+[API Reference](https://github.com/abschill/html-chunk-loader/tree/0.5.x/docs/reference/readme.md)
 
 [Example Repos](https://github.com/abschill/html-chunk-loader-examples)
 
