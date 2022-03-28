@@ -1,3 +1,7 @@
+# 0.5.1
+### 3/27/22
+first major release in a month or so, debugger has gotten a lot more user friendly with new command line options and some work in progress new documentation, to be rolled out more this coming week. the ssg docs are also in place now at least for typedoc for the arguments and basic things. ability to log to a file now, and a lot of internal optimizations to reduce bundle size and decrease runtime execution speed. IMPORTANT: ssg is now keyed off the npx module with "ssg" rather than being the only bin module (it is for now, but its keyed to make room for other ones)
+
 # 0.4.11
 ### 03/24/22
 another minor patch bump for some internal changes & added unit tests

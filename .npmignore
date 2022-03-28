@@ -13,3 +13,5 @@ v0/**/*
 index.ts
 lib/**/*
 public
+docs/**/*
+.git*
