@@ -6,7 +6,8 @@ import {
 	HCL_EVENT, 
 	HCL_EVENT_SIGNATURE, 
 	HCL_RUNTIME_EVENT, 
-	RT_EVENT_DATA
+	RT_EVENT_DATA,
+	FG_COLOR_ESCAPES
 } from './types';
 import { 
 	join, 
@@ -17,7 +18,6 @@ import {
 	appendFileSync, 
 	existsSync 
 } from 'fs';
-import { FG_COLOR_ESCAPES } from './types/util';
 import { DEFAULTS } from '.';
 const { 
 	log, 
