@@ -10,7 +10,7 @@ import {
 	MappedValue,
 } from './internals/types';
 import Parser from './parser';
-import { cleanHTML } from './internals/util/cleanHTML';
+import { cleanHTML } from './internals/util/html';
 
 export default class Compiler {
 
