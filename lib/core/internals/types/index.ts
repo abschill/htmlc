@@ -28,7 +28,7 @@ export type TemplateResolutionConfig = {
     debug ?: UserDebugConfig; 
 }
 // optional arguments for the factory function itself
-export interface LoadOptions extends TemplateResolutionConfig {
+export interface UserSSROptions extends TemplateResolutionConfig {
     watch ?: boolean; // watches files at runtime - default false
     cacheExpiration ?: number; //optional, milliseconds - default 0
 }
@@ -43,11 +43,11 @@ export interface UserSSGOptions extends TemplateResolutionConfig {
 export type E_SSGOptions = Entity<UserSSGOptions>;
 
 // determines if the optoins have been cleaned or still unclead from the function arguments
-export type LoaderOptions = CoreOptions | LoadOptions;
+export type LoaderOptions = CoreOptions | UserSSROptions;
 
 // cleaned arguments submitted to constructor, defaulted if nonexistent
 // only used the E_ENTITYNAME convention for internals, this one will be exposed to the public api
-export type CoreOptions = Entity<LoadOptions>;
+export type CoreOptions = Entity<UserSSROptions>;
 
 
 export type Entity<T> = {
@@ -57,7 +57,8 @@ export type Entity<T> = {
 export type LIST_OR_VALUE<T> = T | T[];
 export type MAP_OR_LIST<T> = T[] | T[][];
 export type MAP_OR_LIST_OR_VALUE<T> = LIST_OR_VALUE<T> | T[][][];
-export type FileInputMeta = {
+
+export type ResolvedFile = {
     path: string;
     name: string;
     rawFile: string;
@@ -75,8 +76,6 @@ export type RootConfig = {
         [key: string]: string | string[]
     }
 }
-
-
 
 export type MapType = 'todo_partials' | 'todo_keys' | 'todo_loops';
 export type ASTMatch = RegExpMatchArray | String[] | []
@@ -105,17 +104,15 @@ export type Insertion = [
     Entry
 ];
 
-export type AST_TARGET = string;
-
 //stores key value to test against ast target domstring
 export type kBUF = {
-    target: AST_TARGET;
+    target: string;
     key: string;
 }
 
 //stores value assigned to key to test against target domstring
 export type vBUF = {
-    target: AST_TARGET;
+    target: string;
     key: string;
     value: string;
 }
@@ -138,9 +135,6 @@ export type TargetDirectoryTree = {
     files: string[];
 }
 
-export type fileUTF8 = string;
-export type fileJSON = object;
-
 export interface RLoopBUF {
     head: number;
     tail: number;
@@ -158,14 +152,14 @@ export type ResolvedMapItem = {
 
 export type CoreContext = {
     config: CoreOptions;
-    partials: FileInputMeta[];
-    templates: FileInputMeta[];
+    partials: ResolvedFile[];
+    templates: ResolvedFile[];
 };
 
 export type ReservedWord = {
     key: string;
     boolean: ( a: kBUF ) => boolean;
-    array: ( a: AST_TARGET ) => string[];
+    array: ( a: string ) => string[];
 }
 export type RT_EVENT_DATA = {
     template_name: string; 

@@ -2,7 +2,6 @@ import {
 	kBUF,
 	vBUF,
 	Insertion,
-	AST_TARGET,
 	Entry,
 	DEP_TAG,
 	RenderMap
@@ -58,14 +57,14 @@ export default class Parser {
 
 	static hasPartial = ( a: kBUF ) => a.target.includes( Parser._replaceSignature( Parser._partialKey, a.key ) );
 	static partialIndex = ( a: kBUF ) => a.target.indexOf( Parser._replaceSignature( Parser._partialKey, a.key ) );
-	static matchPartials = ( target: AST_TARGET ) => target.match( Parser._partialReggie );
+	static matchPartials = ( target: string ) => target.match( Parser._partialReggie );
 	static replacePartial = ( a: vBUF ) => a.target.replace( Parser._replaceSignature( Parser._partialKey, a.key ), a.value );
 
 	static hasKey = ( a: kBUF ) => a.target.includes( Parser._replaceSignature( Parser._renderKey, a.key ) );
-	static matchKeys = ( target: AST_TARGET  ) => target.match( Parser._keyReggie );
+	static matchKeys = ( target: string  ) => target.match( Parser._keyReggie );
 
 	static hasLoop = ( a: kBUF ) => a.target.includes( `<!--${Parser.__loopKey__}(${a.key}){` );
-	static matchLoops( target: AST_TARGET ) {
+	static matchLoops( target: string ) {
 		const out: Array<string> = [];
 		const _opener = /<!--@loop\(\w+\){/gi;
 		const opener = target.match( _opener );

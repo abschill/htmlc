@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 import { 
-	FileInputMeta,
+	ResolvedFile,
 	RenderMap,
 	CompilerArgs,
 	RMap,
@@ -8,7 +8,6 @@ import {
 	ResolvedMapItem,
 	MappedEntry, 
 	MappedValue,
-    fileUTF8,
 } from './internals/types';
 import Parser from './parser';
 import { cleanHTML } from './internals/util/cleanHTML';
@@ -18,7 +17,7 @@ export default class Compiler {
 	static scanTemplate( 
 		args: CompilerArgs 
 	) {
-		const fileData = args.template_ctx.templates.filter( ( temp: FileInputMeta ) => temp.name === args.template_name )[0];
+		const fileData = args.template_ctx.templates.filter( ( temp: ResolvedFile ) => temp.name === args.template_name )[0];
 		return fileData.rawFile;
 	}
 
@@ -67,8 +66,8 @@ export default class Compiler {
 	}
 
 	static render (
-		declaredPartials: FileInputMeta[],
-		rawFile: fileUTF8,
+		declaredPartials: ResolvedFile[],
+		rawFile: string,
 		insertMap: object
 	): string {
 		const renMap = Parser.__renderMap( rawFile );
@@ -166,7 +165,7 @@ export default class Compiler {
 
 	static resolveDeclaredPartials( 
 		renMap: RenderMap, 
-		declaredPartials: FileInputMeta[], 
+		declaredPartials: ResolvedFile[], 
 		insertMap: object,
 		rootCopy: string
 	): string {
@@ -223,7 +222,7 @@ export default class Compiler {
 	 */
 	static shimPartials = (
 		copy: string,
-		declaredPartials: FileInputMeta[],
+		declaredPartials: ResolvedFile[],
 		insertMap: object
 	): string => Compiler.resolveDeclaredPartials( Parser.__renderMap( copy ), declaredPartials, insertMap, copy );
 

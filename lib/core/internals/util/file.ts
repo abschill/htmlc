@@ -2,9 +2,7 @@
  * @module file internal file handling
  */
 import {
-	fileUTF8,
-	fileJSON,
-	FileInputMeta,
+	ResolvedFile,
 	CoreOptions
 } from '../types';
 import {
@@ -26,14 +24,14 @@ export class fsUtil {
 			.filter( x => lstatSync( join( dir, x ) ).isFile() )
 			.map( x => resolve( dir, x ) );
 
-	static toStringF = ( filePath: string ): fileUTF8 => readFileSync( filePath ).toString( 'utf-8' );
+	static toStringF = ( filePath: string ): string => readFileSync( filePath ).toString( 'utf-8' );
 
 	static toJSONF =( 
 		filePath: string
-	): fileJSON => readFileSync( filePath ).toJSON();
+	): object => readFileSync( filePath ).toJSON();
 	
 	static mapData( filePath: string ):
-		FileInputMeta {
+		ResolvedFile {
 		const n = filePath.split( '.html' );
 		if( process.platform === 'win32' ) {
 			const na = n[0].split( fsUtil.__WIN__ );
@@ -53,7 +51,7 @@ export class fsUtil {
 	}
 
 	static resolveTemplates( conf: CoreOptions ):
-		FileInputMeta[] | null {
+		ResolvedFile[] | null {
 		const {
 			templates = DEFAULTS.templates, 
 			pathRoot = DEFAULTS.pathRoot
@@ -62,7 +60,7 @@ export class fsUtil {
 	}
 
 	static resolvePartials( conf: CoreOptions ):
-		FileInputMeta[] | null {
+		ResolvedFile[] | null {
 		const { 
 			partials = DEFAULTS.partials,
 			pathRoot = DEFAULTS.pathRoot 

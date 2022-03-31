@@ -8,7 +8,7 @@ import path from 'path';
 import { fsUtil } from '../core/internals/util/file';
 import { __DEFAULTS } from '../core/internals';
 import { 
-    FileInputMeta
+    ResolvedFile
 } from '../core/internals/types';
 
 export function findConfig() {
@@ -41,7 +41,7 @@ export function getModuleFromBase(
 }
 
 export function pathify( 
-    template: FileInputMeta,
+    template: ResolvedFile,
     contextPath: string
 ): string {
     const toName = `${template.name}.html`;
