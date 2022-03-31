@@ -3,7 +3,7 @@
  */
 import {
 	ResolvedFile,
-	CoreOptions
+	E_SSROptions
 } from '../types';
 import {
 	lstatSync,
@@ -14,7 +14,7 @@ import {
 	join,
 	resolve
 } from 'path';
-import { DEFAULTS } from '..';
+import { HCL_DEFAULTS } from '..';
 
 export class fsUtil {
 	static  __WIN__ = '\\';
@@ -50,21 +50,22 @@ export class fsUtil {
 		}
 	}
 
-	static resolveTemplates( conf: CoreOptions ):
+	static resolveTemplates( conf: E_SSROptions ):
 		ResolvedFile[] | null {
 		const {
-			templates = DEFAULTS.templates, 
-			pathRoot = DEFAULTS.pathRoot
+			templates = HCL_DEFAULTS.templates, 
+			pathRoot = HCL_DEFAULTS.pathRoot
 		} = conf;
 		return fsUtil.readDir( join( process.cwd(), pathRoot, templates ) ).map( fsUtil.mapData );
 	}
 
-	static resolvePartials( conf: CoreOptions ):
+	static resolvePartials( conf: E_SSROptions ):
 		ResolvedFile[] | null {
 		const { 
-			partials = DEFAULTS.partials,
-			pathRoot = DEFAULTS.pathRoot 
+			partials = HCL_DEFAULTS.partials,
+			pathRoot = HCL_DEFAULTS.pathRoot 
 		} = conf;
+
 		return fsUtil.readDir( join( process.cwd(), pathRoot, partials ) ).map( fsUtil.mapData ); 
 	}
 }

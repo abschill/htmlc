@@ -1,27 +1,27 @@
 /**
  *
- * @param { coreContext } config configuration file for engine
- * @returns context for engine
+ * @param { LoaderContext } config configuration file for loader
+ * @returns runtime context for loader
  */
  import { fsUtil } from './internals/util/file';
- import { DEFAULTS } from './internals';
+ import { HCL_DEFAULTS } from './internals';
  import { 
     LoaderOptions,
-    CoreContext, 
-    CoreOptions
+    LoaderContext, 
+    E_SSROptions
 } from './internals/types';
 
 const clean = ( config: LoaderOptions ):
-    CoreOptions =>
-    Object.keys( config ) === Object.keys( DEFAULTS ) ?
-        config as CoreOptions:
-        {...DEFAULTS, ...config} as CoreOptions;
+E_SSROptions =>
+    Object.keys( config ) === Object.keys( HCL_DEFAULTS ) ?
+        config as E_SSROptions:
+        {...HCL_DEFAULTS, ...config} as E_SSROptions;
 
 export default ( config: LoaderOptions ):
-    CoreContext => {
+    LoaderContext => {
     const hydrated = clean( config );
-    const partials = fsUtil.resolvePartials( config as CoreOptions );
-    const templates = fsUtil.resolveTemplates( config as CoreOptions );
+    const partials = fsUtil.resolvePartials( config as E_SSROptions );
+    const templates = fsUtil.resolveTemplates( config as E_SSROptions );
     return ( partials && templates ) ? {
         config: hydrated,
         partials,

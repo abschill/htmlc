@@ -1,6 +1,6 @@
 import { 
 	LoaderOptions, 
-	CoreOptions, 
+	E_SSROptions, 
 	LogStrategy, 
 	LogMode, 
 	HCL_EVENT, 
@@ -17,7 +17,7 @@ import {
 	appendFileSync, 
 	existsSync 
 } from 'fs';
-import { DEFAULTS } from '.';
+import { HCL_DEFAULTS } from '.';
 const { 
 	log, 
 	warn, 
@@ -75,30 +75,29 @@ const HCL_EVENT_MAP: HCL_EVENT[] = [
 
 export default class Debugger {
 
-	runtimeOptions: CoreOptions;
+	runtimeOptions: E_SSROptions;
 	logMode: LogMode = 'silent';
 	logStrategy: LogStrategy = 'none';
 	logFile ?: string;
 	silent: boolean;
 
 	constructor( conf: LoaderOptions ) {
-		this.runtimeOptions = conf as CoreOptions;
-		const debugOpt = this.runtimeOptions.debug;
-		if( typeof( debugOpt ) === 'boolean' ) {
-			if( debugOpt === true ) {
+		this.runtimeOptions = conf as E_SSROptions;
+		const { debug = HCL_DEFAULTS.debug } = this.runtimeOptions;
+		if( typeof( debug ) === 'boolean' ) {
+			if( debug === true ) {
 				this.logMode = 'verbose';
 				this.logStrategy = 'stdout';
 			}
 		}
 		else {
-			this.logMode = debugOpt?.logMode ?? 'silent'; 
-			this.logStrategy = debugOpt?.logStrategy ?? 'none';
-			this.logFile = debugOpt?.logFile;
+			this.logMode = debug?.logMode ?? 'silent'; 
+			this.logStrategy = debug?.logStrategy ?? 'none';
+			this.logFile = debug?.logFile ?? 'hcl.log';
 			this.silent = this.logMode === 'silent';
 		}
 		this.init();
 	}
-
 
 	get_logpath() {
 		return resolve( process.cwd(), this.logFile ?? 'hcl.log' );
@@ -116,9 +115,9 @@ export default class Debugger {
 	}
 
 	std_init_success() {
-		const path_root = join( process.cwd(), this.runtimeOptions.pathRoot ?? DEFAULTS.pathRoot );
-		const t_root = join( path_root, this.runtimeOptions.templates ?? DEFAULTS.templates );
-		const p_root = join( path_root, this.runtimeOptions.partials ?? DEFAULTS.partials );
+		const path_root = join( process.cwd(), this.runtimeOptions.pathRoot ?? HCL_DEFAULTS.pathRoot );
+		const t_root = join( path_root, this.runtimeOptions.templates ?? HCL_DEFAULTS.templates );
+		const p_root = join( path_root, this.runtimeOptions.partials ?? HCL_DEFAULTS.partials );
 		log( FG_COLOR_ESCAPES.green, 'hcl:pathRoot:', path_root );
 		log( FG_COLOR_ESCAPES.green, 'hcl:templates:', t_root );
 		log( FG_COLOR_ESCAPES.green, 'hcl:partials:', p_root );
@@ -154,7 +153,6 @@ export default class Debugger {
 	append_line( __path: string, s ?: string ) {
 		appendFileSync( __path, `${s ?? '~~~~~~~~~~~~~~~~~'}\n` );
 	}
-
 
 	event_to_file(
 		e: HCL_RUNTIME_EVENT

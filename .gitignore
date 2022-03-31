@@ -5,3 +5,4 @@ public
 *.lock
 gitignore.*
 static-paths.js
+hcl-config.js

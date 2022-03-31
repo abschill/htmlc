@@ -1,3 +1,12 @@
+# 0.5.7
+### tba
+
+**rename types**
+
+CoreContext -> LoaderContext
+
+CoreOptions -> E_SSROptions (E_* === Entity of * (no optional properties))
+
 # 0.5.6
 ### 3/31/22
 **IMPORTANT** if using the es6+ module, the named export is now ```createLoader``` rather than simply Loader, just to make it easier to avoid .d.ts name conflicts post-compilation. The return type is now Loader, rather than HCL_RUNTIME.

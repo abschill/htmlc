@@ -12,18 +12,17 @@
  import { 
     Loader, 
     LoaderOptions,
-    CoreContext
+    LoaderContext
 } from './core/internals/types';
-import hydrate from './core/hydrate';
+import hydrateContext from './core/hydrate';
 import { watch } from 'fs';
-import { DEFAULTS } from './core/internals';
+import { HCL_DEFAULTS } from './core/internals';
 import Debugger from './core/internals/debugger';
 import Compiler from './core/compile';
 export {  
     Loader, 
-    CoreContext, 
+    LoaderContext, 
     LoaderOptions,
-    CoreOptions,
     DebugConfig 
 } from './core/internals/types';
 /**
@@ -34,18 +33,18 @@ export {
  */
 export function createLoader( config ?: LoaderOptions ):
 Loader {
-    config =  config ?? DEFAULTS;
+    config =  config ?? HCL_DEFAULTS;
 
     const dbg = new Debugger( config );
 
-    let ctx: CoreContext = hydrate( config );
+    let ctx: LoaderContext = hydrateContext( config );
     if( ctx.config.watch ) {
         dbg.event( 'watch:init', 'watch enabled' );
         ctx.partials.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
                     dbg.event( 'file:change', filename );
-					ctx = hydrate( config );
+					ctx = hydrateContext( config );
                 }
             } );
         } );
@@ -53,7 +52,7 @@ Loader {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
                     dbg.event( 'file:change', filename );
-					ctx = hydrate( config );
+					ctx = hydrateContext( config );
                 }
             } );
         } );

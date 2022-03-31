@@ -1,7 +1,7 @@
 import Debugger from '../debugger';
 
 export interface Loader {
-    ctx: CoreContext;
+    ctx: LoaderContext;
     template: ( name: string, data ?: object ) => string;
 }
 
@@ -14,42 +14,58 @@ export type LogStrategy = 'none' | 'fs' | 'stdout' | 'both';
 export type UserDebugConfig = boolean | DebugConfig;
 
 export interface DebugConfig {
-    logFile ?: string;
-    logMode ?: LogMode;
-    logStrategy ?: LogStrategy;
+    logFile ?: string; // file to log to
+    logMode ?: LogMode; // mode for logger to run in (must be verbose with logFile)
+    logStrategy ?: LogStrategy; // strategy for writing logs 
+}
+
+export interface ProcessCacheConfig {
+    ttl : number; //default 0
+}
+
+export interface ProcessCache {
+    config: ProcessCacheConfig;
+    timeStamp : Date; //calculated at runtime
+    isClean ?: boolean; //default null
 }
 
 export type E_DebugConfig = Entity<DebugConfig>;
-export type TemplateResolutionConfig = {
-    pathRoot ?: string; // directory to look for relative to process.cwd()
-    templates ?: string; // directory to resolve tempaltes from relative to pathRoot - default 'pages'
-    partials ?: string; // directory to resolve partials from relative to pathRoot - default 'partials'
+
+export interface BaseInput {
     partialInput ?: object; // constructor fallback for partial variables - default {}
     templateInput ?: object; // constructor fallback for template variables - default {}
     debug ?: UserDebugConfig; 
 }
+
+export interface BaseMappedConfig extends BaseInput {
+    pathRoot ?: string; // directory to look for relative to process.cwd()
+    templates ?: string; // directory to resolve tempaltes from relative to pathRoot - default 'pages'
+    partials ?: string; // directory to resolve partials from relative to pathRoot - default 'partials'
+    discoverPaths ?: boolean;
+    intlCode ?: string;
+}
+
 // optional arguments for the factory function itself
-export interface UserSSROptions extends TemplateResolutionConfig {
+export interface UserSSROptions extends BaseMappedConfig {
     watch ?: boolean; // watches files at runtime - default false
-    cacheExpiration ?: number; //optional, milliseconds - default 0
+    cache ?: ProcessCacheConfig; 
 }
 
 // ssg cli options
-export interface UserSSGOptions extends TemplateResolutionConfig {
-    outPath: string;
-    loaderFile: string;
-    cleanup: boolean;
+export interface UserSSGOptions extends BaseMappedConfig {
+    outPath: string; //default public
+    loaderFile: string; //default cwd/hcl-config.js
+    cleanup: boolean; //whether or not to clear the outPath before writing the files
 }
 // cleaned ssg cli optoins
 export type E_SSGOptions = Entity<UserSSGOptions>;
 
 // determines if the optoins have been cleaned or still unclead from the function arguments
-export type LoaderOptions = CoreOptions | UserSSROptions;
+export type LoaderOptions = E_SSROptions | UserSSROptions;
 
 // cleaned arguments submitted to constructor, defaulted if nonexistent
 // only used the E_ENTITYNAME convention for internals, this one will be exposed to the public api
-export type CoreOptions = Entity<UserSSROptions>;
-
+export type E_SSROptions = Entity<UserSSROptions>;
 
 export type Entity<T> = {
     [Property in keyof T]-?: T[Property];
@@ -65,18 +81,11 @@ export type ResolvedFile = {
     rawFile: string;
 }
 
-export type ConfigFallbackStrategy = 'package' | 'hcl-config';
+export type ConfigFallbackStrategy = 'package.json' | 'hcl-config.js';
 
 export type loaderConfig = LIST_OR_VALUE<LoaderOptions>
 export type staticConfig = UserSSGOptions;
 export type RootConfigType = loaderConfig | staticConfig;
-
-export type RootConfig = {
-    [key: string]: RootConfigType;
-    fallbacks ?: {
-        [key: string]: string | string[]
-    }
-}
 
 export type MapType = 'todo_partials' | 'todo_keys' | 'todo_loops';
 export type ASTMatch = RegExpMatchArray | String[] | []
@@ -126,7 +135,7 @@ export interface DEP_TAG {
 
 export interface CompilerArgs {
     template_name: string;
-    template_ctx: CoreContext;
+    template_ctx: LoaderContext;
     template_data ?: object;
     _debugger: Debugger;
 }
@@ -151,8 +160,8 @@ export type ResolvedMapItem = {
     insertion: MAP_OR_LIST_OR_VALUE<string>
 }
 
-export type CoreContext = {
-    config: CoreOptions;
+export type LoaderContext = {
+    config: E_SSROptions;
     partials: ResolvedFile[];
     templates: ResolvedFile[];
 };

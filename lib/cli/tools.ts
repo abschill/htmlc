@@ -6,15 +6,15 @@ import {
 } from 'fs';
 import path from 'path';
 import { fsUtil } from '../core/internals/util/file';
-import { __DEFAULTS } from '../core/internals';
+import { STATIC_DEFAULTS } from '../core/internals';
 import { 
     ResolvedFile
 } from '../core/internals/types';
 
 export function findConfig() {
-    const o = JSON.parse( readFileSync( path.resolve( process.cwd(), 'package.json' ) ).toString( 'utf-8' ) )?.static_config ?? __DEFAULTS.static_config;
-    return Object.keys( o ) === Object.keys( __DEFAULTS.static_config ) ? 
-    o : {...__DEFAULTS.static_config, ...o};
+    const o = JSON.parse( readFileSync( path.resolve( process.cwd(), 'package.json' ) ).toString( 'utf-8' ) )?.static_config ?? STATIC_DEFAULTS;
+    return Object.keys( o ) === Object.keys( STATIC_DEFAULTS ) ? 
+    o : {...STATIC_DEFAULTS, ...o};
 }
 
 export function ensureOutPath( 
