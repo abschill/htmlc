@@ -18,7 +18,7 @@ import { createLoader } from 'html-chunk-loader/dist/loader.js';
 const myLoader = createLoader();
 ```
 
-If you do not specify any arguments, they take the following defaults in the following configuration shape:
+If you do not specify any arguments, or any missing arguments, are assigned the following values:
 
 ```
 {
