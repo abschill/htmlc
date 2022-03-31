@@ -1,6 +1,6 @@
 import { 
-	kBUF,
-	vBUF,
+	TargetMatchBuffer,
+	TargetReplaceBuffer,
 	Insertion,
 	Entry,
 	DEP_TAG,
@@ -55,15 +55,15 @@ export default class Parser {
 		}
 	}
 
-	static hasPartial = ( a: kBUF ) => a.target.includes( Parser._replaceSignature( Parser._partialKey, a.key ) );
-	static partialIndex = ( a: kBUF ) => a.target.indexOf( Parser._replaceSignature( Parser._partialKey, a.key ) );
+	static hasPartial = ( a: TargetMatchBuffer ) => a.target.includes( Parser._replaceSignature( Parser._partialKey, a.key ) );
+	static partialIndex = ( a: TargetMatchBuffer ) => a.target.indexOf( Parser._replaceSignature( Parser._partialKey, a.key ) );
 	static matchPartials = ( target: string ) => target.match( Parser._partialReggie );
-	static replacePartial = ( a: vBUF ) => a.target.replace( Parser._replaceSignature( Parser._partialKey, a.key ), a.value );
+	static replacePartial = ( a: TargetReplaceBuffer ) => a.target.replace( Parser._replaceSignature( Parser._partialKey, a.key ), a.value );
 
-	static hasKey = ( a: kBUF ) => a.target.includes( Parser._replaceSignature( Parser._renderKey, a.key ) );
+	static hasKey = ( a: TargetMatchBuffer  ) => a.target.includes( Parser._replaceSignature( Parser._renderKey, a.key ) );
 	static matchKeys = ( target: string  ) => target.match( Parser._keyReggie );
 
-	static hasLoop = ( a: kBUF ) => a.target.includes( `<!--${Parser.__loopKey__}(${a.key}){` );
+	static hasLoop = ( a: TargetMatchBuffer ) => a.target.includes( `<!--${Parser.__loopKey__}(${a.key}){` );
 	static matchLoops( target: string ) {
 		const out: Array<string> = [];
 		const _opener = /<!--@loop\(\w+\){/gi;
@@ -80,7 +80,7 @@ export default class Parser {
 		return out;
 	}
 
-	static replaceAnonLoopBuf = ( a: kBUF ) => a.target.replace( Parser._delim, a.key );
+	static replaceAnonLoopBuf = ( a: TargetMatchBuffer ) => a.target.replace( Parser._delim, a.key );
 	static replacedNamedLoopBuf( copy: string, insert: Insertion | Entry ) {
 		insert.forEach( ( insertion: string | object ) => copy = copy.replace( `{${insertion[0]}}`, insertion[1] ) );
 		return copy;
@@ -105,31 +105,29 @@ export default class Parser {
 		}
 	];
 
-	static __renderMap( content: string ) {
-		const __map__: RenderMap = {
+	static renderMap( content: string ) {
+		const rmap: RenderMap = {
 			todo_keys: [],
 			todo_loops: [],
 			todo_partials: []
 		};
-
 		Parser.ABT.forEach( token => {
 			const keymap = token.array( content );
 			switch( token.key ) {
 				case Parser.__renderKey__:
-					keymap ? __map__.todo_keys = keymap: __map__.todo_keys = [];
+					keymap ? rmap.todo_keys = keymap: rmap.todo_keys = [];
 					break;
 				case Parser.__loopKey__:
-					keymap ? __map__.todo_loops = keymap: __map__.todo_loops = [];
+					keymap ? rmap.todo_loops = keymap: rmap.todo_loops = [];
 					break;
 				case Parser.__partialKey__:
-					keymap ? __map__.todo_partials = keymap: __map__.todo_partials = [];
+					keymap ? rmap.todo_partials = keymap: rmap.todo_partials = [];
 					break;
 				default:
 					break;
 			}
 		} );
-	
-		return __map__;
+		return rmap;
 	}
 
 	static checkDeprecation( clone: string ) {

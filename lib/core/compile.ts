@@ -70,7 +70,7 @@ export default class Compiler {
 		rawFile: string,
 		insertMap: object
 	): string {
-		const renMap = Parser.__renderMap( rawFile );
+		const renMap = Parser.renderMap( rawFile );
 		try {
 			if( renMap.todo_partials && renMap.todo_partials.length > 0 ) rawFile = Compiler.shimPartials( rawFile, declaredPartials, insertMap );
 			if( renMap.todo_keys && renMap.todo_keys.length > 0 ) rawFile = Compiler.shimKeys( rawFile, insertMap );
@@ -163,7 +163,7 @@ export default class Compiler {
 		};
 	}
 
-	static resolveDeclaredPartials( 
+	static resolvePartials( 
 		renMap: RenderMap, 
 		declaredPartials: ResolvedFile[], 
 		insertMap: object,
@@ -178,7 +178,7 @@ export default class Compiler {
                     const insertion = {...insertMap, ...scoped_insertion};
                     rootCopy = rootCopy.replace( 
 						partialSeg, 
-						Compiler.resolve( partial.rawFile, Parser.__renderMap( partial.rawFile ), insertion ).render 
+						Compiler.resolve( partial.rawFile, Parser.renderMap( partial.rawFile ), insertion ).render 
 					);
                 } );
             }
@@ -186,21 +186,21 @@ export default class Compiler {
 		return rootCopy;
 	}
 
-	static resolveDeclaredKeys(
+	static resolveKeys(
 		renMap: RenderMap, 
 		insertMap: object,
 		rootCopy: string
 	): string {
-		renMap.todo_keys.forEach( _ => rootCopy = Compiler.resolve( rootCopy, Parser.__renderMap( rootCopy ), insertMap ).render );
+		renMap.todo_keys.forEach( _ => rootCopy = Compiler.resolve( rootCopy, Parser.renderMap( rootCopy ), insertMap ).render );
 		return rootCopy;
 	}
 
-	static resolveDeclaredLoops(
+	static resolveLoops(
 		renMap: RenderMap,
 		insertMap: object,
 		rootCopy: string
 	): string {
-		renMap.todo_loops.forEach( _ => rootCopy = Compiler.resolve( rootCopy, Parser.__renderMap( rootCopy ), insertMap ).render );
+		renMap.todo_loops.forEach( _ => rootCopy = Compiler.resolve( rootCopy, Parser.renderMap( rootCopy ), insertMap ).render );
 		return rootCopy;
 	}
 
@@ -212,7 +212,7 @@ export default class Compiler {
 	static shimKeys = ( 
 		copy: string,
 		insertMap: object
-	): string => Compiler.resolveDeclaredKeys( Parser.__renderMap( copy ), insertMap, copy );
+	): string => Compiler.resolveKeys( Parser.renderMap( copy ), insertMap, copy );
 
 	/**
 	 * @param copy - process template
@@ -224,7 +224,7 @@ export default class Compiler {
 		copy: string,
 		declaredPartials: ResolvedFile[],
 		insertMap: object
-	): string => Compiler.resolveDeclaredPartials( Parser.__renderMap( copy ), declaredPartials, insertMap, copy );
+	): string => Compiler.resolvePartials( Parser.renderMap( copy ), declaredPartials, insertMap, copy );
 
 	/**
 	 * @param copy - process template
@@ -234,5 +234,5 @@ export default class Compiler {
 	static shimLoops = (
 		copy: string,
 		insertMap: object
-	): string => Compiler.resolveDeclaredLoops( Parser.__renderMap( copy ), insertMap, copy );
+	): string => Compiler.resolveLoops( Parser.renderMap( copy ), insertMap, copy );
 }

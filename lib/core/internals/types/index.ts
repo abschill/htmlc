@@ -18,6 +18,7 @@ export interface DebugConfig {
     logMode ?: LogMode;
     logStrategy ?: LogStrategy;
 }
+
 export type E_DebugConfig = Entity<DebugConfig>;
 export type TemplateResolutionConfig = {
     pathRoot ?: string; // directory to look for relative to process.cwd()
@@ -105,13 +106,13 @@ export type Insertion = [
 ];
 
 //stores key value to test against ast target domstring
-export type kBUF = {
+export type TargetMatchBuffer = {
     target: string;
     key: string;
 }
 
 //stores value assigned to key to test against target domstring
-export type vBUF = {
+export type TargetReplaceBuffer = {
     target: string;
     key: string;
     value: string;
@@ -158,7 +159,7 @@ export type CoreContext = {
 
 export type ReservedWord = {
     key: string;
-    boolean: ( a: kBUF ) => boolean;
+    boolean: ( a: TargetMatchBuffer ) => boolean;
     array: ( a: string ) => string[];
 }
 export type RT_EVENT_DATA = {
