@@ -14,7 +14,7 @@ HTML Chunk Loader 是一个简单、轻量级的 Node.js 模板引擎。它支�
 ## CommonJS
 
 ```
-const Loader = require('html-chunk-loader');
+const createLoader = require('html-chunk-loader');
 ```
 
 
@@ -24,7 +24,7 @@ const Loader = require('html-chunk-loader');
 
 
 ```
-import { Loader } from 'html-chunk-loader/dist/loader.js';
+import { createLoader } from 'html-chunk-loader/dist/loader.js';
 ```
 
 

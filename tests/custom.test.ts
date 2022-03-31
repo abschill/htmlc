@@ -1,15 +1,15 @@
-import { Loader } from '../lib/loader';
+import { createLoader } from '../lib/loader';
 import partialData from './customPartial.json';
 import templateData from './customTemplate.js';
 
-const myLoader0 = Loader( {
+const myLoader0 = createLoader( {
     pathRoot: 'test-pkg/custom',
     partials: 'layout',
     templates: 'pages',
     partialInput: partialData
 } );
 
-const myLoader1 = Loader( {
+const myLoader1 = createLoader( {
     pathRoot: 'test-pkg/custom',
     partials: 'layout',
     templates: 'pages',
@@ -18,7 +18,7 @@ const myLoader1 = Loader( {
 } );
 
 
-const myLoader2 = Loader( {
+const myLoader2 = createLoader( {
     pathRoot: 'test-pkg/custom',
     partials: 'layout',
     templates: 'pages',

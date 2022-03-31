@@ -6,7 +6,7 @@ export type CoreContext = {
     templates: FileInputMeta[];
 };
 
-export interface HCL_Runtime {
+export interface Loader {
     ctx: CoreContext;
     template: ( name: string, data ?: object ) => Template;
 }

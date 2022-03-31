@@ -1,10 +1,11 @@
-import { Loader } from '../lib/loader';
+import { createLoader } from '../lib/loader';
 import partialData from './partialData.json';
 import templateData from './templateData.json';
 import Parser from '../lib/core/parser';
 const pathRoot = 'test-pkg/def';
 const templates = 'templates';
-const i = Loader( {
+
+const i = createLoader( {
     pathRoot,
     templates: templates,
     partialInput: partialData,

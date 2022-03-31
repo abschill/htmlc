@@ -1,8 +1,8 @@
 /**
- * @module ssr-loader
+ * @module createLoader
  *  @example Calling the imported Loader module factory function
  * ```javascript
- * const myLoader = Loader( { pathRoot: 'views', templates: 'pages', partials: 'partials' } );
+ * const myLoader = createLoader( { pathRoot: 'views', templates: 'pages', partials: 'partials' } );
  * ```
  * @example Render templates by name from the loader, and optionally apply / override data from the constructor
      * ```javascript
@@ -10,7 +10,7 @@
      * ```
  */
  import { 
-    HCL_Runtime, 
+    Loader, 
     LoaderOptions,
     CoreContext, 
     Template,
@@ -22,20 +22,20 @@ import { DEFAULTS } from './core/internals';
 import Debugger from './core/internals/debugger';
 import Compiler from './core/compile';
 export {  
-    HCL_Runtime, 
+    Loader, 
     CoreContext, 
     LoaderOptions,
     CoreOptions,
     DebugConfig 
 } from './core/internals/types';
 /**
- * @function Loader
+ * @function createLoader
  * @description Rendering Context for templates
  * @returns Factory function for runtime context
  * @param config
  */
-export function Loader ( config ?: LoaderOptions ):
-HCL_Runtime {
+export function createLoader( config ?: LoaderOptions ):
+Loader {
     config =  config ?? DEFAULTS;
 
     const dbg = new Debugger( config );

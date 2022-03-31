@@ -13,7 +13,7 @@ Data can be iterated over, or directly inserted by name into a template which is
 ## CommonJS
 
 ```
-const Loader = require('html-chunk-loader');
+const createLoader = require('html-chunk-loader');
 ```
 
 
@@ -23,11 +23,11 @@ To import the correct module in ES6/Typescript, make sure to import from the pat
 
 
 ```
-import { Loader } from 'html-chunk-loader/dist/loader.js';
+import { createLoader } from 'html-chunk-loader/dist/loader.js';
 ```
 
 
-[API Reference](https://github.com/abschill/html-chunk-loader/tree/0.5.x/docs/reference/readme.md)
+[API Reference](https://github.com/abschill/html-chunk-loader/tree/master/docs/reference/readme.md)
 
 [Example Repos](https://github.com/abschill/html-chunk-loader-examples)
 

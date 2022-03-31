@@ -1,3 +1,7 @@
+# 0.5.6
+### 3/31/22
+**IMPORTANT** if using the es6+ module, the named export is now ```createLoader``` rather than simply Loader, just to make it easier to avoid .d.ts name conflicts post-compilation. The return type is now Loader, rather than HCL_RUNTIME.
+
 # 0.5.5
 ### 3/27/22
 hotfix some stuff that i forgot to remove from dist folder in 0.5.1, will give type warnings in stdout but should still function the same

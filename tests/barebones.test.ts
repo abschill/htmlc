@@ -1,6 +1,6 @@
-import { Loader } from '../lib/loader';
+import { createLoader } from '../lib/loader';
 
-const myLoader = Loader( {
+const myLoader = createLoader( {
     pathRoot: 'test-pkg/barebones',
     partials: 'partials',
     templates: 'templates'

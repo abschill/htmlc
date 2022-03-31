@@ -9,13 +9,13 @@ const Loader = require('html-chunk-loader');
 ## Importing in ES6+/Typescript
 
 ```
-import { Loader } from 'html-chunk-loader/dist/loader.js';
+import { createLoader } from 'html-chunk-loader/dist/loader.js';
 ```
 
 ## Calling the Loader Factory Function
 
 ```
-const myLoader = Loader();
+const myLoader = createLoader();
 ```
 
 If you do not specify any arguments, they take the following defaults in the following configuration shape:

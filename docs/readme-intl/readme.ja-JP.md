@@ -14,7 +14,7 @@ A<strong>Partial</strong>データが含まれます
 ## CommonJS
 
 ```
-const Loader=require('html-chunk-loader');
+const Loader = require('html-chunk-loader');
 ```
 
 
@@ -23,7 +23,7 @@ const Loader=require('html-chunk-loader');
 ES6/Typescriptで正しいモジュールをインポートするには、次のようにパスからインポートしてください
 
 ```
-import { Loader } from 'html-chunk-loader/dist/loader.js';
+import { createLoader } from 'html-chunk-loader/dist/loader.js';
 ```
 
 [参考文献](https://github.com/abschill/html-chunk-loader/blob/master/docs/modules.md)

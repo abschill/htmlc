@@ -9,7 +9,7 @@ import {
     pathify,
     __write
 } from './tools';
-import { Loader } from '../loader';
+import { createLoader } from '../loader';
 import { UserSSGOptions } from '../core/internals/types';
 
 /** 
@@ -25,7 +25,7 @@ void {
     
     try {
         const data = getModuleFromBase( static_config.loaderFile );
-        const ctx = Loader( {
+        const ctx = createLoader( {
             ...static_config,
             //@ts-ignore
             templateInput: data.templateInput,

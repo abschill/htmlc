@@ -4,7 +4,7 @@
 
 **`example`** Calling the imported Loader module factory function
 ```javascript
-const myLoader = Loader( { pathRoot: 'views', templates: 'pages', partials: 'partials' } );
+const myLoader = createLoader( { pathRoot: 'views', templates: 'pages', partials: 'partials' } );
 ```
 
 **`example`** Render templates by name from the loader, and optionally apply / override data from the constructor
@@ -16,18 +16,18 @@ myLoader.template( 'home', { ...homeData } );
 
 ### Interfaces
 
-- [HCL\_Runtime](../interfaces/ssr_loader.HCL_Runtime.md)
+- [DebugConfig](../interfaces/ssr_loader.DebugConfig.md)
+- [Loader](../interfaces/ssr_loader.Loader.md)
 
 ### Type aliases
 
 - [CoreContext](ssr_loader.md#corecontext)
 - [CoreOptions](ssr_loader.md#coreoptions)
-- [DebugConfig](ssr_loader.md#debugconfig)
 - [LoaderOptions](ssr_loader.md#loaderoptions)
 
 ### Functions
 
-- [Loader](ssr_loader.md#loader)
+- [createLoader](ssr_loader.md#createloader)
 
 ## Type aliases
 
@@ -45,7 +45,7 @@ myLoader.template( 'home', { ...homeData } );
 
 #### Defined in
 
-[core/internals/types/index.ts:7](https://github.com/abschill/html-chunk-loader/blob/93a59c9/lib/core/internals/types/index.ts#L7)
+[core/internals/types/index.ts:3](https://github.com/abschill/html-chunk-loader/blob/017ce62/lib/core/internals/types/index.ts#L3)
 
 ___
 
@@ -55,17 +55,7 @@ ___
 
 #### Defined in
 
-[core/internals/types/config.ts:49](https://github.com/abschill/html-chunk-loader/blob/93a59c9/lib/core/internals/types/config.ts#L49)
-
-___
-
-### DebugConfig
-
-Ƭ **DebugConfig**: `boolean` \| { `logFile?`: `string` ; `logMode?`: `LogMode` ; `logStrategy?`: `LogStrategy`  }
-
-#### Defined in
-
-[core/internals/types/config.ts:11](https://github.com/abschill/html-chunk-loader/blob/93a59c9/lib/core/internals/types/config.ts#L11)
+[core/internals/types/index.ts:81](https://github.com/abschill/html-chunk-loader/blob/017ce62/lib/core/internals/types/index.ts#L81)
 
 ___
 
@@ -75,15 +65,15 @@ ___
 
 #### Defined in
 
-[core/internals/types/config.ts:35](https://github.com/abschill/html-chunk-loader/blob/93a59c9/lib/core/internals/types/config.ts#L35)
+[core/internals/types/index.ts:66](https://github.com/abschill/html-chunk-loader/blob/017ce62/lib/core/internals/types/index.ts#L66)
 
 ## Functions
 
-### Loader
+### createLoader
 
-▸ **Loader**(`config?`): [`HCL_Runtime`](../interfaces/ssr_loader.HCL_Runtime.md)
+▸ **createLoader**(`config?`): [`Loader`](../interfaces/ssr_loader.Loader.md)
 
-**`function`** Loader
+**`function`** createLoader
 
 **`description`** Rendering Context for templates
 
@@ -95,10 +85,10 @@ ___
 
 #### Returns
 
-[`HCL_Runtime`](../interfaces/ssr_loader.HCL_Runtime.md)
+[`Loader`](../interfaces/ssr_loader.Loader.md)
 
 Factory function for runtime context
 
 #### Defined in
 
-[loader.ts:37](https://github.com/abschill/html-chunk-loader/blob/93a59c9/lib/loader.ts#L37)
+[loader.ts:37](https://github.com/abschill/html-chunk-loader/blob/017ce62/lib/loader.ts#L37)
