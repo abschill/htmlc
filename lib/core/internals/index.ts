@@ -12,7 +12,8 @@ export const DEFAULTS: CoreOptions = {
 		logMode: 'silent',
 		logStrategy: 'none',
         logFile: null
-	}
+	},
+    cacheExpiration: 0
 };
 
 export const __DEFAULTS = {

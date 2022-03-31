@@ -5,11 +5,10 @@ import {
 	AST_TARGET,
 	Entry,
 	DEP_TAG,
-	DirtyMap,
 	RenderMap
 } from './internals/types';
 import { emitWarning } from 'process';
-import { Dictionary, ReservedWord } from './internals/types';
+import { ReservedWord } from './internals/types';
 
 export default class Parser {
 
@@ -84,12 +83,12 @@ export default class Parser {
 
 	static replaceAnonLoopBuf = ( a: kBUF ) => a.target.replace( Parser._delim, a.key );
 	static replacedNamedLoopBuf( copy: string, insert: Insertion | Entry ) {
-		insert.forEach( ( insertion: string | DirtyMap ) => copy = copy.replace( `{${insertion[0]}}`, insertion[1] ) );
+		insert.forEach( ( insertion: string | object ) => copy = copy.replace( `{${insertion[0]}}`, insertion[1] ) );
 		return copy;
 	}
 
 	static ABT:
-	Dictionary<ReservedWord> = [
+	ReservedWord[] = [
 		{
 			key: Parser.__loopKey__,
 			boolean: Parser.hasLoop,

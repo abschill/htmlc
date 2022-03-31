@@ -12,9 +12,7 @@
  import { 
     Loader, 
     LoaderOptions,
-    CoreContext, 
-    Template,
-    DirtyMap
+    CoreContext
 } from './core/internals/types';
 import hydrate from './core/hydrate';
 import { watch } from 'fs';
@@ -41,7 +39,6 @@ Loader {
     const dbg = new Debugger( config );
 
     let ctx: CoreContext = hydrate( config );
-
     if( ctx.config.watch ) {
         dbg.event( 'watch:init', 'watch enabled' );
         ctx.partials.forEach( file => {
@@ -74,8 +71,8 @@ Loader {
 	 * @param name
 	 * @param data
 	 */
-    function template( name: string, data ?: DirtyMap ):
-    Template {
+    function template( name: string, data ?: object ):
+    string {
         return Compiler.compile( {
             template_name: name, 
             template_ctx: ctx, 

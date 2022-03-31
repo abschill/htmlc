@@ -1,36 +1,9 @@
 import Debugger from '../debugger';
 
-export type CoreContext = {
-    config: CoreOptions;
-    partials: FileInputMeta[];
-    templates: FileInputMeta[];
-};
-
 export interface Loader {
     ctx: CoreContext;
-    template: ( name: string, data ?: object ) => Template;
+    template: ( name: string, data ?: object ) => string;
 }
-
-export interface DEP_TAG {
-    old: string;
-    new: string;
-    v_change: string;
-}
-
-export interface CompilerArgs {
-    template_name: string;
-    template_ctx: CoreContext;
-    template_data ?: DirtyMap;
-    _debugger: Debugger;
-}
-
-export type TargetDirectoryTree = {
-    path: string;
-    files: string[];
-}
-
-export type fileUTF8 = string;
-export type fileJSON = object;
 
 export type LogMode = 'silent' | 'verbose';
 
@@ -46,15 +19,22 @@ export interface DebugConfig {
     logStrategy ?: LogStrategy;
 }
 export type E_DebugConfig = Entity<DebugConfig>;
+export type TemplateResolutionConfig = {
+    pathRoot ?: string; // directory to look for relative to process.cwd()
+    templates ?: string; // directory to resolve tempaltes from relative to pathRoot - default 'pages'
+    partials ?: string; // directory to resolve partials from relative to pathRoot - default 'partials'
+    partialInput ?: object; // constructor fallback for partial variables - default {}
+    templateInput ?: object; // constructor fallback for template variables - default {}
+    debug ?: UserDebugConfig; 
+}
+// optional arguments for the factory function itself
+export interface LoadOptions extends TemplateResolutionConfig {
+    watch ?: boolean; // watches files at runtime - default false
+    cacheExpiration ?: number; //optional, milliseconds - default 0
+}
 
 // ssg cli options
-export type UserSSGOptions = {
-    pathRoot ?: string;
-    templates ?: string;
-    partials ?: string;
-    partialInput ?: DirtyMap;
-    templateInput ?: DirtyMap;
-    debug ?: UserDebugConfig;
+export interface UserSSGOptions extends TemplateResolutionConfig {
     outPath: string;
     loaderFile: string;
     cleanup: boolean;
@@ -65,27 +45,41 @@ export type E_SSGOptions = Entity<UserSSGOptions>;
 // determines if the optoins have been cleaned or still unclead from the function arguments
 export type LoaderOptions = CoreOptions | LoadOptions;
 
-// optional arguments for the factory function itself
-export type LoadOptions = {
-    pathRoot ?: string;
-    templates ?: string;
-    partials ?: string;
-    partialInput ?: DirtyMap;
-    templateInput ?: DirtyMap;
-    watch ?: boolean;
-    debug ?: UserDebugConfig;
-};
-
 // cleaned arguments submitted to constructor, defaulted if nonexistent
 // only used the E_ENTITYNAME convention for internals, this one will be exposed to the public api
 export type CoreOptions = Entity<LoadOptions>;
 
-export type DirtyMap = object;
+
+export type Entity<T> = {
+    [Property in keyof T]-?: T[Property];
+}
+
+export type LIST_OR_VALUE<T> = T | T[];
+export type MAP_OR_LIST<T> = T[] | T[][];
+export type MAP_OR_LIST_OR_VALUE<T> = LIST_OR_VALUE<T> | T[][][];
+export type FileInputMeta = {
+    path: string;
+    name: string;
+    rawFile: string;
+}
+
+export type ConfigFallbackStrategy = 'package' | 'hcl-config';
+
+export type loaderConfig = LIST_OR_VALUE<LoaderOptions>
+export type staticConfig = UserSSGOptions;
+export type RootConfigType = loaderConfig | staticConfig;
+
+export type RootConfig = {
+    [key: string]: RootConfigType;
+    fallbacks ?: {
+        [key: string]: string | string[]
+    }
+}
+
+
+
 export type MapType = 'todo_partials' | 'todo_keys' | 'todo_loops';
 export type ASTMatch = RegExpMatchArray | String[] | []
-export type STemplate = string;
-export type RTemplate = string;
-export type Template = string;
 
 export interface RenderMap {
     todo_partials: ASTMatch;
@@ -98,16 +92,16 @@ export type MappedEntry = [
 	value: MAP_OR_LIST<string>
 ];
 
-export interface RMap extends DirtyMap {
-    partialInput: DirtyMap;
+export interface RMap {
+    partialInput: object;
 }
 
-export type MappedValue = string | string[];
+export type MappedValue = LIST_OR_VALUE<string>
 
-export type Entry = Array<string | DirtyMap>;
+export type Entry = Array<string | object>;
 
 export type Insertion = [
-    string | DirtyMap,
+    string | object,
     Entry
 ];
 
@@ -126,6 +120,27 @@ export type vBUF = {
     value: string;
 }
 
+export interface DEP_TAG {
+    old: string;
+    new: string;
+    v_change: string;
+}
+
+export interface CompilerArgs {
+    template_name: string;
+    template_ctx: CoreContext;
+    template_data ?: object;
+    _debugger: Debugger;
+}
+
+export type TargetDirectoryTree = {
+    path: string;
+    files: string[];
+}
+
+export type fileUTF8 = string;
+export type fileJSON = object;
+
 export interface RLoopBUF {
     head: number;
     tail: number;
@@ -137,11 +152,15 @@ export type ResolvedMap = {
 }
 
 export type ResolvedMapItem = {
-    replacer: RTemplate;
-    insertion: MAP_OR_LIST_OR_VALUE<RTemplate>
+    replacer: string;
+    insertion: MAP_OR_LIST_OR_VALUE<string>
 }
 
-export type Dictionary<ReservedWord> = ReservedWord[];
+export type CoreContext = {
+    config: CoreOptions;
+    partials: FileInputMeta[];
+    templates: FileInputMeta[];
+};
 
 export type ReservedWord = {
     key: string;
@@ -175,18 +194,5 @@ export type HCL_EVENT = {
 }
 
 export interface HCL_RUNTIME_EVENT extends HCL_EVENT {
-    event_data: string | object;
-}
-export type Entity<T> = {
-    [Property in keyof T]-?: T[Property];
-}
-
-export type LIST_OR_VALUE<T> = T | T[];
-export type MAP_OR_LIST<T> = T[] | T[][];
-export type MAP_OR_LIST_OR_VALUE<T> = LIST_OR_VALUE<T> | T[][][];
-
-export type FileInputMeta = {
-    path: string;
-    name: string;
-    rawFile: string;
+    event_data: string | object
 }
