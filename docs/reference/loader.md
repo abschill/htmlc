@@ -28,10 +28,15 @@ If you do not specify any arguments, they take the following defaults in the fol
     partialInput: {},
     templateInput: {},
     watch: false,
-    debug: {
-        logMode: 'silent',
-        logStrategy: 'none',
+    discoverPaths: false,
+    intlCode: 'en',
+	debug: {
+		logMode: 'silent',
+		logStrategy: 'none',
         logFile: null
+	},
+    cache: {
+        ttl: 0 
     }
 }
 ```

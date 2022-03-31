@@ -33,7 +33,7 @@ export {
  */
 export function createLoader( config ?: LoaderOptions ):
 Loader {
-    config =  config ?? HCL_DEFAULTS;
+    config = config ?? HCL_DEFAULTS;
 
     const dbg = new Debugger( config );
 
@@ -48,6 +48,7 @@ Loader {
                 }
             } );
         } );
+        
         ctx.templates.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
