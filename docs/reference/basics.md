@@ -41,7 +41,21 @@ module.exports = {
 }
 ```
 
-It will effectively just compile all the default options possible in the library itself. The ```fallbacks``` object allows you to specify any potential 'catch data' that can be used to attempt to suppress some sort of fatal error during runtime. An example may be a key / value of ```'content': 'Page not Found'```
+It will effectively just compile all the default options possible in the library itself. The basic concepts to really focus on would be the following properties
+
+```
+pathRoot: 'views',
+partials: 'partials',
+templates: 'pages',
+partialInput: {},
+templateInput: {},
+```
+
+The ```pathRoot``` option specifies, relative to the process directory, where to look for partial / template directories. The ```partials``` and ```template``` option set the paths within the root for the partials/templates. The next options are the inputs for the corresponding chunk type. They are key value pairs that can be accessed from within the expressions available in your chunks. 
+
+[Learn More](https://github.com/abschill/html-chunk-loader/blob/master/docs/reference/loader.md)
+
+The ```fallbacks``` object allows you to specify any potential 'catch data' that can be used to attempt to suppress some sort of fatal error during runtime. An example may be a key / value of ```'content': 'Page not Found'```
 
 <h3 id="config-types">hcl-config.js / hcl-config.json</h3>
 

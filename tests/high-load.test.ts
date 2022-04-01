@@ -10,7 +10,8 @@ const myLoader = createLoader( {
     },
     templateInput: {
         generic_page_content: 'Generic Page Content'
-    }
+    },
+    discoverPaths: true
 } );
 const chonk = myLoader.template( 'chonk', {
     partialInput: {
