@@ -50,6 +50,21 @@
     "typescript": "^4.4.2"
   },
   "hcl_config": {
+    "ssr_config": {
+      "pathRoot": "test-pkg/barebones",
+        "partials": "partials",
+        "templates": "templates",
+        "partialInput": {},
+        "templateInput": {},
+        "watch": false,
+        "discoverPaths": false,
+        "intlCode": "en",
+        "debug": {
+            "logMode": "silent",
+            "logStrategy": "none",
+            "logFile": null
+        }
+    },
     "static_config": {
       "pathRoot": "test-pkg/static",
       "partials": "layout",
