@@ -1,6 +1,9 @@
 # 0.5.7
 ### 04/01/2022
 
+**config updates**
+can now define config fallbacks in hcl-config.js adjacent to package.json, or as an hcl_config property in package.json itself. Read more [here]((https://github.com/abschill/html-chunk-loader/blob/master/docs/reference/basics.md))
+
 **new stuff**
 
 createLoader argument additions:
