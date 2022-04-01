@@ -5,7 +5,7 @@ import {
     mkdirSync 
 } from 'fs';
 import path from 'path';
-import { fsUtil } from '../core/internals/util/file';
+import { __BSD__, __WIN__ } from '../core/internals/util/fs';
 import { STATIC_DEFAULTS } from '../core/internals';
 import { 
     ResolvedFile
@@ -30,7 +30,7 @@ export function readNameData(
     const nameSplit0 = filePath.split( '.html' );
     const nameSplit1 = nameSplit0[nameSplit0.length-2];
     const nameSplit2 = process.platform === 'win32' ? 
-    nameSplit1.split( fsUtil.__WIN__ ) : nameSplit1.split( fsUtil.__BSD__ );
+    nameSplit1.split( __WIN__ ) : nameSplit1.split( __BSD__ );
     return nameSplit2[nameSplit2.length - 1];
 }
 

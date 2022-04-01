@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[core/internals/types/index.ts:17](https://github.com/abschill/html-chunk-loader/blob/a3f69cf/lib/core/internals/types/index.ts#L17)
+[core/internals/types/index.ts:17](https://github.com/abschill/html-chunk-loader/blob/860ba1b/lib/core/internals/types/index.ts#L17)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[core/internals/types/index.ts:18](https://github.com/abschill/html-chunk-loader/blob/a3f69cf/lib/core/internals/types/index.ts#L18)
+[core/internals/types/index.ts:18](https://github.com/abschill/html-chunk-loader/blob/860ba1b/lib/core/internals/types/index.ts#L18)
 
 ___
 
@@ -40,4 +40,4 @@ ___
 
 #### Defined in
 
-[core/internals/types/index.ts:19](https://github.com/abschill/html-chunk-loader/blob/a3f69cf/lib/core/internals/types/index.ts#L19)
+[core/internals/types/index.ts:19](https://github.com/abschill/html-chunk-loader/blob/860ba1b/lib/core/internals/types/index.ts#L19)

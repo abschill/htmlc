@@ -13,6 +13,10 @@ const home = myLoader.template( 'home' );
 
 describe( 'Example Home Page Tests | ESM', () => {
 
+    it( 'Matches en default signature', () => {
+        expect( home ).toMatch( '<html lang="en"' );
+    })
+
     it( 'Loads page_title *', () => {
         expect( home ).toMatch( `<title>${partialData.page_title}</title>` );
     } );

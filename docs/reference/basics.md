@@ -25,9 +25,6 @@ module.exports = {
             logMode: 'silent',
             logStrategy: 'none',
             logFile: null
-        },
-        cache: {
-            ttl: 0 
         }
     }
     static_config: {

@@ -21,8 +21,7 @@ myLoader.template( 'home', { ...homeData } );
 
 ### Type aliases
 
-- [CoreContext](createLoader.md#corecontext)
-- [CoreOptions](createLoader.md#coreoptions)
+- [LoaderContext](createLoader.md#loadercontext)
 - [LoaderOptions](createLoader.md#loaderoptions)
 
 ### Functions
@@ -31,41 +30,31 @@ myLoader.template( 'home', { ...homeData } );
 
 ## Type aliases
 
-### CoreContext
+### LoaderContext
 
-Ƭ **CoreContext**: `Object`
+Ƭ **LoaderContext**: `Object`
 
 #### Type declaration
 
 | Name | Type |
 | :------ | :------ |
-| `config` | [`CoreOptions`](createLoader.md#coreoptions) |
+| `config` | `E_SSROptions` |
 | `partials` | `ResolvedFile`[] |
 | `templates` | `ResolvedFile`[] |
 
 #### Defined in
 
-[core/internals/types/index.ts:153](https://github.com/abschill/html-chunk-loader/blob/a3f69cf/lib/core/internals/types/index.ts#L153)
-
-___
-
-### CoreOptions
-
-Ƭ **CoreOptions**: `Entity`<`UserSSROptions`\>
-
-#### Defined in
-
-[core/internals/types/index.ts:50](https://github.com/abschill/html-chunk-loader/blob/a3f69cf/lib/core/internals/types/index.ts#L50)
+[core/internals/types/index.ts:162](https://github.com/abschill/html-chunk-loader/blob/860ba1b/lib/core/internals/types/index.ts#L162)
 
 ___
 
 ### LoaderOptions
 
-Ƭ **LoaderOptions**: [`CoreOptions`](createLoader.md#coreoptions) \| `UserSSROptions`
+Ƭ **LoaderOptions**: `E_SSROptions` \| `UserSSROptions`
 
 #### Defined in
 
-[core/internals/types/index.ts:46](https://github.com/abschill/html-chunk-loader/blob/a3f69cf/lib/core/internals/types/index.ts#L46)
+[core/internals/types/index.ts:63](https://github.com/abschill/html-chunk-loader/blob/860ba1b/lib/core/internals/types/index.ts#L63)
 
 ## Functions
 
@@ -91,4 +80,4 @@ Factory function for runtime context
 
 #### Defined in
 
-[loader.ts:35](https://github.com/abschill/html-chunk-loader/blob/a3f69cf/lib/loader.ts#L35)
+[loader.ts:34](https://github.com/abschill/html-chunk-loader/blob/860ba1b/lib/loader.ts#L34)

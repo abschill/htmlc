@@ -48,7 +48,6 @@ export interface BaseMappedConfig extends BaseInput {
 // optional arguments for the factory function itself
 export interface UserSSROptions extends BaseMappedConfig {
     watch ?: boolean; // watches files at runtime - default false
-    cache ?: ProcessCacheConfig; 
 }
 
 // ssg cli options

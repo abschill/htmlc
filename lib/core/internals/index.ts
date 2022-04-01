@@ -18,10 +18,7 @@ export const HCL_DEFAULTS: E_SSROptions = {
 		logMode: 'silent',
 		logStrategy: 'none',
         logFile: null
-	},
-    cache: {
-        ttl: 0 
-    }
+	}
 };
 
 export const STATIC_DEFAULTS = {

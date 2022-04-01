@@ -1,30 +1,17 @@
-const enums = {
-    DOCTYPE: '<!DOCTYPE html>',
-    OPEN_HTML: '<html',
-    OPEN_HTML_BLANK: '<html>',
-    CLOSE_HTML: '</html>',
-    HEAD_OPEN: '<head>',
-    HEAD_OPEN_BLANK: '<head>',
-    HEAD_CLOSE: '</head>',
-    BODY_OPEN: '<body',
-    BODY_OPEN_BLANK: '<body>',
-    BODY_CLOSE: '</body>'
-};
 
-export const cleanHTML = ( copy: string ):
+const DOCTYPE = '<!DOCTYPE html>';
+const OPEN_HTML = '<html';
+const CLOSE_HTML = '</html>';
+const HEAD_OPEN = '<head>';
+const HEAD_CLOSE = '</head>';
+const BODY_OPEN = '<body';
+const BODY_OPEN_BLANK = '<body>';
+const BODY_CLOSE = '</body>';
+
+export const cleanHTML = ( copy: string, lang ?: string ):
 string => {
-    const {
-        CLOSE_HTML,
-        OPEN_HTML,
-        OPEN_HTML_BLANK,
-        DOCTYPE,
-        HEAD_OPEN,
-        HEAD_CLOSE,
-        BODY_OPEN,
-        BODY_OPEN_BLANK,
-        BODY_CLOSE
-     } = enums;
-
+    if( !lang ) lang = 'en';
+    const intl_sig = `${OPEN_HTML} lang="${lang}">`;
     if( !copy.includes( BODY_OPEN ) ) {
         if( copy.includes( HEAD_OPEN ) ) {
             const headCache = copy.substring( 0, copy.indexOf( HEAD_CLOSE ) + HEAD_CLOSE.length );
@@ -35,17 +22,8 @@ string => {
             copy = HEAD_OPEN + HEAD_CLOSE + BODY_OPEN_BLANK + copy + BODY_CLOSE;
         }
     }
-    if( !copy.includes( CLOSE_HTML ) ) {
-        copy = copy + CLOSE_HTML;
-    }
-
-    if( !copy.includes( OPEN_HTML ) ) {
-        copy = OPEN_HTML_BLANK + copy;
-    }
-
-    if( !copy.includes( DOCTYPE ) ) {
-        copy = DOCTYPE + copy;
-    }
-
+    if( !copy.includes( OPEN_HTML ) ) copy = intl_sig + copy;
+    if( !copy.includes( CLOSE_HTML ) ) copy = copy + CLOSE_HTML;
+    if( !copy.includes( DOCTYPE ) ) copy = DOCTYPE + copy;
     return copy;
 };

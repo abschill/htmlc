@@ -1,12 +1,11 @@
 # 0.5.7
-### tba
+### 04/01/2022
 
 **new stuff**
 
 createLoader argument additions:
 - ```discoverPaths``` to determine whether or not template/partial directories will be walked or just used at base level search. 
 - ```intlCode``` to validate lang of clean html helper
-- ```cache``` to facilitate loader cache (wip)
 
 **rename types**
 

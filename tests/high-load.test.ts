@@ -4,6 +4,7 @@ const myLoader = createLoader( {
     pathRoot: 'test-pkg/big-bertha',
     templates: 'templates',
     partials: 'partials',
+    intlCode: 'es',
     partialInput: {
         partial_one_data: 'Partial One',
         partial_four_data: 'Partial four'
@@ -28,6 +29,18 @@ const chonk = myLoader.template( 'chonk', {
     chonk8: 'chonk8'
 } );
 
+describe( 'Loads en espanol', () => {
+    it( 'Loads es lang attribute', () => {
+        expect( chonk ).toMatch( '<html lang="es"' );
+    } );
+} );
+
+describe( 'Discover Paths', () => {
+    it( 'Loads ee', () => {
+        expect( chonk ).toMatch( '<p>ee</p>' );
+    } );
+} );
+
 describe( 'Handles high volume data renders', () => {
     it( 'Loads Partial Inline w/ constructor', () => {
         expect( chonk ).toMatch( 'Partial One' );
@@ -42,7 +55,6 @@ describe( 'Handles high volume data renders', () => {
         for( const num of [1,2,3,4,5,6,7,8] ) {
             expect( chonk ).toMatch( `chonk${num}` );
         }
-        
     } );
 
     it( 'Has no silent errors', () => {

@@ -61,21 +61,22 @@ export default class Compiler {
 				u_insert_map: args.template_data, 
 				c_insert_map: insertions 
 			} );
-			return Compiler.render( args.template_ctx.partials, Compiler.scanTemplate( args ), insertions );
+			return Compiler.render( args.template_ctx.partials, Compiler.scanTemplate( args ), insertions, args.template_ctx.config.intlCode );
 		}
 	}
 
 	static render (
 		declaredPartials: ResolvedFile[],
 		rawFile: string,
-		insertMap: object
+		insertMap: object,
+		lang ?: string
 	): string {
 		const renMap = Parser.renderMap( rawFile );
 		try {
 			if( renMap.todo_partials && renMap.todo_partials.length > 0 ) rawFile = Compiler.shimPartials( rawFile, declaredPartials, insertMap );
 			if( renMap.todo_keys && renMap.todo_keys.length > 0 ) rawFile = Compiler.shimKeys( rawFile, insertMap );
 			if( renMap.todo_loops && renMap.todo_loops.length > 0 ) rawFile = Compiler.shimLoops( rawFile, insertMap );
-			return cleanHTML( rawFile );
+			return cleanHTML( rawFile, lang );
 		}
 		catch( e ) {
 			return rawFile;
