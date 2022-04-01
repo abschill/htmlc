@@ -19,6 +19,7 @@ import {
 import { HCL_DEFAULTS } from '..';
 export const __WIN__ = '\\';
 export const __BSD__ = '/';
+
 export function readValidFileList(
 	dir: string
 ) {
@@ -26,6 +27,7 @@ export function readValidFileList(
 	.filter( x => statSync( join( dir, x ) ).isFile() && x.includes( '.html' ) )
 	.map( x => resolve( dir, x ) );
 }
+
 export function mapFileData(
 	filePath: string
 ): ResolvedFile {

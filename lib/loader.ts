@@ -19,6 +19,8 @@ import { watch } from 'fs';
 import { HCL_DEFAULTS } from './core/internals';
 import Debugger from './core/internals/debugger';
 import Compiler from './core/compile';
+import findConfig from './config';
+
 export {  
     Loader, 
     LoaderContext, 
@@ -33,7 +35,7 @@ export {
  */
 export function createLoader( config ?: LoaderOptions ):
 Loader {
-    config = config ?? HCL_DEFAULTS;
+    config = config ?? findConfig();
 
     const dbg = new Debugger( config );
 

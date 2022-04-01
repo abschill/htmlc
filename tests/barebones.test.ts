@@ -1,12 +1,8 @@
 import { createLoader } from '../lib/loader';
 
-const myLoader = createLoader( {
-    pathRoot: 'test-pkg/barebones',
-    partials: 'partials',
-    templates: 'templates'
-} );
+const myLoader = createLoader();
 
-describe( 'Load Static Partial Data', () => {
+describe( 'Load Static Partial Data with package.json options', () => {
     const home = myLoader.template( 'home' );
     
     it( 'Loads Head', () => {
