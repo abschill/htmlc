@@ -34,9 +34,6 @@ If you do not specify any arguments, or any missing arguments, are assigned the 
         logMode: 'silent',
         logStrategy: 'none',
         logFile: null
-    },
-    cache: {
-        ttl: 0 
     }
 }
 ```
@@ -62,6 +59,10 @@ The default keyed data to be rendered into partials
 ### ```templateInput```
 
 The default keyed data to be rendered into templates
+
+### ```discoverPaths```
+
+Whether or not the runtime is able to walk through the directory to find more partials/templates rather than just the html files at base level.
 
 ### ```watch```
 
