@@ -3,7 +3,7 @@
  * @param { LoaderContext } config configuration file for loader
  * @returns runtime context for loader
  */
- import { resolvePartials, resolveTemplates } from './internals/util/fs';
+ import { findPartials, findTemplates } from './internals/util/fs';
  import { HCL_DEFAULTS } from './internals';
  import { 
     LoaderOptions,
@@ -20,8 +20,8 @@ E_SSROptions =>
 export default ( config: LoaderOptions ):
     LoaderContext => {
     const hydrated = clean( config );
-    const partials = resolvePartials( config as E_SSROptions );
-    const templates = resolveTemplates( config as E_SSROptions );
+    const partials = findPartials( config as E_SSROptions );
+    const templates = findTemplates( config as E_SSROptions );
     return ( partials && templates ) ? {
         config: hydrated,
         partials,

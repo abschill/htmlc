@@ -32,7 +32,6 @@ export default class Compiler {
 		// unset null data if applicable
 		if( !args.template_data ) args.template_data = {};
 	
-	
 		//if no data, load default input for template
 		const globalInsertions:
 		object = templateInput;
@@ -170,6 +169,7 @@ export default class Compiler {
 		insertMap: object,
 		rootCopy: string
 	): string {
+		// this will be an optional strategy soon to hydrate on load rather than prerender, which will be the new default
 		renMap.todo_partials.forEach( ( partialSeg: string ) => {
             const p_name = partialSeg.split( `${Parser.__partialKey__}=` )[1].split( Parser.__CLOSE__ )[0];
             const matchPartials = declaredPartials.filter( n => n.name === p_name );
@@ -177,6 +177,7 @@ export default class Compiler {
                 matchPartials.forEach( partial => {
                     const scoped_insertion = insertMap['partialInput'] ?? {};
                     const insertion = {...insertMap, ...scoped_insertion};
+					// todo - @0.5.9 - set up prerender for partials instead of putting the raw file into the template here
                     rootCopy = rootCopy.replace( 
 						partialSeg, 
 						Compiler.resolve( partial.rawFile, Parser.renderMap( partial.rawFile ), insertion ).render 

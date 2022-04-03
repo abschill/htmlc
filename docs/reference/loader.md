@@ -55,14 +55,40 @@ The template path relative to the base path
 ### ```partialInput```
 
 The default keyed data to be rendered into partials
-
+```
+partialInput: { foo: 'bar' }
+```
+```
+<span><!--@render=foo--></span>
+```
+becomes
+```
+<span>bar</span>
+```
 ### ```templateInput```
 
 The default keyed data to be rendered into templates
+```
+templateInput: { foo: 'bar' }
+```
+```
+<span><!--@render=foo--></span>
+```
+becomes
+```
+<span>bar</span>
+```
 
 ### ```discoverPaths```
 
-Whether or not the runtime is able to walk through the directory to find more partials/templates rather than just the html files at base level.
+Whether or not the runtime is able to walk through the directory to find more partials/templates rather than just the html files at base level. Each folder will be namespaced, delimited with / in the template itself, for example
+
+```
+<!--@partial=foo/bar>
+```
+
+If you have discoverPaths enabled, and you have a partial in this format, it will search relative to the partial root for the loader calling it. If the partials property is 'partials', the partial will be linked to partials/foo/bar.html
+
 
 ### ```watch```
 

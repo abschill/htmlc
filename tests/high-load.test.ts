@@ -12,6 +12,7 @@ const myLoader = createLoader( {
     templateInput: {
         generic_page_content: 'Generic Page Content'
     },
+    debug: true,
     discoverPaths: true
 } );
 const chonk = myLoader.template( 'chonk', {
@@ -36,8 +37,17 @@ describe( 'Loads en espanol', () => {
 } );
 
 describe( 'Discover Paths', () => {
+
+    it( 'registers names with slash chars in template', () => {
+        expect( myLoader.ctx.partials.filter( partial => partial.name.includes( '/' ) ).length ).toBe( 2 );
+    } );
+
     it( 'Loads ee', () => {
         expect( chonk ).toMatch( '<p>ee</p>' );
+    } );
+
+    it( 'Loads Deeper Nest', () => {
+        expect( chonk ).toMatch( '<p>baz</p>' );
     } );
 } );
 

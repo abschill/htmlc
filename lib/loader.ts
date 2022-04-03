@@ -16,7 +16,6 @@
 } from './core/internals/types';
 import hydrateContext from './core/hydrate';
 import { watch } from 'fs';
-import { HCL_DEFAULTS } from './core/internals';
 import Debugger from './core/internals/debugger';
 import Compiler from './core/compile';
 import findConfig from './config';

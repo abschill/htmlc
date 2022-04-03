@@ -176,7 +176,7 @@ export type RT_EVENT_DATA = {
     c_insert_map: RMap;
 }
 
-export type HCL_EVENT_SIGNATURE = 'file:change' | 'watch:init' | 'loader:init' | 'template:load';
+export type HCL_EVENT_SIGNATURE = 'file:change' | 'watch:init' | 'loader:init' | 'partial:load' | 'template:load';
 
 export enum HCL_EVENT_TYPE_MAP {
     STATUS = 0,

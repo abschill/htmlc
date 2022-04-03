@@ -42,7 +42,7 @@ export default class Parser {
 	static _partialSignature = `<!--${Parser.__partialKey__}=${Parser._delim}${Parser.__CLOSE__}`;
 
 	static _keyReggie = /<!--@render=[\w|\d]+-->/gi;
-	static _partialReggie = /<!--@partial=[\w|\d]+-->/gi;
+	static _partialReggie = /<!--@partial=[\w|\d|//\\]+-->/gi;
 
 	private static _replaceSignature( type: string, val: string ) {
 		switch( type ) {

@@ -27,4 +27,4 @@
 
 #### Defined in
 
-[cli/index.ts:21](https://github.com/abschill/html-chunk-loader/blob/860ba1b/lib/cli/index.ts#L21)
+[cli/index.ts:21](https://github.com/abschill/html-chunk-loader/blob/b345592/lib/cli/index.ts#L21)

@@ -1,3 +1,9 @@
+# 0.5.8
+### 04/03/2022
+updates to the discoverPaths partial naming, they will be namespaced with the directories rather than collected into the global partial registry during runtime, this will allow for namespaced nesting rather than arbitrary sorting QOL, now itll be both. 
+
+new unit tests, and reserved new debug points for 0.5.9
+
 # 0.5.7
 ### 04/01/2022
 

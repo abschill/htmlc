@@ -5,58 +5,67 @@ import {
 	ResolvedFile,
 	E_SSROptions
 } from '../types';
+
 import {
-	readdir,
 	readdirSync,
 	readFileSync,
-	opendirSync,
-	statSync,stat
+	statSync
 } from 'fs';
+
 import {
 	join,
 	resolve
 } from 'path';
+
 import { HCL_DEFAULTS } from '..';
 export const __WIN__ = '\\';
 export const __BSD__ = '/';
 
-export function readValidFileList(
+export function validFileList(
 	dir: string
-) {
+): string[] {
 	return readdirSync( dir )
 	.filter( x => statSync( join( dir, x ) ).isFile() && x.includes( '.html' ) )
 	.map( x => resolve( dir, x ) );
 }
 
-export function mapFileData(
-	filePath: string
-): ResolvedFile {
-	const n = filePath.split( '.html' );
-	if( process.platform === 'win32' ) {
-		const na = n[0].split( __WIN__ );
-		return {
-			path: filePath, 
-			name: na[na.length - 1], 
-			rawFile: readFileSync( filePath ).toString( 'utf-8' )
-		};
+export function mapPath(
+	splitter: string[],
+	basename: string,
+	sysSplit: string,
+): string {
+	let name = splitter[0];
+	const na = name.split( sysSplit );
+	name = na[na.length - 1];
+	const base = na.indexOf( basename );
+	const offset = na.indexOf( name ) - base;
+	if( offset > 1 ) {
+		const prefixArr = [];
+		for( let i = base+1; i < base+offset + 1; i++ ) {
+			prefixArr.push( na[i] );
+		}
+		name =  prefixArr.join( '/' );
 	}
-	else {
-		const na = n[0].split( __BSD__ );
-		return {
-			path: filePath, 
-			name: na[na.length - 1], 
-			rawFile: readFileSync( filePath ).toString( 'utf-8' )
-		};
-	}
+	return name;
 }
 
-export function getChildDirectories( 
-	pathBase: string 
-): string[] {
-	const dir = readdirSync( pathBase );
-	const dirs = dir.filter( ent => statSync( resolve( pathBase, ent ) ).isDirectory() );
-	if( dirs.length === 0 ) return null;
-	return dirs.map( dir => join( pathBase, dir ) );
+export function fileMap(
+	path: string,
+	splitter: string[],
+	basename: string
+): ResolvedFile {
+	return {
+		path,
+		rawFile: readFileSync( path ).toString( 'utf-8' ),
+		name: mapPath( splitter, basename, process.platform === 'win32' ? __WIN__ : __BSD__ )
+	};
+}
+
+export function createFileMap(
+	filepath: string,
+	basepath: string
+): ResolvedFile {
+	return fileMap( filepath, filepath.split( '.html' ), basepath );
 }
 
 export function readValidFSTree(
@@ -68,30 +77,28 @@ export function readValidFSTree(
 	} ).flat();
 }
 
-export function resolvePartials( 
-	conf: E_SSROptions 
-): ResolvedFile[] | null {
-	const { 
-		partials = HCL_DEFAULTS.partials,
-		pathRoot = HCL_DEFAULTS.pathRoot,
-		discoverPaths = HCL_DEFAULTS.discoverPaths
-	} = conf;
+export const mapPathList = (
+	paths: string[],
+	base: string
+): ResolvedFile [] => paths.map( ( file ) => createFileMap( file, base ) );
+
+
+export function findPartials( { 
+	partials = HCL_DEFAULTS.partials,
+	pathRoot = HCL_DEFAULTS.pathRoot,
+	discoverPaths = HCL_DEFAULTS.discoverPaths
+}: E_SSROptions ): ResolvedFile[] | null {
 	const root = join( process.cwd(), pathRoot, partials );
-	if( !discoverPaths ) return readValidFileList( root ).map( mapFileData ); 
-	const paths = Array.from( new Set( readValidFSTree( root ) ) );
-	return paths.map( mapFileData );
+	if( !discoverPaths ) return validFileList( root ).map( file => createFileMap( file, partials ) ); 
+	return mapPathList( readValidFSTree( root ), partials );
 }
 
-export function resolveTemplates(
-	conf: E_SSROptions 
-): ResolvedFile[] | null {
-	const {
-		templates = HCL_DEFAULTS.templates, 
-		pathRoot = HCL_DEFAULTS.pathRoot,
-		discoverPaths = HCL_DEFAULTS.discoverPaths
-	} = conf;
+export function findTemplates( {
+	templates = HCL_DEFAULTS.templates, 
+	pathRoot = HCL_DEFAULTS.pathRoot,
+	discoverPaths = HCL_DEFAULTS.discoverPaths
+}: E_SSROptions ): ResolvedFile[] | null {
 	const root = join( process.cwd(), pathRoot, templates );
-	if( !discoverPaths ) return readValidFileList( root ).map( mapFileData ); 
-	const paths = Array.from( new Set( readValidFSTree( root ) ) );
-	return paths.map( mapFileData );
+	if( !discoverPaths ) return validFileList( root ).map( ( file ) => createFileMap( file, templates ) ); 
+	return mapPathList( readValidFSTree( root ), templates );
 }

@@ -68,6 +68,12 @@ const HCL_EVENT_MAP: HCL_EVENT[] = [
 	{
 		phase: 1,
 		type: 1,
+		signature: 'partial:load',
+		fatal: false
+	},
+	{
+		phase: 1,
+		type: 1,
 		signature: 'template:load',
 		fatal: false
 	}
@@ -110,7 +116,7 @@ export default class Debugger {
 			case 'loader:init':
 				return this.std_init_success();
 			default:
-				return log( '\x1b[42m%s\x1b[0m', 'html-chunk-loader:', e.event_data ?? e.signature );
+				return log( '\x1b[42m%s\x1b[0m', 'hcl_debug:', e.event_data ?? e.signature );
 		}
 	}
 
@@ -118,10 +124,10 @@ export default class Debugger {
 		const path_root = join( process.cwd(), this.runtimeOptions.pathRoot ?? HCL_DEFAULTS.pathRoot );
 		const t_root = join( path_root, this.runtimeOptions.templates ?? HCL_DEFAULTS.templates );
 		const p_root = join( path_root, this.runtimeOptions.partials ?? HCL_DEFAULTS.partials );
-		log( FG_COLOR_ESCAPES.green, 'hcl:pathRoot:', path_root );
-		log( FG_COLOR_ESCAPES.green, 'hcl:templates:', t_root );
-		log( FG_COLOR_ESCAPES.green, 'hcl:partials:', p_root );
-		log( FG_COLOR_ESCAPES.green, 'hcl:',  'Loaded Config Successfully' );
+		log( FG_COLOR_ESCAPES.green, 'hcl_debug:pathRoot:', path_root );
+		log( FG_COLOR_ESCAPES.green, 'hcl_debug:templates:', t_root );
+		log( FG_COLOR_ESCAPES.green, 'hcl_debug:partials:', p_root );
+		log( FG_COLOR_ESCAPES.green, 'hcl_debug:event:',  'Loaded Config Successfully' );
 		log( '\n' );
 	}
 
@@ -129,9 +135,9 @@ export default class Debugger {
 		event_data: RT_EVENT_DATA
 	) {
 		const { template_name, u_insert_map, c_insert_map } = event_data;
-		log( FG_COLOR_ESCAPES.blue, 'hcl:template: ', template_name );
-		log( FG_COLOR_ESCAPES.blue, 'hcl:umap: ', u_insert_map );
-		log( FG_COLOR_ESCAPES.blue, 'hcl:cmap: ', c_insert_map );
+		log( FG_COLOR_ESCAPES.blue, 'hcl_debug:template:load: ', template_name );
+		if( !Object.is( u_insert_map, {} ) ) log( FG_COLOR_ESCAPES.blue, 'hcl:umap: ', u_insert_map );
+		if( !Object.is( c_insert_map, {} ) ) log( FG_COLOR_ESCAPES.blue, 'hcl:cmap: ', c_insert_map );
 		log( '\n' );
 	}
 
@@ -141,12 +147,12 @@ export default class Debugger {
 	): void {
 		if( !isEvent ) return log( e );
 		const { signature, event_data } = e as HCL_RUNTIME_EVENT; 
-		log( '\x1b[44m%s\x1b[0m', 'html-chunk-loader:', signature );
+		log( '\x1b[44m%s\x1b[0m', 'hcl_debug:', signature );
 		switch( signature ) {
 			case 'template:load':
 				return this.std_load_template( event_data as RT_EVENT_DATA );
 			default: 
-				return log( FG_COLOR_ESCAPES.blue, 'hcl:', event_data );
+				return log( FG_COLOR_ESCAPES.blue, 'hcl_debug:event:', event_data );
 		}
 	}
 
@@ -171,9 +177,9 @@ export default class Debugger {
 
 		switch( signature ) {
 			default:
-				this.append_line( logFilePath, `HCL_EVENT: ${signature}` );
-				this.append_line( logFilePath, `HCL_EVENT_TYPE: ${type}` );
-				this.append_line( logFilePath, `HCL_EVENT_PHASE: ${phase}` );
+				this.append_line( logFilePath, `hcl_debug:event: ${signature}` );
+				this.append_line( logFilePath, `hcl_debug:event_type: ${type}` );
+				this.append_line( logFilePath, `hcl_debug:event_phase: ${phase}` );
 				this.append_line( logFilePath, `${timeStamp}` );
 				this.append_line( logFilePath );
 				break;
