@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 import { 
-	ResolvedFile,
+	HTMLChunk,
 	RenderMap,
 	CompilerArgs,
 	RMap,
@@ -17,8 +17,15 @@ export default class Compiler {
 	static scanTemplate( 
 		args: CompilerArgs 
 	) {
-		const fileData = args.template_ctx.templates.filter( ( temp: ResolvedFile ) => temp.name === args.template_name )[0];
-		return fileData.rawFile;
+		try {
+			const fileData = args.template_ctx.chunks.filter( chunk => chunk.type === 'template' && chunk.name === args.template_name )[0];
+			return fileData.rawFile;
+		}
+		catch( e ) {
+			console.warn( 'todo: handle scan template error - raw error: \n' );
+			console.error( e );
+		}
+		
 	}
 
 	static compile( 
@@ -43,7 +50,7 @@ export default class Compiler {
 				u_insert_map: args.template_data, 
 				c_insert_map: insertions 
 			} );
-			return Compiler.render( args.template_ctx.partials, Compiler.scanTemplate( args ), insertions );
+			return Compiler.render( args.template_ctx.chunks.filter( chunk => chunk.type === 'partial' ), Compiler.scanTemplate( args ), insertions );
 		}
 		else {
 			const scopedInsertions:
@@ -60,12 +67,12 @@ export default class Compiler {
 				u_insert_map: args.template_data, 
 				c_insert_map: insertions 
 			} );
-			return Compiler.render( args.template_ctx.partials, Compiler.scanTemplate( args ), insertions, args.template_ctx.config.intlCode );
+			return Compiler.render( args.template_ctx.chunks.filter( chunk => chunk.type === 'partial' ), Compiler.scanTemplate( args ), insertions, args.template_ctx.config.intlCode );
 		}
 	}
 
 	static render (
-		declaredPartials: ResolvedFile[],
+		declaredPartials: HTMLChunk[],
 		rawFile: string,
 		insertMap: object,
 		lang ?: string
@@ -165,7 +172,7 @@ export default class Compiler {
 
 	static resolvePartials( 
 		renMap: RenderMap, 
-		declaredPartials: ResolvedFile[], 
+		declaredPartials: HTMLChunk[], 
 		insertMap: object,
 		rootCopy: string
 	): string {
@@ -224,7 +231,7 @@ export default class Compiler {
 	 */
 	static shimPartials = (
 		copy: string,
-		declaredPartials: ResolvedFile[],
+		declaredPartials: HTMLChunk[],
 		insertMap: object
 	): string => Compiler.resolvePartials( Parser.renderMap( copy ), declaredPartials, insertMap, copy );
 

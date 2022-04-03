@@ -8,7 +8,7 @@ import path from 'path';
 import { __BSD__, __WIN__ } from '../core/internals/util/fs';
 import { STATIC_DEFAULTS } from '../core/internals';
 import { 
-    ResolvedFile
+    HTMLChunk
 } from '../core/internals/types';
 
 export function findConfig() {
@@ -41,7 +41,7 @@ export function getModuleFromBase(
 }
 
 export function pathify( 
-    template: ResolvedFile,
+    template: HTMLChunk,
     contextPath: string
 ): string {
     const toName = `${template.name}.html`;

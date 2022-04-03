@@ -13,9 +13,24 @@ const home = myLoader.template( 'home' );
 
 describe( 'Example Home Page Tests | ESM', () => {
 
+    it( 'Types the return correctly', () => {
+        expect( typeof( home ) ).toBe( 'string' );
+    } );
+
+    it( 'Compiles all Inputs', () => {
+        expect( home ).not.toMatch( '<!--@render' );
+    } );
+    it( 'Compiles all Inputs', () => {
+        expect( home ).not.toMatch( '<!--@partial' );
+    } );
+    it( 'Compiles all loops', () => {
+        expect( home ).not.toMatch( '<!--@loop' );
+    } );
+    
+
     it( 'Matches en default signature', () => {
         expect( home ).toMatch( '<html lang="en"' );
-    })
+    } );
 
     it( 'Loads page_title *', () => {
         expect( home ).toMatch( `<title>${partialData.page_title}</title>` );

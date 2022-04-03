@@ -1,8 +1,12 @@
-import Debugger from '../debugger';
+import { Debugger } from '../debugger';
+
+export type ProcessingTemplate = string;
+export type HTMLPage = string;
+export type HTMLChunkContent = string;
 
 export interface Loader {
     ctx: LoaderContext;
-    template: ( name: string, data ?: object ) => string;
+    template: ( name: string, data ?: object ) => HTMLPage;
 }
 
 export type LogMode = 'silent' | 'verbose';
@@ -74,10 +78,17 @@ export type LIST_OR_VALUE<T> = T | T[];
 export type MAP_OR_LIST<T> = T[] | T[][];
 export type MAP_OR_LIST_OR_VALUE<T> = LIST_OR_VALUE<T> | T[][][];
 
-export type ResolvedFile = {
+export type HTMLChunkType = 'template' | 'partial';
+
+export type HTMLChunk = {
+    type: HTMLChunkType;
     path: string;
     name: string;
-    rawFile: string;
+    rawFile: HTMLChunkContent;
+    hasRendered: boolean;
+    renderedFile ?: HTMLChunkContent;
+    isCached: boolean;
+    needsRehydrate: boolean;
 }
 
 export type ConfigFallbackStrategy = 'package.json' | 'hcl-config.js';
@@ -115,13 +126,13 @@ export type Insertion = [
 
 //stores key value to test against ast target domstring
 export type TargetMatchBuffer = {
-    target: string;
+    target: ProcessingTemplate;
     key: string;
 }
 
 //stores value assigned to key to test against target domstring
 export type TargetReplaceBuffer = {
-    target: string;
+    target: ProcessingTemplate;
     key: string;
     value: string;
 }
@@ -150,8 +161,8 @@ export interface RLoopBUF {
 }
 
 export type ResolvedMap = {
-    raw: string;
-    render: string;
+    raw: HTMLChunkContent;
+    render: HTMLChunkContent;
 }
 
 export type ResolvedMapItem = {
@@ -161,8 +172,7 @@ export type ResolvedMapItem = {
 
 export type LoaderContext = {
     config: E_SSROptions;
-    partials: ResolvedFile[];
-    templates: ResolvedFile[];
+    chunks: HTMLChunk[];
 };
 
 export type ReservedWord = {

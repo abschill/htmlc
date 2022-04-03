@@ -1,4 +1,4 @@
-[html-chunk-loader](../README.md) / [Modules](../modules.md) / ssg-cli
+[html-chunk-loader - v0.5.9](../README.md) / [Modules](../modules.md) / ssg-cli
 
 # Module: ssg-cli
 
@@ -27,4 +27,4 @@
 
 #### Defined in
 
-[cli/index.ts:21](https://github.com/abschill/html-chunk-loader/blob/b345592/lib/cli/index.ts#L21)
+[cli/index.ts:21](https://github.com/abschill/html-chunk-loader/blob/f29676d/lib/cli/index.ts#L21)

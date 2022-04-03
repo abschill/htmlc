@@ -1,4 +1,4 @@
-[html-chunk-loader](../README.md) / [Modules](../modules.md) / createLoader
+[html-chunk-loader - v0.5.9](../README.md) / [Modules](../modules.md) / createLoader
 
 # Module: createLoader
 
@@ -38,13 +38,12 @@ myLoader.template( 'home', { ...homeData } );
 
 | Name | Type |
 | :------ | :------ |
+| `chunks` | `HTMLChunk`[] |
 | `config` | `E_SSROptions` |
-| `partials` | `ResolvedFile`[] |
-| `templates` | `ResolvedFile`[] |
 
 #### Defined in
 
-[core/internals/types/index.ts:162](https://github.com/abschill/html-chunk-loader/blob/b345592/lib/core/internals/types/index.ts#L162)
+[core/internals/types/index.ts:173](https://github.com/abschill/html-chunk-loader/blob/f29676d/lib/core/internals/types/index.ts#L173)
 
 ___
 
@@ -54,13 +53,13 @@ ___
 
 #### Defined in
 
-[core/internals/types/index.ts:63](https://github.com/abschill/html-chunk-loader/blob/b345592/lib/core/internals/types/index.ts#L63)
+[core/internals/types/index.ts:67](https://github.com/abschill/html-chunk-loader/blob/f29676d/lib/core/internals/types/index.ts#L67)
 
 ## Functions
 
 ### createLoader
 
-▸ **createLoader**(`config?`): [`Loader`](../interfaces/createLoader.Loader.md)
+▸ **createLoader**(`u_config?`): [`Loader`](../interfaces/createLoader.Loader.md)
 
 **`function`** createLoader
 
@@ -68,9 +67,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `config?` | [`LoaderOptions`](createLoader.md#loaderoptions) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `u_config?` | [`LoaderOptions`](createLoader.md#loaderoptions) | user config options |
 
 #### Returns
 
@@ -80,4 +79,4 @@ Factory function for runtime context
 
 #### Defined in
 
-[loader.ts:35](https://github.com/abschill/html-chunk-loader/blob/b345592/lib/loader.ts#L35)
+[loader.ts:36](https://github.com/abschill/html-chunk-loader/blob/f29676d/lib/loader.ts#L36)

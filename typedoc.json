@@ -4,5 +4,6 @@
         "./lib/cli/index.ts"
     ],
     "darkHighlightTheme": "dark-plus",
-    "out": "docs/typedoc"
+    "out": "docs/typedoc",
+    "includeVersion": true
 }

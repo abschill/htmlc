@@ -12,11 +12,12 @@
  import { 
     Loader, 
     LoaderOptions,
-    LoaderContext
+    LoaderContext,
+    HTMLPage
 } from './core/internals/types';
 import hydrateContext from './core/hydrate';
 import { watch } from 'fs';
-import Debugger from './core/internals/debugger';
+import createDebugger from './core/internals/debugger';
 import Compiler from './core/compile';
 import findConfig from './config';
 
@@ -30,41 +31,37 @@ export {
  * @function createLoader
  * @description Rendering Context for templates
  * @returns Factory function for runtime context
- * @param config
+ * @param u_config user config options
  */
-export function createLoader( config ?: LoaderOptions ):
+export function createLoader( u_config ?: LoaderOptions ):
 Loader {
-    config = config ?? findConfig();
+    const hcl_config = u_config ?? findConfig();
 
-    const dbg = new Debugger( config );
+    const dbg = createDebugger( hcl_config );
 
-    let ctx: LoaderContext = hydrateContext( config );
+    let ctx: LoaderContext = hydrateContext( hcl_config );
     if( ctx.config.watch ) {
         dbg.event( 'watch:init', 'watch enabled' );
-        ctx.partials.forEach( file => {
+        ctx.chunks.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
                     dbg.event( 'file:change', filename );
-					ctx = hydrateContext( config );
-                }
-            } );
-        } );
-        
-        ctx.templates.forEach( file => {
-            watch( file.path, ( eventType, filename ) => {
-                if( eventType === 'change' ) {
-                    dbg.event( 'file:change', filename );
-					ctx = hydrateContext( config );
+					ctx = hydrateContext( hcl_config );
                 }
             } );
         } );
     }
 
+    // todo - reserved
+    // function preload( args ?: object ) {
+    //     //
+    // }
+
     /**
 	 * @function template
 	 * Name of Template to Load
 	 * data to override fallback data for given template
-	 * @returns {string} the template's rendered content
+	 * @returns {HTMLPage} the template's rendered content
 	 * @example
 	 * ```javascript
 	 * Loader.template( 'home', {...homeData} );
@@ -73,7 +70,7 @@ Loader {
 	 * @param data
 	 */
     function template( name: string, data ?: object ):
-    string {
+    HTMLPage {
         return Compiler.compile( {
             template_name: name, 
             template_ctx: ctx, 

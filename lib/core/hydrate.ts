@@ -24,12 +24,10 @@ export default ( config: LoaderOptions ):
     const templates = findTemplates( config as E_SSROptions );
     return ( partials && templates ) ? {
         config: hydrated,
-        partials,
-        templates
+        chunks: [...partials, ...templates ]
     } : {
         config: hydrated,
-        partials: [],
-        templates: []
+        chunks: []
     };
 };
  

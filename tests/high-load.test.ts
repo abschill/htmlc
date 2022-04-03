@@ -39,7 +39,7 @@ describe( 'Loads en espanol', () => {
 describe( 'Discover Paths', () => {
 
     it( 'registers names with slash chars in template', () => {
-        expect( myLoader.ctx.partials.filter( partial => partial.name.includes( '/' ) ).length ).toBe( 2 );
+        expect( myLoader.ctx.chunks.filter( chunk => chunk.type === 'partial' ).filter( partial => partial.name.includes( '/' ) ).length ).toBe( 2 );
     } );
 
     it( 'Loads ee', () => {
@@ -48,6 +48,15 @@ describe( 'Discover Paths', () => {
 
     it( 'Loads Deeper Nest', () => {
         expect( chonk ).toMatch( '<p>baz</p>' );
+    } );
+    it( 'Compiles all Inputs', () => {
+        expect( chonk ).not.toMatch( '<!--@render' );
+    } );
+    it( 'Compiles all Inputs', () => {
+        expect( chonk ).not.toMatch( '<!--@partial' );
+    } );
+    it( 'Compiles all loops', () => {
+        expect( chonk ).not.toMatch( '<!--@loop' );
     } );
 } );
 

@@ -1,4 +1,4 @@
-[html-chunk-loader](../README.md) / [Modules](../modules.md) / [createLoader](../modules/createLoader.md) / DebugConfig
+[html-chunk-loader - v0.5.9](../README.md) / [Modules](../modules.md) / [createLoader](../modules/createLoader.md) / DebugConfig
 
 # Interface: DebugConfig
 
@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[core/internals/types/index.ts:17](https://github.com/abschill/html-chunk-loader/blob/b345592/lib/core/internals/types/index.ts#L17)
+[core/internals/types/index.ts:21](https://github.com/abschill/html-chunk-loader/blob/f29676d/lib/core/internals/types/index.ts#L21)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[core/internals/types/index.ts:18](https://github.com/abschill/html-chunk-loader/blob/b345592/lib/core/internals/types/index.ts#L18)
+[core/internals/types/index.ts:22](https://github.com/abschill/html-chunk-loader/blob/f29676d/lib/core/internals/types/index.ts#L22)
 
 ___
 
@@ -40,4 +40,4 @@ ___
 
 #### Defined in
 
-[core/internals/types/index.ts:19](https://github.com/abschill/html-chunk-loader/blob/b345592/lib/core/internals/types/index.ts#L19)
+[core/internals/types/index.ts:23](https://github.com/abschill/html-chunk-loader/blob/f29676d/lib/core/internals/types/index.ts#L23)

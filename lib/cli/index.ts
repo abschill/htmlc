@@ -32,7 +32,7 @@ void {
             //@ts-ignore
             partialInput: data.partialInput,
         } );
-        ctx.ctx.templates.forEach( template => {
+        ctx.ctx.chunks.filter( chunk => chunk.type === 'template' ).forEach( template => {
             const fileData = {
                 toName: pathify( template, static_config.outPath ),
                 toWrite: ctx.template( template.name )

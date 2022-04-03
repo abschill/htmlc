@@ -2,7 +2,8 @@
  * @module fs internal file handling
  */
 import {
-	ResolvedFile,
+	HTMLChunk,
+	HTMLChunkType,
 	E_SSROptions
 } from '../types';
 
@@ -32,7 +33,7 @@ export function validFileList(
 export function mapPath(
 	splitter: string[],
 	basename: string,
-	sysSplit: string,
+	sysSplit: string
 ): string {
 	let name = splitter[0];
 	const na = name.split( sysSplit );
@@ -52,20 +53,27 @@ export function mapPath(
 export function fileMap(
 	path: string,
 	splitter: string[],
-	basename: string
-): ResolvedFile {
+	basename: string,
+	type: HTMLChunkType
+): HTMLChunk {
 	return {
+		type,
 		path,
 		rawFile: readFileSync( path ).toString( 'utf-8' ),
-		name: mapPath( splitter, basename, process.platform === 'win32' ? __WIN__ : __BSD__ )
+		name: mapPath( splitter, basename, process.platform === 'win32' ? __WIN__ : __BSD__ ),
+		isCached: false,
+		hasRendered: false,
+		renderedFile: null,
+		needsRehydrate: false
 	};
 }
 
 export function createFileMap(
 	filepath: string,
-	basepath: string
-): ResolvedFile {
-	return fileMap( filepath, filepath.split( '.html' ), basepath );
+	basepath: string,
+	type: HTMLChunkType
+): HTMLChunk {
+	return fileMap( filepath, filepath.split( '.html' ), basepath, type );
 }
 
 export function readValidFSTree(
@@ -79,26 +87,27 @@ export function readValidFSTree(
 
 export const mapPathList = (
 	paths: string[],
-	base: string
-): ResolvedFile [] => paths.map( ( file ) => createFileMap( file, base ) );
+	base: string,
+	type: HTMLChunkType
+): HTMLChunk [] => paths.map( ( file ) => createFileMap( file, base, type ) );
 
 
 export function findPartials( { 
 	partials = HCL_DEFAULTS.partials,
 	pathRoot = HCL_DEFAULTS.pathRoot,
 	discoverPaths = HCL_DEFAULTS.discoverPaths
-}: E_SSROptions ): ResolvedFile[] | null {
+}: E_SSROptions ): HTMLChunk[] | null {
 	const root = join( process.cwd(), pathRoot, partials );
-	if( !discoverPaths ) return validFileList( root ).map( file => createFileMap( file, partials ) ); 
-	return mapPathList( readValidFSTree( root ), partials );
+	if( !discoverPaths ) return validFileList( root ).map( file => createFileMap( file, partials, 'partial' ) ); 
+	return mapPathList( readValidFSTree( root ), partials, 'partial' );
 }
 
 export function findTemplates( {
 	templates = HCL_DEFAULTS.templates, 
 	pathRoot = HCL_DEFAULTS.pathRoot,
 	discoverPaths = HCL_DEFAULTS.discoverPaths
-}: E_SSROptions ): ResolvedFile[] | null {
+}: E_SSROptions ): HTMLChunk[] | null {
 	const root = join( process.cwd(), pathRoot, templates );
-	if( !discoverPaths ) return validFileList( root ).map( ( file ) => createFileMap( file, templates ) ); 
-	return mapPathList( readValidFSTree( root ), templates );
+	if( !discoverPaths ) return validFileList( root ).map( ( file ) => createFileMap( file, templates, 'template' ) ); 
+	return mapPathList( readValidFSTree( root ), templates, 'template' );
 }

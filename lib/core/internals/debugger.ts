@@ -79,7 +79,7 @@ const HCL_EVENT_MAP: HCL_EVENT[] = [
 	}
 ];
 
-export default class Debugger {
+export class Debugger {
 
 	runtimeOptions: E_SSROptions;
 	logMode: LogMode = 'silent';
@@ -221,4 +221,11 @@ export default class Debugger {
 		return this.logFile ? this.logEventFile( this.handleEvent( name, data ) ) : 
 			this.logEventNormal( this.handleEvent( name, data ) );
 	}
+}
+
+export default function createDebugger( 
+	options: LoaderOptions 
+	):
+Debugger {
+	return new Debugger( options );
 }

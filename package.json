@@ -1,6 +1,6 @@
 {
   "name": "html-chunk-loader",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "description": "Node Template Engine using HTML Comments",
   "main": "dist/index.js",
   "bin": {
@@ -14,6 +14,7 @@
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable",
     "docs": "typedoc",
+    "preparePublish": "python scripts/refresh-build.py",
     "testCli": "yarn build && node dist/cli"
   },
   "files": [
@@ -52,18 +53,18 @@
   "hcl_config": {
     "ssr_config": {
       "pathRoot": "test-pkg/barebones",
-        "partials": "partials",
-        "templates": "templates",
-        "partialInput": {},
-        "templateInput": {},
-        "watch": false,
-        "discoverPaths": false,
-        "intlCode": "en",
-        "debug": {
-            "logMode": "silent",
-            "logStrategy": "none",
-            "logFile": null
-        }
+      "partials": "partials",
+      "templates": "templates",
+      "partialInput": {},
+      "templateInput": {},
+      "watch": false,
+      "discoverPaths": false,
+      "intlCode": "en",
+      "debug": {
+        "logMode": "silent",
+        "logStrategy": "none",
+        "logFile": null
+      }
     },
     "static_config": {
       "pathRoot": "test-pkg/static",
