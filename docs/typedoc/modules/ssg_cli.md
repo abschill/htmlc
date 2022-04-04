@@ -1,4 +1,4 @@
-[html-chunk-loader - v0.5.10](../README.md) / [Modules](../modules.md) / ssg-cli
+[html-chunk-loader - v0.5.11](../README.md) / [Modules](../modules.md) / ssg-cli
 
 # Module: ssg-cli
 
@@ -30,7 +30,7 @@
 
 #### Defined in
 
-cli/ssg/index.ts:42
+[cli/ssg/index.ts:42](https://github.com/abschill/html-chunk-loader/blob/f79e3e7/lib/cli/ssg/index.ts#L42)
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 #### Defined in
 
-cli/ssg/index.ts:38
+[cli/ssg/index.ts:38](https://github.com/abschill/html-chunk-loader/blob/f79e3e7/lib/cli/ssg/index.ts#L38)
 
 ___
 
@@ -65,7 +65,7 @@ ___
 
 #### Defined in
 
-cli/ssg/index.ts:54
+[cli/ssg/index.ts:54](https://github.com/abschill/html-chunk-loader/blob/f79e3e7/lib/cli/ssg/index.ts#L54)
 
 ___
 
@@ -79,7 +79,7 @@ ___
 
 #### Defined in
 
-cli/ssg/index.ts:14
+[cli/ssg/index.ts:14](https://github.com/abschill/html-chunk-loader/blob/f79e3e7/lib/cli/ssg/index.ts#L14)
 
 ___
 
@@ -93,4 +93,4 @@ ___
 
 #### Defined in
 
-cli/ssg/index.ts:25
+[cli/ssg/index.ts:25](https://github.com/abschill/html-chunk-loader/blob/f79e3e7/lib/cli/ssg/index.ts#L25)

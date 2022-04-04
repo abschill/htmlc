@@ -11,7 +11,8 @@
  */
  import { 
     Loader, 
-    toLoadOptions,
+    USSROptions,
+    USSGOptions,
     LoaderContext,
     SSROptions,
     HTMLPage
@@ -33,7 +34,7 @@ export {
  * @returns Factory function for runtime context
  * @param u_config user config options
  */
-export function createLoader( u_config ?: toLoadOptions ):
+export function createLoader( u_config ?: USSROptions | USSGOptions ):
 Loader {
     const hcl_config: SSROptions = createConfig( u_config );
     const dbg = createDebugger( hcl_config );
