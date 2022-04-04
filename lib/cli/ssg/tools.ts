@@ -1,21 +1,13 @@
 import { 
-    readFileSync, 
     writeFileSync, 
     existsSync, 
     mkdirSync 
 } from 'fs';
 import path from 'path';
-import { __BSD__, __WIN__ } from '../core/internals/util/fs';
-import { STATIC_DEFAULTS } from '../core/internals';
+import { __BSD__, __WIN__ } from '../../core/internals/util/fs';
 import { 
     HTMLChunk
-} from '../core/internals/types';
-
-export function findConfig() {
-    const o = JSON.parse( readFileSync( path.resolve( process.cwd(), 'package.json' ) ).toString( 'utf-8' ) )?.static_config ?? STATIC_DEFAULTS;
-    return Object.keys( o ) === Object.keys( STATIC_DEFAULTS ) ? 
-    o : {...STATIC_DEFAULTS, ...o};
-}
+} from '../../core/types';
 
 export function ensureOutPath( 
     outPath: string 

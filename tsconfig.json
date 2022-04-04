@@ -14,7 +14,7 @@
         "removeComments": true
     },
     "include": [
-        "lib/**/*"
+        "lib/**/*"   
     ],
     "exclude":[
         "./tests/**/*",

@@ -1,4 +1,4 @@
-[html-chunk-loader - v0.5.9](../README.md) / [Modules](../modules.md) / createLoader
+[html-chunk-loader - v0.5.10](../README.md) / [Modules](../modules.md) / createLoader
 
 # Module: createLoader
 
@@ -16,19 +16,29 @@ myLoader.template( 'home', { ...homeData } );
 
 ### Interfaces
 
-- [DebugConfig](../interfaces/createLoader.DebugConfig.md)
 - [Loader](../interfaces/createLoader.Loader.md)
 
 ### Type aliases
 
+- [DebugConfig](createLoader.md#debugconfig)
 - [LoaderContext](createLoader.md#loadercontext)
-- [LoaderOptions](createLoader.md#loaderoptions)
+- [toNarrowOptions](createLoader.md#tonarrowoptions)
 
 ### Functions
 
 - [createLoader](createLoader.md#createloader)
 
 ## Type aliases
+
+### DebugConfig
+
+Ƭ **DebugConfig**: `Required`<`DebugOptions`\>
+
+#### Defined in
+
+core/types/index.ts:14
+
+___
 
 ### LoaderContext
 
@@ -39,21 +49,21 @@ myLoader.template( 'home', { ...homeData } );
 | Name | Type |
 | :------ | :------ |
 | `chunks` | `HTMLChunk`[] |
-| `config` | `E_SSROptions` |
+| `config` | `SSROptions` |
 
 #### Defined in
 
-[core/internals/types/index.ts:173](https://github.com/abschill/html-chunk-loader/blob/f29676d/lib/core/internals/types/index.ts#L173)
+core/types/index.ts:70
 
 ___
 
-### LoaderOptions
+### toNarrowOptions
 
-Ƭ **LoaderOptions**: `E_SSROptions` \| `UserSSROptions`
+Ƭ **toNarrowOptions**: `SSROptions` \| `USSROptions`
 
 #### Defined in
 
-[core/internals/types/index.ts:67](https://github.com/abschill/html-chunk-loader/blob/f29676d/lib/core/internals/types/index.ts#L67)
+core/types/index.ts:146
 
 ## Functions
 
@@ -69,7 +79,7 @@ ___
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `u_config?` | [`LoaderOptions`](createLoader.md#loaderoptions) | user config options |
+| `u_config?` | `toLoadOptions` | user config options |
 
 #### Returns
 
@@ -79,4 +89,4 @@ Factory function for runtime context
 
 #### Defined in
 
-[loader.ts:36](https://github.com/abschill/html-chunk-loader/blob/f29676d/lib/loader.ts#L36)
+[loader.ts:36](https://github.com/abschill/html-chunk-loader/blob/64c5456/lib/loader.ts#L36)

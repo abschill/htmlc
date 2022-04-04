@@ -3,12 +3,13 @@ import {
 	HTMLChunk,
 	RenderMap,
 	CompilerArgs,
-	RMap,
+	MapWithPartial,
 	ResolvedMap,
 	ResolvedMapItem,
 	MappedEntry, 
 	MappedValue,
-} from './internals/types';
+	LoaderContext
+} from './types';
 import Parser from './parser';
 import { cleanHTML } from './internals/util/html';
 
@@ -44,7 +45,7 @@ export default class Compiler {
 		object = templateInput;
 		if( Object.keys( args.template_data ).length === 0 ) {
 			const insertions:
-			RMap = {...globalInsertions, partialInput};
+			MapWithPartial = {...globalInsertions, partialInput};
 			args._debugger.event( 'template:load', {
 				template_name: args.template_name, 
 				u_insert_map: args.template_data, 
@@ -56,7 +57,7 @@ export default class Compiler {
 			const scopedInsertions:
 			object = {...templateInput, ...args.template_data};
 			const insertions:
-			RMap = {...globalInsertions, ...scopedInsertions,
+			MapWithPartial = {...globalInsertions, ...scopedInsertions,
 				partialInput: {
 					...partialInput,
 					...args.template_data['partialInput']
@@ -170,9 +171,47 @@ export default class Compiler {
 		};
 	}
 
+	public static renderPartial(
+		chunkData: HTMLChunk,
+		insertMap: object
+	): string {
+		let renderedChunk = chunkData.rawFile;
+
+		const scoped_insertion = insertMap['partialInput'] ?? {};
+		const insertion = {...insertMap, ...scoped_insertion};
+		
+		const toReplaceChunks = Parser.ABT.map( word => {
+			const buffer = word.array( chunkData.rawFile );
+			if( !buffer || buffer.length === 0 ) return null;
+			return { buffer, keyname: word.key };
+		} ).filter( e => e ).flat();
+
+		if( !toReplaceChunks || toReplaceChunks.length === 0 ) return;
+		toReplaceChunks.map( chunk => {
+			chunk.buffer.forEach( buf => {
+				const keyname = buf.replace( `<!--${chunk.keyname}=`, '' ).replace( '-->', '' );
+				renderedChunk = renderedChunk.replace( buf, insertion[keyname] );
+			} );
+		} );
+		return renderedChunk;
+	}
+
+	public static preloadChunks(
+		ctx: LoaderContext
+	): HTMLChunk[] {
+		//todo - setup partial signature resolution for templates if the called partials don't have needsRehydrate
+		return ctx.chunks.map( ( fd: HTMLChunk ) => {
+			if( !Parser.hasSymbols( fd.rawFile ) ) {
+				fd.renderedChunk = fd.rawFile;
+				return fd;
+			}
+			return fd;
+		} );
+	}
+
 	static resolvePartials( 
-		renMap: RenderMap, 
-		declaredPartials: HTMLChunk[], 
+		renMap: RenderMap, //map of things to be rendered into template
+		declaredPartials: HTMLChunk[], //map of declared partials in runtime
 		insertMap: object,
 		rootCopy: string
 	): string {
@@ -182,16 +221,21 @@ export default class Compiler {
             const matchPartials = declaredPartials.filter( n => n.name === p_name );
             if( matchPartials.length > 0 ) {
                 matchPartials.forEach( partial => {
-                    const scoped_insertion = insertMap['partialInput'] ?? {};
-                    const insertion = {...insertMap, ...scoped_insertion};
-					// todo - @0.5.9 - set up prerender for partials instead of putting the raw file into the template here
-                    rootCopy = rootCopy.replace( 
-						partialSeg, 
-						Compiler.resolve( partial.rawFile, Parser.renderMap( partial.rawFile ), insertion ).render 
-					);
+					if( partial.renderedChunk && !partial.needsRehydrate ) {
+						rootCopy = rootCopy.replace( partialSeg, partial.renderedChunk );
+					}
+					else {
+						const scoped_insertion = insertMap['partialInput'] ?? {};
+						const insertion = {...insertMap, ...scoped_insertion};
+						// todo - @0.5.9 - set up prerender for partials instead of putting the raw file into the template here
+						rootCopy = rootCopy.replace( 
+							partialSeg, 
+							Compiler.resolve( partial.rawFile, Parser.renderMap( partial.rawFile ), insertion ).render 
+						); 
+					}
                 } );
             }
-        } );
+		} );
 		return rootCopy;
 	}
 

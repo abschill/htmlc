@@ -11,46 +11,47 @@
  */
  import { 
     Loader, 
-    LoaderOptions,
+    toLoadOptions,
     LoaderContext,
+    SSROptions,
     HTMLPage
-} from './core/internals/types';
-import hydrateContext from './core/hydrate';
+} from './core/types';
+import { hydrateConfig, hydrateChunks } from './core/hydrate';
 import { watch } from 'fs';
 import createDebugger from './core/internals/debugger';
 import Compiler from './core/compile';
-import findConfig from './config';
-
+import { createConfig } from './core/config';
 export {  
     Loader, 
     LoaderContext, 
-    LoaderOptions,
+    toNarrowOptions,
     DebugConfig 
-} from './core/internals/types';
+} from './core/types';
 /**
  * @function createLoader
  * @description Rendering Context for templates
  * @returns Factory function for runtime context
  * @param u_config user config options
  */
-export function createLoader( u_config ?: LoaderOptions ):
+export function createLoader( u_config ?: toLoadOptions ):
 Loader {
-    const hcl_config = u_config ?? findConfig();
-
+    const hcl_config: SSROptions = createConfig( u_config );
     const dbg = createDebugger( hcl_config );
 
-    let ctx: LoaderContext = hydrateContext( hcl_config );
+    let ctx: LoaderContext = hydrateConfig( hcl_config );
     if( ctx.config.watch ) {
         dbg.event( 'watch:init', 'watch enabled' );
         ctx.chunks.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
                     dbg.event( 'file:change', filename );
-					ctx = hydrateContext( hcl_config );
+					ctx = hydrateConfig( hcl_config );
                 }
             } );
         } );
     }
+    
+    if( hcl_config.preload ) ctx.chunks = Compiler.preloadChunks( ctx );
 
     // todo - reserved
     // function preload( args ?: object ) {

@@ -1,4 +1,4 @@
-html-chunk-loader - v0.5.9 / [Modules](modules.md)
+html-chunk-loader - v0.5.10 / [Modules](modules.md)
 
 # HTML Chunk Loader
 

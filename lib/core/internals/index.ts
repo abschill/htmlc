@@ -1,30 +1,36 @@
 
-import { E_SSROptions } from './types';
+import { SSROptions, SSGOptions, LogMode, LogStrategy } from '../types';
 
-export const __PATHS__ = {
+export const DEFAULT_PATHS = {
     pathRoot: 'views',
     templates: 'pages',
     partials: 'partials'
 };
 
-export const HCL_DEFAULTS: E_SSROptions = {
-    ...__PATHS__,
+export const RT_DEFAULTS = {
     templateInput: {},
     partialInput: {},
-    watch: false,
+    preload: true,
     discoverPaths: false,
     intlCode: 'en',
 	debug: {
-		logMode: 'silent',
-		logStrategy: 'none',
-        logFile: null
+		logMode: <LogMode>'silent',
+		logStrategy: <LogStrategy>'none'
 	}
 };
 
-export const STATIC_DEFAULTS = {
-	...__PATHS__,
+export const HCL_DEFAULTS: SSROptions = {
+    ...DEFAULT_PATHS,
+    ...RT_DEFAULTS,
+    watch: false,
+    
+};
+
+export const STATIC_DEFAULTS: SSGOptions = {
+	...DEFAULT_PATHS,
+    ...RT_DEFAULTS,
     outPath: 'public',
-    loaderFile: 'loader.js',
+    loaderFile: 'hcl-config.js',
     cleanup: true
 };
 

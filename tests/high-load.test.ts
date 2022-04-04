@@ -12,7 +12,6 @@ const myLoader = createLoader( {
     templateInput: {
         generic_page_content: 'Generic Page Content'
     },
-    debug: true,
     discoverPaths: true
 } );
 const chonk = myLoader.template( 'chonk', {
@@ -39,7 +38,7 @@ describe( 'Loads en espanol', () => {
 describe( 'Discover Paths', () => {
 
     it( 'registers names with slash chars in template', () => {
-        expect( myLoader.ctx.chunks.filter( chunk => chunk.type === 'partial' ).filter( partial => partial.name.includes( '/' ) ).length ).toBe( 2 );
+        expect( myLoader.ctx.chunks.filter( chunk => chunk.type === 'partial' ).filter( partial => partial.name.includes( '/' ) ).length ).toBe( 4 );
     } );
 
     it( 'Loads ee', () => {
@@ -49,12 +48,19 @@ describe( 'Discover Paths', () => {
     it( 'Loads Deeper Nest', () => {
         expect( chonk ).toMatch( '<p>baz</p>' );
     } );
+
+    it( 'matches lorem signature', () => {
+        expect( chonk ).toMatch( 'Lorem ipsum dolor sit amet' );
+    } );
+
     it( 'Compiles all Inputs', () => {
         expect( chonk ).not.toMatch( '<!--@render' );
     } );
+
     it( 'Compiles all Inputs', () => {
         expect( chonk ).not.toMatch( '<!--@partial' );
     } );
+    
     it( 'Compiles all loops', () => {
         expect( chonk ).not.toMatch( '<!--@loop' );
     } );

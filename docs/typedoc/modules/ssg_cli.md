@@ -1,4 +1,4 @@
-[html-chunk-loader - v0.5.9](../README.md) / [Modules](../modules.md) / ssg-cli
+[html-chunk-loader - v0.5.10](../README.md) / [Modules](../modules.md) / ssg-cli
 
 # Module: ssg-cli
 
@@ -6,9 +6,47 @@
 
 ### Functions
 
+- [createConfig](ssg_cli.md#createconfig)
+- [findConfig](ssg_cli.md#findconfig)
 - [ssg](ssg_cli.md#ssg)
+- [tryJS](ssg_cli.md#tryjs)
+- [tryPackage](ssg_cli.md#trypackage)
 
 ## Functions
+
+### createConfig
+
+▸ **createConfig**(`conf`): `SSGOptions`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `conf` | `USSGOptions` |
+
+#### Returns
+
+`SSGOptions`
+
+#### Defined in
+
+cli/ssg/index.ts:42
+
+___
+
+### findConfig
+
+▸ **findConfig**(): `SSGOptions`
+
+#### Returns
+
+`SSGOptions`
+
+#### Defined in
+
+cli/ssg/index.ts:38
+
+___
 
 ### ssg
 
@@ -27,4 +65,32 @@
 
 #### Defined in
 
-[cli/index.ts:21](https://github.com/abschill/html-chunk-loader/blob/f29676d/lib/cli/index.ts#L21)
+cli/ssg/index.ts:54
+
+___
+
+### tryJS
+
+▸ **tryJS**(): `SSGOptions`
+
+#### Returns
+
+`SSGOptions`
+
+#### Defined in
+
+cli/ssg/index.ts:14
+
+___
+
+### tryPackage
+
+▸ **tryPackage**(): `SSGOptions`
+
+#### Returns
+
+`SSGOptions`
+
+#### Defined in
+
+cli/ssg/index.ts:25

@@ -6,28 +6,33 @@
  import { findPartials, findTemplates } from './internals/util/fs';
  import { HCL_DEFAULTS } from './internals';
  import { 
-    LoaderOptions,
+    HTMLChunk,
+    toNarrowOptions,
     LoaderContext, 
-    E_SSROptions
-} from './internals/types';
+    SSROptions
+} from './types';
 
-const clean = ( config: LoaderOptions ):
-E_SSROptions =>
+const clean = ( config: toNarrowOptions ):
+SSROptions =>
     Object.keys( config ) === Object.keys( HCL_DEFAULTS ) ?
-        config as E_SSROptions:
-        {...HCL_DEFAULTS, ...config} as E_SSROptions;
+        config as SSROptions:
+        {...HCL_DEFAULTS, ...config} as SSROptions;
 
-export default ( config: LoaderOptions ):
-    LoaderContext => {
+export const hydrateConfig = ( config: toNarrowOptions ):
+LoaderContext => {
     const hydrated = clean( config );
-    const partials = findPartials( config as E_SSROptions );
-    const templates = findTemplates( config as E_SSROptions );
+    const partials = findPartials( config as SSROptions );
+    const templates = findTemplates( config as SSROptions );
     return ( partials && templates ) ? {
         config: hydrated,
-        chunks: [...partials, ...templates ]
+        chunks: [...partials, ...templates]
     } : {
         config: hydrated,
         chunks: []
     };
 };
  
+export const hydrateChunks = ( ctx: LoaderContext, chunks: HTMLChunk[] ):
+LoaderContext => {
+    return { ...ctx, ...chunks };
+};

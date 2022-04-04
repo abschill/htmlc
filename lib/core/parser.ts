@@ -4,14 +4,32 @@ import {
 	Insertion,
 	Entry,
 	DEP_TAG,
-	RenderMap
-} from './internals/types';
+	RenderMap,
+	ReservedWord
+} from './types';
 import { emitWarning } from 'process';
-import { ReservedWord } from './internals/types';
 
 export default class Parser {
 
-	static DEPRECATED_TAGS: DEP_TAG[] = [
+	private static _loopKey = 'loop';
+	public static __loopKey__ = `@${Parser._loopKey}`;
+	private static _renderKey = 'render';
+	private static _partialKey = 'partial';
+	public static __renderKey__ = `@${Parser._renderKey}`;
+	public static __partialKey__ = `@${Parser._partialKey}`;
+
+	//regex matches for keywords
+	private static keyReggie = /<!--@render=[\w|\d]+-->/gi;
+	private static partialReggie = /<!--@partial=[\w|\d|//\\]+-->/gi;
+
+	//reserved for later(4/3/22)
+	private static partialGroupReggie = /<!--@pgroup=[\w|\d|//\\|,]+-->/gi;
+
+	public static __CLOSE__ = '-->';
+	public static LOOP_CLOSE = `}${Parser.__CLOSE__}`;
+	public static LOOP_OPEN = ( key: string ): string => `<!--${Parser.__loopKey__}(${key}){`;
+
+	private static DEPRECATED_TAGS: DEP_TAG[] = [
 		{ 
 			old: '@render-partial', 
 			new: '@partial',
@@ -24,25 +42,11 @@ export default class Parser {
 		}
 	];
 
-	static _delim = '{_}';
-	static __CLOSE__ = '-->';
-	static LOOP_CLOSE = `}${Parser.__CLOSE__}`;
+	private static _delim = '{_}';
+	private static _loopSignature = `<!--${Parser.__loopKey__}(${Parser._delim}){}${Parser.__CLOSE__}`;
+	private static _keySignature = `<!--${Parser.__renderKey__}=${Parser._delim}${Parser.__CLOSE__}`;
+	private static _partialSignature = `<!--${Parser.__partialKey__}=${Parser._delim}${Parser.__CLOSE__}`;
 	
-	static LOOP_OPEN = ( key: string ): string => `<!--${Parser.__loopKey__}(${key}){`;
-
-	static _renderKey = 'render';
-	static __renderKey__ = `@${Parser._renderKey}`;
-	static _partialKey = 'partial';
-	static __partialKey__ = `@${Parser._partialKey}`;
-	static _loopKey = 'loop';
-	static __loopKey__ = `@${Parser._loopKey}`;
-
-	static _loopSignature = `<!--${Parser.__loopKey__}(${Parser._delim}){}${Parser.__CLOSE__}`;
-	static _keySignature = `<!--${Parser.__renderKey__}=${Parser._delim}${Parser.__CLOSE__}`;
-	static _partialSignature = `<!--${Parser.__partialKey__}=${Parser._delim}${Parser.__CLOSE__}`;
-
-	static _keyReggie = /<!--@render=[\w|\d]+-->/gi;
-	static _partialReggie = /<!--@partial=[\w|\d|//\\]+-->/gi;
 
 	private static _replaceSignature( type: string, val: string ) {
 		switch( type ) {
@@ -54,17 +58,18 @@ export default class Parser {
 				return Parser._keySignature.replace( Parser._delim, val );
 		}
 	}
+	
 
-	static hasPartial = ( a: TargetMatchBuffer ) => a.target.includes( Parser._replaceSignature( Parser._partialKey, a.key ) );
-	static partialIndex = ( a: TargetMatchBuffer ) => a.target.indexOf( Parser._replaceSignature( Parser._partialKey, a.key ) );
-	static matchPartials = ( target: string ) => target.match( Parser._partialReggie );
-	static replacePartial = ( a: TargetReplaceBuffer ) => a.target.replace( Parser._replaceSignature( Parser._partialKey, a.key ), a.value );
+	public static hasPartial = ( a: TargetMatchBuffer ) => a.target.includes( Parser._replaceSignature( Parser._partialKey, a.key ) );
+	public static partialIndex = ( a: TargetMatchBuffer ) => a.target.indexOf( Parser._replaceSignature( Parser._partialKey, a.key ) );
+	public static matchPartials = ( target: string ) => target.match( Parser.partialReggie );
+	public static replacePartial = ( a: TargetReplaceBuffer ) => a.target.replace( Parser._replaceSignature( Parser._partialKey, a.key ), a.value );
 
-	static hasKey = ( a: TargetMatchBuffer  ) => a.target.includes( Parser._replaceSignature( Parser._renderKey, a.key ) );
-	static matchKeys = ( target: string  ) => target.match( Parser._keyReggie );
+	public static hasKey = ( a: TargetMatchBuffer  ) => a.target.includes( Parser._replaceSignature( Parser._renderKey, a.key ) );
+	public static matchKeys = ( target: string  ) => target.match( Parser.keyReggie );
 
-	static hasLoop = ( a: TargetMatchBuffer ) => a.target.includes( `<!--${Parser.__loopKey__}(${a.key}){` );
-	static matchLoops( target: string ) {
+	public static hasLoop = ( a: TargetMatchBuffer ) => a.target.includes( `<!--${Parser.__loopKey__}(${a.key}){` );
+	public static matchLoops( target: string ) {
 		const out: Array<string> = [];
 		const _opener = /<!--@loop\(\w+\){/gi;
 		const opener = target.match( _opener );
@@ -80,13 +85,19 @@ export default class Parser {
 		return out;
 	}
 
-	static replaceAnonLoopBuf = ( a: TargetMatchBuffer ) => a.target.replace( Parser._delim, a.key );
-	static replacedNamedLoopBuf( copy: string, insert: Insertion | Entry ) {
+	public static replaceAnonLoopBuf = ( a: TargetMatchBuffer ) => a.target.replace( Parser._delim, a.key );
+	public static replacedNamedLoopBuf( copy: string, insert: Insertion | Entry ) {
 		insert.forEach( ( insertion: string | object ) => copy = copy.replace( `{${insertion[0]}}`, insertion[1] ) );
 		return copy;
 	}
 
-	static ABT:
+	public static hasSymbols(
+		chunk: string
+	): boolean {
+		return ( chunk.includes( '@render' ) || chunk.includes( '@loop' ) || chunk.includes( '@partial' ) || chunk.includes( '@pgroup' ) );
+	}
+
+	public static ABT:
 	ReservedWord[] = [
 		{
 			key: Parser.__loopKey__,
@@ -105,7 +116,7 @@ export default class Parser {
 		}
 	];
 
-	static renderMap( content: string ) {
+	public static renderMap( content: string ) {
 		const rmap: RenderMap = {
 			todo_keys: [],
 			todo_loops: [],
@@ -130,7 +141,7 @@ export default class Parser {
 		return rmap;
 	}
 
-	static checkDeprecation( clone: string ) {
+	public static checkDeprecation( clone: string ) {
 		for( const tag of Parser.DEPRECATED_TAGS ) {
 			if( clone.includes( tag.old ) ) {
 				emitWarning( `Warning: ${tag.old} was deprecated in version ${tag.v_change}\n` );

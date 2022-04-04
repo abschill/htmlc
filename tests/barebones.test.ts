@@ -2,7 +2,7 @@ import { createLoader } from '../lib/loader';
 
 const myLoader = createLoader();
 
-describe( 'Load Static Partial Data with package.json options', () => {
+describe( 'Basic Partial Data from package.json options', () => {
     const home = myLoader.template( 'home' );
     
     it( 'Loads Head', () => {
