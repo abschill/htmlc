@@ -23,7 +23,7 @@ export const HCL_DEFAULTS: SSROptions = {
     ...DEFAULT_PATHS,
     ...RT_DEFAULTS,
     watch: false,
-    
+	errorSuppression: false
 };
 
 export const STATIC_DEFAULTS: SSGOptions = {

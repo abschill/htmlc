@@ -1,26 +1,26 @@
-import { 
-	toLoadOptions, 
-	SSROptions, 
-	LogStrategy, 
-	LogMode, 
-	DebugEvent, 
-	DebugEventSignature, 
-	RuntimeEvent, 
+import {
+	toLoadOptions,
+	SSROptions,
+	LogStrategy,
+	LogMode,
+	DebugEvent,
+	DebugEventSignature,
+	RuntimeEvent,
 	RT_EVENT_DATA
 } from '../types';
-import { 
-	join, 
-	resolve 
+import {
+	join,
+	resolve
 } from 'path';
-import { 
-	writeFileSync, 
-	appendFileSync, 
-	existsSync 
+import {
+	writeFileSync,
+	appendFileSync,
+	existsSync
 } from 'fs';
 import { HCL_DEFAULTS } from '.';
-const { 
-	log, 
-	warn, 
+const {
+	log,
+	warn,
 	error
 } = console;
 
@@ -57,13 +57,13 @@ const HCL_EVENT_MAP: DebugEvent[] = [
 		phase: 0,
 		type: 0,
 		signature: 'watch:init',
-		fatal: false 
+		fatal: false
 	},
 	{
 		phase: -1,
 		type: 1,
 		signature: 'file:change',
-		fatal: false 
+		fatal: false
 	},
 	{
 		phase: 1,
@@ -88,7 +88,7 @@ export class Debugger {
 	silent: boolean;
 
 	constructor( conf: toLoadOptions ) {
-		this.runtimeOptions = conf as SSROptions;
+		this.runtimeOptions = <SSROptions>conf;
 		const { debug = HCL_DEFAULTS.debug } = this.runtimeOptions;
 		if( typeof( debug ) === 'boolean' ) {
 			if( debug === true ) {
@@ -97,7 +97,7 @@ export class Debugger {
 			}
 		}
 		else {
-			this.logMode = debug?.logMode ?? 'silent'; 
+			this.logMode = debug?.logMode ?? 'silent';
 			this.logStrategy = debug?.logStrategy ?? 'none';
 			this.logFile = debug?.logFile ?? 'hcl.log';
 			this.silent = this.logMode === 'silent';
@@ -109,7 +109,7 @@ export class Debugger {
 		return resolve( process.cwd(), this.logFile ?? 'hcl.log' );
 	}
 
-	success( 
+	success(
 		e: RuntimeEvent
 	): void {
 		switch( e.signature ) {
@@ -141,17 +141,17 @@ export class Debugger {
 		log( '\n' );
 	}
 
-	status( 
+	status(
 		e: RuntimeEvent | string,
 		isEvent : boolean = typeof e != 'string'
 	): void {
 		if( !isEvent ) return log( e );
-		const { signature, event_data } = <RuntimeEvent>e; 
+		const { signature, event_data } = <RuntimeEvent>e;
 		log( '\x1b[44m%s\x1b[0m', 'hcl_debug:', signature );
 		switch( signature ) {
 			case 'template:load':
-				return this.std_load_template( event_data as RT_EVENT_DATA );
-			default: 
+				return this.std_load_template( <RT_EVENT_DATA>event_data );
+			default:
 				return log( FG_COLOR_ESCAPES.blue, 'hcl_debug:event:', event_data );
 		}
 	}
@@ -164,11 +164,11 @@ export class Debugger {
 		e: RuntimeEvent
 	): void {
 		const logFilePath = resolve( process.cwd(), this.logFile );
-		const { 
-			signature, 
-			event_data, 
-			phase, 
-			type 
+		const {
+			signature,
+			event_data,
+			phase,
+			type
 		} = e;
 		const date = new Date();
 		const timeStamp = date.toUTCString();
@@ -185,13 +185,13 @@ export class Debugger {
 				break;
 		}
 	}
-	
+
 	init():
 	void {
 		if( this.silent ) return;
 		const ev = <RuntimeEvent>HCL_EVENT_MAP[0];
 		if( this.logFile ) this.event_to_file( ev );
-		return this.success( ev ); 
+		return this.success( ev );
 	}
 
 	handleEvent( sig: DebugEventSignature, data ?: any ) {
@@ -200,31 +200,31 @@ export class Debugger {
 		return ev;
 	}
 
-	logEventNormal( 
+	logEventNormal(
 		e: RuntimeEvent | string
 	): void {
 		return this.status( e );
 	}
 
-	logEventFile( 
+	logEventFile(
 		e: RuntimeEvent
 	): void {
 		return this.event_to_file( e );
 	}
 
-	event( 
+	event(
 		name: DebugEventSignature,
 		data: any
 	):
 	void {
 		if( this.silent ) return;
-		return this.logFile ? this.logEventFile( this.handleEvent( name, data ) ) : 
+		return this.logFile ? this.logEventFile( this.handleEvent( name, data ) ) :
 			this.logEventNormal( this.handleEvent( name, data ) );
 	}
 }
 
-export default function createDebugger( 
-	options: toLoadOptions 
+export default function createDebugger(
+	options: toLoadOptions
 	):
 Debugger {
 	return new Debugger( options );

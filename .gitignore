@@ -2,7 +2,7 @@ node_modules
 dist
 examples/**/node_modules
 public
+public/**/*
 *.lock
 gitignore.*
 static-paths.js
-hcl-config.js

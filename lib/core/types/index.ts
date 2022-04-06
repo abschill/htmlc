@@ -4,12 +4,12 @@ export type ASTMatch = RegExpMatchArray | String[] | [];
 
 export interface CompilerArgs {
     template_name: string;
-    template_ctx: LoaderContext;
-    template_data ?: object;
-    _debugger: Debugger;
+    caller_ctx: LoaderContext;
+    caller_data ?: object;
+    debug: Debugger;
 }
-
-export type ConfigFallbackStrategy = 'package.json' | 'hcl-config.js';
+export type ConfigType = 'ssr' | 'ssg';
+export type ConfigArgType = SSROptions | SSGOptions;
 
 export type DebugConfig = Required<DebugOptions>;
 export interface DEP_TAG {
@@ -35,7 +35,7 @@ export type DebugEvent = {
 export interface DebugOptions {
     logFile ?: string; // file to log to
     logMode ?: LogMode; // mode for logger to run in (must be verbose with logFile)
-    logStrategy ?: LogStrategy; // strategy for writing logs 
+    logStrategy ?: LogStrategy; // strategy for writing logs
 }
 
 export type Entry = Array<string | object>;
@@ -118,8 +118,8 @@ export type ReservedWord = {
     array: ( a: string ) => string[];
 }
 export type RT_EVENT_DATA = {
-    template_name: string; 
-    u_insert_map: object; 
+    template_name: string;
+    u_insert_map: object;
     c_insert_map: MapWithPartial;
 }
 
@@ -127,11 +127,6 @@ export type RT_EVENT_DATA = {
 export type SSGOptions = Required<USSGOptions>;
 // cleaned arguments submitted to Loader constructor, defaulted if nonexistent
 export type SSROptions = Required<USSROptions>;
-
-export type TargetDirectoryTree = {
-    path: string;
-    files: string[];
-}
 //stores key value to test against ast target domstring
 export type TargetMatchBuffer = {
     target: ProcessingTemplate;
@@ -146,22 +141,23 @@ export type TargetReplaceBuffer = {
 export type toNarrowOptions = SSROptions | USSROptions;
 // base options submitted by user to create a loader
 export interface toLoadOptions extends UInput {
-    pathRoot ?: string; // directory to look for relative to process.cwd()
-    templates ?: string; // directory to resolve tempaltes from relative to pathRoot - default 'pages'
+    pathRoot ?: string; // directory to look for relative to process.cwd() default: views
+    templates ?: string; // directory to resolve templates from relative to pathRoot - default: 'pages'
     partials ?: string; // directory to resolve partials from relative to pathRoot - default 'partials'
-    discoverPaths ?: boolean;
-    intlCode ?: string;
-    preload ?: boolean;
+    discoverPaths ?: boolean; // whether or not the runtime will walk the configured directory tree for chunks (default: false)
+    intlCode ?: string; //html lang code (default 'en')
+    preload ?: boolean; //whether or not to preload renderable chunks before they are called. (default true)
 }
 
 export type UDebugConfig = boolean | DebugOptions;
 export interface UInput {
     partialInput ?: object; // constructor fallback for partial variables - default {}
     templateInput ?: object; // constructor fallback for template variables - default {}
-    debug ?: UDebugConfig; 
+    debug ?: UDebugConfig;
 }
 // optional arguments for the createLoader factory function exclusively
 export interface USSROptions extends toLoadOptions {
+	errorSuppression ?: boolean //whether or not to throw errors when it will affect template, or if the runtime should try to decide on a solution with what it has to work with in the given situation, even if that includes removing the chunk entirely.
     watch ?: boolean; // watches files at runtime - default false
 }
 // ssg cli options

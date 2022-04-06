@@ -22,7 +22,6 @@ myLoader.template( 'home', { ...homeData } );
 
 - [DebugConfig](createLoader.md#debugconfig)
 - [LoaderContext](createLoader.md#loadercontext)
-- [toNarrowOptions](createLoader.md#tonarrowoptions)
 
 ### Functions
 
@@ -36,7 +35,7 @@ myLoader.template( 'home', { ...homeData } );
 
 #### Defined in
 
-[core/types/index.ts:14](https://github.com/abschill/html-chunk-loader/blob/f79e3e7/lib/core/types/index.ts#L14)
+[core/types/index.ts:14](https://github.com/abschill/html-chunk-loader/blob/96039cd/lib/core/types/index.ts#L14)
 
 ___
 
@@ -53,17 +52,7 @@ ___
 
 #### Defined in
 
-[core/types/index.ts:70](https://github.com/abschill/html-chunk-loader/blob/f79e3e7/lib/core/types/index.ts#L70)
-
-___
-
-### toNarrowOptions
-
-Ƭ **toNarrowOptions**: `SSROptions` \| `USSROptions`
-
-#### Defined in
-
-[core/types/index.ts:146](https://github.com/abschill/html-chunk-loader/blob/f79e3e7/lib/core/types/index.ts#L146)
+[core/types/index.ts:70](https://github.com/abschill/html-chunk-loader/blob/96039cd/lib/core/types/index.ts#L70)
 
 ## Functions
 
@@ -89,4 +78,4 @@ Factory function for runtime context
 
 #### Defined in
 
-[loader.ts:37](https://github.com/abschill/html-chunk-loader/blob/f79e3e7/lib/loader.ts#L37)
+[loader.ts:36](https://github.com/abschill/html-chunk-loader/blob/96039cd/lib/loader.ts#L36)

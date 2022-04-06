@@ -5,10 +5,10 @@
  */
  import { findPartials, findTemplates } from './internals/util/fs';
  import { HCL_DEFAULTS } from './internals';
- import { 
+ import {
     HTMLChunk,
     toNarrowOptions,
-    LoaderContext, 
+    LoaderContext,
     SSROptions
 } from './types';
 
@@ -31,7 +31,7 @@ LoaderContext => {
         chunks: []
     };
 };
- 
+
 export const hydrateChunks = ( ctx: LoaderContext, chunks: HTMLChunk[] ):
 LoaderContext => {
     return { ...ctx, ...chunks };

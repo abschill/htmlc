@@ -1,12 +1,12 @@
 /* eslint-disable no-case-declarations */
-import { 
+import {
 	HTMLChunk,
 	RenderMap,
 	CompilerArgs,
 	MapWithPartial,
 	ResolvedMap,
 	ResolvedMapItem,
-	MappedEntry, 
+	MappedEntry,
 	MappedValue,
 	LoaderContext
 } from './types';
@@ -15,64 +15,63 @@ import { cleanHTML } from './internals/util/html';
 
 export default class Compiler {
 
-	static scanTemplate( 
-		args: CompilerArgs 
+	static scanTemplateV1(
+		args: CompilerArgs
 	) {
 		try {
-			const fileData = args.template_ctx.chunks.filter( chunk => chunk.type === 'template' && chunk.name === args.template_name )[0];
+			const fileData = args.caller_ctx.chunks.filter( chunk => chunk.type === 'template' && chunk.name === args.template_name )[0];
 			return fileData.rawFile;
 		}
 		catch( e ) {
 			console.warn( 'todo: handle scan template error - raw error: \n' );
 			console.error( e );
 		}
-		
 	}
 
-	static compile( 
-		args: CompilerArgs 
+	static compileTemplateV1(
+		args: CompilerArgs
 	): string {
 		/**
 		 * If any data was keyed with the template name in the constructor, we will use as a secondary priority load value
 		 * these objects will default to {} if not entered
 		 */
-		const {templateInput = {}, partialInput = {}} = args.template_ctx.config;
+		const {templateInput = {}, partialInput = {}} = args.caller_ctx.config;
 		// unset null data if applicable
-		if( !args.template_data ) args.template_data = {};
-	
+		if( !args.caller_data ) args.caller_data = {};
+
 		//if no data, load default input for template
 		const globalInsertions:
 		object = templateInput;
-		if( Object.keys( args.template_data ).length === 0 ) {
+		if( Object.keys( args.caller_data ).length === 0 ) {
 			const insertions:
 			MapWithPartial = {...globalInsertions, partialInput};
-			args._debugger.event( 'template:load', {
-				template_name: args.template_name, 
-				u_insert_map: args.template_data, 
-				c_insert_map: insertions 
+			args.debug.event( 'template:load', {
+				template_name: args.template_name,
+				u_insert_map: args.caller_data,
+				c_insert_map: insertions
 			} );
-			return Compiler.render( args.template_ctx.chunks.filter( chunk => chunk.type === 'partial' ), Compiler.scanTemplate( args ), insertions );
+			return Compiler.renderV1( args.caller_ctx.chunks.filter( chunk => chunk.type === 'partial' ), Compiler.scanTemplateV1( args ), insertions );
 		}
 		else {
 			const scopedInsertions:
-			object = {...templateInput, ...args.template_data};
+			object = {...templateInput, ...args.caller_data};
 			const insertions:
 			MapWithPartial = {...globalInsertions, ...scopedInsertions,
 				partialInput: {
 					...partialInput,
-					...args.template_data['partialInput']
+					...args.caller_data['partialInput']
 				}
 			};
-			args._debugger.event( 'template:load', { 
-				template_name: args.template_name, 
-				u_insert_map: args.template_data, 
-				c_insert_map: insertions 
+			args.debug.event( 'template:load', {
+				template_name: args.template_name,
+				u_insert_map: args.caller_data,
+				c_insert_map: insertions
 			} );
-			return Compiler.render( args.template_ctx.chunks.filter( chunk => chunk.type === 'partial' ), Compiler.scanTemplate( args ), insertions, args.template_ctx.config.intlCode );
+			return Compiler.renderV1( args.caller_ctx.chunks.filter( chunk => chunk.type === 'partial' ), Compiler.scanTemplateV1( args ), insertions, args.caller_ctx.config.intlCode );
 		}
 	}
 
-	static render (
+	static renderV1 (
 		declaredPartials: HTMLChunk[],
 		rawFile: string,
 		insertMap: object,
@@ -80,17 +79,17 @@ export default class Compiler {
 	): string {
 		const renMap = Parser.renderMap( rawFile );
 		try {
-			if( renMap.todo_partials && renMap.todo_partials.length > 0 ) rawFile = Compiler.shimPartials( rawFile, declaredPartials, insertMap );
-			if( renMap.todo_keys && renMap.todo_keys.length > 0 ) rawFile = Compiler.shimKeys( rawFile, insertMap );
-			if( renMap.todo_loops && renMap.todo_loops.length > 0 ) rawFile = Compiler.shimLoops( rawFile, insertMap );
+			if( renMap.todo_partials && renMap.todo_partials.length > 0 ) rawFile = Compiler.shimPartialsV1( rawFile, declaredPartials, insertMap );
+			if( renMap.todo_keys && renMap.todo_keys.length > 0 ) rawFile = Compiler.shimKeysV1( rawFile, insertMap );
+			if( renMap.todo_loops && renMap.todo_loops.length > 0 ) rawFile = Compiler.shimLoopsV1( rawFile, insertMap );
 			return cleanHTML( rawFile, lang );
 		}
 		catch( e ) {
 			return rawFile;
 		}
 	}
-	
-	static resolve (
+
+	static resolveV1 (
 		file: string,
 		renderMap: RenderMap,
 		insertionMap: object
@@ -133,17 +132,17 @@ export default class Compiler {
 							r = r as string;
 							if( typeof( insertion ) === 'string' ) {
 								//1d array
-								outVal.push( { 
-									replacer: r, 
-									insertion: Parser.replaceAnonLoopBuf( {target: elChild, key: insertion as string} ) 
+								outVal.push( {
+									replacer: r,
+									insertion: Parser.replaceAnonLoopBuf( {target: elChild, key: insertion as string} )
 								} );
 							}
 							else if ( typeof( insertion ) === 'object' ) {
 								//key/val
 								const entries = Object.entries( insertion );
-								if ( entries.length > 0  ) outObj.push( { 
-									replacer: r, 
-									insertion: Parser.replacedNamedLoopBuf( elChild, entries ) 
+								if ( entries.length > 0  ) outObj.push( {
+									replacer: r,
+									insertion: Parser.replacedNamedLoopBuf( elChild, entries )
 								} );
 							}
 						} );
@@ -166,12 +165,18 @@ export default class Compiler {
 		Parser.checkDeprecation( render );
 
 		return {
-			raw: file, 
+			raw: file,
 			render
 		};
 	}
-
-	public static renderPartial(
+	/**
+	 * @function renderPartialsV5
+	 * @description a reworked module in 0.5.9
+	 * @param chunkData {HTMLChunk} the chunk contents to render
+	 * @param insertMap {object} the map from which to pull values
+	 * @returns List of preloaded chunks for runtime
+	 */
+	public static renderPartialV5(
 		chunkData: HTMLChunk,
 		insertMap: object
 	): string {
@@ -179,7 +184,7 @@ export default class Compiler {
 
 		const scoped_insertion = insertMap['partialInput'] ?? {};
 		const insertion = {...insertMap, ...scoped_insertion};
-		
+
 		const toReplaceChunks = Parser.ABT.map( word => {
 			const buffer = word.array( chunkData.rawFile );
 			if( !buffer || buffer.length === 0 ) return null;
@@ -196,7 +201,13 @@ export default class Compiler {
 		return renderedChunk;
 	}
 
-	public static preloadChunks(
+	/**
+	 * @function preloadChunksV5
+	 * @description a reworked module in 0.5.9 to minimize runtime execution speed of preloadable modules that don't require / have sufficient data from constructor/fallbacks
+	 * @param ctx Context of chunks to Preload
+	 * @returns List of preloaded chunks for runtime
+	 */
+	public static preloadChunksV5(
 		ctx: LoaderContext
 	): HTMLChunk[] {
 		//todo - setup partial signature resolution for templates if the called partials don't have needsRehydrate
@@ -209,7 +220,7 @@ export default class Compiler {
 		} );
 	}
 
-	static resolvePartials( 
+	static resolvePartialsV1(
 		renMap: RenderMap, //map of things to be rendered into template
 		declaredPartials: HTMLChunk[], //map of declared partials in runtime
 		insertMap: object,
@@ -228,10 +239,10 @@ export default class Compiler {
 						const scoped_insertion = insertMap['partialInput'] ?? {};
 						const insertion = {...insertMap, ...scoped_insertion};
 						// todo - @0.5.9 - set up prerender for partials instead of putting the raw file into the template here
-						rootCopy = rootCopy.replace( 
-							partialSeg, 
-							Compiler.resolve( partial.rawFile, Parser.renderMap( partial.rawFile ), insertion ).render 
-						); 
+						rootCopy = rootCopy.replace(
+							partialSeg,
+							Compiler.resolveV1( partial.rawFile, Parser.renderMap( partial.rawFile ), insertion ).render
+						);
 					}
                 } );
             }
@@ -239,33 +250,33 @@ export default class Compiler {
 		return rootCopy;
 	}
 
-	static resolveKeys(
-		renMap: RenderMap, 
-		insertMap: object,
-		rootCopy: string
-	): string {
-		renMap.todo_keys.forEach( _ => rootCopy = Compiler.resolve( rootCopy, Parser.renderMap( rootCopy ), insertMap ).render );
-		return rootCopy;
-	}
-
-	static resolveLoops(
+	static resolveKeysV1(
 		renMap: RenderMap,
 		insertMap: object,
 		rootCopy: string
 	): string {
-		renMap.todo_loops.forEach( _ => rootCopy = Compiler.resolve( rootCopy, Parser.renderMap( rootCopy ), insertMap ).render );
+		renMap.todo_keys.forEach( _ => rootCopy = Compiler.resolveV1( rootCopy, Parser.renderMap( rootCopy ), insertMap ).render );
+		return rootCopy;
+	}
+
+	static resolveLoopsV1(
+		renMap: RenderMap,
+		insertMap: object,
+		rootCopy: string
+	): string {
+		renMap.todo_loops.forEach( _ => rootCopy = Compiler.resolveV1( rootCopy, Parser.renderMap( rootCopy ), insertMap ).render );
 		return rootCopy;
 	}
 
 	/**
-	 * @param 
+	 * @param {string} copy the processing template
 	 * @param {object} insertMap map to insert values into templates from
 	 * @returns {string} The processing template
 	 */
-	static shimKeys = ( 
+	static shimKeysV1 = (
 		copy: string,
 		insertMap: object
-	): string => Compiler.resolveKeys( Parser.renderMap( copy ), insertMap, copy );
+	): string => Compiler.resolveKeysV1( Parser.renderMap( copy ), insertMap, copy );
 
 	/**
 	 * @param copy - process template
@@ -273,19 +284,19 @@ export default class Compiler {
 	 * @param insertMap - map to insert values into templates from
 	 * @returns {string} process template
 	 */
-	static shimPartials = (
+	static shimPartialsV1 = (
 		copy: string,
 		declaredPartials: HTMLChunk[],
 		insertMap: object
-	): string => Compiler.resolvePartials( Parser.renderMap( copy ), declaredPartials, insertMap, copy );
+	): string => Compiler.resolvePartialsV1( Parser.renderMap( copy ), declaredPartials, insertMap, copy );
 
 	/**
 	 * @param copy - process template
 	 * @param insertMap - map to insert values from
 	 * @returns {string} The rendered template
 	 */
-	static shimLoops = (
+	static shimLoopsV1 = (
 		copy: string,
 		insertMap: object
-	): string => Compiler.resolveLoops( Parser.renderMap( copy ), insertMap, copy );
+	): string => Compiler.resolveLoopsV1( Parser.renderMap( copy ), insertMap, copy );
 }

@@ -7,4 +7,4 @@
 ### Modules
 
 - [createLoader](modules/createLoader.md)
-- [ssg-cli](modules/ssg_cli.md)
+- [ssg](modules/ssg.md)

@@ -9,8 +9,8 @@
      * myLoader.template( 'home', { ...homeData } );
      * ```
  */
- import { 
-    Loader, 
+ import {
+    Loader,
     USSROptions,
     USSGOptions,
     LoaderContext,
@@ -21,12 +21,11 @@ import { hydrateConfig, hydrateChunks } from './core/hydrate';
 import { watch } from 'fs';
 import createDebugger from './core/internals/debugger';
 import Compiler from './core/compile';
-import { createConfig } from './core/config';
-export {  
-    Loader, 
-    LoaderContext, 
-    toNarrowOptions,
-    DebugConfig 
+import { createSSRConfig } from './core/config';
+export {
+    Loader,
+    LoaderContext,
+    DebugConfig
 } from './core/types';
 /**
  * @function createLoader
@@ -36,7 +35,7 @@ export {
  */
 export function createLoader( u_config ?: USSROptions | USSGOptions ):
 Loader {
-    const hcl_config: SSROptions = createConfig( u_config );
+    const hcl_config: SSROptions = createSSRConfig( u_config );
     const dbg = createDebugger( hcl_config );
 
     let ctx: LoaderContext = hydrateConfig( hcl_config );
@@ -51,13 +50,9 @@ Loader {
             } );
         } );
     }
-    
-    if( hcl_config.preload ) ctx.chunks = Compiler.preloadChunks( ctx );
 
-    // todo - reserved
-    // function preload( args ?: object ) {
-    //     //
-    // }
+	// new 0.5.11 - preload template to minimize execution time for ssr if there are any renderable chunks
+    if( hcl_config.preload ) ctx.chunks = Compiler.preloadChunksV5( ctx );
 
     /**
 	 * @function template
@@ -73,13 +68,15 @@ Loader {
 	 */
     function template( name: string, data ?: object ):
     HTMLPage {
-        return Compiler.compile( {
-            template_name: name, 
-            template_ctx: ctx, 
-            template_data: data,
-            _debugger: dbg
+        return Compiler.compileTemplateV1( {
+            template_name: name,
+            caller_ctx: ctx,
+            caller_data: data,
+            debug: dbg
         } );
     }
-
-    return {ctx, template};
+    return {
+		ctx,
+		template
+	};
 }

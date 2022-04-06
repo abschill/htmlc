@@ -1,8 +1,12 @@
+# 0.5.11
+### 04/06/22
+add support for hcl-config.json, and proper layering of the priority for config defaults. 
+
 # 0.5.10
 ### 04/03/2022
 add new default true option for preload, will load static partials when the loader is created rather than when each template is called, will be applied to templates resolving prerendered partials in 0.5.11
 
-also renamed a lot of the c-style types to more human readable pascal/camelcase naming conventions, and alphabetized the types file. In 0.5.9 i didnt make a log for some reason but I centralized the runtime storage for "chunks" as a type with a property determining if its a partial or template. 
+also renamed a lot of the c-style types to more human-readable pascal/camelcase naming conventions, and alphabetized the types file. In 0.5.9 i didnt make a log for some reason but I centralized the runtime storage for "chunks" as a type with a property determining if its a partial or template. 
 
 # 0.5.8
 ### 04/03/2022
