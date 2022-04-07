@@ -3,14 +3,14 @@
  * @param { LoaderContext } config configuration file for loader
  * @returns runtime context for loader
  */
- import { findPartials, findTemplates } from './internals/util/fs';
- import { HCL_DEFAULTS } from './internals';
+ import { findPartials, findTemplates } from '../../internal/util/fs';
+ import { HCL_DEFAULTS } from '../../internal';
  import {
     HTMLChunk,
     toNarrowOptions,
     LoaderContext,
     SSROptions
-} from './types';
+} from '../../types';
 
 const clean = ( config: toNarrowOptions ):
 SSROptions =>

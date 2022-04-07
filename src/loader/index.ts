@@ -16,17 +16,17 @@
     LoaderContext,
     SSROptions,
     HTMLPage
-} from './core/types';
-import { hydrateConfig, hydrateChunks } from './core/hydrate';
+} from '../types/';
+import { hydrateConfig } from '../modules/core/hydrate';
 import { watch } from 'fs';
-import createDebugger from './core/internals/debugger';
-import Compiler from './core/compile';
-import { createSSRConfig } from './core/config';
+import createDebugger from '../internal/debugger';
+import Compiler from '../modules/compiler';
+import { createSSRConfig } from '../modules/core/config';
 export {
     Loader,
     LoaderContext,
     DebugConfig
-} from './core/types';
+} from '../types/';
 /**
  * @function createLoader factory function for Loader
  * @description Rendering Context for templates

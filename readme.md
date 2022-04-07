@@ -27,7 +27,7 @@ To import the correct module in ES6/Typescript, make sure to import from the pat
 
 
 ```
-import { createLoader } from 'html-chunk-loader/dist/loader.js';
+import { createLoader } from 'html-chunk-loader/lib/loader';
 ```
 
 

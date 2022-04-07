@@ -6,7 +6,7 @@ import {
 import path from 'path';
 import {
     HTMLChunk
-} from '../../core/types';
+} from '../../../types';
 
 export function ensureOutPath(
     outPath: string

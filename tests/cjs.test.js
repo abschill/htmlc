@@ -1,4 +1,4 @@
-const lib = require( '../dist' );
+const lib = require( '..' );
 
 const myLoader = lib();
 

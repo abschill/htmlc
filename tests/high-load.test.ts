@@ -1,4 +1,4 @@
-import { createLoader } from '../lib/loader';
+import { createLoader } from '../src/loader';
 
 const myLoader = createLoader( {
     pathRoot: 'test-pkg/big-bertha',

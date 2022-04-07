@@ -9,15 +9,15 @@
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "sourceMap": true,
-        "outDir": "./dist",
-        "rootDir": "lib",
+        "outDir": "./lib",
+        "rootDir": "src",
         "removeComments": true
     },
     "include": [
-        "lib/**/*"   
+        "src/**/*"   
     ],
     "exclude":[
         "./tests/**/*",
-        "./dist/**/*"
+        "./lib/**/*"
     ]
 }

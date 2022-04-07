@@ -1,5 +1,5 @@
 
-import { createLoader } from '../lib/loader';
+import { createLoader } from '../src/loader';
 import partialData from './partialData.json';
 import templateData from './templateData.json';
 

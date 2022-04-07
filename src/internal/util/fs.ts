@@ -6,18 +6,15 @@ import {
 	HTMLChunkType,
 	SSROptions
 } from '../../types';
-
 import {
 	readdirSync,
 	readFileSync,
 	statSync
 } from 'fs';
-
 import {
 	join,
 	resolve
 } from 'path';
-
 import { HCL_DEFAULTS } from '..';
 export const __WIN__ = '\\';
 export const __BSD__ = '/';

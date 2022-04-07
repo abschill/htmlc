@@ -9,9 +9,9 @@ import {
 	MappedEntry,
 	MappedValue,
 	LoaderContext
-} from './types';
+} from '../../types';
 import Parser from './parser';
-import { cleanHTML } from './internals/util/html';
+import { cleanHTML } from '../../internal/util/html';
 
 export default class Compiler {
 

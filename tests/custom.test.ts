@@ -1,4 +1,4 @@
-import { createLoader } from '../lib/loader';
+import { createLoader } from '../src/loader';
 import partialData from './customPartial.json';
 import templateData from './customTemplate.js';
 

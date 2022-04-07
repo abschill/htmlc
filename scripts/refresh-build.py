@@ -2,7 +2,7 @@ import subprocess
 import os 
 
 script_status = 0
-has_dist = os.path.exists(os.path.join(os.getcwd(), 'dist'))
+has_dist = os.path.exists(os.path.join(os.getcwd(), 'lib'))
 has_quickstart = os.path.exists(os.path.join(os.getcwd(), 'views'))
 
 if( has_quickstart ):
@@ -12,7 +12,7 @@ if( has_quickstart ):
 
 if( has_dist ):
     print('Deleting Old..')
-    remove_dist = subprocess.run('rm -rf dist', shell=True)
+    remove_dist = subprocess.run('rm -rf lib', shell=True)
     script_status = remove_dist.returncode
 
 

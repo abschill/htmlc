@@ -3,7 +3,7 @@ import { existsSync } from 'fs';
 import {
 	HCL_DEFAULTS,
 	STATIC_DEFAULTS
-} from './internals';
+} from '../../internal';
 import {
 	SSROptions,
 	USSROptions,
@@ -11,7 +11,7 @@ import {
 	SSGOptions,
 	ConfigType,
 	ConfigArgType
-} from './types';
+} from '../../types';
 
 export function genTypedFallbacks(
 	type: ConfigType,

@@ -6,7 +6,7 @@ import {
 	DEP_TAG,
 	RenderMap,
 	ReservedWord
-} from './types';
+} from '../../types';
 import { emitWarning } from 'process';
 
 export default class Parser {

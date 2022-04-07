@@ -1,7 +1,9 @@
-# 0.5.13
+# 0.5.13 / 0.5.14
 ### 04/06/22
 add quickstart module to cli to quickly generate default folder structure & configuration
 ```npx html-chunk-loader quickstart```
+
+rename ts output path to ```/lib```, and rename ```lib``` to ```src``` - update for ts import to ```html-chunk-loader/lib/loader``` you shouldn't need the .js extension now since it's not next to a .d.ts file its just an indexed directory. anyway, hopefully this restucturing doesnt break anything
 
 # 0.5.11/0.5.12
 ### 04/06/22

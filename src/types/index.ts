@@ -1,4 +1,4 @@
-import { Debugger } from '../internals/debugger';
+import { Debugger } from '../internal/debugger';
 
 export type ASTMatch = RegExpMatchArray | String[] | [];
 

@@ -1,4 +1,4 @@
-html-chunk-loader - v0.5.13 / [Modules](modules.md)
+html-chunk-loader - v0.5.14 / [Modules](modules.md)
 
 # HTML Chunk Loader
 
@@ -27,7 +27,7 @@ const createLoader = require('html-chunk-loader');
 To import the correct module in ES6/Typescript, make sure to import from the path as follows
 
 ```
-import { createLoader } from 'html-chunk-loader/dist/loader.js';
+import { createLoader } from 'html-chunk-loader/lib/loader';
 ```
 
 [API Reference](https://github.com/abschill/html-chunk-loader/tree/master/docs/reference/readme.md)

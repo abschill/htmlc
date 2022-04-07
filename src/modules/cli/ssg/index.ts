@@ -7,8 +7,8 @@
     pathify,
     __write
 } from './tools';
-import { SSGOptions } from '../../core/types';
-import { createLoader } from '../../loader';
+import { SSGOptions } from '../../../types';
+import { createLoader } from '../../../../';
 import { createSSGConfig } from '../../core/config';
 
 /**

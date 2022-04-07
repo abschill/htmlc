@@ -1,4 +1,4 @@
-[html-chunk-loader - v0.5.13](../README.md) / [Modules](../modules.md) / [createLoader](../modules/createLoader.md) / Loader
+[html-chunk-loader - v0.5.14](../README.md) / [Modules](../modules.md) / [createLoader](../modules/createLoader.md) / Loader
 
 # Interface: Loader
 
@@ -22,7 +22,7 @@
 
 #### Defined in
 
-[core/types/index.ts:67](https://github.com/abschill/html-chunk-loader/blob/408b9db/lib/core/types/index.ts#L67)
+[types/index.ts:67](https://github.com/abschill/html-chunk-loader/blob/4a4d33b/src/types/index.ts#L67)
 
 ## Methods
 
@@ -43,4 +43,4 @@
 
 #### Defined in
 
-[core/types/index.ts:68](https://github.com/abschill/html-chunk-loader/blob/408b9db/lib/core/types/index.ts#L68)
+[types/index.ts:68](https://github.com/abschill/html-chunk-loader/blob/4a4d33b/src/types/index.ts#L68)

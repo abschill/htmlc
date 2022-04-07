@@ -1,11 +1,11 @@
 {
   "name": "html-chunk-loader",
-  "version": "0.5.13",
+  "version": "0.5.14",
   "description": "Node Template Engine using HTML Comments",
-  "main": "dist/index.js",
+  "main": "index.js",
   "bin": {
-    "ssg": "dist/cli/ssg/index.js",
-    "quickstart": "dist/cli/quickstart/index.js"
+    "ssg": "lib/cli/ssg/index.js",
+    "quickstart": "lib/cli/quickstart/index.js"
   },
   "scripts": {
     "build": "tsc",
@@ -16,10 +16,10 @@
     "postpublish": "pinst --enable",
     "docs": "typedoc",
     "preparePublish": "python scripts/refresh-build.py",
-    "test:ssg": "node dist/cli/ssg/index.js"
+    "test:ssg": "node lib/cli/ssg/index.js"
   },
   "files": [
-    "dist/**/*"
+    "lib/**/*"
   ],
   "keywords": [
     "html",
