@@ -28,9 +28,9 @@ export {
     DebugConfig
 } from './core/types';
 /**
- * @function createLoader
+ * @function createLoader factory function for Loader
  * @description Rendering Context for templates
- * @returns Factory function for runtime context
+ * @returns Loader from config options
  * @param u_config user config options
  */
 export function createLoader( u_config ?: USSROptions | USSGOptions ):

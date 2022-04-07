@@ -1,4 +1,9 @@
-# 0.5.11
+# 0.5.13
+### 04/06/22
+add quickstart module to cli to quickly generate default folder structure & configuration
+```npx html-chunk-loader quickstart```
+
+# 0.5.11/0.5.12
 ### 04/06/22
 add support for hcl-config.json, and proper layering of the priority for config defaults. 
 

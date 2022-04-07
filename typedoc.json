@@ -1,7 +1,8 @@
 {
     "entryPoints": [
         "./lib/loader.ts",
-        "./lib/cli/ssg/index.ts"
+        "./lib/cli/ssg/index.ts",
+        "./lib/cli/quickstart/index.ts"
     ],
     "darkHighlightTheme": "dark-plus",
     "out": "docs/typedoc",

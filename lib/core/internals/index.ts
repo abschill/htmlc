@@ -35,7 +35,7 @@ export const STATIC_DEFAULTS: SSGOptions = {
 };
 
 export const FULL_DEFAULTS = {
-    base_config: HCL_DEFAULTS,
-    static_config: STATIC_DEFAULTS,
+    ssr_config: HCL_DEFAULTS,
+    ssg_config: STATIC_DEFAULTS,
     fallbacks: {}
 };
