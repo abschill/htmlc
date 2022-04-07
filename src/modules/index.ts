@@ -1,1 +1,1 @@
-export * as Loader from '../Loader';
+export * as Loader from '../loader';

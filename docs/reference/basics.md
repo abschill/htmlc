@@ -50,7 +50,7 @@ templateInput: {},
 
 The ```pathRoot``` option specifies, relative to the process directory, where to look for partial / template directories. The ```partials``` and ```template``` option set the paths within the root for the partials/templates. The next options are the inputs for the corresponding chunk type. They are key value pairs that can be accessed from within the expressions available in your chunks. 
 
-[Learn More](https://github.com/abschill/html-chunk-loader/blob/master/docs/reference/loader.md)
+[Learn More](/docs/reference/loader.md)
 
 The ```fallbacks``` object allows you to specify any potential 'catch data' that can be used to attempt to suppress some sort of fatal error during runtime. An example may be a key / value of ```'content': 'Page not Found'```
 
@@ -62,6 +62,6 @@ You can create a file on the same level as package.json in your project with eit
 
 If you set fallbacks in package.json, you would just take the same shape as above, but wrap it around hcl_config: {} in the package.json itself
 
-[Loaders](https://github.com/abschill/html-chunk-loader/blob/master/docs/reference/loader.md)
-[CLI](https://github.com/abschill/html-chunk-loader/tree/0.5.7/docs/reference/cli.md)
+[Loaders](/docs/reference/loader.md)
+[CLI](/docs/reference/cli.md)
 [Examples](https://github.com/abschill/html-chunk-loader-examples)
