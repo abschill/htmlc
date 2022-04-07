@@ -3,13 +3,13 @@
 ## Importing in CommonJS
 
 ```
-const Loader = require('html-chunk-loader');
+const createLoader = require('html-chunk-loader');
 ```
 
 ## Importing in ES6+/Typescript
 
 ```
-import { createLoader } from 'html-chunk-loader/dist/loader.js';
+import { createLoader } from 'html-chunk-loader/lib/loader';
 ```
 
 ## Calling the Loader Factory Function
