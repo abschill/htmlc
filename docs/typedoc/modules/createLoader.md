@@ -1,4 +1,4 @@
-[html-chunk-loader - v0.5.14](../README.md) / [Modules](../modules.md) / createLoader
+[html-chunk-loader - v0.5.15](../README.md) / [Modules](../modules.md) / createLoader
 
 # Module: createLoader
 
@@ -35,7 +35,7 @@ myLoader.template( 'home', { ...homeData } );
 
 #### Defined in
 
-[types/index.ts:14](https://github.com/abschill/html-chunk-loader/blob/4a4d33b/src/types/index.ts#L14)
+[types/index.ts:14](https://github.com/abschill/html-chunk-loader/blob/55c8165/src/types/index.ts#L14)
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 #### Defined in
 
-[types/index.ts:70](https://github.com/abschill/html-chunk-loader/blob/4a4d33b/src/types/index.ts#L70)
+[types/index.ts:70](https://github.com/abschill/html-chunk-loader/blob/55c8165/src/types/index.ts#L70)
 
 ## Functions
 
@@ -78,4 +78,4 @@ Loader from config options
 
 #### Defined in
 
-[loader/index.ts:36](https://github.com/abschill/html-chunk-loader/blob/4a4d33b/src/loader/index.ts#L36)
+[loader/index.ts:36](https://github.com/abschill/html-chunk-loader/blob/55c8165/src/loader/index.ts#L36)
