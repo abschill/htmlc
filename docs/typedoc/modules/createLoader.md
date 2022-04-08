@@ -35,7 +35,7 @@ myLoader.template( 'home', { ...homeData } );
 
 #### Defined in
 
-[types/index.ts:14](https://github.com/abschill/html-chunk-loader/blob/55c8165/src/types/index.ts#L14)
+[types/index.ts:18](https://github.com/abschill/html-chunk-loader/blob/b0e9007/src/types/index.ts#L18)
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 #### Defined in
 
-[types/index.ts:70](https://github.com/abschill/html-chunk-loader/blob/55c8165/src/types/index.ts#L70)
+[types/index.ts:74](https://github.com/abschill/html-chunk-loader/blob/b0e9007/src/types/index.ts#L74)
 
 ## Functions
 
@@ -78,4 +78,4 @@ Loader from config options
 
 #### Defined in
 
-[loader/index.ts:36](https://github.com/abschill/html-chunk-loader/blob/55c8165/src/loader/index.ts#L36)
+[loader/index.ts:36](https://github.com/abschill/html-chunk-loader/blob/b0e9007/src/loader/index.ts#L36)

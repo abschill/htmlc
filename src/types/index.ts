@@ -1,12 +1,16 @@
 import { Debugger } from '../internal/debugger';
 
 export type ASTMatch = RegExpMatchArray | String[] | [];
-
+export type AST_MAP = {
+    todo_partials: Token[];
+    todo_keys: Token[];
+    todo_loops: Token[];
+}
 export interface CompilerArgs {
     template_name: string;
     caller_ctx: LoaderContext;
     caller_data ?: object;
-    debug: Debugger;
+    debug ?: Debugger;
 }
 export type ConfigType = 'ssr' | 'ssg';
 export type ConfigArgType = SSROptions | SSGOptions;
@@ -87,6 +91,13 @@ export type MappedValue = LIST_OR_VALUE<string>
 export interface MapWithPartial {
     partialInput: object;
 }
+
+export type ParsableToken = {
+    signature: string;
+    exists: ( chunk: string ) => boolean;
+    asList: ( chunk: string ) => string[];
+}
+
 // reserved for later user
 export interface ProcessCacheConfig {
     ttl : number; //default 0
@@ -147,6 +158,10 @@ export interface toLoadOptions extends UInput {
     discoverPaths ?: boolean; // whether or not the runtime will walk the configured directory tree for chunks (default: false)
     intlCode ?: string; //html lang code (default 'en')
     preload ?: boolean; //whether or not to preload renderable chunks before they are called. (default true)
+}
+export type Token = {
+    name: string;
+    raw: string;
 }
 
 export type UDebugConfig = boolean | DebugOptions;
