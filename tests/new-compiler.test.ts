@@ -1,6 +1,7 @@
 import { createLoader } from '../lib/loader';
 import { tokenize } from '../src/modules/compiler/v2/parser';
 import templateInput from './templateData.json';
+import { compile } from '../lib/modules/compiler/v2';
 const myLoader = createLoader( {
     pathRoot: 'test-pkg/custom',
     partials: 'layout',
@@ -10,13 +11,6 @@ const myLoader = createLoader( {
 
 const myChunkTest = myLoader.ctx.chunks.filter( chunk => chunk.type === 'template' )[0];
 const tokens = tokenize( myChunkTest.rawFile );
-import { compile} from '../lib/modules/compiler/v2';
-
-compile( {
-    template_name: 'home',
-    caller_data: {},
-    caller_ctx: myLoader.ctx,
-} );
 
 describe( 'Parses Tokens Properly', () => {
    it( 'Gets the right shape', () => {
