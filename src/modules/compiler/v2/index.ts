@@ -1,6 +1,6 @@
 import {
     CompilerArgs,
-    AST_MAP, SSROptions
+    AST_MAP, LoaderContext
 } from '../../../types';
 import * as ParserV2 from './parser';
 
@@ -12,24 +12,33 @@ function hasSymbols(
 
 function handleTokenMap(
     tokens: AST_MAP,
-    config: SSROptions,
+    ctx: LoaderContext,
     data: object
 ) {
+    const { config, chunks } = ctx;
     const input = { ...config.partialInput, ...config.templateInput, ...data };
-    console.log( tokens );
-    console.log( input );
+
+    const partials = chunks.filter( chunk => chunk.type === 'partial' );
+
+    const todoPartials = tokens.todo_partials.map( data => {
+        return {
+            ...data,
+            registryMatch: partials.filter( partial => partial.name === data.name ).shift()
+        };
+    } );
+    console.log( todoPartials );
 }
 
 export function compile (
     args: CompilerArgs
 ): string {
     const registry = args.caller_ctx.chunks;
-    const match = registry.filter( chunk => chunk.name === args.template_name )?.shift();
+    const match = registry.filter( chunk => chunk.name === args.template_name ).shift();
     const toParse = hasSymbols( match.rawFile );
     // nothing to compile
     if( !toParse ) return match.rawFile;
     const tokens = ParserV2.tokenize( match.rawFile );
-    handleTokenMap( tokens, args.caller_ctx.config, args.caller_data );
+    handleTokenMap( tokens, args.caller_ctx, args.caller_data );
 
     return '';
 }
