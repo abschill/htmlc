@@ -13,7 +13,8 @@ function hasSymbols(
 function handleTokenMap(
     tokens: AST_MAP,
     ctx: LoaderContext,
-    data: object
+    data: object,
+    chunk: string
 ) {
     const { config, chunks } = ctx;
     const input = { ...config.partialInput, ...config.templateInput, ...data };
@@ -26,7 +27,11 @@ function handleTokenMap(
             registryMatch: partials.filter( partial => partial.name === data.name ).shift()
         };
     } );
-    console.log( todoPartials );
+    todoPartials.forEach( ( curr ) => {
+        chunk = chunk.replace( curr.raw, curr.registryMatch.rawFile );
+    } );
+
+    console.log( chunk );
 }
 
 export function compile (
@@ -38,7 +43,7 @@ export function compile (
     // nothing to compile
     if( !toParse ) return match.rawFile;
     const tokens = ParserV2.tokenize( match.rawFile );
-    handleTokenMap( tokens, args.caller_ctx, args.caller_data );
+    handleTokenMap( tokens, args.caller_ctx, args.caller_data, match.rawFile );
 
     return '';
 }
