@@ -3,6 +3,12 @@ import {
     Token, AST_MAP
 } from '../../../../types';
 
+const EMPTY_MAP: AST_MAP = {
+    todo_keys: [],
+    todo_loops: [],
+    todo_partials: []
+};
+
 export function tokenizeMatch(
     token: string
 ): Token {
@@ -38,5 +44,5 @@ export function tokenize(
             default:
                 return acc;
         }
-    }, { todo_loops: [], todo_keys: [], todo_partials: [] } );
+    }, EMPTY_MAP );
 }

@@ -29,8 +29,8 @@ describe( 'Parses Tokens Properly', () => {
    it( 'Gets the right values', () => {
        const values = Object.values( tokens );
        expect( values.length ).toBe( 3 );
-       expect( values[0].length ).toBe( 2 );
-       expect( values[1].length ).toBe( 0 );
+       expect( values[0].length ).toBe( 0 );
+       expect( values[1].length ).toBe( 2 );
        expect( values[2].length ).toBe( 2 );
    } );
 } );
