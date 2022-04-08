@@ -15,7 +15,7 @@ function handleTokenMap(
     ctx: LoaderContext,
     data: object,
     chunk: string
-) {
+): string {
     const { config, chunks } = ctx;
     const input = { ...config.partialInput, ...config.templateInput, ...data };
 
@@ -27,11 +27,22 @@ function handleTokenMap(
             registryMatch: partials.filter( partial => partial.name === data.name ).shift()
         };
     } );
-    todoPartials.forEach( ( curr ) => {
-        chunk = chunk.replace( curr.raw, curr.registryMatch.rawFile );
+    todoPartials.forEach( ( curr ) => chunk = chunk.replace( curr.raw, curr.registryMatch.renderedChunk ?? curr.registryMatch.rawFile ) );
+    const newTokens = ParserV2.tokenize( chunk );
+
+    newTokens.todo_keys.forEach( key => {
+        const { name = '', raw = '' } = key;
+        chunk = chunk.replace( raw, input[name] );
     } );
 
-    console.log( chunk );
+    newTokens.todo_loops.forEach( loop => {
+        const { name = '', raw = '' } = loop;
+        const matcher = input[name];
+        console.log( matcher );
+        console.log( raw );
+    } );
+
+    return chunk;
 }
 
 export function compile (
@@ -43,7 +54,5 @@ export function compile (
     // nothing to compile
     if( !toParse ) return match.rawFile;
     const tokens = ParserV2.tokenize( match.rawFile );
-    handleTokenMap( tokens, args.caller_ctx, args.caller_data, match.rawFile );
-
-    return '';
+    return handleTokenMap( tokens, args.caller_ctx, args.caller_data, match.rawFile );
 }

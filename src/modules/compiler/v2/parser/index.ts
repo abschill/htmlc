@@ -3,7 +3,7 @@ import {
     Token, AST_MAP
 } from '../../../../types';
 
-const EMPTY_MAP: AST_MAP = {
+export const EMPTY_MAP: AST_MAP = {
     todo_keys: [],
     todo_loops: [],
     todo_partials: []

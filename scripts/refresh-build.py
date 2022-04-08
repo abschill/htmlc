@@ -30,11 +30,6 @@ if(script_status == 0):
     print('Running Tests..')
     test_job0 = subprocess.run('yarn test', shell=True)
     script_status = test_job0.returncode
-    test_job1 = subprocess.run('yarn test:ssg', shell=True)
-    if test_job1.returncode == 0:
-        if os.path.exists(os.path.join(os.getcwd(), '../public')):
-            script_status = 0
-        else:
-            script_status = 1
+
 
 print('Status: ', script_status)

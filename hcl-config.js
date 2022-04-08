@@ -3,7 +3,9 @@ module.exports = {
         pathRoot: 'test-pkg/barebones',
         partials: 'partials',
         templates: 'templates',
-        partialInput: {},
+        partialInput: {
+            nav3: 'Hello'
+        },
         templateInput: {},
         watch: false,
         discoverPaths: false,
