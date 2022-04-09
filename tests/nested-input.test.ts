@@ -22,10 +22,10 @@ describe( 'Parses nested token insertions from input', () => {
         expect( tester ).toMatch( 'foobar' );
         expect( tester ).toMatch( 'Hello World' );
     } );
-    // it( 'Doesnt silent error', () => {
-    //     expect( tester ).not.toMatch( 'undefined' );
-    //     expect( tester ).not.toMatch( '<!--@render' );
-    //     expect( tester ).not.toMatch( '<!--@partial' );
-    //     expect( tester ).not.toMatch( '<!--@loop' );
-    // } );
+    it( 'Doesnt silent error', () => {
+        expect( tester ).not.toMatch( 'undefined' );
+        expect( tester ).not.toMatch( '<!--@render' );
+        expect( tester ).not.toMatch( '<!--@partial' );
+        expect( tester ).not.toMatch( '<!--@loop' );
+    } );
 } );
