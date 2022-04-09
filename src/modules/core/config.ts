@@ -18,9 +18,9 @@ export function genTypedFallbacks(
 	args: ConfigArgType
 ): ConfigArgType {
 	if( type === 'ssg' ) {
-		return {...STATIC_DEFAULTS, ...args };
+		return {...STATIC_DEFAULTS, ...args};
 	}
-	return {...HCL_DEFAULTS, ...args };
+	return {...HCL_DEFAULTS, ...args};
 }
 
 export function findConfig(
@@ -72,7 +72,7 @@ export function createSSRConfig( conf ?: USSROptions ):
 SSROptions {
     if( !conf ) return <SSROptions>findConfig( 'ssr' );
     if( Object.keys( conf ) === Object.keys( HCL_DEFAULTS ) ) return <SSROptions>conf;
-    return <SSROptions>{ ...HCL_DEFAULTS, ...conf };
+    return <SSROptions>{...HCL_DEFAULTS, ...conf};
 }
 
 export function createSSGConfig( conf ?: USSGOptions ) :

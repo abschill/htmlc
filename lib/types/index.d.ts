@@ -1,9 +1,8 @@
 import { Debugger } from '../internal/debugger';
-export declare type ASTMatch = RegExpMatchArray | String[] | [];
 export declare type AST_MAP = {
-    todo_partials: Token[];
-    todo_keys: Token[];
-    todo_loops: Token[];
+    partials: Token[];
+    keys: Token[];
+    loops: Token[];
 };
 export interface CompilerArgs {
     template_name: string;
@@ -95,11 +94,6 @@ export interface ProcessCache {
     isClean?: boolean;
 }
 export declare type ProcessingTemplate = string;
-export interface RenderMap {
-    todo_partials: ASTMatch;
-    todo_keys: ASTMatch;
-    todo_loops: ASTMatch;
-}
 export declare type ResolvedMap = {
     raw: HTMLChunkContent;
     render: HTMLChunkContent;
@@ -107,11 +101,6 @@ export declare type ResolvedMap = {
 export declare type ResolvedMapItem = {
     replacer: string;
     insertion: MAP_OR_LIST_OR_VALUE<string>;
-};
-export declare type ReservedWord = {
-    key: string;
-    boolean: (a: TargetMatchBuffer) => boolean;
-    array: (a: string) => string[];
 };
 export declare type RT_EVENT_DATA = {
     template_name: string;

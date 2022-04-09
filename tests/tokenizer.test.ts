@@ -15,9 +15,9 @@ describe( 'Parses Tokens Properly', () => {
    it( 'Gets the right shape', () => {
        const types = Object.keys( tokens );
        expect( types.length ).toBe(  3 );
-       expect( types ).toContain( 'todo_loops' );
-       expect( types ).toContain( 'todo_keys' );
-       expect( types ).toContain( 'todo_partials' );
+       expect( types ).toContain( 'loops' );
+       expect( types ).toContain( 'keys' );
+       expect( types ).toContain( 'partials' );
    } );
    it( 'Gets the right values', () => {
        const values = Object.values( tokens );

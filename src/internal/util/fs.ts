@@ -53,11 +53,12 @@ export function fileMap(
 	basename: string,
 	type: HTMLChunkType
 ): HTMLChunk {
+	const name = mapPath( splitter, basename, process.platform === 'win32' ? __WIN__ : __BSD__ )
 	return {
 		type,
 		path,
 		rawFile: readFileSync( path ).toString( 'utf-8' ),
-		name: mapPath( splitter, basename, process.platform === 'win32' ? __WIN__ : __BSD__ ),
+		name,
 		isCached: false,
 		renderedChunk: null,
 		needsRehydrate: false

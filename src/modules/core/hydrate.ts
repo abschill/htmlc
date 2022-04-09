@@ -15,14 +15,14 @@
 const clean = ( config: toNarrowOptions ):
 SSROptions =>
     Object.keys( config ) === Object.keys( HCL_DEFAULTS ) ?
-        config as SSROptions:
-        {...HCL_DEFAULTS, ...config} as SSROptions;
+        <SSROptions>config:
+        <SSROptions>{...HCL_DEFAULTS, ...config};
 
 export const hydrateConfig = ( config: toNarrowOptions ):
 LoaderContext => {
     const hydrated = clean( config );
-    const partials = findPartials( config as SSROptions );
-    const templates = findTemplates( config as SSROptions );
+    const partials = findPartials( hydrated );
+    const templates = findTemplates( hydrated );
     return ( partials && templates ) ? {
         config: hydrated,
         chunks: [...partials, ...templates]
@@ -34,5 +34,5 @@ LoaderContext => {
 
 export const hydrateChunks = ( ctx: LoaderContext, chunks: HTMLChunk[] ):
 LoaderContext => {
-    return { ...ctx, ...chunks };
+    return <LoaderContext>{...ctx, ...chunks};
 };

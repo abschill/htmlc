@@ -14,7 +14,7 @@
         "removeComments": true
     },
     "include": [
-        "src/**/*"   
+        "./src/**/*"   
     ],
     "exclude":[
         "./tests/**/*",

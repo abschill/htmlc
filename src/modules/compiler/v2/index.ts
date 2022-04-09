@@ -1,6 +1,6 @@
 import {
     CompilerArgs, Token,
-    AST_MAP, LoaderContext, TargetReplaceBuffer, TemplateTuple
+    AST_MAP, LoaderContext,
 } from '../../../types';
 import * as ParserV2 from './parser';
 import { cleanHTML } from '../../../internal/util/html';
@@ -30,8 +30,6 @@ function replaceKeyValue(
     key: Token,
     input: object
 ): string {
-    console.log( chunk );
-    console.log( key );
     if( !key.name.includes( '.' ) ) {
         chunk = chunk.replace( key.raw, input[key.name] );
         return chunk;
@@ -39,13 +37,11 @@ function replaceKeyValue(
     const splitterBase = key.name.split( '.' );
     const rootAncestor = splitterBase.shift();
     const matchedInput = Object.entries( input ).filter( ( i: [ string, object ] ) => i[0] === rootAncestor ).shift();
-    chunk = chunk.replace( key.raw, matchedInput[1][splitterBase.shift()] );
-    return chunk;
+    return chunk.replace( key.raw, matchedInput[1][splitterBase.shift()] );
 }
 
 
 function resolveTokenMap(
-    tokens: AST_MAP,
     ctx: LoaderContext,
     data: object,
     chunk: string
@@ -53,16 +49,16 @@ function resolveTokenMap(
     const { config, chunks } = ctx;
     const input = { ...config.partialInput, ...config.templateInput, ...data };
     const partials = chunks.filter( chunk => chunk.type === 'partial' );
-    const todoPartials = tokens.todo_partials.map( data => {
-        return {
-            ...data,
-            registryMatch: partials.filter( partial => partial.name === data.name ).shift()
-        };
-    } );
-    todoPartials.forEach( ( curr ) => chunk = chunk.replace( curr.raw, curr.registryMatch?.renderedChunk ?? curr.registryMatch?.rawFile ) );
+    for( const p of partials ) {
+        const signature = `<!--@partial=${p.name}-->`;
+        if( chunk.includes( signature ) ) {
+            chunk = chunk.replace( signature, p.renderedChunk ?? p.rawFile );
+        }
+    }
+
     const newTokens = ParserV2.tokenize( chunk );
-    newTokens.todo_keys.forEach( key => chunk = replaceKeyValue( chunk, key, input ) );
-    newTokens.todo_loops.forEach( loop => chunk = replaceIteratorKey( chunk, loop, input ) );
+    newTokens.keys.forEach( key => chunk = replaceKeyValue( chunk, key, input ) );
+    newTokens.loops.forEach( loop => chunk = replaceIteratorKey( chunk, loop, input ) );
     return cleanHTML( chunk, ctx.config.intlCode );
 }
 
@@ -71,9 +67,11 @@ export function compile (
 ): string {
     const registry = args.caller_ctx.chunks;
     const match = registry.filter( chunk => chunk.name === args.template_name ).shift();
+    // console.log( match );
     const toParse = ParserV2.hasSymbols( match.rawFile );
     // nothing to compile
     if( !toParse ) return match.rawFile;
-    const tokens = ParserV2.tokenize( match.rawFile );
-    return resolveTokenMap( tokens, args.caller_ctx, args.caller_data, match.rawFile );
+    const resolved = resolveTokenMap( args.caller_ctx, args.caller_data, match.rawFile );
+    console.log( resolved );
+    return resolved;
 }

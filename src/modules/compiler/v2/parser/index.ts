@@ -4,9 +4,9 @@ import {
 } from '../../../../types';
 
 export const EMPTY_MAP: AST_MAP = {
-    todo_keys: [],
-    todo_loops: [],
-    todo_partials: []
+    keys: [],
+    loops: [],
+    partials: []
 };
 
 export function hasSymbols(
@@ -64,11 +64,11 @@ export function tokenize(
         }
         switch( curr.signature ) {
             case '@partial':
-                return {...acc, todo_partials: matches.map( tokenizeMatch )};
+                return {...acc, partials: matches.map( tokenizeMatch )};
             case '@render':
-                return {...acc, todo_keys: matches.map( tokenizeMatch )};
+                return {...acc, keys: matches.map( tokenizeMatch )};
             case '@loop':
-                return {...acc, todo_loops: matches.map( tokenizeMatch )};
+                return {...acc, loops: matches.map( tokenizeMatch )};
             default:
                 return acc;
         }

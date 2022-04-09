@@ -1,7 +1,6 @@
 import { createLoader } from '../src/loader';
 import partialData from './partialData.json';
 import templateData from './templateData.json';
-import Parser from '../src/modules/compiler/parser';
 const pathRoot = 'test-pkg/def';
 const templates = 'templates';
 
@@ -12,14 +11,6 @@ const i = createLoader( {
     templateInput: templateData
 } );
 
-
-describe( 'Internal Class Module Tests', () => {
-    it( 'Loads Static Parser Vals', () => {
-        expect( Parser.__renderKey__ ).toBeDefined();
-        expect( Parser.__loopKey__ ).toBeDefined();
-        expect( Parser.__partialKey__ ).toBeDefined();
-    } );
-} );
 
 describe( 'Internal Config Testing', () => {
     

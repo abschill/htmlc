@@ -27,7 +27,7 @@ function matchKeys(
 function matchPartial(
     chunk: string
 ): string[] {
-    return chunk.match( /<!--@partial=[\w|\d|//\\]+-->/gi );
+    return chunk.match( /<!--@partial=\w+[\w|\d|/\\]*-->/gi );
 }
 
 function matchLoops(
