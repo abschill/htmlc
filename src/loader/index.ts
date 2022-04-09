@@ -20,7 +20,7 @@
 import { hydrateConfig } from '../modules/core/hydrate';
 import { watch } from 'fs';
 import createDebugger from '../internal/debugger';
-import Compiler from '../modules/compiler';
+import * as Compiler from '../modules/compiler/v2';
 import { createSSRConfig } from '../modules/core/config';
 export {
     Loader,
@@ -52,7 +52,7 @@ Loader {
     }
 
 	// new 0.5.11 - preload template to minimize execution time for ssr if there are any renderable chunks
-    if( hcl_config.preload ) ctx.chunks = Compiler.preloadChunksV5( ctx );
+   // if( hcl_config.preload ) ctx.chunks = Compiler.preloadChunksV5( ctx );
 
     /**
 	 * @function template
@@ -68,7 +68,7 @@ Loader {
 	 */
     function template( name: string, data ?: object ):
     HTMLPage {
-        return Compiler.compileTemplateV1( {
+        return Compiler.compile( {
             template_name: name,
             caller_ctx: ctx,
             caller_data: data,

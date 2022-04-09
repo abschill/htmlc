@@ -3,7 +3,7 @@ import {
     AST_MAP, LoaderContext, TargetReplaceBuffer, TemplateTuple
 } from '../../../types';
 import * as ParserV2 from './parser';
-
+import { cleanHTML } from '../../../internal/util/html';
 function replaceIteratorKey(
     chunk: string,
     loop: Token,
@@ -54,7 +54,7 @@ function resolveTokenMap(
         chunk = replaceIteratorKey( chunk, loop, input );
     } );
 
-    return chunk;
+    return cleanHTML( chunk, ctx.config.intlCode );
 }
 
 export function compile (

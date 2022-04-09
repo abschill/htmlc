@@ -62,7 +62,7 @@ describe( 'Load Constructed Partial Data', () => {
 describe( 'Load Empty Input FF', () => {
     it( 'Gets Empty Constructor Inline', () => {
         const data = myLoader2.template( 'home', {
-            partialInput: partialData,
+            ...partialData,
             ...templateData
         } );
         expect( data ).toMatch( 'HTTP' );

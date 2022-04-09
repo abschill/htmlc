@@ -15,9 +15,7 @@ const myLoader = createLoader( {
     discoverPaths: true
 } );
 const chonk = myLoader.template( 'chonk', {
-    partialInput: {
-        heading: 'Hello World'
-    },
+    heading: 'Hello World',
     chonk: 'chonk',
     chonk1: 'chonk1',
     chonk2: 'chonk2',
