@@ -1,6 +1,7 @@
 import {
-    CompilerArgs, Token,
-    AST_MAP, LoaderContext,
+    CompilerArgs, 
+    Token,
+    LoaderContext,
 } from '../../../types';
 import * as ParserV2 from './parser';
 import { cleanHTML } from '../../../internal/util/html';
@@ -67,11 +68,9 @@ export function compile (
 ): string {
     const registry = args.caller_ctx.chunks;
     const match = registry.filter( chunk => chunk.name === args.template_name ).shift();
-    // console.log( match );
     const toParse = ParserV2.hasSymbols( match.rawFile );
     // nothing to compile
     if( !toParse ) return match.rawFile;
     const resolved = resolveTokenMap( args.caller_ctx, args.caller_data, match.rawFile );
-    console.log( resolved );
     return resolved;
 }
