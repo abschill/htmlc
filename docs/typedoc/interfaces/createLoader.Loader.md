@@ -22,7 +22,7 @@
 
 #### Defined in
 
-[types/index.ts:71](https://github.com/abschill/html-chunk-loader/blob/26a5a98/src/types/index.ts#L71)
+[types/index.ts:71](https://github.com/abschill/html-chunk-loader/blob/5ef0cad/src/types/index.ts#L71)
 
 ## Methods
 
@@ -43,4 +43,4 @@
 
 #### Defined in
 
-[types/index.ts:72](https://github.com/abschill/html-chunk-loader/blob/26a5a98/src/types/index.ts#L72)
+[types/index.ts:72](https://github.com/abschill/html-chunk-loader/blob/5ef0cad/src/types/index.ts#L72)

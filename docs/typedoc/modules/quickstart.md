@@ -27,4 +27,4 @@
 
 #### Defined in
 
-[modules/cli/quickstart/index.ts:43](https://github.com/abschill/html-chunk-loader/blob/26a5a98/src/modules/cli/quickstart/index.ts#L43)
+[modules/cli/quickstart/index.ts:43](https://github.com/abschill/html-chunk-loader/blob/5ef0cad/src/modules/cli/quickstart/index.ts#L43)

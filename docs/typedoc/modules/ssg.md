@@ -27,4 +27,4 @@
 
 #### Defined in
 
-[modules/cli/ssg/index.ts:20](https://github.com/abschill/html-chunk-loader/blob/26a5a98/src/modules/cli/ssg/index.ts#L20)
+[modules/cli/ssg/index.ts:20](https://github.com/abschill/html-chunk-loader/blob/5ef0cad/src/modules/cli/ssg/index.ts#L20)

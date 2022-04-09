@@ -129,6 +129,10 @@ export declare type TargetReplaceBuffer = {
     key: string;
     value: string;
 };
+export declare type TemplateTuple = [
+    string,
+    Array<string | object>
+];
 export declare type toNarrowOptions = SSROptions | USSROptions;
 export interface toLoadOptions extends UInput {
     pathRoot?: string;

@@ -9,6 +9,36 @@ export const EMPTY_MAP: AST_MAP = {
     todo_partials: []
 };
 
+export function hasSymbols(
+    chunk: string
+): boolean {
+    return ( chunk.includes( '@render' ) || chunk.includes( '@loop' ) || chunk.includes( '@partial' ) || chunk.includes( '@pgroup' ) );
+}
+
+export function mask(
+    mask: string,
+    input: object
+): string {
+    const resolvedKeys = parseKeys( mask );
+    resolvedKeys.forEach( key => {
+        mask = mask.replace( key.token, input[key.key] );
+    } );
+    return mask;
+}
+
+export function unmaskKey(
+    key: string
+): string {
+    return key.replace( '{', '' ).replace( '}', '' );
+}
+
+export function parseKeys(
+    chunk: string
+) {
+    const reggie = /{\w+[\w}\d]*}/gi;
+    return chunk.match( reggie ).map( matcher => ( { token: matcher, key: unmaskKey( matcher )} ));
+}
+
 export function tokenizeMatch(
     token: string
 ): Token {

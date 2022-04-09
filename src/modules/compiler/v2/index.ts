@@ -1,16 +1,31 @@
 import {
-    CompilerArgs,
-    AST_MAP, LoaderContext
+    CompilerArgs, Token,
+    AST_MAP, LoaderContext, TargetReplaceBuffer, TemplateTuple
 } from '../../../types';
 import * as ParserV2 from './parser';
 
-function hasSymbols(
-    chunk: string
-): boolean {
-    return ( chunk.includes( '@render' ) || chunk.includes( '@loop' ) || chunk.includes( '@partial' ) || chunk.includes( '@pgroup' ) );
+function replaceIteratorKey(
+    chunk: string,
+    loop: Token,
+    input: object
+): string {
+    const rawContext = loop.raw;
+    const outStack = [];
+    input[loop.name].forEach( ( entry: string | object ) => {
+        const mask = rawContext.split( `<!--@loop(${loop.name}){` ).pop().split( '}-->' ).shift().trim();
+        if( mask.includes( '{_}' ) ) {
+            outStack.push( mask.replace( '{_}', <string>entry ) );
+        }
+        else {
+            // if the array iterator has {foo} and {bar}, the input will be { foo: 'foo', bar: 'bar' }
+           outStack.push( ParserV2.mask( mask, <object>entry ) );
+        }
+    } );
+
+    return chunk.replace( loop.raw, outStack.join( '' ) );
 }
 
-function handleTokenMap(
+function resolveTokenMap(
     tokens: AST_MAP,
     ctx: LoaderContext,
     data: object,
@@ -36,10 +51,7 @@ function handleTokenMap(
     } );
 
     newTokens.todo_loops.forEach( loop => {
-        const { name = '', raw = '' } = loop;
-        const matcher = input[name];
-        console.log( matcher );
-        console.log( raw );
+        chunk = replaceIteratorKey( chunk, loop, input );
     } );
 
     return chunk;
@@ -50,9 +62,9 @@ export function compile (
 ): string {
     const registry = args.caller_ctx.chunks;
     const match = registry.filter( chunk => chunk.name === args.template_name ).shift();
-    const toParse = hasSymbols( match.rawFile );
+    const toParse = ParserV2.hasSymbols( match.rawFile );
     // nothing to compile
     if( !toParse ) return match.rawFile;
     const tokens = ParserV2.tokenize( match.rawFile );
-    return handleTokenMap( tokens, args.caller_ctx, args.caller_data, match.rawFile );
+    return resolveTokenMap( tokens, args.caller_ctx, args.caller_data, match.rawFile );
 }

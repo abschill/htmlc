@@ -149,6 +149,10 @@ export type TargetReplaceBuffer = {
     key: string;
     value: string;
 }
+export type TemplateTuple = [
+    string,
+    Array<string | object>
+]
 export type toNarrowOptions = SSROptions | USSROptions;
 // base options submitted by user to create a loader
 export interface toLoadOptions extends UInput {
