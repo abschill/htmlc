@@ -1,4 +1,4 @@
-import { createLoader } from '../lib/loader/index.js';
+import { createLoader } from '../src/loader';
 import { tokenize } from '../src/modules/compiler/v2/parser';
 import templateInput from './templateData.json';
 const myLoader = createLoader( {
@@ -14,7 +14,7 @@ const tokens = tokenize( myChunkTest.rawFile );
 describe( 'Parses Tokens Properly', () => {
    it( 'Gets the right shape', () => {
        const types = Object.keys( tokens );
-       expect( types.length ).toBe(  3 );
+       expect( types.length ).toBe( 3 );
        expect( types ).toContain( 'loops' );
        expect( types ).toContain( 'keys' );
        expect( types ).toContain( 'partials' );
