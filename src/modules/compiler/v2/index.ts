@@ -4,6 +4,7 @@ import {
 } from '../../../types';
 import * as ParserV2 from './parser';
 import { cleanHTML } from '../../../internal/util/html';
+
 function replaceIteratorKey(
     chunk: string,
     loop: Token,
@@ -21,9 +22,27 @@ function replaceIteratorKey(
            outStack.push( ParserV2.mask( mask, <object>entry ) );
         }
     } );
-
     return chunk.replace( loop.raw, outStack.join( '' ) );
 }
+
+function replaceKeyValue(
+    chunk: string,
+    key: Token,
+    input: object
+): string {
+    console.log( chunk );
+    console.log( key );
+    if( !key.name.includes( '.' ) ) {
+        chunk = chunk.replace( key.raw, input[key.name] );
+        return chunk;
+    }
+    const splitterBase = key.name.split( '.' );
+    const rootAncestor = splitterBase.shift();
+    const matchedInput = Object.entries( input ).filter( ( i: [ string, object ] ) => i[0] === rootAncestor ).shift();
+    chunk = chunk.replace( key.raw, matchedInput[1][splitterBase.shift()] );
+    return chunk;
+}
+
 
 function resolveTokenMap(
     tokens: AST_MAP,
@@ -33,27 +52,17 @@ function resolveTokenMap(
 ): string {
     const { config, chunks } = ctx;
     const input = { ...config.partialInput, ...config.templateInput, ...data };
-
     const partials = chunks.filter( chunk => chunk.type === 'partial' );
-
     const todoPartials = tokens.todo_partials.map( data => {
         return {
             ...data,
             registryMatch: partials.filter( partial => partial.name === data.name ).shift()
         };
     } );
-    todoPartials.forEach( ( curr ) => chunk = chunk.replace( curr.raw, curr.registryMatch.renderedChunk ?? curr.registryMatch.rawFile ) );
+    todoPartials.forEach( ( curr ) => chunk = chunk.replace( curr.raw, curr.registryMatch?.renderedChunk ?? curr.registryMatch?.rawFile ) );
     const newTokens = ParserV2.tokenize( chunk );
-
-    newTokens.todo_keys.forEach( key => {
-        const { name = '', raw = '' } = key;
-        chunk = chunk.replace( raw, input[name] );
-    } );
-
-    newTokens.todo_loops.forEach( loop => {
-        chunk = replaceIteratorKey( chunk, loop, input );
-    } );
-
+    newTokens.todo_keys.forEach( key => chunk = replaceKeyValue( chunk, key, input ) );
+    newTokens.todo_loops.forEach( loop => chunk = replaceIteratorKey( chunk, loop, input ) );
     return cleanHTML( chunk, ctx.config.intlCode );
 }
 

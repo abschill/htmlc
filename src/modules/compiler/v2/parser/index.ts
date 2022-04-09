@@ -20,9 +20,7 @@ export function mask(
     input: object
 ): string {
     const resolvedKeys = parseKeys( mask );
-    resolvedKeys.forEach( key => {
-        mask = mask.replace( key.token, input[key.key] );
-    } );
+    resolvedKeys.forEach( key => mask = mask.replace( key.token, input[key.key] ) );
     return mask;
 }
 
@@ -35,8 +33,8 @@ export function unmaskKey(
 export function parseKeys(
     chunk: string
 ) {
-    const reggie = /{\w+[\w}\d]*}/gi;
-    return chunk.match( reggie ).map( matcher => ( { token: matcher, key: unmaskKey( matcher )} ));
+    const reggie = /{\w+.?[\w|\d]*}/gi;
+    return chunk.match( reggie ).map( matcher => ( { token: matcher, key: unmaskKey( matcher )} ) );
 }
 
 export function tokenizeMatch(

@@ -10,14 +10,32 @@ const loader1 = createLoader( {
     partialInput,
     templateInput
 } );
-log( compile( {
-    template_name: 'home',
-    caller_data: {},
-    caller_ctx: loader0.ctx
-} ) );
+const loader2 = createLoader( {
+    pathRoot: 'test-pkg/nested_loopobject',
+    templates: 'templates',
+    templateInput: {
+        foo: {
+            bar: 'foobar'
+        },
+        page: {
+            title: 'Hello World'
+        }
+    }
+} );
+// log( compile( {
+//     template_name: 'home',
+//     caller_data: {},
+//     caller_ctx: loader0.ctx
+// } ) );
+//
+// log( compile( {
+//     template_name: 'home',
+//     caller_data: {},
+//     caller_ctx: loader1.ctx
+// } ) );
 
 log( compile( {
     template_name: 'home',
     caller_data: {},
-    caller_ctx: loader1.ctx
+    caller_ctx: loader2.ctx
 } ) );

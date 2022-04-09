@@ -1,4 +1,4 @@
-import { createLoader } from '../lib/loader';
+import { createLoader } from '../lib/loader/index.js';
 import { tokenize } from '../src/modules/compiler/v2/parser';
 import templateInput from './templateData.json';
 const myLoader = createLoader( {
