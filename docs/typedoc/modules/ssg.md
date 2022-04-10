@@ -1,4 +1,4 @@
-[html-chunk-loader - v0.5.15](../README.md) / [Modules](../modules.md) / ssg
+[html-chunk-loader - v0.6.1](../README.md) / [Modules](../modules.md) / ssg
 
 # Module: ssg
 
@@ -27,4 +27,4 @@
 
 #### Defined in
 
-[modules/cli/ssg/index.ts:20](https://github.com/abschill/html-chunk-loader/blob/5ef0cad/src/modules/cli/ssg/index.ts#L20)
+[modules/cli/ssg/index.ts:20](https://github.com/abschill/html-chunk-loader/blob/afc981e/src/modules/cli/ssg/index.ts#L20)
