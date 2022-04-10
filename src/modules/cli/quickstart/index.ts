@@ -4,12 +4,8 @@
  */
 import { DEFAULT_PATHS, FULL_DEFAULTS } from '../../../internal';
 import {
-	close,
 	existsSync,
 	mkdirSync,
-	copyFileSync,
-	openSync,
-	writeSync,
 	writeFileSync,
 } from 'fs';
 import {
@@ -21,12 +17,12 @@ const demoChunks = [
 	{
 		type: 'partial',
 		filename: 'head.html',
-		content: '<main><h1>My HTML Template</h1></main>'
+		content: '<head><title>Hello World</title></head>'
 	},
 	{
 		type: 'template',
 		filename: 'home.html',
-		content: '<head><title>Hello World</title></head>'
+		content: '<!--@partial=head--><main><h1>My HTML Template</h1></main>'
 	}
 ];
 
