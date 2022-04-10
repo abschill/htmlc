@@ -1,11 +1,11 @@
 {
   "name": "html-chunk-loader",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Node Template Engine using HTML Comments",
   "main": "index.js",
   "bin": {
-    "ssg": "lib/cli/ssg/index.js",
-    "quickstart": "lib/cli/quickstart/index.js"
+    "ssg": "lib/modules/cli/ssg/index.js",
+    "quickstart": "lib/modules/cli/quickstart/index.js"
   },
   "scripts": {
     "build": "tsc",

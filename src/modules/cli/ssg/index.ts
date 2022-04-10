@@ -8,7 +8,7 @@
     __write
 } from './tools';
 import { SSGOptions } from '../../../types';
-import { createLoader } from '../../../../';
+import { createLoader } from '../../../loader';
 import { createSSGConfig } from '../../core/config';
 
 /**
