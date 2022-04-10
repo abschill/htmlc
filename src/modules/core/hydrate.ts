@@ -3,7 +3,7 @@
  * @param { LoaderContext } config configuration file for loader
  * @returns runtime context for loader
  */
- import { findPartials, findTemplates } from '../../internal/util/fs';
+ import { findPartials, findTemplates } from '../../internal/fs';
  import { HCL_DEFAULTS } from '../../internal';
  import {
     HTMLChunk,

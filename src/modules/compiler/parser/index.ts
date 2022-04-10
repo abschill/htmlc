@@ -1,7 +1,7 @@
 import ABT from './abt';
 import {
     Token, AST_MAP
-} from '../../../../types';
+} from '../../../types';
 
 export const EMPTY_MAP: AST_MAP = {
     keys: [],

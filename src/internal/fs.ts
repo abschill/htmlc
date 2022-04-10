@@ -5,7 +5,7 @@ import {
 	HTMLChunk,
 	HTMLChunkType,
 	SSROptions
-} from '../../types';
+} from '../types';
 import {
 	readdirSync,
 	readFileSync,
@@ -15,7 +15,7 @@ import {
 	join,
 	resolve
 } from 'path';
-import { HCL_DEFAULTS } from '..';
+import { HCL_DEFAULTS } from '.';
 export const __WIN__ = '\\';
 export const __BSD__ = '/';
 

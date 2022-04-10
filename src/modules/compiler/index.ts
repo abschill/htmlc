@@ -2,9 +2,9 @@ import {
     CompilerArgs, 
     Token,
     LoaderContext,
-} from '../../../types';
+} from '../../types';
 import * as ParserV2 from './parser';
-import { cleanHTML } from '../../../internal/util/html';
+import { cleanHTML } from '../../internal/html';
 
 function replaceIteratorKey(
     chunk: string,

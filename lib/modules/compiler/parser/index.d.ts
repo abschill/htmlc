@@ -1,4 +1,4 @@
-import { Token, AST_MAP } from '../../../../types';
+import { Token, AST_MAP } from '../../../types';
 export declare const EMPTY_MAP: AST_MAP;
 export declare function hasSymbols(chunk: string): boolean;
 export declare function mask(mask: string, input: object): string;

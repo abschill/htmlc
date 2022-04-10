@@ -20,7 +20,7 @@
 import { hydrateConfig } from '../modules/core/hydrate';
 import { watch } from 'fs';
 import createDebugger from '../internal/debugger';
-import * as Compiler from '../modules/compiler/v2';
+import * as Compiler from '../modules/compiler';
 import { createSSRConfig } from '../modules/core/config';
 export {
     Loader,

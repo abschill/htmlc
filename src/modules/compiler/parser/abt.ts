@@ -1,4 +1,4 @@
-import { ParsableToken } from '../../../../types';
+import { ParsableToken } from '../../../types';
 
 function hasLoop(
     chunk: string

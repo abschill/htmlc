@@ -1,5 +1,5 @@
 import { createLoader } from '../src/loader';
-import { tokenize } from '../src/modules/compiler/v2/parser';
+import { tokenize } from '../src/modules/compiler/parser';
 import templateInput from './templateData.json';
 const myLoader = createLoader( {
     pathRoot: 'test-pkg/custom',

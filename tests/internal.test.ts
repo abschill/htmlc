@@ -6,7 +6,7 @@ const templates = 'templates';
 
 const i = createLoader( {
     pathRoot,
-    templates: templates,
+    templates,
     partialInput: partialData,
     templateInput: templateData
 } );

@@ -1,4 +1,4 @@
-import { HTMLChunk, HTMLChunkType, SSROptions } from '../../types';
+import { HTMLChunk, HTMLChunkType, SSROptions } from '../types';
 export declare const __WIN__ = "\\";
 export declare const __BSD__ = "/";
 export declare function validFileList(dir: string): string[];
