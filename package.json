@@ -1,7 +1,8 @@
 {
   "name": "html-chunk-loader",
-  "version": "0.6.3",
-  "description": "Node Template Engine using HTML Comments",
+  "version": "0.6.4",
+  "description": "Lightweight SSR/SSG Template Engine for Node",
+  "homepage": "https://html-chunk-loader.vercel.app/",
   "main": "index.js",
   "bin": {
     "ssg": "lib/modules/cli/ssg/index.js",

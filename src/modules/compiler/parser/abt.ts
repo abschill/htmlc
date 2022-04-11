@@ -21,7 +21,7 @@ function hasKey(
 function matchKeys(
     chunk: string
 ): string[] {
-    return chunk.match( /<!--@render=\w+.?[\w|\d]+-->/gi );
+    return chunk.match( /<!--@render=\w+.?[\w|\d|.]+-->/gi );
 }
 
 function matchPartial(

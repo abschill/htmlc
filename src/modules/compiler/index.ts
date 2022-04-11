@@ -26,6 +26,23 @@ function replaceIteratorKey(
     return chunk.replace( loop.raw, outStack.join( '' ) );
 }
 
+function matchInputWithSubkey(
+    input: object,
+    splitKeyName: string[]
+) {
+    if( splitKeyName.length === 2 ) {
+        const rootAncestor = splitKeyName[0];
+        const tailValue = splitKeyName[splitKeyName.length-1];
+        const childValue = input[rootAncestor][tailValue];
+        return childValue;
+    }
+    if( splitKeyName.length > 2 ) {
+        const t = splitKeyName.reduce( ( o,i )=> o[i], input );
+        return t;
+    }
+    return null;
+}
+
 function replaceKeyValue(
     chunk: string,
     key: Token,
@@ -36,9 +53,9 @@ function replaceKeyValue(
         return chunk;
     }
     const splitterBase = key.name.split( '.' );
-    const rootAncestor = splitterBase.shift();
-    const matchedInput = Object.entries( input ).filter( ( i: [ string, object ] ) => i[0] === rootAncestor ).shift();
-    return chunk.replace( key.raw, matchedInput[1][splitterBase.shift()] );
+    const matcher = matchInputWithSubkey( input, splitterBase );
+    if( !matcher ) return chunk.replace( key.raw, '' );
+    return chunk.replace( key.raw, matcher );
 }
 
 

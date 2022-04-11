@@ -1,6 +1,6 @@
-[html-chunk-loader - v0.6.1](README.md) / Modules
+[html-chunk-loader - v0.6.4](README.md) / Modules
 
-# html-chunk-loader - v0.6.1
+# html-chunk-loader - v0.6.4
 
 ## Table of contents
 

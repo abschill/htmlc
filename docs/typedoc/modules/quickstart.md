@@ -1,4 +1,4 @@
-[html-chunk-loader - v0.6.1](../README.md) / [Modules](../modules.md) / quickstart
+[html-chunk-loader - v0.6.4](../README.md) / [Modules](../modules.md) / quickstart
 
 # Module: quickstart
 
@@ -27,4 +27,4 @@
 
 #### Defined in
 
-[modules/cli/quickstart/index.ts:43](https://github.com/abschill/html-chunk-loader/blob/afc981e/src/modules/cli/quickstart/index.ts#L43)
+[modules/cli/quickstart/index.ts:39](https://github.com/abschill/html-chunk-loader/blob/c5f1f2b/src/modules/cli/quickstart/index.ts#L39)
