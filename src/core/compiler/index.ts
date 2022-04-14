@@ -14,7 +14,7 @@ function replaceIteratorKey (
 ): string {
     const rawContext = loop.raw;
     const outStack = [];
-    input[loop.name].forEach( ( entry: string | object ) => {
+    input[loop.name]?.forEach( ( entry: string | object ) => {
         const mask = rawContext.split( `<!--@loop(${loop.name}){` ).pop().split( '}-->' ).shift().trim();
         if( mask.includes( '{_}' ) ) {
             outStack.push( mask.replace( '{_}', <string>entry ) );
