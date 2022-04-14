@@ -10,8 +10,8 @@ import {
 } from '../types';
 export const DEBUG_DEFAULTS: 
 DebugConfig = {
-    logMode: <LogMode>'silent',
-    logStrategy: <LogStrategy>'none',
+    logMode: <LogMode>'stdout',
+    logStrategy: <LogStrategy>'verbose',
     logFile: null
 };
 

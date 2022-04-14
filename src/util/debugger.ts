@@ -8,7 +8,8 @@ import {
 	DebugEventSignature,
 	RuntimeEvent,
 	RT_EVENT_DATA,
-	DebugConfig
+	DebugConfig,
+	UDebugConfig
 } from '../types';
 import {
 	join,
@@ -25,12 +26,7 @@ import {
 	HCL_EVENT_MAP, 
 	DEBUG_DEFAULTS 
 } from '.';
-const {
-	log,
-	warn,
-	error
-} = console;
-
+const c = console;
 // export class Debugger {
 
 // 	runtimeOptions: SSROptions;
@@ -188,23 +184,30 @@ const {
 // 	return new Debugger( options );
 // }
 
+function cleanArgs(
+	args: UDebugConfig | true
+): DebugConfig {
+	if( args !== true ) return {...DEBUG_DEFAULTS, ...<UDebugConfig>args };
+	return DEBUG_DEFAULTS;
+}
+
 export function createDebugger( 
 	options: SSROptions | SSGOptions
 ) {
 	if( !options.debug ) {
 		return;
 	}
-	const config = <DebugConfig>options.debug;
+	const config = cleanArgs( options.debug );
 	//@ts-ignore
 	if( config.logMode === 'silent' ) {
 		return;
 	}
-	console.log( config );
+	c.log( FG_COLOR_ESCAPES.green, config );
 //
 	function log( event, msg ) {
 		//
-		console.log( event );
-		console.log( msg );
+		c.log( event );
+		c.log( msg );
 	}
 
 	return { log };

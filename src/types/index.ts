@@ -68,9 +68,12 @@ export type DebugEvent = {
 	signature: DebugEventSignature;
 	fatal: boolean;
 }
-export type LogStrategy = 'silent' | 'verbose';
+export type DebugPositive = true;
+export type DebugNegative = false;
+
+export type LogMode = 'silent' | 'verbose';
 // the method by which the debugger will process logging
-export type LogMode = 'none' | 'fs' | 'stdout' | 'both';
+export type LogStrategy = 'none' | 'fs' | 'stdout' | 'both';
 
 /**
  * Compiler/Parser Internals

@@ -16,6 +16,7 @@ const myLoader = createLoader( {
             }
         }
     },
+    debug: true,
     discoverPaths: true
 } );
 

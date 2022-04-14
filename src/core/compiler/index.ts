@@ -2,6 +2,7 @@ import {
     CompilerArgs, 
     Token,
     LoaderContext,
+    HTMLChunk
 } from '../../types';
 import * as ParserV2 from './parser';
 import { cleanHTML } from '../../util/html';
@@ -80,11 +81,18 @@ function resolveTokenMap (
     return cleanHTML( chunk, ctx.config.intlCode );
 }
 
+function filterRegistryChunk(
+    registry: HTMLChunk[],
+    name: string
+): HTMLChunk {
+    return registry.filter( chunk => chunk.name === name ).shift();
+}
+
 export function compile (
     args: CompilerArgs
 ): string {
-    const registry = args.caller_ctx.chunks;
-    const match = registry.filter( chunk => chunk.name === args.template_name ).shift();
+    const { chunks = [] } = args.caller_ctx;
+    const match = filterRegistryChunk( chunks, args.template_name );
     const toParse = ParserV2.hasSymbols( match.rawFile );
     // nothing to compile
     if( !toParse ) return match.rawFile;

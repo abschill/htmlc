@@ -50,8 +50,8 @@ export declare type DebugEvent = {
     signature: DebugEventSignature;
     fatal: boolean;
 };
-export declare type LogStrategy = 'silent' | 'verbose';
-export declare type LogMode = 'none' | 'fs' | 'stdout' | 'both';
+export declare type LogMode = 'silent' | 'verbose';
+export declare type LogStrategy = 'none' | 'fs' | 'stdout' | 'both';
 export declare type AST_MAP = {
     partials: Token[];
     keys: Token[];
