@@ -46,14 +46,15 @@ export interface USSGOptions extends UGlobalOptions {
  * Debug Types
  */
 export type DebugConfig = Defaulted<UDebugConfig>;
-export enum DebugEventMap {
-    STATUS = 0,
-    TRIGGER = 1,
-    WARNING = 2,
-    ERROR = 3
-}
+// -1 = unknown/unspecified runtime state
+// 0 = config setup
+// 1 = partial loading
+// 2 = template loading
 export type DebugEventPhase = -1 | 0 | 1 | 2;
-export type DebugEventType = 0 | 1;
+// 0 - verbose
+// 1 - default
+// 2 - critical
+export type DebugEventStatus = 0 | 1 | 2;
 export interface UDebugConfig {
     logFile ?: string; // file to log to
     logMode ?: LogMode; // mode for logger to run in (must be verbose with logFile)
@@ -62,14 +63,11 @@ export interface UDebugConfig {
 export type UUDebugConfig = boolean | UDebugConfig;
 
 export type DebugEventSignature = 'file:change' | 'watch:init' | 'loader:init' | 'partial:load' | 'template:load';
-export type DebugEvent = {
+export type DebugEventType = {
 	phase: DebugEventPhase;
-	type: DebugEventMap;
 	signature: DebugEventSignature;
 	fatal: boolean;
 }
-export type DebugPositive = true;
-export type DebugNegative = false;
 
 export type LogMode = 'silent' | 'verbose';
 // the method by which the debugger will process logging
@@ -92,7 +90,6 @@ export type Token = {
     name: string;
     raw: string;
 }
-export type MapType = 'todo_partials' | 'todo_keys' | 'todo_loops';
 
 /**
  * Other Runtime Internals
@@ -118,10 +115,6 @@ export type LoaderContext = {
     chunks: HTMLChunk[];
 };
 export type LIST_OR_VALUE<T> = T | T[];
-export type MappedEntry = [
-	key: MapType,
-	value: MAP_OR_LIST<string>
-];
 export type MAP_OR_LIST<T> = T[] | T[][];
 export type MAP_OR_LIST_OR_VALUE<T> = LIST_OR_VALUE<T> | T[][][];
 export type MappedValue = LIST_OR_VALUE<string>
@@ -132,8 +125,5 @@ export type RT_EVENT_DATA = {
     template_name: string;
     u_insert_map: object;
     c_insert_map: MapWithPartial;
-}
-export interface RuntimeEvent extends DebugEvent {
-    event_data: string | object
 }
 

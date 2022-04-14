@@ -1,5 +1,6 @@
 import { DebugConfig, SSROptions, SSGOptions, UGlobalOptions } from '../types';
 export declare const DEBUG_DEFAULTS: DebugConfig;
+export declare const DEBUG_BOOLTRUE: DebugConfig;
 export declare const __DEFAULTS__: UGlobalOptions;
 export declare const SSR_DEFAULTS: SSROptions;
 export declare const SSG_DEFAULTS: SSGOptions;

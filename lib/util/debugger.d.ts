@@ -1,4 +1,4 @@
-import { SSROptions, SSGOptions } from '../types';
+import { SSROptions, SSGOptions, DebugEventSignature } from '../types';
 export declare function createDebugger(options: SSROptions | SSGOptions): {
-    log: (event: any, msg: any) => void;
+    log: (event_signature: DebugEventSignature, data: unknown) => void;
 };

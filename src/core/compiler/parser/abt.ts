@@ -7,9 +7,11 @@ import {
     ABT_RENDER_SIGNATURE, 
     ABT_PARTIAL_SIGNATURE,
     ABT_LOOP_SIGNATURE,
+    ABT_PGROUP_SIGNATURE,
     ABT_RENDER_REGGIE,
     ABT_PARTIAL_REGGIE,
-    ABT_LOOP_OPEN_REGGIE
+    ABT_LOOP_OPEN_REGGIE,
+    ABT_PGROUP_REGGIE
 } from './constants';
 
 const hasLoop = (
@@ -19,6 +21,10 @@ const hasLoop = (
 const hasPartial = (
     chunk: string
 ) => chunk.includes( ABT_PARTIAL_SIGNATURE );
+
+const hasPGroup = (
+    chunk: string
+) => chunk.includes( ABT_PGROUP_SIGNATURE );
 
 const hasKey = (
     chunk: string
@@ -34,6 +40,12 @@ function matchPartial (
     chunk: string
 ): string[] {
     return chunk.match( ABT_PARTIAL_REGGIE );
+}
+
+function matchPGroup (
+    chunk: string
+): string[] {
+    return chunk.match( ABT_PGROUP_REGGIE );
 }
 
 function matchLoops (
@@ -59,6 +71,11 @@ const ABT: ParsableToken[] = [
         signature: '@partial',
         exists: hasPartial,
         asList: matchPartial
+    },
+    {
+        signature: '@partials',
+        exists: hasPGroup,
+        asList: matchPGroup
     },
     {
         signature: '@render',

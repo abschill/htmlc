@@ -4,10 +4,8 @@ import {
 	SSGOptions,
 	LogStrategy,
 	LogMode,
-	DebugEvent,
+	DebugEventType,
 	DebugEventSignature,
-	RuntimeEvent,
-	RT_EVENT_DATA,
 	DebugConfig,
 	UDebugConfig
 } from '../types';
@@ -202,12 +200,15 @@ export function createDebugger(
 	if( config.logMode === 'silent' ) {
 		return;
 	}
+	c.log( FG_COLOR_ESCAPES.green, 'html-chunk-loader: config loaded\n' );
 	c.log( FG_COLOR_ESCAPES.green, config );
-//
-	function log( event, msg ) {
-		//
-		c.log( event );
-		c.log( msg );
+	
+	function log ( 
+		event_signature: DebugEventSignature, 
+		data: unknown 
+	) {
+		c.log( FG_COLOR_ESCAPES.blue, `html-chunk-loader: ${event_signature}` );
+		c.log( <string>data );
 	}
 
 	return { log };

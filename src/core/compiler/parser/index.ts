@@ -1,4 +1,11 @@
 import ABT from './abt';
+
+import { 
+    ABT_LOOP_SIGNATURE,
+    ABT_PARTIAL_SIGNATURE,
+    ABT_RENDER_SIGNATURE,
+    ABT_PGROUP_SIGNATURE
+} from './constants';
 import {
     Token, AST_MAP
 } from '../../../types';
@@ -12,7 +19,10 @@ export const EMPTY_MAP: AST_MAP = {
 export function hasSymbols (
     chunk: string
 ): boolean {
-    return ( chunk.includes( '@render' ) || chunk.includes( '@loop' ) || chunk.includes( '@partial' ) || chunk.includes( '@pgroup' ) );
+    return ( chunk.includes( ABT_RENDER_SIGNATURE ) 
+            || chunk.includes( ABT_LOOP_SIGNATURE ) 
+            || chunk.includes( ABT_PARTIAL_SIGNATURE ) 
+            || chunk.includes( ABT_PGROUP_SIGNATURE ) );
 }
 
 export function mask (
@@ -63,11 +73,12 @@ export function tokenize (
             return acc;
         }
         switch( curr.signature ) {
-            case '@partial':
-                return {...acc, partials: matches.map( tokenizeMatch )};
-            case '@render':
+            case ABT_PARTIAL_SIGNATURE:
+            case ABT_PGROUP_SIGNATURE:
+                return {...acc, partials: [...acc.partials, ...matches.map( tokenizeMatch )]};
+            case ABT_RENDER_SIGNATURE:
                 return {...acc, keys: matches.map( tokenizeMatch )};
-            case '@loop':
+            case ABT_LOOP_SIGNATURE:
                 return {...acc, loops: matches.map( tokenizeMatch )};
             default:
                 return acc;

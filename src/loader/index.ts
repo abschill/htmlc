@@ -15,12 +15,14 @@
     USSGOptions,
     LoaderContext,
     SSROptions,
-    HTMLPage
+    HTMLPage,
+    DebugEventSignature
 } from '../types';
 import { Config } from '../core';
 import { watch } from 'fs';
 import { createDebugger } from '../util/debugger';
 import * as Compiler from '../core/compiler';
+import { DEBUG_DEFAULTS, DEBUG_BOOLTRUE } from '../util/index';
 /**
  * @function createLoader factory function for Loader
  * @description Rendering Context for templates
@@ -31,15 +33,22 @@ export function createLoader (
     u_config ?: USSROptions | USSGOptions 
 ): Loader {
     const hcl_config: SSROptions = Config.createSSRConfig( u_config );
-    const dbg = createDebugger( hcl_config );
+    let dbg: { log: ( event_signature: DebugEventSignature, data: unknown ) => void; } = null;
+
+    if( typeof hcl_config.debug === 'boolean' && hcl_config.debug === true ) {
+        const o = {...hcl_config, debug: DEBUG_BOOLTRUE };
+        dbg = createDebugger( o );
+    }
+    else if ( !hcl_config.debug && typeof hcl_config.debug === 'object' ) {
+        dbg = createDebugger( {debug: DEBUG_DEFAULTS, ...hcl_config} );
+    }
 
     let ctx: LoaderContext = Config.hydrateConfig( hcl_config );
     if( ctx.config.watch ) {
-
         ctx.chunks.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-                   // dbg.event( 'file:change', filename );
+                    dbg.log( 'file:change', `Chunk Updated at: ${filename}` );
 					ctx = Config.hydrateConfig( hcl_config );
                 }
             } );
