@@ -6,7 +6,7 @@ import {
 import * as ParserV2 from './parser';
 import { cleanHTML } from '../../util/html';
 
-function replaceIteratorKey(
+function replaceIteratorKey (
     chunk: string,
     loop: Token,
     input: object
@@ -26,7 +26,7 @@ function replaceIteratorKey(
     return chunk.replace( loop.raw, outStack.join( '' ) );
 }
 
-function matchInputWithSubkey(
+function matchInputWithSubkey (
     input: object,
     splitKeyName: string[]
 ) {
@@ -43,7 +43,7 @@ function matchInputWithSubkey(
     return null;
 }
 
-function replaceKeyValue(
+function replaceKeyValue (
     chunk: string,
     key: Token,
     input: object
@@ -59,7 +59,7 @@ function replaceKeyValue(
 }
 
 
-function resolveTokenMap(
+function resolveTokenMap (
     ctx: LoaderContext,
     data: object,
     chunk: string

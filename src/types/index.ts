@@ -1,6 +1,9 @@
 /**
  * Config Related Types
  */
+
+export type Defaulted<T> = Readonly<Required<T>>;
+
 export interface CompilerArgs {
     template_name: string;
     caller_ctx: LoaderContext;
@@ -10,9 +13,9 @@ export interface CompilerArgs {
 export type ConfigStringType = 'ssr' | 'ssg';
 export type ConfigType = SSROptions | SSGOptions;
 // cleaned ssg cli optoins
-export type SSGOptions = Readonly<Required<USSGOptions>>;
+export type SSGOptions = Defaulted<USSGOptions>;
 // cleaned arguments submitted to Loader constructor, defaulted if nonexistent
-export type SSROptions = Readonly<Required<USSROptions>>;
+export type SSROptions = Defaulted<USSROptions>;
 
 export type UGlobalOptions = {
     pathRoot ?: string; // directory to look for relative to process.cwd() default: views
@@ -26,7 +29,7 @@ export type UGlobalOptions = {
     debug ?: UUDebugConfig;
 }
 
-export type GlobalOptions = Readonly<Required<UGlobalOptions>>;
+export type GlobalOptions = Defaulted<UGlobalOptions>;
 
 // optional arguments for the createLoader factory function exclusively
 export interface USSROptions extends UGlobalOptions {
@@ -42,7 +45,7 @@ export interface USSGOptions extends UGlobalOptions {
 /**
  * Debug Types
  */
-export type DebugConfig = Required<UDebugConfig>;
+export type DebugConfig = Defaulted<UDebugConfig>;
 export enum DebugEventMap {
     STATUS = 0,
     TRIGGER = 1,
@@ -68,7 +71,6 @@ export type DebugEvent = {
 export type LogStrategy = 'silent' | 'verbose';
 // the method by which the debugger will process logging
 export type LogMode = 'none' | 'fs' | 'stdout' | 'both';
-
 
 /**
  * Compiler/Parser Internals
@@ -104,7 +106,6 @@ export type HTMLChunk = {
     isCached: boolean;
     needsRehydrate: boolean;
 }
-
 export interface Loader {
     ctx: LoaderContext;
     template: ( name: string, data ?: object ) => HTMLPage;
@@ -113,22 +114,17 @@ export type LoaderContext = {
     config: SSROptions;
     chunks: HTMLChunk[];
 };
-
 export type LIST_OR_VALUE<T> = T | T[];
-
 export type MappedEntry = [
 	key: MapType,
 	value: MAP_OR_LIST<string>
 ];
-
 export type MAP_OR_LIST<T> = T[] | T[][];
 export type MAP_OR_LIST_OR_VALUE<T> = LIST_OR_VALUE<T> | T[][][];
 export type MappedValue = LIST_OR_VALUE<string>
 export interface MapWithPartial {
     partialInput: object;
 }
-
-
 export type RT_EVENT_DATA = {
     template_name: string;
     u_insert_map: object;

@@ -15,7 +15,9 @@ import {
 const { log } = console;
 const demoChunks = require( './demo' );
 
-function createPath( path: string ) {
+function createPath( 
+	path: string 
+): void {
 	log( `Creating Directory at ${path}` );
 	mkdirSync( path );
 }

@@ -13,7 +13,7 @@ import {
 	ConfigType
 } from '../../types';
 
-export function genTypedFallbacks(
+export function genTypedFallbacks (
 	type: ConfigStringType,
 	args: ConfigType
 ): ConfigType {
@@ -23,7 +23,7 @@ export function genTypedFallbacks(
 	return {...SSR_DEFAULTS, ...args};
 }
 
-export function findConfig(
+export function findConfig (
 	type: ConfigStringType
 ): ConfigType {
     try {
@@ -34,7 +34,7 @@ export function findConfig(
     }
 }
 
-export function tryHCL(
+export function tryHCL (
 	type: ConfigStringType
 ): ConfigType {
 	const sig = `${type}_config`;

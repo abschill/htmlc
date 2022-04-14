@@ -1,3 +1,4 @@
+export declare type Defaulted<T> = Readonly<Required<T>>;
 export interface CompilerArgs {
     template_name: string;
     caller_ctx: LoaderContext;
@@ -5,8 +6,8 @@ export interface CompilerArgs {
 }
 export declare type ConfigStringType = 'ssr' | 'ssg';
 export declare type ConfigType = SSROptions | SSGOptions;
-export declare type SSGOptions = Readonly<Required<USSGOptions>>;
-export declare type SSROptions = Readonly<Required<USSROptions>>;
+export declare type SSGOptions = Defaulted<USSGOptions>;
+export declare type SSROptions = Defaulted<USSROptions>;
 export declare type UGlobalOptions = {
     pathRoot?: string;
     templates?: string;
@@ -18,7 +19,7 @@ export declare type UGlobalOptions = {
     intlCode?: string;
     debug?: UUDebugConfig;
 };
-export declare type GlobalOptions = Readonly<Required<UGlobalOptions>>;
+export declare type GlobalOptions = Defaulted<UGlobalOptions>;
 export interface USSROptions extends UGlobalOptions {
     watch?: boolean;
 }
@@ -27,7 +28,7 @@ export interface USSGOptions extends UGlobalOptions {
     loaderFile?: string;
     cleanup?: boolean;
 }
-export declare type DebugConfig = Required<UDebugConfig>;
+export declare type DebugConfig = Defaulted<UDebugConfig>;
 export declare enum DebugEventMap {
     STATUS = 0,
     TRIGGER = 1,

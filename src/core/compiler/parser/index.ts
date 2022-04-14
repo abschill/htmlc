@@ -9,13 +9,13 @@ export const EMPTY_MAP: AST_MAP = {
     partials: []
 };
 
-export function hasSymbols(
+export function hasSymbols (
     chunk: string
 ): boolean {
     return ( chunk.includes( '@render' ) || chunk.includes( '@loop' ) || chunk.includes( '@partial' ) || chunk.includes( '@pgroup' ) );
 }
 
-export function mask(
+export function mask (
     mask: string,
     input: object
 ): string {
@@ -24,20 +24,20 @@ export function mask(
     return mask;
 }
 
-export function unmaskKey(
+export function unmaskKey (
     key: string
 ): string {
     return key.replace( '{', '' ).replace( '}', '' );
 }
 
-export function parseKeys(
+export function parseKeys (
     chunk: string
 ) {
     const reggie = /{\w+.?[\w|\d]*}/gi;
     return chunk.match( reggie ).map( matcher => ( { token: matcher, key: unmaskKey( matcher )} ) );
 }
 
-export function tokenizeMatch(
+export function tokenizeMatch (
     token: string
 ): Token {
     if( token.includes( 'loop' ) ) {
@@ -54,7 +54,7 @@ export function tokenizeMatch(
     };
 }
 
-export function tokenize(
+export function tokenize (
     input: string
 ): AST_MAP {
     return ABT.reduce( ( acc, curr ) => {
@@ -74,3 +74,5 @@ export function tokenize(
         }
     }, EMPTY_MAP );
 }
+
+export * as ABT from './abt';

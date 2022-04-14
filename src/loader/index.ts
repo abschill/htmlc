@@ -27,8 +27,9 @@ import * as Compiler from '../core/compiler';
  * @returns Loader from config options
  * @param u_config user config options
  */
-export function createLoader( u_config ?: USSROptions | USSGOptions ):
-Loader {
+export function createLoader ( 
+    u_config ?: USSROptions | USSGOptions 
+): Loader {
     const hcl_config: SSROptions = Config.createSSRConfig( u_config );
     const dbg = createDebugger( hcl_config );
 
@@ -57,8 +58,9 @@ Loader {
 	 * @param name
 	 * @param data
 	 */
-    function template( name: string, data ?: object ):
-    HTMLPage {
+    function template ( 
+        name: string, data ?: object 
+    ): HTMLPage {
         return Compiler.compile( {
             template_name: name,
             caller_ctx: ctx,
@@ -66,8 +68,6 @@ Loader {
             // debug: dbg
         } );
     }
-    return {
-		ctx,
-		template
-	};
+
+    return {ctx, template};
 }

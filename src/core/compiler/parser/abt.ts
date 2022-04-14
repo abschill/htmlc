@@ -6,12 +6,15 @@
 import { 
     ABT_RENDER_SIGNATURE, 
     ABT_PARTIAL_SIGNATURE,
-    ABT_LOOP_SIGNATURE 
-} from './enums';
+    ABT_LOOP_SIGNATURE,
+    ABT_RENDER_REGGIE,
+    ABT_PARTIAL_REGGIE,
+    ABT_LOOP_OPEN_REGGIE
+} from './constants';
 
 const hasLoop = (
     chunk: string
-): boolean => chunk.includes( ABT_LOOP_SIGNATURE  );
+): boolean => chunk.includes( ABT_LOOP_SIGNATURE );
 
 const hasPartial = (
     chunk: string
@@ -21,23 +24,23 @@ const hasKey = (
     chunk: string
 ): boolean => chunk.includes( ABT_RENDER_SIGNATURE );
 
-function matchKeys(
+function matchKeys (
     chunk: string
 ): string[] {
-    return chunk.match( /<!--@render=\w+.?[\w|\d|.]+-->/gi );
+    return chunk.match( ABT_RENDER_REGGIE );
 }
 
-function matchPartial(
+function matchPartial (
     chunk: string
 ): string[] {
-    return chunk.match( /<!--@partial=\w+[\w|\d|/\\]*-->/gi );
+    return chunk.match( ABT_PARTIAL_REGGIE );
 }
 
-function matchLoops(
+function matchLoops (
     chunk: string
 ): string[] {
     const out: Array<string> = [];
-    const _opener = /<!--@loop\(\w+\){/gi;
+    const _opener = ABT_LOOP_OPEN_REGGIE;
     const opener = chunk.match( _opener );
     if( opener && opener?.length > 0 ) {
         opener.forEach( ( match: string ) => {
