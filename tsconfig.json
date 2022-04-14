@@ -11,13 +11,15 @@
         "sourceMap": true,
         "outDir": "./lib",
         "rootDir": "src",
-        "removeComments": true
+        "alwaysStrict": true,
+        "removeComments": true,
     },
     "include": [
-        "./src/**/*"   
+        "./src/**/*",
+        
     ],
-    "exclude":[
-        "./tests/**/*",
-        "./lib/**/*"
+    "exclude": [
+        "./lib/**/*",
+        "./tests/**/*"
     ]
 }

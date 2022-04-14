@@ -16,17 +16,11 @@
     LoaderContext,
     SSROptions,
     HTMLPage
-} from '../types/';
-import { hydrateConfig } from '../modules/core/hydrate';
+} from '../types';
+import { Config } from '../core';
 import { watch } from 'fs';
-import createDebugger from '../internal/debugger';
-import * as Compiler from '../modules/compiler';
-import { createSSRConfig } from '../modules/core/config';
-export {
-    Loader,
-    LoaderContext,
-    DebugConfig
-} from '../types/';
+import { createDebugger } from '../util/debugger';
+import * as Compiler from '../core/compiler';
 /**
  * @function createLoader factory function for Loader
  * @description Rendering Context for templates
@@ -35,24 +29,21 @@ export {
  */
 export function createLoader( u_config ?: USSROptions | USSGOptions ):
 Loader {
-    const hcl_config: SSROptions = createSSRConfig( u_config );
+    const hcl_config: SSROptions = Config.createSSRConfig( u_config );
     const dbg = createDebugger( hcl_config );
 
-    let ctx: LoaderContext = hydrateConfig( hcl_config );
+    let ctx: LoaderContext = Config.hydrateConfig( hcl_config );
     if( ctx.config.watch ) {
-        dbg.event( 'watch:init', 'watch enabled' );
+
         ctx.chunks.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-                    dbg.event( 'file:change', filename );
-					ctx = hydrateConfig( hcl_config );
+                   // dbg.event( 'file:change', filename );
+					ctx = Config.hydrateConfig( hcl_config );
                 }
             } );
         } );
     }
-
-	// new 0.5.11 - preload template to minimize execution time for ssr if there are any renderable chunks
-   // if( hcl_config.preload ) ctx.chunks = Compiler.preloadChunksV5( ctx );
 
     /**
 	 * @function template
@@ -72,7 +63,7 @@ Loader {
             template_name: name,
             caller_ctx: ctx,
             caller_data: data,
-            debug: dbg
+            // debug: dbg
         } );
     }
     return {

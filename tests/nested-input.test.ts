@@ -1,4 +1,4 @@
-import { createLoader } from '../lib/loader/index.js';
+import { createLoader } from '../src/loader';
 const myLoader = createLoader( {
     pathRoot: 'test-pkg/nested_loopobject',
     partials: 'partials',

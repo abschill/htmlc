@@ -6,3 +6,4 @@ public/**/*
 *.lock
 gitignore.*
 static-paths.js
+.idea
