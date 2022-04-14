@@ -60,3 +60,4 @@ export * from './color-escape';
 export * from './fs';
 export * from './html';
 export * from './event-map';
+export *  from './wrap-fn';

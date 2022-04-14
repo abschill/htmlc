@@ -2,7 +2,8 @@ import { resolve } from 'path';
 import { existsSync } from 'fs';
 import {
 	SSR_DEFAULTS,
-	SSG_DEFAULTS
+	SSG_DEFAULTS,
+	wrap
 } from '../../util';
 import {
 	SSROptions,
@@ -26,12 +27,7 @@ export function genTypedFallbacks (
 export function findConfig (
 	type: ConfigStringType
 ): ConfigType {
-    try {
-		return tryHCL( type );
-    }
-    catch( e ) {
-        return tryPackage( type );
-    }
+	return wrap( () => tryHCL( type ), () => tryPackage( type ) );
 }
 
 export function tryHCL (

@@ -8,14 +8,14 @@ import {
     HTMLChunk
 } from '../../../types';
 
-export function ensureOutPath(
+export function ensureOutPath (
     outPath: string
 ): void {
     return existsSync( outPath ) ?
     null : mkdirSync( outPath );
 }
 
-export function pathify(
+export function pathify (
     template: HTMLChunk,
     contextPath: string
 ): string {
@@ -23,7 +23,7 @@ export function pathify(
     return path.resolve( path.resolve( process.cwd(), contextPath ), toName );
 }
 
-export function __write(
+export function __write (
     args: {
         toName: string,
         toWrite: string
