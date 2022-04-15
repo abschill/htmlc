@@ -12,6 +12,7 @@ const myLoader = createLoader( {
     templateInput: {
         generic_page_content: 'Generic Page Content'
     },
+    debug: true,
     discoverPaths: true
 } );
 const chonk = myLoader.template( 'chonk', {

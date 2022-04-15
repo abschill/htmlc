@@ -8,3 +8,5 @@ gitignore.*
 static-paths.js
 .idea
 lib
+.husky
+hcl.log

@@ -20,13 +20,10 @@ import {
 	existsSync
 } from 'fs';
 import { 
-	SSR_DEFAULTS, 
 	FG_COLOR_ESCAPES, 
-	HCL_EVENT_MAP, 
-	DEBUG_DEFAULTS 
 } from '.';
-const c = console;
 import { checkDebug } from '../core/config';
+const c = console.log;
 export function createDebugger( 
 	options: SSROptions | SSGOptions
 ) {
@@ -38,15 +35,14 @@ export function createDebugger(
 	if( config.logMode === 'silent' ) {
 		return;
 	}
-	c.log( FG_COLOR_ESCAPES.green, 'html-chunk-loader: config loaded\n' );
-	c.log( FG_COLOR_ESCAPES.green, config );
+	c( '\x1b[42m%s\x1b[37m', 'html-chunk-loader: ', '\x1b[47m', 'debug enabled\n' );
 	
 	function log ( 
 		event_signature: DebugEventSignature, 
-		data: unknown 
+		data: object | string,
 	) {
-		c.log( FG_COLOR_ESCAPES.blue, `html-chunk-loader: ${event_signature}` );
-		c.log( <string>data );
+		c( FG_COLOR_ESCAPES.blue, 'html-chunk-loader:', '\x1b[37m', event_signature );
+		c( data );
 	}
 
 	return { log };
