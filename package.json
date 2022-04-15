@@ -1,6 +1,6 @@
 {
   "name": "html-chunk-loader",
-  "version": "0.6.4",
+  "version": "0.6.6-canary1~.0",
   "description": "Lightweight SSR/SSG Template Engine for Node",
   "homepage": "https://html-chunk-loader.vercel.app/",
   "main": "index.js",
