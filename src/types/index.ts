@@ -1,14 +1,13 @@
 /**
  * Config Related Types
  */
-
 export type Defaulted<T> = Readonly<Required<T>>;
 
 export interface CompilerArgs {
-    template_name: string;
-    caller_ctx: LoaderContext;
-    caller_data ?: object;
-    debug ?: Debugger;
+    templateName: string;
+    ctx: LoaderContext;
+    callData ?: object;
+    debugger ?: Debugger;
 }
 export type ConfigStringType = 'ssr' | 'ssg';
 export type ConfigType = SSROptions | SSGOptions;
@@ -42,12 +41,14 @@ export interface USSGOptions extends UGlobalOptions {
     cleanup ?: boolean; //whether or not to clear the outPath before writing the files
 }
 
+export type AnyLoadConfig = GlobalOptions | UGlobalOptions | USSGOptions | USSROptions | SSROptions | SSGOptions; 
+
 /**
  * Debug Types
  */
-
+export type DebugLogArgs = [eventSignature: DebugEventSignature, data: unknown];
 export type Debugger = {
-    log: ( event_signature: DebugEventSignature, data: unknown ) => void
+    log: ( ...DebugLogArgs ) => void;
 }
 
 export type DebugConfig = Defaulted<UDebugConfig>;
@@ -56,7 +57,7 @@ export type DebugConfig = Defaulted<UDebugConfig>;
 // 1 = chunk resolving
 // 2 = chunk tokenizing
 // 3 = chunk rendering
-export type DebugEventPhase = -1 | 0 | 1 | 2;
+export type DebugEventPhase = -1 | 0 | 1 | 2 | 3;
 
 // 0 - verbose
 // 1 - default
@@ -69,7 +70,7 @@ export interface UDebugConfig {
 }
 export type UUDebugConfig = boolean | UDebugConfig;
 
-export type DebugEventSignature = 'file:change' | 'watch:init' | 'loader:init' | 'compiler:resolutions' | 'partial:load' | 'template:load';
+export type DebugEventSignature = 'parser:tokenize' | 'file:change' | 'watch:init' | 'loader:init' | 'compiler:resolutions' | 'partial:load' | 'template:load';
 export type DebugEventType = {
 	phase: DebugEventPhase;
 	signature: DebugEventSignature;
@@ -79,6 +80,13 @@ export type DebugEventType = {
 export type LogMode = 'silent' | 'verbose';
 // the method by which the debugger will process logging
 export type LogStrategy = 'none' | 'fs' | 'stdout' | 'both';
+
+export interface CallerDebugArgs {
+    errorSuppression: boolean;
+    logMode: LogMode;
+    logStrategy: LogStrategy;
+    debugger: Debugger;
+}
 
 /**
  * Compiler/Parser Internals
@@ -113,9 +121,12 @@ export type HTMLChunk = {
     isCached: boolean;
     needsRehydrate: boolean;
 }
-export interface Loader {
+export type HTMLChunkRenderArgs = [name: string, data ?: object];
+export type HTMLChunkRenderFN = ( ...HTMLChunkRenderArgs ) => HTMLPage;
+
+export interface HTMLChunkLoader {
     ctx: LoaderContext;
-    template: ( name: string, data ?: object ) => HTMLPage;
+    template: HTMLChunkRenderFN;
 }
 export type LoaderContext = {
     config: SSROptions;
@@ -128,9 +139,8 @@ export type MappedValue = LIST_OR_VALUE<string>
 export interface MapWithPartial {
     partialInput: object;
 }
-export type RT_EVENT_DATA = {
-    template_name: string;
-    u_insert_map: object;
-    c_insert_map: MapWithPartial;
-}
 
+/**
+ * Locale Enums
+ */
+export { toLocale } from './locale';

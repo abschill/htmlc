@@ -6,7 +6,7 @@ import {
     LogMode,
     LogStrategy,
     GlobalOptions,
-    UGlobalOptions 
+    toLocale
 } from '../types';
 export const DEBUG_DEFAULTS: 
 DebugConfig = {
@@ -23,14 +23,14 @@ DebugConfig = {
 };
 
 export const __DEFAULTS__:
-UGlobalOptions = {
+GlobalOptions = {
     pathRoot: 'views',
     templates: 'pages',
     partials: 'partials',
     templateInput: {},
     partialInput: {},
     discoverPaths: true,
-    intlCode: 'en',
+    intlCode: toLocale( 'en_US' ),
     errorSuppression: false,
     debug: <DebugConfig>DEBUG_DEFAULTS
 };

@@ -10,19 +10,22 @@
      * ```
  */
  import {
-    Loader,
+    HTMLChunkLoader,
     USSROptions,
     USSGOptions,
     LoaderContext,
     SSROptions,
     HTMLPage,
-    Debugger
+    Debugger,
+    toLocale
 } from '../types';
 import { Config } from '../core';
 import { watch } from 'fs';
 import { createDebugger } from '../util/debugger';
 import * as Compiler from '../core/compiler';
-import { DEBUG_DEFAULTS, DEBUG_BOOLTRUE } from '../util/index';
+import { DEBUG_DEFAULTS, DEBUG_BOOLTRUE } from '../util';
+import { checkIntlCode } from '../core/config/check-intl';
+import { SSR_DEFAULTS } from '../util/index';
 /**
  * @function createLoader factory function for Loader
  * @description Rendering Context for templates
@@ -31,7 +34,13 @@ import { DEBUG_DEFAULTS, DEBUG_BOOLTRUE } from '../util/index';
  */
 export function createLoader ( 
     u_config ?: USSROptions | USSGOptions 
-): Loader {
+): HTMLChunkLoader {
+
+    if( u_config ) {
+        // validate user config options
+        u_config.intlCode = checkIntlCode( u_config );
+    }
+
     const hcl_config: SSROptions = Config.createSSRConfig( u_config );
     let dbg: Debugger = null;
 
@@ -41,6 +50,9 @@ export function createLoader (
     }
     else if ( !hcl_config.debug && typeof hcl_config.debug === 'object' ) {
         dbg = createDebugger( {debug: DEBUG_DEFAULTS, ...hcl_config} );
+    }
+    else if ( !hcl_config.debug ) {
+        dbg = null;
     }
 
     let ctx: LoaderContext = Config.hydrateConfig( hcl_config );
@@ -74,10 +86,10 @@ export function createLoader (
         name: string, data ?: object 
     ): HTMLPage {
         return Compiler.compile( {
-            template_name: name,
-            caller_ctx: ctx,
-            caller_data: data,
-            debug: dbg
+            templateName: name,
+            ctx: ctx,
+            callData: data,
+            debugger: dbg 
         } );
     }
 

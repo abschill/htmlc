@@ -81,3 +81,4 @@ export function createSSGConfig (
 }
 
 export * from './hydrate';
+export * from './check-debug';

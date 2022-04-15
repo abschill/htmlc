@@ -4,7 +4,7 @@ export const HCL_EVENT_MAP: DebugEventType[] = [
 	{
 		phase: 0,
 		signature: 'loader:init',
-		fatal: false
+		fatal: true
 	},
 	{
 		phase: 0,
@@ -18,12 +18,22 @@ export const HCL_EVENT_MAP: DebugEventType[] = [
 	},
 	{
 		phase: 1,
+		signature: 'parser:tokenize',
+		fatal: true
+	},
+	{
+		phase: 2,
 		signature: 'partial:load',
 		fatal: false
 	},
 	{
-		phase: 2,
+		phase: 3,
 		signature: 'template:load',
-		fatal: false
+		fatal: true
+	},
+	{
+		phase: 2,
+		signature: 'compiler:resolutions',
+		fatal: true
 	}
 ];

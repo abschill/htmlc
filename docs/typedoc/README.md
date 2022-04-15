@@ -30,7 +30,7 @@ To import the correct module in ES6/Typescript, make sure to import from the pat
 import { createLoader } from 'html-chunk-loader/lib/loader';
 ```
 
-[API Reference](https://github.com/abschill/html-chunk-loader/tree/master/docs/reference/readme.md)
+[API Reference](https://html-chunk-loader.vercel.app/)
 
 [Example Repos](https://github.com/abschill/html-chunk-loader-examples)
 

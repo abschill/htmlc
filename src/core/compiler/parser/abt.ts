@@ -4,6 +4,7 @@
  * Abstract binding tree for template directives with typed callbacks
  */
 import { 
+    ABT_CLOSE_SCOPE,
     ABT_RENDER_SIGNATURE, 
     ABT_PARTIAL_SIGNATURE,
     ABT_LOOP_SIGNATURE,
@@ -58,7 +59,7 @@ function matchLoops (
         opener.forEach( ( match: string ) => {
             const chopBottom = chunk.slice( chunk.indexOf( match ), chunk.length );
             if( chopBottom ) {
-                const ret = chopBottom?.slice( 0, chopBottom.indexOf( '}-->' ) + 4 );
+                const ret = chopBottom?.slice( 0, chopBottom.indexOf( ABT_CLOSE_SCOPE ) + 4 );
                 if ( ret ) out.push( ret );
             }
         } );
@@ -68,7 +69,7 @@ function matchLoops (
 
 const ABT: ParsableToken[] = [
     {
-        signature: '@partial',
+        signature: ABT_PARTIAL_SIGNATURE,
         exists: hasPartial,
         asList: matchPartial
     },
@@ -78,12 +79,12 @@ const ABT: ParsableToken[] = [
     //     asList: matchPGroup
     // },
     {
-        signature: '@render',
+        signature: ABT_RENDER_SIGNATURE,
         exists: hasKey,
         asList: matchKeys
     },
     {
-        signature: '@loop',
+        signature: ABT_LOOP_SIGNATURE,
         exists: hasLoop,
         asList: matchLoops
     },

@@ -4,7 +4,7 @@ const myLoader = createLoader( {
     pathRoot: 'test-pkg/big-bertha',
     templates: 'templates',
     partials: 'partials',
-    intlCode: 'es',
+    intlCode: 'en_ES',
     partialInput: {
         partial_one_data: 'Partial One',
         partial_four_data: 'Partial four'
@@ -12,6 +12,7 @@ const myLoader = createLoader( {
     templateInput: {
         generic_page_content: 'Generic Page Content'
     },
+    debug: true,
     discoverPaths: true
 } );
 const chonk = myLoader.template( 'chonk', {
@@ -29,7 +30,7 @@ const chonk = myLoader.template( 'chonk', {
 
 describe( 'Chonky Boi', () => {
     it( 'Loads es lang attribute', () => {
-        expect( chonk ).toMatch( '<html lang="es"' );
+        expect( chonk ).toMatch( '<html lang="en-ES"' );
     } );
 
     it( 'registers discovered partials in template', () => {
