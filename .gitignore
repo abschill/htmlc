@@ -7,3 +7,4 @@ public/**/*
 gitignore.*
 static-paths.js
 .idea
+lib

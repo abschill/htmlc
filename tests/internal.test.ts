@@ -11,18 +11,10 @@ const i = createLoader( {
     templateInput: templateData
 } );
 
-
 describe( 'Internal Config Testing', () => {
-    
-    it( 'Loads Conf Root', () => {
+    it( 'Loads Conf', () => {
         expect( i.ctx.config.pathRoot ).toBe( 'test-pkg/def' );
-    } );
-
-    // it( 'Sets correct default debug options', () => expect( i.ctx.config.debug ) );
-
-    it( 'Loads Conf Templates', () => {
         expect( i.ctx.config.templates ).toBe( templates );
+        expect( Object.keys( i.ctx.config.templateInput ).length ).toBeGreaterThan( 0 );
     } );
-
-    it( 'Load constructor data', () => expect( Object.keys( i.ctx.config.templateInput ).length ).toBeGreaterThan( 0 ) );
 } );

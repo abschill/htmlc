@@ -15,9 +15,7 @@ const myLoader = createLoader( {
                 heading1: 'Page Subtitle'
             }
         }
-    },
-    debug: true,
-    discoverPaths: true
+    }
 } );
 
 const tester = myLoader.template( 'home' );

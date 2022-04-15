@@ -8,7 +8,7 @@ export interface CompilerArgs {
     template_name: string;
     caller_ctx: LoaderContext;
     caller_data ?: object;
-    // debug ?: Debugger;
+    debug ?: Debugger;
 }
 export type ConfigStringType = 'ssr' | 'ssg';
 export type ConfigType = SSROptions | SSGOptions;
@@ -45,12 +45,19 @@ export interface USSGOptions extends UGlobalOptions {
 /**
  * Debug Types
  */
+
+export type Debugger = {
+    log: ( event_signature: DebugEventSignature, data: unknown ) => void
+}
+
 export type DebugConfig = Defaulted<UDebugConfig>;
 // -1 = unknown/unspecified runtime state
-// 0 = config setup
-// 1 = partial loading
-// 2 = template loading
+// 0 = runtime setup
+// 1 = chunk resolving
+// 2 = chunk tokenizing
+// 3 = chunk rendering
 export type DebugEventPhase = -1 | 0 | 1 | 2;
+
 // 0 - verbose
 // 1 - default
 // 2 - critical
@@ -62,7 +69,7 @@ export interface UDebugConfig {
 }
 export type UUDebugConfig = boolean | UDebugConfig;
 
-export type DebugEventSignature = 'file:change' | 'watch:init' | 'loader:init' | 'partial:load' | 'template:load';
+export type DebugEventSignature = 'file:change' | 'watch:init' | 'loader:init' | 'compiler:resolutions' | 'partial:load' | 'template:load';
 export type DebugEventType = {
 	phase: DebugEventPhase;
 	signature: DebugEventSignature;

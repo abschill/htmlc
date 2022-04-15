@@ -3,8 +3,7 @@ import ABT from './abt';
 import { 
     ABT_LOOP_SIGNATURE,
     ABT_PARTIAL_SIGNATURE,
-    ABT_RENDER_SIGNATURE,
-    ABT_PGROUP_SIGNATURE
+    ABT_RENDER_SIGNATURE
 } from './constants';
 import {
     Token, AST_MAP
@@ -21,8 +20,7 @@ export function hasSymbols (
 ): boolean {
     return ( chunk.includes( ABT_RENDER_SIGNATURE ) 
             || chunk.includes( ABT_LOOP_SIGNATURE ) 
-            || chunk.includes( ABT_PARTIAL_SIGNATURE ) 
-            || chunk.includes( ABT_PGROUP_SIGNATURE ) );
+            || chunk.includes( ABT_PARTIAL_SIGNATURE )  );
 }
 
 export function mask (
@@ -74,7 +72,6 @@ export function tokenize (
         }
         switch( curr.signature ) {
             case ABT_PARTIAL_SIGNATURE:
-            case ABT_PGROUP_SIGNATURE:
                 return {...acc, partials: [...acc.partials, ...matches.map( tokenizeMatch )]};
             case ABT_RENDER_SIGNATURE:
                 return {...acc, keys: matches.map( tokenizeMatch )};

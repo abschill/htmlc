@@ -27,52 +27,23 @@ const chonk = myLoader.template( 'chonk', {
     chonk8: 'chonk8'
 } );
 
-describe( 'Loads en espanol', () => {
+describe( 'Chonky Boi', () => {
     it( 'Loads es lang attribute', () => {
         expect( chonk ).toMatch( '<html lang="es"' );
     } );
-} );
 
-describe( 'Discover Paths', () => {
-
-    it( 'registers names with slash chars in template', () => {
+    it( 'registers discovered partials in template', () => {
         expect( myLoader.ctx.chunks.filter( chunk => chunk.type === 'partial' ).filter( partial => partial.name.includes( '/' ) ).length ).toBe( 4 );
     } );
 
-    it( 'Loads ee', () => {
-        expect( chonk ).toMatch( '<p>ee</p>' );
-    } );
-
-    it( 'Loads Deeper Nest', () => {
+    it( 'Loads Nest', () => {
         expect( chonk ).toMatch( '<p>baz</p>' );
-    } );
-
-    it( 'matches lorem signature', () => {
+        expect( chonk ).toMatch( '<p>ee</p>' );
         expect( chonk ).toMatch( 'Lorem ipsum dolor sit amet' );
-    } );
-
-    it( 'Compiles all Inputs', () => {
-        expect( chonk ).not.toMatch( '<!--@render' );
-    } );
-
-    it( 'Compiles all Inputs', () => {
-        expect( chonk ).not.toMatch( '<!--@partial' );
-    } );
-    
-    it( 'Compiles all loops', () => {
-        expect( chonk ).not.toMatch( '<!--@loop' );
-    } );
-} );
-
-describe( 'Handles high volume data renders', () => {
-    it( 'Loads Partial Inline w/ constructor', () => {
         expect( chonk ).toMatch( 'Partial One' );
         expect( chonk ).toMatch( 'Hello World' );
         expect( chonk ).toMatch( 'Partial Two' );
         expect( chonk ).toMatch( 'Partial four' );
-    } );
-
-    it( 'Loads without crashing or dropping input', () => {
         expect( chonk ).toMatch( 'chonk' );
         expect( chonk ).toMatch( 'Generic Page Content' );
         for( const num of [1,2,3,4,5,6,7,8] ) {
@@ -80,6 +51,12 @@ describe( 'Handles high volume data renders', () => {
         }
     } );
 
+    it( 'Compiles all Inputs', () => {
+        expect( chonk ).not.toMatch( '<!--@render' );
+        expect( chonk ).not.toMatch( '<!--@partial' );
+        expect( chonk ).not.toMatch( '<!--@loop' );
+    } );
+    
     it( 'Has no silent errors', () => {
         expect( chonk.includes( 'undefined' ) ).toBeFalsy();
     } );

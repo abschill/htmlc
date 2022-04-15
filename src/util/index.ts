@@ -32,7 +32,7 @@ UGlobalOptions = {
     discoverPaths: true,
     intlCode: 'en',
     errorSuppression: false,
-    debug: DEBUG_DEFAULTS
+    debug: <DebugConfig>DEBUG_DEFAULTS
 };
 
 export const SSR_DEFAULTS: 

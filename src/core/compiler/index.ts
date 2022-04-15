@@ -2,7 +2,8 @@ import {
     CompilerArgs, 
     Token,
     LoaderContext,
-    HTMLChunk
+    HTMLChunk,
+    DebugConfig
 } from '../../types';
 import * as ParserV2 from './parser';
 import { cleanHTML } from '../../util/html';
@@ -91,6 +92,10 @@ function filterRegistryChunk(
 export function compile (
     args: CompilerArgs
 ): string {
+    const debugOpts = <DebugConfig>args.caller_ctx.config.debug; 
+    const { debug } = args;
+    const toWrite = debugOpts.logMode === 'verbose';
+    if( toWrite ) debug.log( 'compiler:resolutions', `Compiling Template ${args.template_name}` );
     const { chunks = [] } = args.caller_ctx;
     const match = filterRegistryChunk( chunks, args.template_name );
     const toParse = ParserV2.hasSymbols( match.rawFile );
