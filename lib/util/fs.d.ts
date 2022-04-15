@@ -1,0 +1,11 @@
+import { HTMLChunk, HTMLChunkType, SSROptions } from '../types';
+export declare const __WIN__ = "\\";
+export declare const __BSD__ = "/";
+export declare function validFileList(dir: string): string[];
+export declare function mapPath(splitter: string[], basename: string, sysSplit: string): string;
+export declare function fileMap(path: string, splitter: string[], basename: string, type: HTMLChunkType): HTMLChunk;
+export declare function createFileMap(filepath: string, basepath: string, type: HTMLChunkType): HTMLChunk;
+export declare function readValidFSTree(dir: string): string[];
+export declare const mapPathList: (paths: string[], base: string, type: HTMLChunkType) => HTMLChunk[];
+export declare function findPartials({ partials, pathRoot, discoverPaths }: SSROptions): HTMLChunk[] | null;
+export declare function findTemplates({ templates, pathRoot, discoverPaths }: SSROptions): HTMLChunk[] | null;

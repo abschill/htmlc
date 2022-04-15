@@ -1,0 +1,10 @@
+export declare const ABT_DT = "@";
+export declare const ABT_RENDER_SIGNATURE: string;
+export declare const ABT_PARTIAL_SIGNATURE: string;
+export declare const ABT_LOOP_SIGNATURE: string;
+export declare const ABT_PARTIAL_REGGIE: RegExp;
+export declare const ABT_RENDER_REGGIE: RegExp;
+export declare const ABT_LOOP_OPEN_REGGIE: RegExp;
+export declare const ABT_OPEN_SCOPE = "<!--";
+export declare const ABT_CLOSE_SCOPE = "-->";
+export declare const ABT_CLOSE_LOOP_SCOPE: string;
