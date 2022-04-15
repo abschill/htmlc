@@ -1,4 +1,4 @@
-enum Locale {
+export enum Locale {
     af = 'af',
     af_NA = 'af-NA',
     af_ZA = 'af-ZA',
@@ -735,5 +735,10 @@ enum Locale {
 export function toLocale(
     input: string
 ): Locale {
-    return Locale[input];
+    try {
+        return Locale[`${input}`];
+    }
+    catch( e ) {
+        return Locale.en;
+    }
 }

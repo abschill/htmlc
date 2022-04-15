@@ -1,9 +1,9 @@
 import ABT from './abt';
-
 import { 
     ABT_LOOP_SIGNATURE,
     ABT_PARTIAL_SIGNATURE,
-    ABT_RENDER_SIGNATURE
+    ABT_RENDER_SIGNATURE,
+    ABT_CLOSE_SCOPE
 } from './constants';
 import {
     Token, AST_MAP
@@ -48,14 +48,14 @@ export function parseKeys (
 export function tokenizeMatch (
     token: string
 ): Token {
-    if( token.includes( 'loop' ) ) {
+    if( token.includes( ABT_LOOP_SIGNATURE ) ) {
         const name = token.split( '(' ).pop().split( ')' ).shift();
         return {
             name,
             raw: token
         };
     }
-    const name = token.split( '=' ).pop().split( '-->' ).shift();
+    const name = token.split( '=' ).pop().split( ABT_CLOSE_SCOPE ).shift();
     return {
         name,
         raw: token

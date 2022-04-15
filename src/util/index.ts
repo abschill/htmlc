@@ -30,7 +30,7 @@ GlobalOptions = {
     templateInput: {},
     partialInput: {},
     discoverPaths: true,
-    intlCode: toLocale( 'en_US' ),
+    intlCode: toLocale( 'en' ),
     errorSuppression: false,
     debug: <DebugConfig>DEBUG_DEFAULTS
 };

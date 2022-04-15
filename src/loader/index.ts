@@ -25,7 +25,6 @@ import { createDebugger } from '../util/debugger';
 import * as Compiler from '../core/compiler';
 import { DEBUG_DEFAULTS, DEBUG_BOOLTRUE } from '../util';
 import { checkIntlCode } from '../core/config/check-intl';
-import { SSR_DEFAULTS } from '../util/index';
 /**
  * @function createLoader factory function for Loader
  * @description Rendering Context for templates
@@ -36,10 +35,10 @@ export function createLoader (
     u_config ?: USSROptions | USSGOptions 
 ): HTMLChunkLoader {
 
-    if( u_config ) {
-        // validate user config options
-        u_config.intlCode = checkIntlCode( u_config );
-    }
+    // if( u_config && u_config.intlCode ) {
+    //     // validate user config options
+    //     u_config.intlCode = checkIntlCode( u_config );
+    // }
 
     const hcl_config: SSROptions = Config.createSSRConfig( u_config );
     let dbg: Debugger = null;

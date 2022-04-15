@@ -143,4 +143,4 @@ export interface MapWithPartial {
 /**
  * Locale Enums
  */
-export { toLocale } from './locale';
+export { Locale, toLocale } from './locale';

@@ -1,7 +1,6 @@
 import {
     ABT_OPEN_SCOPE,
     ABT_CLOSE_SCOPE,
-    ABT_DT,
     ABT_LOOP_SIGNATURE
 } from './constants';
 

@@ -4,7 +4,8 @@ import {
     LoaderContext,
     HTMLChunk,
     DebugConfig,
-    CallerDebugArgs
+    CallerDebugArgs,
+    Locale
 } from '../../types';
 import * as ParserV2 from './parser';
 import { cleanHTML } from '../../util/html';
@@ -107,7 +108,8 @@ function tokenMap (
         debug.debugger.log( 'parser:tokenize:hydrated-loopdata', chunk );
         debug.debugger.log( 'parser:tokenize:processing-tempalte', chunk );
     }
-    return cleanHTML( chunk, ctx.config.intlCode );
+    
+    return cleanHTML( chunk, ctx.config.intlCode ?? Locale.en_US );
 }
 
 function filterRegistryChunk(

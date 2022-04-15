@@ -12,7 +12,6 @@ const myLoader = createLoader( {
     templateInput: {
         generic_page_content: 'Generic Page Content'
     },
-    debug: true,
     discoverPaths: true
 } );
 const chonk = myLoader.template( 'chonk', {
@@ -30,7 +29,7 @@ const chonk = myLoader.template( 'chonk', {
 
 describe( 'Chonky Boi', () => {
     it( 'Loads es lang attribute', () => {
-        expect( chonk ).toMatch( '<html lang="en-ES"' );
+        expect( chonk ).toMatch( '<html lang="en_ES"' );
     } );
 
     it( 'registers discovered partials in template', () => {
