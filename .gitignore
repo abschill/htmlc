@@ -3,7 +3,6 @@ dist
 examples/**/node_modules
 public
 public/**/*
-*.lock
 gitignore.*
 static-paths.js
 .idea
