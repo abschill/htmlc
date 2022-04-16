@@ -93,10 +93,6 @@ export declare type LoaderContext = {
     config: SSROptions;
     chunks: HTMLChunk[];
 };
-export declare type LIST_OR_VALUE<T> = T | T[];
-export declare type MAP_OR_LIST<T> = T[] | T[][];
-export declare type MAP_OR_LIST_OR_VALUE<T> = LIST_OR_VALUE<T> | T[][][];
-export declare type MappedValue = LIST_OR_VALUE<string>;
 export interface MapWithPartial {
     partialInput: object;
 }

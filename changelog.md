@@ -1,3 +1,7 @@
+# 0.6.7
+### 04/16/22
+add bigger list of locale enum + remove utility types, debug rework with color escapes being less awkward from 0.6.6
+
 # 0.5.13 / 0.5.14
 ### 04/06/22
 add quickstart module to cli to quickly generate default folder structure & configuration

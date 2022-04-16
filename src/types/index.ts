@@ -132,10 +132,7 @@ export type LoaderContext = {
     config: SSROptions;
     chunks: HTMLChunk[];
 };
-export type LIST_OR_VALUE<T> = T | T[];
-export type MAP_OR_LIST<T> = T[] | T[][];
-export type MAP_OR_LIST_OR_VALUE<T> = LIST_OR_VALUE<T> | T[][][];
-export type MappedValue = LIST_OR_VALUE<string>
+
 export interface MapWithPartial {
     partialInput: object;
 }

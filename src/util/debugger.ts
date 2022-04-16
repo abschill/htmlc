@@ -7,8 +7,8 @@ import {
 	FG_COLOR_ESCAPES, 
 } from '.';
 import { checkDebug } from '../core/config';
-const c = console.log;
-export function createDebugger( 
+const _ = console.log;
+export function createDebugger ( 
 	options: SSROptions | SSGOptions
 ) {
 	if( !options.debug ) {
@@ -19,14 +19,14 @@ export function createDebugger(
 	if( config.logMode === 'silent' ) {
 		return;
 	}
-	c( '\x1b[42m%s\x1b[37m', 'html-chunk-loader: ', '\x1b[47m', 'debug enabled\n' );
-	
+	_( FG_COLOR_ESCAPES.blue, 'html-chunk-loader:' );
+	_( FG_COLOR_ESCAPES.green, 'debug enabled' );
 	function log ( 
 		event_signature: DebugEventSignature, 
 		data: object | string,
 	) {
-		c( FG_COLOR_ESCAPES.blue, 'html-chunk-loader:', '\x1b[37m', event_signature );
-		c( data );
+		_( FG_COLOR_ESCAPES.blue, 'hcl_debug::event_signature: ', FG_COLOR_ESCAPES.white.replace( '%s', '' ), event_signature );
+		_( data );
 	}
 
 	return { log };
