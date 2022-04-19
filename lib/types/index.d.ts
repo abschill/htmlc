@@ -35,8 +35,18 @@ export declare type Debugger = {
     log: (...DebugLogArgs: any[]) => void;
 };
 export declare type DebugConfig = Defaulted<UDebugConfig>;
-export declare type DebugEventPhase = -1 | 0 | 1 | 2 | 3;
-export declare type DebugEventStatus = 0 | 1 | 2;
+export declare enum DebugEventPhase {
+    UNSPECIFIED = -1,
+    RUNTIME_INIT = 0,
+    CHUNK_RESOLVE = 1,
+    CHUNK_TOKENIZE = 2,
+    CHUNK_RENDER = 3
+}
+export declare enum DebugEventStatus {
+    VERBOSE = 0,
+    DEFAULT = 1,
+    CRITICAL = 2
+}
 export interface UDebugConfig {
     logFile?: string;
     logMode?: LogMode;
@@ -49,7 +59,7 @@ export declare type DebugEventType = {
     signature: DebugEventSignature;
     fatal: boolean;
 };
-export declare type LogMode = 'silent' | 'verbose';
+export declare type LogMode = 'silent' | 'verbose' | 'considerate';
 export declare type LogStrategy = 'none' | 'fs' | 'stdout' | 'both';
 export interface CallerDebugArgs {
     errorSuppression: boolean;

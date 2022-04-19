@@ -1,9 +1,8 @@
 import {
-    CompilerArgs, 
+    CompilerArgs,
     Token,
     LoaderContext,
     HTMLChunk,
-    DebugConfig,
     CallerDebugArgs,
     Locale
 } from '../../types';
@@ -11,9 +10,8 @@ import * as ParserV2 from './parser';
 import { cleanHTML } from '../../util/html';
 import { genInlineScope } from './parser/util';
 import { checkDebug } from '../config/check-debug';
-const { warn } = console;
 const { Util, hasSymbols, Constants }  = ParserV2;
-
+const { warn } = console;
 function replaceIteratorKey (
     chunk: string,
     loop: Token,
@@ -23,7 +21,7 @@ function replaceIteratorKey (
     const outStack = [];
     const matcher = input[loop.name];
     if( !matcher ) {
-        // handle if err suppression is off 
+        // handle if err suppression is off
         return chunk.replace( loop.raw, '' );
     }
     matcher.forEach( ( entry: string | object ) => {
@@ -45,11 +43,14 @@ function matchWithSubkey (
         const rootAncestor = splitKeyName[0];
         const tailValue = splitKeyName[splitKeyName.length-1];
         const childValue = input[rootAncestor][tailValue];
+		if( !childValue ) {
+			warn( `Warning: ${rootAncestor} could not be matched with any valid input, please check this line` );
+			return '';
+		}
         return childValue;
     }
     if( splitKeyName.length > 2 ) {
-        const t = splitKeyName.reduce( ( o,i )=> o[i], input );
-        return t;
+        return splitKeyName.reduce( ( o,i )=> o[i], input );
     }
     return null;
 }
@@ -108,7 +109,7 @@ function tokenMap (
         debug.debugger.log( 'parser:tokenize:hydrated-loopdata', chunk );
         debug.debugger.log( 'parser:tokenize:processing-tempalte', chunk );
     }
-    
+
     return cleanHTML( chunk, ctx.config.intlCode ?? Locale.en_US );
 }
 
@@ -122,19 +123,18 @@ function filterRegistryChunk(
 export function compile (
     args: CompilerArgs
 ): string {
-    const debugConfig = checkDebug( args.ctx.config.debug ); 
-    if( debugConfig.logMode === 'verbose' ) args.debugger.log( 'compiler:resolutions', `Compiling Template ${args.templateName}` );
+    const debugConfig = checkDebug( args.ctx.config.debug );
+    if( debugConfig.logMode === 'verbose' || debugConfig.logMode === 'considerate' ) args.debugger.log( 'compiler:resolutions', `Compiling Template ${args.templateName}` );
     const { chunks = [] } = args.ctx;
     const match = filterRegistryChunk( chunks, args.templateName );
     const toParse = hasSymbols( match.rawFile );
     // nothing to compile
     if( !toParse ) return match.rawFile;
     const { errorSuppression } = args.ctx.config;
-    const resolved = tokenMap( args.ctx, args.callData, match.rawFile, { 
+    return tokenMap( args.ctx, args.callData, match.rawFile, {
         errorSuppression,
         logMode: debugConfig.logMode ?? 'silent',
         logStrategy: debugConfig.logStrategy ?? 'none',
         debugger: args.debugger
     } );
-    return resolved;
 }

@@ -16,30 +16,23 @@
     LoaderContext,
     SSROptions,
     HTMLPage,
-    Debugger,
-    toLocale
+    Debugger
 } from '../types';
 import { Config } from '../core';
 import { watch } from 'fs';
 import { createDebugger } from '../util/debugger';
 import * as Compiler from '../core/compiler';
 import { DEBUG_DEFAULTS, DEBUG_BOOLTRUE } from '../util';
-import { checkIntlCode } from '../core/config/check-intl';
+
 /**
  * @function createLoader factory function for Loader
  * @description Rendering Context for templates
  * @returns Loader from config options
  * @param u_config user config options
  */
-export function createLoader ( 
-    u_config ?: USSROptions | USSGOptions 
+export function createLoader (
+    u_config ?: USSROptions | USSGOptions
 ): HTMLChunkLoader {
-
-    // if( u_config && u_config.intlCode ) {
-    //     // validate user config options
-    //     u_config.intlCode = checkIntlCode( u_config );
-    // }
-
     const hcl_config: SSROptions = Config.createSSRConfig( u_config );
     let dbg: Debugger = null;
 
@@ -59,9 +52,9 @@ export function createLoader (
         ctx.chunks.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
                 if( eventType === 'change' ) {
-                    if( ctx.config.debug === true 
-                        || ctx.config.debug 
-                        && ( typeof ctx.config.debug !== 'boolean' 
+                    if( ctx.config.debug === true
+                        || ctx.config.debug
+                        && ( typeof ctx.config.debug !== 'boolean'
                         && ctx.config.debug.logMode !== 'silent' ) ) dbg.log( 'file:change', `Chunk Updated at: ${filename}` );
 					ctx = Config.hydrateConfig( hcl_config );
                 }
@@ -81,14 +74,14 @@ export function createLoader (
 	 * @param name
 	 * @param data
 	 */
-    function template ( 
-        name: string, data ?: object 
+    function template (
+        name: string, data ?: object
     ): HTMLPage {
         return Compiler.compile( {
             templateName: name,
             ctx: ctx,
             callData: data,
-            debugger: dbg 
+            debugger: dbg
         } );
     }
 

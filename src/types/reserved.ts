@@ -8,5 +8,3 @@ export interface ProcessCache {
     timeStamp : Date; //calculated at runtime
     isClean ?: boolean; //default null
 }
-
-

@@ -41,7 +41,7 @@ export interface USSGOptions extends UGlobalOptions {
     cleanup ?: boolean; //whether or not to clear the outPath before writing the files
 }
 
-export type AnyLoadConfig = GlobalOptions | UGlobalOptions | USSGOptions | USSROptions | SSROptions | SSGOptions; 
+export type AnyLoadConfig = GlobalOptions | UGlobalOptions | USSGOptions | USSROptions | SSROptions | SSGOptions;
 
 /**
  * Debug Types
@@ -52,17 +52,21 @@ export type Debugger = {
 }
 
 export type DebugConfig = Defaulted<UDebugConfig>;
-// -1 = unknown/unspecified runtime state
-// 0 = runtime setup
-// 1 = chunk resolving
-// 2 = chunk tokenizing
-// 3 = chunk rendering
-export type DebugEventPhase = -1 | 0 | 1 | 2 | 3;
 
-// 0 - verbose
-// 1 - default
-// 2 - critical
-export type DebugEventStatus = 0 | 1 | 2;
+export enum DebugEventPhase {
+	UNSPECIFIED = -1,
+	RUNTIME_INIT = 0,
+	CHUNK_RESOLVE = 1,
+	CHUNK_TOKENIZE = 2,
+	CHUNK_RENDER = 3
+}
+
+export enum DebugEventStatus {
+	VERBOSE = 0,
+	DEFAULT = 1,
+	CRITICAL = 2
+}
+
 export interface UDebugConfig {
     logFile ?: string; // file to log to
     logMode ?: LogMode; // mode for logger to run in (must be verbose with logFile)
@@ -77,7 +81,7 @@ export type DebugEventType = {
 	fatal: boolean;
 }
 
-export type LogMode = 'silent' | 'verbose';
+export type LogMode = 'silent' | 'verbose' | 'considerate';
 // the method by which the debugger will process logging
 export type LogStrategy = 'none' | 'fs' | 'stdout' | 'both';
 

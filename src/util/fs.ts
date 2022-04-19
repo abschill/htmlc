@@ -42,7 +42,7 @@ export function mapPath(
 		for( let i = base+1; i < base+offset + 1; i++ ) {
 			prefixArr.push( na[i] );
 		}
-		name =  prefixArr.join( '/' );
+		name = prefixArr.join( '/' );
 	}
 	return name;
 }
@@ -53,7 +53,7 @@ export function fileMap(
 	basename: string,
 	type: HTMLChunkType
 ): HTMLChunk {
-	const name = mapPath( splitter, basename, process.platform === 'win32' ? __WIN__ : __BSD__ )
+	const name = mapPath( splitter, basename, process.platform === 'win32' ? __WIN__ : __BSD__ );
 	return {
 		type,
 		path,
@@ -89,22 +89,22 @@ export const mapPathList = (
 ): HTMLChunk [] => paths.map( ( file ) => createFileMap( file, base, type ) );
 
 
-export function findPartials( { 
+export function findPartials( {
 	partials = __DEFAULTS__.partials,
 	pathRoot = __DEFAULTS__.pathRoot,
 	discoverPaths = __DEFAULTS__.discoverPaths
 }: SSROptions ): HTMLChunk[] | null {
 	const root = join( process.cwd(), pathRoot, partials );
-	if( !discoverPaths ) return validFileList( root ).map( file => createFileMap( file, partials, 'partial' ) ); 
+	if( !discoverPaths ) return validFileList( root ).map( file => createFileMap( file, partials, 'partial' ) );
 	return mapPathList( readValidFSTree( root ), partials, 'partial' );
 }
 
 export function findTemplates( {
-	templates = __DEFAULTS__.templates, 
+	templates = __DEFAULTS__.templates,
 	pathRoot = __DEFAULTS__.pathRoot,
 	discoverPaths = __DEFAULTS__.discoverPaths
 }: SSROptions ): HTMLChunk[] | null {
 	const root = join( process.cwd(), pathRoot, templates );
-	if( !discoverPaths ) return validFileList( root ).map( ( file ) => createFileMap( file, templates, 'template' ) ); 
+	if( !discoverPaths ) return validFileList( root ).map( ( file ) => createFileMap( file, templates, 'template' ) );
 	return mapPathList( readValidFSTree( root ), templates, 'template' );
 }
