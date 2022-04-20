@@ -6,7 +6,7 @@ import {
 import {
 	FG_COLOR_ESCAPES,
 } from '.';
-import { checkDebug } from '../core/config';
+import { checkDebug } from '../config';
 const _ = console.log;
 export function createDebugger (
 	options: SSROptions | SSGOptions

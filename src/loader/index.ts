@@ -18,10 +18,10 @@
     HTMLPage,
     Debugger
 } from '../types';
-import { Config } from '../core';
+import * as Config from '../config';
 import { watch } from 'fs';
 import { createDebugger } from '../util/debugger';
-import * as Compiler from '../core/compiler';
+import * as Compiler from '../compiler';
 import { DEBUG_DEFAULTS, DEBUG_BOOLTRUE } from '../util';
 
 /**

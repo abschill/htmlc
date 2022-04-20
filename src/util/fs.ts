@@ -19,7 +19,7 @@ import { __DEFAULTS__ } from '.';
 export const __WIN__ = '\\';
 export const __BSD__ = '/';
 
-export function validFileList(
+export function validFileList (
 	dir: string
 ): string[] {
 	return readdirSync( dir )
@@ -27,7 +27,7 @@ export function validFileList(
 	.map( x => resolve( dir, x ) );
 }
 
-export function mapPath(
+export function mapPath (
 	splitter: string[],
 	basename: string,
 	sysSplit: string
@@ -47,7 +47,7 @@ export function mapPath(
 	return name;
 }
 
-export function fileMap(
+export function fileMap (
 	path: string,
 	splitter: string[],
 	basename: string,
@@ -65,7 +65,7 @@ export function fileMap(
 	};
 }
 
-export function createFileMap(
+export function createFileMap (
 	filepath: string,
 	basepath: string,
 	type: HTMLChunkType
@@ -73,7 +73,7 @@ export function createFileMap(
 	return fileMap( filepath, filepath.split( '.html' ), basepath, type );
 }
 
-export function readValidFSTree(
+export function readValidFSTree (
 	dir: string,
 ): string[] {
 	return readdirSync( dir ).map( file => {

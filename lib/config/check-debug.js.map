@@ -1,0 +1,1 @@
+{"version":3,"file":"check-debug.js","sourceRoot":"","sources":["../../src/config/check-debug.ts"],"names":[],"mappings":";;;AACA,yCAA+D;AAC/D,SAAgB,UAAU,CACtB,GAAkB;IAElB,IAAI,OAAO,GAAG,KAAK,SAAS,EAAG;QAC3B,OAAO,GAAG,KAAK,IAAI,CAAC,CAAC,CAAC,sBAAc,CAAA,CAAC,CAAC,sBAAc,CAAC;KACxD;SACI;QACD,uCAAW,sBAAc,GAAK,GAAG,EAAE;KACtC;AACL,CAAC;AATD,gCASC"}
