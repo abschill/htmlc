@@ -1,12 +1,12 @@
 {
   "name": "html-chunk-loader",
-  "version": "0.6.9",
+  "version": "0.6.10",
   "description": "Lightweight SSR/SSG Template Engine for Node",
   "homepage": "https://html-chunk-loader.vercel.app/",
   "main": "index.js",
   "bin": {
-    "ssg": "lib/modules/cli/ssg/index.js",
-    "quickstart": "lib/modules/cli/quickstart/index.js"
+    "ssg": "lib/cli/ssg/index.js",
+    "quickstart": "lib/cli/quickstart/index.js"
   },
   "scripts": {
     "build": "tsc",
