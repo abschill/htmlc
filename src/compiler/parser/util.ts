@@ -1,17 +1,17 @@
 import {
-    ABT_OPEN_SCOPE,
-    ABT_CLOSE_SCOPE,
-    ABT_LOOP_SIGNATURE
+    AST_OPEN_SCOPE,
+    AST_CLOSE_SCOPE,
+    AST_LOOP_SIGNATURE
 } from './constants';
 
 export function genInlineScope (
     input: string
 ): string {
-    return `${ABT_OPEN_SCOPE}${input}${ABT_CLOSE_SCOPE}`;
+    return `${AST_OPEN_SCOPE}${input}${AST_CLOSE_SCOPE}`;
 }
 
 export function genLoopOpenScope(
     name: string
 ): string {
-    return `${ABT_OPEN_SCOPE}${ABT_LOOP_SIGNATURE}(${name}){`;
+    return `${AST_OPEN_SCOPE}${AST_LOOP_SIGNATURE}(${name}){`;
 }

@@ -10,7 +10,8 @@ import * as ParserV2 from './parser';
 import { cleanHTML } from '../util/html';
 import { genInlineScope } from './parser/util';
 import { checkDebug } from '../config/check-debug';
-const { Util, hasSymbols, Constants }  = ParserV2;
+const { error } = console;
+const { Util, hasSymbols, Constants}  = ParserV2;
 
 function replaceIteratorKey (
     chunk: string,
@@ -22,14 +23,13 @@ function replaceIteratorKey (
     const outStack = [];
     const matcher = input[loop.name];
     if( !matcher && !debug.errorSuppression ) {
-        // handle if err suppression is off
-        throw `Error: ${matcher} was not resolvable in ${input}. Aborted`;
+        error( `HCL Error: ${matcher} was not resolvable in ${input}` );
     }
 	if( !matcher && debug.errorSuppression ) return chunk.replace( loop.raw, '' );
     matcher.forEach( ( entry: string | object ) => {
-        const mask = raw.split( Util.genLoopOpenScope( loop.name ) ).pop().split( Constants.ABT_CLOSE_LOOP_SCOPE ).shift().trim();
-        if( mask.includes( '{_}' ) ) {
-            return outStack.push( mask.replace( '{_}', <string>entry ) );
+        const mask = raw.split( Util.genLoopOpenScope( loop.name ) ).pop().split( Constants.AST_CLOSE_LOOP_SCOPE ).shift().trim();
+        if( mask.includes( Constants.AST_KEYSELF ) ) {
+            return outStack.push( mask.replace( Constants.AST_KEYSELF, <string>entry ) );
         }
         // if the array iterator has {foo} and {bar}, the input will be { foo: 'foo', bar: 'bar' }
         outStack.push( ParserV2.mask( mask, <object>entry ) );
@@ -47,12 +47,12 @@ function matchWithSubkey (
         const tailValue = splitKeyName[splitKeyName.length-1];
 
 		if( !tailValue && !debug.errorSuppression ) {
-			throw 'Error: tail matcher failed to resolve. Aborted';
+			error( 'HCL Error: tail matcher failed to resolve.' );
 		}
 
         const childValue = input[rootAncestor][tailValue];
 		if( !childValue && !debug.errorSuppression ) {
-			throw `Error: ${rootAncestor} could not be found, render failed. Please enable error suppression to ignore this error. `;
+			error( `HCL Error: ${rootAncestor} could not be found, render failed. Please enable error suppression to ignore this error.` );
 		}
         return childValue;
     }
@@ -71,7 +71,7 @@ function replaceKeyValue (
     if( !key.name.includes( '.' ) ) {
 		const value = input[key.name];
 		if( !value && !debug.errorSuppression ) {
-			throw `Error: Key ${key.name} was not found, render failed. Please enable error suppression to ignore this.`;
+			error( `HCL Error: Key ${key.name} was not found. Please enable error suppression to ignore this message.` );
 		}
         chunk = chunk.replace( key.raw, value );
         return chunk;
@@ -80,7 +80,7 @@ function replaceKeyValue (
     const matcher = matchWithSubkey( input, splitterBase, debug );
 
 	if( !matcher && !debug.errorSuppression ) {
-		throw `Error: Key ${key.name} was not resolvable, render failed. Please enable error suppression to hide this error.`;
+		error( `Error: Key ${key.name} was not resolvable, render failed. Please enable error suppression to hide this error.` );
 	}
 
     if( !matcher ) return chunk.replace( key.raw, '' );
@@ -103,7 +103,7 @@ function tokenMap (
     if( debug.logMode === 'verbose' ) debug.debugger.log( 'parser:tokenize:scope-args', input );
     const partials = chunks.filter( chunk => chunk.type === 'partial' );
     for( const p of partials ) {
-        const signature = genInlineScope( `${Constants.ABT_PARTIAL_SIGNATURE}=${p.name}` );
+        const signature = genInlineScope( `${Constants.AST_PARTIAL_SIGNATURE}=${p.name}` );
         if( chunk.includes( signature ) ) {
             if( debug.logMode === 'verbose' ) debug.debugger.log( 'parser:tokenize:match-partial_signature', signature );
             chunk = chunk.replace( signature, p.renderedChunk ?? p.rawFile );

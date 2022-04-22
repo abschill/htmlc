@@ -15,6 +15,7 @@ import {
 	join,
 	resolve
 } from 'path';
+
 import { __DEFAULTS__ } from '.';
 export const __WIN__ = '\\';
 export const __BSD__ = '/';
@@ -61,6 +62,7 @@ export function fileMap (
 		name,
 		isCached: false,
 		renderedChunk: null,
+		hasChildNodes: false,
 		needsRehydrate: false
 	};
 }

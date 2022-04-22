@@ -90,6 +90,7 @@ export declare type HTMLChunk = {
     name: string;
     rawFile: HTMLChunkContent;
     renderedChunk?: HTMLChunkContent;
+    hasChildNodes: boolean;
     isCached: boolean;
     needsRehydrate: boolean;
 };

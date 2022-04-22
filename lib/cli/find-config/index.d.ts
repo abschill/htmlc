@@ -1,2 +1,3 @@
 #!/usr/bin/env node
-export declare function findConfig(mode: 'full' | 'ssg' | 'ssr'): void;
+import { ConfigStringType } from '../../types/index';
+export declare function findConfigCLI(mode: ConfigStringType): import("../../types/index").ConfigType;
