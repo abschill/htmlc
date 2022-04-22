@@ -49,6 +49,7 @@ export type AnyLoadConfig = GlobalOptions | UGlobalOptions | USSGOptions | USSRO
 export type DebugLogArgs = [eventSignature: DebugEventSignature, data: unknown];
 export type Debugger = {
     log: ( ...DebugLogArgs ) => void;
+	err: ( ...DebugLogArgs ) => void;
 }
 
 export type DebugConfig = Defaulted<UDebugConfig>;
@@ -95,6 +96,7 @@ export interface CallerDebugArgs {
 /**
  * Compiler/Parser Internals
  */
+export type ABT_Binding<T> = ( chunk: string ) => T;
 export type AST_MAP = {
     partials: Token[];
     keys: Token[];
@@ -108,6 +110,10 @@ export interface DEP_TAG {
 export type Token = {
     name: string;
     raw: string;
+}
+export type ParsedKey = {
+	token: string;
+	key: string;
 }
 
 /**

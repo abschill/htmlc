@@ -45,14 +45,18 @@ function matchWithSubkey (
     if( splitKeyName.length === 2 ) {
         const rootAncestor = splitKeyName[0];
         const tailValue = splitKeyName[splitKeyName.length-1];
-
 		if( !tailValue && !debug.errorSuppression ) {
-			error( 'HCL Error: tail matcher failed to resolve.' );
+			debug.debugger.err( 'compiler:resolutions', {
+				msg: 'HCL Error: tail matcher failed to resolve.',
+				data: {splitKeyName, input}
+			} );
 		}
-
         const childValue = input[rootAncestor][tailValue];
 		if( !childValue && !debug.errorSuppression ) {
-			error( `HCL Error: ${rootAncestor} could not be found, render failed. Please enable error suppression to ignore this error.` );
+			debug.debugger.err( 'compiler:resolutions', {
+				msg: `HCL Error: ${rootAncestor} could not be found, render failed. Please enable error suppression to ignore this error.`,
+				data: {splitKeyName, input}
+			} );
 		}
         return childValue;
     }
@@ -68,10 +72,13 @@ function replaceKeyValue (
     input: object,
 	debug : CallerDebugArgs
 ): string {
+	if( !key && !debug.errorSuppression ) {
+		debug.debugger.err( 'compiler:resolutions', { msg: `HCL Error: Key replace error in\n\n ${chunk}\n\n with error`, data: {chunk, key, input} } );
+	}
     if( !key.name.includes( '.' ) ) {
 		const value = input[key.name];
 		if( !value && !debug.errorSuppression ) {
-			error( `HCL Error: Key ${key.name} was not found. Please enable error suppression to ignore this message.` );
+			debug.debugger.err( 'compiler:resolutions', { msg: `HCL Error: Key ${key.name} was not found. Please enable error suppression to ignore this message.`,  data: {chunk, key, input} } );
 		}
         chunk = chunk.replace( key.raw, value );
         return chunk;
@@ -80,7 +87,7 @@ function replaceKeyValue (
     const matcher = matchWithSubkey( input, splitterBase, debug );
 
 	if( !matcher && !debug.errorSuppression ) {
-		error( `Error: Key ${key.name} was not resolvable, render failed. Please enable error suppression to hide this error.` );
+		debug.debugger.err( 'compiler:resolutions', { msg: `Error: Key ${key.name} was not resolvable, render failed. Please enable error suppression to hide this error.`,  data: {chunk, key, input} } );
 	}
 
     if( !matcher ) return chunk.replace( key.raw, '' );

@@ -8,12 +8,11 @@ import {
     AST_RENDER_SIGNATURE,
     AST_PARTIAL_SIGNATURE,
     AST_LOOP_SIGNATURE,
-    // ABT_PGROUP_SIGNATURE,
     AST_RENDER_REGGIE,
     AST_PARTIAL_REGGIE,
     AST_LOOP_OPEN_REGGIE,
-    // ABT_PGROUP_REGGIE
 } from './constants';
+import { ABT_Binding } from '../../types';
 
 const hasLoop = (
     chunk: string
@@ -23,10 +22,6 @@ const hasPartial = (
     chunk: string
 ) => chunk.includes( AST_PARTIAL_SIGNATURE );
 
-// const hasPGroup = (
-//     chunk: string
-// ) => chunk.includes( ABT_PGROUP_SIGNATURE );
-
 const hasKey = (
     chunk: string
 ): boolean => chunk.includes( AST_RENDER_SIGNATURE );
@@ -34,20 +29,14 @@ const hasKey = (
 function matchKeys (
     chunk: string
 ): string[] {
-    return chunk.match( AST_RENDER_REGGIE );
+    return chunk.match( AST_RENDER_REGGIE ) ?? [];
 }
 
 function matchPartial (
     chunk: string
 ): string[] {
-    return chunk.match( AST_PARTIAL_REGGIE );
+    return chunk.match( AST_PARTIAL_REGGIE ) ?? [];
 }
-
-// function matchPGroup (
-//     chunk: string
-// ): string[] {
-//     return chunk.match( ABT_PGROUP_REGGIE );
-// }
 
 function matchLoops (
     chunk: string
@@ -73,11 +62,6 @@ const ABT: ParsableToken[] = [
         exists: hasPartial,
         asList: matchPartial
     },
-    // {
-    //     signature: '@partials',
-    //     exists: hasPGroup,
-    //     asList: matchPGroup
-    // },
     {
         signature: AST_RENDER_SIGNATURE,
         exists: hasKey,
@@ -93,6 +77,6 @@ const ABT: ParsableToken[] = [
 export default ABT;
 export type ParsableToken = {
     signature: string;
-    exists: ( chunk: string ) => boolean;
-    asList: ( chunk: string ) => string[];
+    exists: ABT_Binding<boolean>
+    asList: ABT_Binding<string[]>;
 }

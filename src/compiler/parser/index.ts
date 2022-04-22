@@ -12,7 +12,8 @@ import {
 	AST_TNC
 } from './constants';
 import {
-    Token, AST_MAP
+    Token, AST_MAP,
+	ParsedKey
 } from '../../types';
 
 /**
@@ -38,14 +39,14 @@ export function hasSymbols (
 /**
  * @param mask the masked string
  * @param input
- * @returns
+ * @returns the parsed string
  */
 export function mask (
     mask: string,
     input: object
 ): string {
     const resolvedKeys = parseKeys( mask );
-    resolvedKeys.forEach( key => mask = mask.replace( key.token, input[key.key] ) );
+    resolvedKeys?.forEach( key => mask = mask.replace( key.token, input[key.key] ) );
     return mask;
 }
 
@@ -66,8 +67,10 @@ export function unmask (
  */
 export function parseKeys (
     chunk: string
-) {
-    return chunk.match( AST_NESTED_KEYPARSE ).map( matcher => ( { token: matcher, key: unmask( matcher )} ) );
+): ParsedKey[] {
+    const matches = chunk.match( AST_NESTED_KEYPARSE );
+	if( !matches ) return [];
+	return matches.map( matcher => ( { token: matcher, key: unmask( matcher )} ) );
 }
 
 /**

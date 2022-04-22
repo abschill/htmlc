@@ -33,6 +33,7 @@ export declare type AnyLoadConfig = GlobalOptions | UGlobalOptions | USSGOptions
 export declare type DebugLogArgs = [eventSignature: DebugEventSignature, data: unknown];
 export declare type Debugger = {
     log: (...DebugLogArgs: any[]) => void;
+    err: (...DebugLogArgs: any[]) => void;
 };
 export declare type DebugConfig = Defaulted<UDebugConfig>;
 export declare enum DebugEventPhase {
@@ -67,6 +68,7 @@ export interface CallerDebugArgs {
     logStrategy: LogStrategy;
     debugger: Debugger;
 }
+export declare type ABT_Binding<T> = (chunk: string) => T;
 export declare type AST_MAP = {
     partials: Token[];
     keys: Token[];
@@ -80,6 +82,10 @@ export interface DEP_TAG {
 export declare type Token = {
     name: string;
     raw: string;
+};
+export declare type ParsedKey = {
+    token: string;
+    key: string;
 };
 export declare type HTMLPage = string;
 export declare type HTMLChunkContent = string;

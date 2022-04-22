@@ -10,7 +10,7 @@ export function genInlineScope (
     return `${AST_OPEN_SCOPE}${input}${AST_CLOSE_SCOPE}`;
 }
 
-export function genLoopOpenScope(
+export function genLoopOpenScope (
     name: string
 ): string {
     return `${AST_OPEN_SCOPE}${AST_LOOP_SIGNATURE}(${name}){`;

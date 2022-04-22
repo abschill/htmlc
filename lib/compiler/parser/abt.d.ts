@@ -1,7 +1,8 @@
+import { ABT_Binding } from '../../types';
 declare const ABT: ParsableToken[];
 export default ABT;
 export declare type ParsableToken = {
     signature: string;
-    exists: (chunk: string) => boolean;
-    asList: (chunk: string) => string[];
+    exists: ABT_Binding<boolean>;
+    asList: ABT_Binding<string[]>;
 };

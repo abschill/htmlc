@@ -40,11 +40,8 @@ export function createLoader (
         const o = {...hcl_config, debug: DEBUG_BOOLTRUE };
         dbg = createDebugger( o );
     }
-    else if ( !hcl_config.debug && typeof hcl_config.debug === 'object' ) {
+    else if ( !hcl_config.debug || typeof hcl_config.debug === 'object' ) {
         dbg = createDebugger( {debug: DEBUG_DEFAULTS, ...hcl_config} );
-    }
-    else if ( !hcl_config.debug ) {
-        dbg = null;
     }
 
     let ctx: LoaderContext = Config.hydrateConfig( hcl_config );
