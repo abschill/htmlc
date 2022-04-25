@@ -33,9 +33,10 @@ import { DEBUG_DEFAULTS, DEBUG_BOOLTRUE } from '../util';
 export function createLoader (
     u_config ?: USSROptions | USSGOptions
 ): HTMLChunkLoader {
-    const hcl_config: SSROptions = Config.createSSRConfig( u_config );
+    const hcl_config: SSROptions = Config.findSSRConfig( u_config );
     let dbg: Debugger = null;
 
+	//i think next y version we will either fix this or remove the boolean option bc its getting annoying lol
     if( typeof hcl_config.debug === 'boolean' && hcl_config.debug === true ) {
         const o = {...hcl_config, debug: DEBUG_BOOLTRUE };
         dbg = createDebugger( o );
@@ -44,7 +45,7 @@ export function createLoader (
         dbg = createDebugger( {debug: DEBUG_DEFAULTS, ...hcl_config} );
     }
 
-    let ctx: LoaderContext = Config.hydrateConfig( hcl_config );
+    let ctx: LoaderContext = Config.hydrateRuntimeConfig( hcl_config );
     if( ctx.config.watch ) {
         ctx.chunks.forEach( file => {
             watch( file.path, ( eventType, filename ) => {
@@ -53,7 +54,7 @@ export function createLoader (
                         || ctx.config.debug
                         && ( typeof ctx.config.debug !== 'boolean'
                         && ctx.config.debug.logMode !== 'silent' ) ) dbg.log( 'file:change', `Chunk Updated at: ${filename}` );
-					ctx = Config.hydrateConfig( hcl_config );
+					ctx = Config.hydrateRuntimeConfig( hcl_config );
                 }
             } );
         } );

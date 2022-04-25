@@ -6,7 +6,7 @@ import {
 import {
 	FG_COLOR_ESCAPES,
 } from '.';
-import { checkDebug } from '../config';
+import { getDebug } from '../config';
 const _ = console.log;
 export function createDebugger (
 	options: SSROptions | SSGOptions
@@ -14,7 +14,7 @@ export function createDebugger (
 	if( !options.debug ) {
 		return;
 	}
-	const config = checkDebug( options.debug );
+	const config = getDebug( options.debug );
 
 	if( config.logMode === 'silent' || config.logMode === 'considerate' ) {
 		return;

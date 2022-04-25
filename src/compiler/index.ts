@@ -9,7 +9,7 @@ import {
 import * as ParserV2 from './parser';
 import { cleanHTML } from '../util/html';
 import { genInlineScope } from './parser/util';
-import { checkDebug } from '../config/check-debug';
+import { getDebug } from '../config';
 const { error } = console;
 const { Util, hasSymbols, Constants}  = ParserV2;
 
@@ -23,14 +23,12 @@ function replaceIteratorKey (
     const outStack = [];
     const matcher = input[loop.name];
     if( !matcher && !debug.errorSuppression ) {
-        error( `HCL Error: ${matcher} was not resolvable in ${input}` );
+        error( 'HCL Error: \n', loop, '\nwas not resolvable in', input );
+		return chunk.replace( loop.raw, '' );
     }
-	if( !matcher && debug.errorSuppression ) return chunk.replace( loop.raw, '' );
     matcher.forEach( ( entry: string | object ) => {
         const mask = raw.split( Util.genLoopOpenScope( loop.name ) ).pop().split( Constants.AST_CLOSE_LOOP_SCOPE ).shift().trim();
-        if( mask.includes( Constants.AST_KEYSELF ) ) {
-            return outStack.push( mask.replace( Constants.AST_KEYSELF, <string>entry ) );
-        }
+        if( mask.includes( Constants.AST_KEYSELF ) ) return outStack.push( mask.replace( Constants.AST_KEYSELF, <string>entry ) );
         // if the array iterator has {foo} and {bar}, the input will be { foo: 'foo', bar: 'bar' }
         outStack.push( ParserV2.mask( mask, <object>entry ) );
     } );
@@ -147,7 +145,7 @@ function filterRegistryChunk(
 export function compile (
     args: CompilerArgs
 ): string {
-    const debugConfig = checkDebug( args.ctx.config.debug );
+    const debugConfig = getDebug( args.ctx.config.debug );
     if( debugConfig.logMode === 'verbose' || debugConfig.logMode === 'considerate' ) args.debugger.log( 'compiler:resolutions', `Compiling Template ${args.templateName}` );
     const { chunks = [] } = args.ctx;
     const match = filterRegistryChunk( chunks, args.templateName );

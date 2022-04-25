@@ -1,6 +1,6 @@
 import { createLoader } from '../src/loader';
 import { tokenize } from '../src/compiler/parser';
-import templateInput from './templateData.json';
+import templateInput from './fixtures/templateData.json';
 const myLoader = createLoader( {
     pathRoot: 'test-pkg/custom',
     partials: 'layout',

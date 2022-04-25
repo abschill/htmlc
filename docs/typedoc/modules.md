@@ -1,6 +1,6 @@
-[html-chunk-loader - v0.6.11](README.md) / Modules
+[html-chunk-loader - v0.6.12](README.md) / Exports
 
-# html-chunk-loader - v0.6.11
+# html-chunk-loader - v0.6.12
 
 **`example`** Calling the imported Loader module factory function
 ```javascript
@@ -42,4 +42,4 @@ Loader from config options
 
 #### Defined in
 
-[index.ts:33](https://github.com/abschill/html-chunk-loader/blob/88b0e8f/src/loader/index.ts#L33)
+[index.ts:33](https://github.com/abschill/html-chunk-loader/blob/bd5c0e4/src/loader/index.ts#L33)

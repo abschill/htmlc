@@ -1,27 +1,36 @@
+/**
+ * @module Config configuration tools for ssr/ssg
+ *
+ */
 import { resolve } from 'path';
 import { existsSync } from 'fs';
-import {
-	SSR_DEFAULTS,
-	SSG_DEFAULTS,
-	wrap
-} from '../util';
 import {
 	SSROptions,
 	USSROptions,
 	USSGOptions,
 	SSGOptions,
 	ConfigStringType,
-	ConfigType
+	ConfigType,
+	LoaderContext,
+	UUDebugConfig,
+	DebugConfig
 } from '../types';
+import {
+	findPartials,
+	findTemplates,
+	__DEFAULTS__,
+	DEBUG_BOOLTRUE,
+	DEBUG_DEFAULTS,
+	SSR_DEFAULTS,
+	SSG_DEFAULTS,
+	wrap
+} from '../util';
 
 export function genTypedFallbacks (
 	type: ConfigStringType,
 	args: ConfigType
 ): ConfigType {
-	if( type === 'ssg' ) {
-		return {...SSG_DEFAULTS, ...args};
-	}
-	return {...SSR_DEFAULTS, ...args};
+	return type === 'ssg' ? {...SSG_DEFAULTS, ...args} : {...SSR_DEFAULTS, ...args};
 }
 
 export function findConfig (
@@ -57,14 +66,14 @@ export function tryPackage (
         if( !hcl_config.ssr_config ) {
             return SSR_DEFAULTS;
         }
-        return type === 'ssr' ? createSSRConfig( hcl_config.ssr_config ): createSSGConfig( hcl_config.ssg_config );
+        return type === 'ssr' ? findSSRConfig( hcl_config.ssr_config ): findSSGConfig( hcl_config.ssg_config );
     }
     catch( e ) {
         return type === 'ssr' ? SSR_DEFAULTS : SSR_DEFAULTS;
     }
 }
 
-export function createSSRConfig (
+export function findSSRConfig (
 	conf ?: USSROptions
 ): SSROptions {
     if( !conf ) return <SSROptions>findConfig( 'ssr' );
@@ -72,7 +81,7 @@ export function createSSRConfig (
     return <SSROptions>{...SSR_DEFAULTS, ...conf};
 }
 
-export function createSSGConfig (
+export function findSSGConfig (
 	conf ?: USSGOptions
 ): SSGOptions {
 	if( !conf ) return <SSGOptions>findConfig( 'ssg' );
@@ -80,5 +89,30 @@ export function createSSGConfig (
 	return <SSGOptions>{...SSG_DEFAULTS, ...conf};
 }
 
-export * from './hydrate';
-export * from './check-debug';
+/**
+ * @function hydrateConfig
+ * @description Hydrate loader context with chunks + config
+ * @param config SSROptions | USSROptions
+ */
+ export function hydrateRuntimeConfig (
+    config: SSROptions | USSROptions
+): LoaderContext {
+    const hydrated = findSSRConfig( config );
+    const partials = findPartials( hydrated );
+    const templates = findTemplates( hydrated );
+    return ( partials && templates ) ? {
+        config: hydrated,
+        chunks: [...partials, ...templates]
+    } : {
+        config: hydrated,
+        chunks: []
+    };
+}
+
+export function getDebug (
+    opt: UUDebugConfig
+): DebugConfig {
+    if( typeof opt === 'boolean' )  return opt === true ? DEBUG_BOOLTRUE: DEBUG_DEFAULTS;
+	return {...DEBUG_DEFAULTS, ...opt};
+}
+

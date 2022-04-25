@@ -5,7 +5,7 @@ import {
 } from '../types';
 const { warn } = console;
 
-export function checkIntlCode(
+export function checkIntlCode (
     u_config: AnyLoadConfig
 ): Locale {
     if( !u_config || !u_config.intlCode ) return Locale.en;

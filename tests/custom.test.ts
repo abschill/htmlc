@@ -1,30 +1,10 @@
-import { createLoader } from '../src/loader';
-import partialData from './customPartial.json';
-import templateData from './customTemplate.js';
-
-const myLoader0 = createLoader( {
-    pathRoot: 'test-pkg/custom',
-    partials: 'layout',
-    templates: 'pages',
-    partialInput: partialData
-} );
-
-const myLoader1 = createLoader( {
-    pathRoot: 'test-pkg/custom',
-    partials: 'layout',
-    templates: 'pages',
-    partialInput: partialData,
-    templateInput: templateData
-} );
-
-
-const myLoader2 = createLoader( {
-    pathRoot: 'test-pkg/custom',
-    partials: 'layout',
-    templates: 'pages',
-    partialInput: {},
-    templateInput: {}
-} );
+import {
+	custom_Loader0 as myLoader0,
+	custom_Loader1 as myLoader1,
+	custom_Loader2 as myLoader2,
+	customTemplate as templateData,
+	customPartial as partialData
+} from './fixtures/prepareLoaders';
 
 describe( 'Load Constructed Partial Data', () => {
     const data0 = myLoader0.template( 'home', templateData );
@@ -36,7 +16,6 @@ describe( 'Load Constructed Partial Data', () => {
         expect( data0 ).toMatch( 'React' );
         expect( data0 ).toMatch( 'Prismic' );
     } );
-
     it( 'Gets Constructor', () => {
         expect( data1 ).toMatch( 'HTTP' );
         expect( data1 ).toMatch( 'HTML' );
@@ -44,7 +23,6 @@ describe( 'Load Constructed Partial Data', () => {
         expect( data1 ).toMatch( 'React' );
         expect( data1 ).toMatch( 'Prismic' );
     } );
-
     it( 'Compiles all Inputs', () => {
         expect( data0 ).not.toMatch( '<!--@render' );
         expect( data1 ).not.toMatch( '<!--@render' );
@@ -71,5 +49,4 @@ describe( 'Load Empty Input FF', () => {
         expect( data ).toMatch( 'React' );
         expect( data ).toMatch( 'Prismic' );
     } );
-    
 } );

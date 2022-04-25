@@ -1,7 +1,4 @@
 #!/usr/bin/env node
-/**
- * @module ssg
-*/
 import {
     ensureOutPath,
     pathify,
@@ -9,7 +6,7 @@ import {
 } from './tools';
 import { SSGOptions } from '../../types';
 import { createLoader } from '../../loader';
-import { createSSGConfig } from '../../config';
+import { findSSGConfig } from '../../config';
 
 /**
  * @function ssg
@@ -19,7 +16,7 @@ import { createSSGConfig } from '../../config';
 */
 export function ssg():
 void {
-    const static_config: SSGOptions = createSSGConfig();
+    const static_config: SSGOptions = findSSGConfig();
     ensureOutPath( static_config.outPath );
     try {
         const ctx = createLoader( static_config );

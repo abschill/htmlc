@@ -1,1 +1,0 @@
-{"version":3,"file":"demo.js","sourceRoot":"","sources":["../../../src/cli/quickstart/demo.ts"],"names":[],"mappings":";;AAAA,kBAAe;IACd;QACC,IAAI,EAAE,SAAS;QACf,QAAQ,EAAE,WAAW;QACrB,OAAO,EAAE,yCAAyC;KAClD;IACD;QACC,IAAI,EAAE,UAAU;QAChB,QAAQ,EAAE,WAAW;QACrB,OAAO,EAAE,4DAA4D;KACrE;CACD,CAAC"}

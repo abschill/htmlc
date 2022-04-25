@@ -16,3 +16,4 @@ public
 docs/**/*
 .git*
 .idea
+scripts/*

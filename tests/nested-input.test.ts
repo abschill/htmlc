@@ -1,24 +1,4 @@
-import { createLoader } from '../src/loader';
-const myLoader = createLoader( {
-    pathRoot: 'test-pkg/nested_loopobject',
-    partials: 'partials',
-    templates: 'templates',
-    partialInput: {},
-    templateInput: {
-        foo: {
-            bar: 'foobar'
-        },
-        page: {
-            title: 'Hello World',
-            body : {
-                heading0: 'Page Title',
-                heading1: 'Page Subtitle'
-            }
-        }
-    }
-} );
-
-const tester = myLoader.template( 'home' );
+import { nestedHome as tester } from './fixtures/prepareLoaders';
 
 describe( 'Parses nested token insertions from input', () => {
     it( 'Gets key/values', () => {

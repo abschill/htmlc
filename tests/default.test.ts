@@ -1,15 +1,4 @@
-
-import { createLoader } from '../src/loader';
-import partialData from './partialData.json';
-import templateData from './templateData.json';
-
-const myLoader = createLoader( {
-    pathRoot: 'test-pkg/def',
-    templates: 'templates',
-    partialInput: partialData,
-    templateInput: templateData
-} );
-const home = myLoader.template( 'home' );
+import { defaultHome as home, defaultPartialData as partialData } from './fixtures/prepareLoaders';
 
 describe( 'Example Home Page Tests | ESM', () => {
     it( 'Types the return correctly', () => {
