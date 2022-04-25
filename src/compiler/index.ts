@@ -78,8 +78,7 @@ function replaceKeyValue (
 		if( !value && !debug.errorSuppression ) {
 			debug.debugger.err( 'compiler:resolutions', { msg: `HCL Error: Key ${key.name} was not found. Please enable error suppression to ignore this message.`,  data: {chunk, key, input} } );
 		}
-        chunk = chunk.replace( key.raw, value );
-        return chunk;
+        return chunk.replace( key.raw, value );
     }
     const splitterBase = key.name.split( '.' );
     const matcher = matchWithSubkey( input, splitterBase, debug );
@@ -135,7 +134,7 @@ function tokenMap (
     return cleanHTML( chunk, ctx.config.intlCode ?? Locale.en_US );
 }
 
-function filterRegistryChunk(
+function filterRegistryChunk (
     registry: HTMLChunk[],
     name: string
 ): HTMLChunk {
