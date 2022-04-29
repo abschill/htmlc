@@ -1,6 +1,6 @@
 # Introduction
 
-When writing HTML, you have probably come across the issue of rewriting a lot of the same logic, or seeking to compartmentalize your semantic HTML markup into modules that can be called programmatically on the server, or generated for static serving at runtime. You may even want to do a bit of both! I had such desires when making this package, with a 90% reduction in bundle size compared to alternatives like handlebars, and the freedom to control the full cycle the way I wanted was not something I came to regret. 
+When writing HTML, you have probably come across the issue of rewriting a lot of the same logic, or seeking to compartmentalize your semantic HTML markup into modules that can be called programmatically on the server, or generated for static serving at runtime. You may even want to do a bit of both! I had such desires when making this package, with a 90% reduction in bundle size compared to alternatives like handlebars, and the freedom to control the full cycle the way I wanted was not something I came to regret.
 
 The main concept to understand is the concept of a Loader. A Loader simply makes strings, formatted for the text/html [MIME type](https://datatracker.ietf.org/doc/html/rfc6838). What html-chunk-loader does is dynamically build HTML pages for you to give to a server's response as an HTML page. How you use the library is up to you, it is very unopinionated and configurable, no application is limited to one loader, can use one for any given server auth level, user state, etc. The choice is really yours.
 
@@ -10,7 +10,7 @@ To configure your runtime options, for anything from loaders to template variabl
 
 <h3 id="global-config">Global Config Example - hcl-config.js</h3>
 
-```
+```js
 module.exports = {
     ssr_config: {
         pathRoot: 'views',
@@ -27,7 +27,7 @@ module.exports = {
             logFile: null
         }
     }
-    static_config: {
+    ssg_config: {
         pathRoot: 'views',
         partials: 'partials',
         templates: 'pages',
@@ -40,7 +40,7 @@ module.exports = {
 
 It will effectively just compile all the default options possible in the library itself. The basic concepts to really focus on would be the following properties
 
-```
+```js
 pathRoot: 'views',
 partials: 'partials',
 templates: 'pages',
@@ -48,7 +48,7 @@ partialInput: {},
 templateInput: {},
 ```
 
-The ```pathRoot``` option specifies, relative to the process directory, where to look for partial / template directories. The ```partials``` and ```template``` option set the paths within the root for the partials/templates. The next options are the inputs for the corresponding chunk type. They are key value pairs that can be accessed from within the expressions available in your chunks. 
+The ```pathRoot``` option specifies, relative to the process directory, where to look for partial / template directories. The ```partials``` and ```template``` option set the paths within the root for the partials/templates. The next options are the inputs for the corresponding chunk type. They are key value pairs that can be accessed from within the expressions available in your chunks.
 
 [Learn More](/docs/reference/loader.md)
 
@@ -56,7 +56,7 @@ The ```fallbacks``` object allows you to specify any potential 'catch data' that
 
 <h3 id="config-types">hcl-config.js / hcl-config.json</h3>
 
-You can create a file on the same level as package.json in your project with either of those names, and give it any of the following configuration options which will be a low priority fallback by the runtime itself. 
+You can create a file on the same level as package.json in your project with either of those names, and give it any of the following configuration options which will be a low priority fallback by the runtime itself.
 
 ### package.json
 

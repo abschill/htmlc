@@ -11,7 +11,7 @@ import { cleanHTML } from '../util/html';
 import { genInlineScope } from './parser/util';
 import { getDebug } from '../config';
 const { error } = console;
-const { Util, hasSymbols, Constants}  = ParserV2;
+const { Util, hasSymbols, Constants }  = ParserV2;
 
 function replaceIteratorKey (
     chunk: string,

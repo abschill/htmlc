@@ -31,9 +31,10 @@ export interface USSGOptions extends UGlobalOptions {
 }
 export declare type AnyLoadConfig = GlobalOptions | UGlobalOptions | USSGOptions | USSROptions | SSROptions | SSGOptions;
 export declare type DebugLogArgs = [eventSignature: DebugEventSignature, data: unknown];
+export declare type DebugFn<T> = (...DebugLogArgs: any[]) => T;
 export declare type Debugger = {
-    log: (...DebugLogArgs: any[]) => void;
-    err: (...DebugLogArgs: any[]) => void;
+    log: DebugFn<void>;
+    err: DebugFn<void>;
 };
 export declare type DebugConfig = Defaulted<UDebugConfig>;
 export declare enum DebugEventPhase {
@@ -90,10 +91,12 @@ export declare type ParsedKey = {
 export declare type HTMLPage = string;
 export declare type HTMLChunkContent = string;
 export declare type HTMLChunkType = 'template' | 'partial';
+export declare type ChunkableSplitData = [string, string];
 export declare type HTMLChunk = {
     type: HTMLChunkType;
     path: string;
     name: string;
+    extension: string;
     rawFile: HTMLChunkContent;
     renderedChunk?: HTMLChunkContent;
     hasChildNodes: boolean;

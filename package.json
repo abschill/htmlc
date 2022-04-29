@@ -1,6 +1,6 @@
 {
   "name": "html-chunk-loader",
-  "version": "0.6.13",
+  "version": "0.6.14",
   "description": "Lightweight SSR/SSG Template Engine for Node",
   "homepage": "https://html-chunk-loader.vercel.app/",
   "main": "index.js",
@@ -68,7 +68,7 @@
         "logFile": null
       }
     },
-    "static_config": {
+    "ssg_config": {
       "pathRoot": "test-pkg/static",
       "partials": "layout",
       "templates": "pages",

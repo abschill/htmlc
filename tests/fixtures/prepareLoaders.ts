@@ -86,7 +86,11 @@ const nestedLoader = createLoader( {
 
 const nestedHome = nestedLoader.template( 'home' );
 
+const alt_loader = createLoader( {
+	pathRoot: 'test-pkg/alt-ext'
+} );
 export {
+	alt_loader,
 	barebones_Loader,
 	custom_Loader0,
 	custom_Loader1,

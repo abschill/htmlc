@@ -47,9 +47,10 @@ export type AnyLoadConfig = GlobalOptions | UGlobalOptions | USSGOptions | USSRO
  * Debug Types
  */
 export type DebugLogArgs = [eventSignature: DebugEventSignature, data: unknown];
+export type DebugFn<T> = ( ...DebugLogArgs ) => T;
 export type Debugger = {
-    log: ( ...DebugLogArgs ) => void;
-	err: ( ...DebugLogArgs ) => void;
+    log: DebugFn<void>;
+	err: DebugFn<void>;
 }
 
 export type DebugConfig = Defaulted<UDebugConfig>;
@@ -122,10 +123,12 @@ export type ParsedKey = {
 export type HTMLPage = string;
 export type HTMLChunkContent = string;
 export type HTMLChunkType = 'template' | 'partial';
+export type ChunkableSplitData = [string, string];
 export type HTMLChunk = {
     type: HTMLChunkType;
     path: string;
     name: string;
+	extension: string;
     rawFile: HTMLChunkContent;
     renderedChunk ?: HTMLChunkContent;
 	hasChildNodes : boolean;

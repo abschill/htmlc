@@ -17,14 +17,26 @@ import {
 } from 'path';
 
 import { __DEFAULTS__ } from '.';
+import { ChunkableSplitData } from '../types/index';
 export const __WIN__ = '\\';
 export const __BSD__ = '/';
+
+// this is for the upcoming extension intellisense, as well as general shifting towards a standalone compiler outside of nodejs - interop thru the gyp
+// todo: make a config setting to allow user to declare the filetype as a constant so that they can reduce iterations at runtime
+export const ALLOWED_EXTENSIONS = [
+	'.html',
+	'.htmlc',
+	'.chtml',
+	'.chunk'
+];
+
+export const hasValidExtension = ( filename: string ) => ALLOWED_EXTENSIONS.filter( ext => filename.includes( ext ) ).length > 0;
 
 export function validFileList (
 	dir: string
 ): string[] {
 	return readdirSync( dir )
-	.filter( x => statSync( join( dir, x ) ).isFile() && x.includes( '.html' ) )
+	.filter( x => statSync( join( dir, x ) ).isFile() && hasValidExtension( x ) )
 	.map( x => resolve( dir, x ) );
 }
 
@@ -32,7 +44,7 @@ export function mapPath (
 	splitter: string[],
 	basename: string,
 	sysSplit: string
-): string {
+): ChunkableSplitData {
 	let name = splitter[0];
 	const na = name.split( sysSplit );
 	name = na[na.length - 1];
@@ -40,12 +52,12 @@ export function mapPath (
 	const offset = na.indexOf( name ) - base;
 	if( offset > 1 ) {
 		const prefixArr = [];
-		for( let i = base+1; i < base+offset + 1; i++ ) {
+		for( let i = base + 1; i < base + offset + 1; i++ ) {
 			prefixArr.push( na[i] );
 		}
 		name = prefixArr.join( '/' );
 	}
-	return name;
+	return [name, splitter[0]];
 }
 
 export function fileMap (
@@ -55,16 +67,30 @@ export function fileMap (
 	type: HTMLChunkType
 ): HTMLChunk {
 	const name = mapPath( splitter, basename, process.platform === 'win32' ? __WIN__ : __BSD__ );
-	return {
+	const data = {
 		type,
 		path,
 		rawFile: readFileSync( path ).toString( 'utf-8' ),
-		name,
 		isCached: false,
 		renderedChunk: null,
 		hasChildNodes: false,
 		needsRehydrate: false
 	};
+	if( splitter.length === 2 ) {
+		return {
+			...data,
+			name: name[0],
+			extension: name[1]
+		};
+	}
+	else {
+		return {
+			...data,
+			extension: name.pop(),
+			name: name.join( '' )
+		};
+	}
+
 }
 
 export function createFileMap (
@@ -72,7 +98,7 @@ export function createFileMap (
 	basepath: string,
 	type: HTMLChunkType
 ): HTMLChunk {
-	return fileMap( filepath, filepath.split( '.html' ), basepath, type );
+	return fileMap( filepath, filepath.split( '.' ), basepath, type );
 }
 
 export function readValidFSTree (
