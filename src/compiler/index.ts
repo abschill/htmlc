@@ -91,7 +91,7 @@ function replaceKeyValue (
     return chunk.replace( key.raw, matcher );
 }
 
-function tokenMap (
+function render (
     ctx: LoaderContext,
     data: object,
     chunk: string,
@@ -141,6 +141,7 @@ function filterRegistryChunk (
     return registry.filter( chunk => chunk.name === name ).shift();
 }
 
+// call render process with given debug arrangements & latest parser version
 export function compile (
     args: CompilerArgs
 ): string {
@@ -152,7 +153,7 @@ export function compile (
     // nothing to compile
     if( !toParse ) return match.rawFile;
     const { errorSuppression } = args.ctx.config;
-    return tokenMap( args.ctx, args.callData, match.rawFile, {
+    return render( args.ctx, args.callData, match.rawFile, {
         errorSuppression,
         logMode: debugConfig.logMode ?? 'silent',
         logStrategy: debugConfig.logStrategy ?? 'none',

@@ -30,13 +30,15 @@ export const ALLOWED_EXTENSIONS = [
 	'.chunk'
 ];
 
-export const hasValidExtension = ( filename: string ) => ALLOWED_EXTENSIONS.filter( ext => filename.includes( ext ) ).length > 0;
+export const hasValidExtension = ( filename: string, isExperimental: boolean ) => {
+	return isExperimental ? ALLOWED_EXTENSIONS.filter( ext => filename.includes( ext ) ).length > 0 : filename.includes( ALLOWED_EXTENSIONS[0] );
+};
 
 export function validFileList (
-	dir: string
+	dir: string, isExp: boolean
 ): string[] {
 	return readdirSync( dir )
-	.filter( x => statSync( join( dir, x ) ).isFile() && hasValidExtension( x ) )
+	.filter( x => statSync( join( dir, x ) ).isFile() && hasValidExtension( x, isExp ) )
 	.map( x => resolve( dir, x ) );
 }
 
@@ -120,19 +122,21 @@ export const mapPathList = (
 export function findPartials( {
 	partials = __DEFAULTS__.partials,
 	pathRoot = __DEFAULTS__.pathRoot,
-	discoverPaths = __DEFAULTS__.discoverPaths
+	discoverPaths = __DEFAULTS__.discoverPaths,
+	experimentalExtensions = false
 }: SSROptions ): HTMLChunk[] | null {
 	const root = join( process.cwd(), pathRoot, partials );
-	if( !discoverPaths ) return validFileList( root ).map( file => createFileMap( file, partials, 'partial' ) );
+	if( !discoverPaths ) return validFileList( root, experimentalExtensions ).map( file => createFileMap( file, partials, 'partial' ) );
 	return mapPathList( readValidFSTree( root ), partials, 'partial' );
 }
 
 export function findTemplates( {
 	templates = __DEFAULTS__.templates,
 	pathRoot = __DEFAULTS__.pathRoot,
-	discoverPaths = __DEFAULTS__.discoverPaths
+	discoverPaths = __DEFAULTS__.discoverPaths,
+	experimentalExtensions = false
 }: SSROptions ): HTMLChunk[] | null {
 	const root = join( process.cwd(), pathRoot, templates );
-	if( !discoverPaths ) return validFileList( root ).map( ( file ) => createFileMap( file, templates, 'template' ) );
+	if( !discoverPaths ) return validFileList( root, experimentalExtensions ).map( ( file ) => createFileMap( file, templates, 'template' ) );
 	return mapPathList( readValidFSTree( root ), templates, 'template' );
 }

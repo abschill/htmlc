@@ -7,7 +7,9 @@ import {
 import { SSGOptions } from '../../types';
 import { createLoader } from '../../loader';
 import { findSSGConfig } from '../../config';
+import util from 'util';
 
+const { log, warn } = console;
 /**
  * @function ssg
  * @description command line interface for ssg templates
@@ -17,6 +19,7 @@ import { findSSGConfig } from '../../config';
 export function ssg():
 void {
     const static_config: SSGOptions = findSSGConfig();
+	process.stdout.write( util.format( '\x1b[32mOutpath found: %s ✓ \x1b[0m\n', static_config.outPath ) + '\n' );
     ensureOutPath( static_config.outPath );
     try {
         const ctx = createLoader( static_config );
@@ -26,6 +29,7 @@ void {
                 toWrite: ctx.template( template.name )
             };
             __write( fileData );
+			process.stdout.write( util.format( '\x1b[32m%s ✓ \x1b[0m\n', 'Files Written' ) + '\n' );
             return;
         } );
     }

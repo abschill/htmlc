@@ -1,4 +1,10 @@
-# 0.6.12
+# 0.6.16
+
+## 05/08/2022
+
+- add experimentalExtensions config option to allow loading of an exp. filetype we are thinking of integrating into this project outside of html comments themselves, for shaping a set of partials for a "shell" template of some kind.
+
+## 0.6.12
 
 ## 04/24/22
 
@@ -56,18 +62,16 @@ new unit tests, and reserved new debug points for 0.5.9
 
 ### 04/01/2022
 
-
 **config updates**
 can now define config fallbacks in hcl-config.js adjacent to package.json, or as an hcl_config property in package.json itself. Read more [here]((https://github.com/abschill/html-chunk-loader/blob/master/docs/reference/basics.md))
 
 **new stuff**
 
 createLoader argument additions:
-- ```discoverPaths``` to determine whether or not template/partial directories will be walked or just used at base level search.
-- ```intlCode``` to validate lang of clean html helper
+- `discoverPaths` to determine whether or not template/partial directories will be walked or just used at base level search.
+- `intlCode` to validate lang of clean html helper
 
 **rename types**
-
 CoreContext -> LoaderContext
 
 CoreOptions -> E_SSROptions (E_* === Entity of * (no optional properties))
@@ -138,7 +142,7 @@ fix type warning bugs and add details debug points with a new "debug" mode
 
 update type defs and rename import for case sensitivity. add more types for ts interoperability
 
-# 0.2.8
+## 0.2.8
 
 ### 12/21/21
 

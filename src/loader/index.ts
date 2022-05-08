@@ -31,7 +31,7 @@ import { DEBUG_DEFAULTS, DEBUG_BOOLTRUE } from '../util';
  * @param u_config user config options
  */
 export function createLoader (
-    u_config ?: USSROptions | USSGOptions
+    u_config ?: USSROptions
 ): HTMLChunkLoader {
     const hcl_config: SSROptions = Config.findSSRConfig( u_config );
     let dbg: Debugger = null;

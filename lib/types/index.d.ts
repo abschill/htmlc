@@ -19,6 +19,7 @@ export declare type UGlobalOptions = {
     errorSuppression?: boolean;
     intlCode?: string;
     debug?: UUDebugConfig;
+    experimentalExtensions?: boolean;
 };
 export declare type GlobalOptions = Defaulted<UGlobalOptions>;
 export interface USSROptions extends UGlobalOptions {

@@ -34,6 +34,7 @@ export function createDebugger (
 		data: object | string
 	) {
 		_( FG_COLOR_ESCAPES.red, 'hcl_debug::event_signature: ', FG_COLOR_ESCAPES.white.replace( '%s', '' ), event_signature );
+
 		_( data );
 	}
 

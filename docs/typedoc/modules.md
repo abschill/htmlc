@@ -1,6 +1,6 @@
-[html-chunk-loader - v0.6.13](README.md) / Exports
+[html-chunk-loader - v0.6.15](README.md) / Exports
 
-# html-chunk-loader - v0.6.13
+# html-chunk-loader - v0.6.15
 
 **`example`** Calling the imported Loader module factory function
 ```javascript
@@ -32,7 +32,7 @@ myLoader.template( 'home', { ...homeData } );
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `u_config?` | `USSROptions` \| `USSGOptions` | user config options |
+| `u_config?` | `USSROptions` | user config options |
 
 #### Returns
 
@@ -42,4 +42,4 @@ Loader from config options
 
 #### Defined in
 
-[index.ts:33](https://github.com/abschill/html-chunk-loader/blob/0b3a32c/src/loader/index.ts#L33)
+[index.ts:33](https://github.com/abschill/html-chunk-loader/blob/fabc7f3/src/loader/index.ts#L33)

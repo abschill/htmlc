@@ -1,14 +1,14 @@
 
-import { 
-    DebugConfig, 
-    SSROptions, 
-    SSGOptions, 
+import {
+    DebugConfig,
+    SSROptions,
+    SSGOptions,
     LogMode,
     LogStrategy,
     GlobalOptions,
     toLocale
 } from '../types';
-export const DEBUG_DEFAULTS: 
+export const DEBUG_DEFAULTS:
 DebugConfig = {
     logMode: <LogMode>'silent',
     logStrategy: <LogStrategy>'silent',
@@ -32,16 +32,17 @@ GlobalOptions = {
     discoverPaths: true,
     intlCode: toLocale( 'en' ),
     errorSuppression: false,
+	experimentalExtensions: false,
     debug: <DebugConfig>DEBUG_DEFAULTS
 };
 
-export const SSR_DEFAULTS: 
+export const SSR_DEFAULTS:
 SSROptions = {
     ...<GlobalOptions>__DEFAULTS__,
     watch: false
 };
 
-export const SSG_DEFAULTS: 
+export const SSG_DEFAULTS:
 SSGOptions = {
 	...<GlobalOptions>__DEFAULTS__,
     outPath: 'public',

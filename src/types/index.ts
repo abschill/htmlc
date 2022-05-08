@@ -26,6 +26,7 @@ export type UGlobalOptions = {
     errorSuppression ?: boolean //whether or not to throw errors when it will affect template, or if the runtime should try to decide on a solution with what it has to work with in the given situation, even if that includes removing the chunk entirely.
     intlCode ?: string;
     debug ?: UUDebugConfig;
+	experimentalExtensions ?: boolean;
 }
 
 export type GlobalOptions = Defaulted<UGlobalOptions>;
