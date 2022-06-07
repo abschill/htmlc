@@ -1,0 +1,12 @@
+{
+	"name": "@htmlc/types",
+	"version": "0.7.0",
+	"main": "lib/index.js",
+	"types": "lib/index.d.ts",
+	"scripts": {
+		"build": "tsc"
+	},
+	"devDependencies": {
+		"typescript": "^4.7.3"
+	}
+}

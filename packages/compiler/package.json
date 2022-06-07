@@ -1,0 +1,16 @@
+{
+	"name": "@htmlc/compiler",
+	"version": "0.7.0",
+	"main": "lib/index.js",
+	"scripts": {
+		"build": "tsc"
+	},
+	"dependencies": {
+		"@htmlc/types": "file://../types",
+		"@htmlc/internals": "file://../internals",
+		"@htmlc/compiler": "file://../compiler"
+	},
+	"devDependencies": {
+		"typescript": "^4.7.3"
+	}
+}

@@ -1,0 +1,6 @@
+{
+	"name": "@htmlc/cli",
+	"version": "0.7.0",
+	"main": "lib/index.js",
+	"bin": "cmd/index.js"
+}
