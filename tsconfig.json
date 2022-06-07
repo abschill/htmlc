@@ -9,17 +9,11 @@
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "sourceMap": true,
-        "outDir": "./lib",
-        "rootDir": "src",
         "alwaysStrict": true,
         "removeComments": true,
+		"lib": ["es6"]
     },
-    "include": [
-        "./src/**/*",
-
-    ],
-    "exclude": [
-        "./lib/**/*",
-        "./tests/**/*"
-    ]
+	"exclude": [
+		"node_modules"
+	]
 }

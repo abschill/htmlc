@@ -10,3 +10,4 @@ static-paths.js
 hcl.log
 *.lock
 .internal
+packages

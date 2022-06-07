@@ -31,7 +31,7 @@ import { createLoader } from 'html-chunk-loader/lib/loader';
 import { HTMLChunkLoader } from 'html-chunk-loader/lib/types';
 ```
 
-[API Reference](https://html-chunk-loader.vercel.app/)
+[API Reference](https://htmlc.abschill.com)
 
 [Example Repos](https://github.com/abschill/html-chunk-loader-examples)
 
