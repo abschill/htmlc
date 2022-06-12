@@ -39,7 +39,7 @@ import { useLoader } from 'html-chunk-loader';
 
 ## command line compiler
 ```
-npx -p html-chunk-loader ssg
+npx html-chunk-loader ssg
 ```
 
 run through npx to compile static context in the current path. learn more in the examples
