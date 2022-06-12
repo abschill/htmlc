@@ -6,6 +6,6 @@ export declare function unmask(key: string): string;
 export declare function parseKeys(chunk: string): ParsedKey[];
 export declare function tokenizeMatch(token: string): Token;
 export declare function tokenize(chunk: string): AST_MAP;
-export * as ABT from './abt';
+export * as ABT from './tokens';
 export * as Constants from './constants';
 export * as Util from './util';

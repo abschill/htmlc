@@ -30,7 +30,7 @@ GlobalOptions = {
     templateInput: {},
     partialInput: {},
     discoverPaths: true,
-    intlCode: toLocale( 'en' ),
+    intlCode: toLocale('en'),
     errorSuppression: false,
 	experimentalExtensions: false,
     debug: <DebugConfig>DEBUG_DEFAULTS
@@ -55,7 +55,6 @@ export const FULL_DEFAULTS = {
     ssg_config: SSG_DEFAULTS,
     fallbacks: {}
 };
-
 
 export * from './color-escape';
 export * from './fs';

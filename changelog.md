@@ -1,4 +1,10 @@
-# 0.6.16
+# 0.7.0
+## 06/tbd/2022
+- createLoader -> useLoader
+- change ts entry point to base instead of `/lib/loader` after the import path.
+- add test coverage
+-
+## 0.6.16
 
 ## 05/08/2022
 

@@ -3,5 +3,5 @@ export function wrap<T>(
 	c: () => T 
 ): T {
 	try { return t(); }
-	catch( _ ) { return c(); }
+	catch(_) { return c(); }
 }

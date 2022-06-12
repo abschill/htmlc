@@ -1,2 +1,2 @@
-export declare const genInlineScope: (input: string) => string;
-export declare const genLoopOpenScope: (name: string) => string;
+export declare const useInlineScope: (input: string) => string;
+export declare const useLoopOpenScope: (name: string) => string;

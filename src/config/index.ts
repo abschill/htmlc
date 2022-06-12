@@ -33,27 +33,27 @@ export function genTypedFallbacks (
 	return type === 'ssg' ? {...SSG_DEFAULTS, ...args} : {...SSR_DEFAULTS, ...args};
 }
 
-export function findConfig (
+export function useConfig (
 	type: ConfigStringType
 ): ConfigType {
-	return wrap( () => tryHCL( type ), () => tryPackage( type ) );
+	return wrap(() => tryHCL(type), () => tryPackage(type));
 }
 
 export function tryHCL (
 	type: ConfigStringType
 ): ConfigType {
 	const sig = `${type}_config`;
-	const jsPath = resolve( process.cwd(), 'hcl-config.js' );
-	if( existsSync( jsPath ) ) {
-		return genTypedFallbacks( type, require( jsPath )[`${sig}`] );
+	const jsPath = resolve(process.cwd(), 'hcl-config.js');
+	if(existsSync(jsPath)) {
+		return genTypedFallbacks(type, require(jsPath)[`${sig}`]);
 	}
 	else {
-		const jsonPath = resolve( process.cwd(), 'hcl-config.json' );
-		if( existsSync( jsonPath ) ) {
-			return genTypedFallbacks( type, require( jsonPath )[`${sig}`] );
+		const jsonPath = resolve(process.cwd(), 'hcl-config.json');
+		if(existsSync(jsonPath)) {
+			return genTypedFallbacks(type, require(jsonPath)[`${sig}`]);
 		}
 		else {
-			throw new Error( 'Config Path Error' );
+			throw new Error('Config Path Error');
 		}
 	}
 }
@@ -62,30 +62,30 @@ export function tryPackage (
 	type: ConfigStringType
 ): ConfigType {
     try {
-        const { hcl_config } = require( resolve( process.cwd(), 'package.json' ) );
-        if( !hcl_config.ssr_config ) {
+        const { hcl_config } = require(resolve(process.cwd(), 'package.json'));
+        if(!hcl_config.ssr_config) {
             return SSR_DEFAULTS;
         }
-        return type === 'ssr' ? findSSRConfig( hcl_config.ssr_config ): findSSGConfig( hcl_config.ssg_config );
+        return type === 'ssr' ? useSSRConfig(hcl_config.ssr_config): useSSGConfig(hcl_config.ssg_config);
     }
-    catch( e ) {
+    catch(e) {
         return type === 'ssr' ? SSR_DEFAULTS : SSR_DEFAULTS;
     }
 }
 
-export function findSSRConfig (
+export function useSSRConfig (
 	conf ?: USSROptions
 ): SSROptions {
-    if( !conf ) return <SSROptions>findConfig( 'ssr' );
-    if( Object.keys( conf ) === Object.keys( SSR_DEFAULTS ) ) return <SSROptions>conf;
+    if(!conf) return <SSROptions>useConfig('ssr');
+    if(Object.keys(conf) === Object.keys(SSR_DEFAULTS)) return <SSROptions>conf;
     return <SSROptions>{...SSR_DEFAULTS, ...conf};
 }
 
-export function findSSGConfig (
+export function useSSGConfig (
 	conf ?: USSGOptions
 ): SSGOptions {
-	if( !conf ) return <SSGOptions>findConfig( 'ssg' );
-	if( Object.keys( conf ) === Object.keys( SSG_DEFAULTS ) ) return <SSGOptions>conf;
+	if(!conf) return <SSGOptions>useConfig('ssg');
+	if(Object.keys(conf) === Object.keys(SSG_DEFAULTS)) return <SSGOptions>conf;
 	return <SSGOptions>{...SSG_DEFAULTS, ...conf};
 }
 
@@ -97,10 +97,10 @@ export function findSSGConfig (
  export function hydrateRuntimeConfig (
     config: SSROptions | USSROptions
 ): LoaderContext {
-    const hydrated = findSSRConfig( config );
-    const partials = findPartials( hydrated );
-    const templates = findTemplates( hydrated );
-    return ( partials && templates ) ? {
+    const hydrated = useSSRConfig(config);
+    const partials = findPartials(hydrated);
+    const templates = findTemplates(hydrated);
+    return (partials && templates) ? {
         config: hydrated,
         chunks: [...partials, ...templates]
     } : {
@@ -109,10 +109,10 @@ export function findSSGConfig (
     };
 }
 
-export function getDebug (
+export function useDebug (
     opt: UUDebugConfig
 ): DebugConfig {
-    if( typeof opt === 'boolean' )  return opt === true ? DEBUG_BOOLTRUE: DEBUG_DEFAULTS;
+    if(typeof opt === 'boolean')  return opt === true ? DEBUG_BOOLTRUE: DEBUG_DEFAULTS;
 	return {...DEBUG_DEFAULTS, ...opt};
 }
 

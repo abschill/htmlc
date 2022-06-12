@@ -1,4 +1,4 @@
-import ABT from './abt';
+import Tokens from './tokens';
 import {
     AST_LOOP_SIGNATURE,
     AST_PARTIAL_SIGNATURE,
@@ -33,7 +33,7 @@ export const EMPTY_MAP: AST_MAP = {
 export function hasSymbols (
     chunk: string
 ): boolean {
-    return ( chunk.includes( AST_RENDER_SIGNATURE ) || chunk.includes( AST_LOOP_SIGNATURE ) || chunk.includes( AST_PARTIAL_SIGNATURE ) );
+    return (chunk.includes(AST_RENDER_SIGNATURE) || chunk.includes(AST_LOOP_SIGNATURE) || chunk.includes(AST_PARTIAL_SIGNATURE));
 }
 
 /**
@@ -45,8 +45,8 @@ export function mask (
     mask: string,
     input: object
 ): string {
-    const resolvedKeys = parseKeys( mask );
-    resolvedKeys?.forEach( key => mask = mask.replace( key.token, input[key.key] ) );
+    const resolvedKeys = parseKeys(mask);
+    resolvedKeys?.forEach(key => mask = mask.replace(key.token, input[key.key]));
     return mask;
 }
 
@@ -57,7 +57,7 @@ export function mask (
 export function unmask (
     key: string
 ): string {
-    return key.replace( AST_TNO, '' ).replace( AST_TNC, '' );
+    return key.replace(AST_TNO, '').replace(AST_TNC, '');
 }
 
 /**
@@ -68,9 +68,9 @@ export function unmask (
 export function parseKeys (
     chunk: string
 ): ParsedKey[] {
-    const matches = chunk.match( AST_NESTED_KEYPARSE );
-	if( !matches ) return [];
-	return matches.map( matcher => ( { token: matcher, key: unmask( matcher )} ) );
+    const matches = chunk.match(AST_NESTED_KEYPARSE);
+	if(!matches) return [];
+	return matches.map(matcher => ({ token: matcher, key: unmask(matcher)}));
 }
 
 /**
@@ -81,21 +81,21 @@ export function parseKeys (
 export function tokenizeMatch (
     token: string
 ): Token {
-    if( token.includes( AST_LOOP_SIGNATURE ) ) {
+    if(token.includes(AST_LOOP_SIGNATURE)) {
 		//handle it as a block-level token such as
 		/**
 		 * <!--@loop(foo){
 		 * 		some content
 		 * }-->
 		 */
-        const name = token.split( AST_KNO ).pop().split( AST_KNC ).shift();
+        const name = token.split(AST_KNO).pop().split(AST_KNC).shift();
         return {
             name,
             raw: token
         };
     }
 	// handle it as an inline (non-loop) token such as <!--@partial=foo-->
-    const name = token.split( AST_EQ ).pop().split( AST_CLOSE_SCOPE ).shift();
+    const name = token.split(AST_EQ).pop().split(AST_CLOSE_SCOPE).shift();
     return {
         name,
         raw: token
@@ -110,22 +110,22 @@ export function tokenizeMatch (
 export function tokenize (
     chunk: string
 ): AST_MAP {
-    return ABT.reduce( ( acc, curr ) => {
-        const matches = curr.asList( chunk );
-        if( !matches || matches.length === 0 ) return acc;
-        switch( curr.signature ) {
+    return Tokens.reduce((acc, curr) => {
+        const matches = curr.asList(chunk);
+        if(!matches || matches.length === 0) return acc;
+        switch(curr.signature) {
             case AST_PARTIAL_SIGNATURE:
-                return {...acc, partials: [...acc.partials, ...matches.map( tokenizeMatch )]};
+                return {...acc, partials: [...acc.partials, ...matches.map(tokenizeMatch)]};
             case AST_RENDER_SIGNATURE:
-                return {...acc, keys: matches.map( tokenizeMatch )};
+                return {...acc, keys: matches.map(tokenizeMatch)};
             case AST_LOOP_SIGNATURE:
-                return {...acc, loops: matches.map( tokenizeMatch )};
+                return {...acc, loops: matches.map(tokenizeMatch)};
             default:
                 return acc;
         }
-    }, EMPTY_MAP );
+    }, EMPTY_MAP);
 }
 
-export * as ABT from './abt';
+export * as ABT from './tokens';
 export * as Constants from './constants';
 export * as Util from './util';

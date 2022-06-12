@@ -48,7 +48,7 @@ export type AnyLoadConfig = GlobalOptions | UGlobalOptions | USSGOptions | USSRO
  * Debug Types
  */
 export type DebugLogArgs = [eventSignature: DebugEventSignature, data: unknown];
-export type DebugFn<T> = ( ...DebugLogArgs ) => T;
+export type DebugFn<T> = (...DebugLogArgs) => T;
 export type Debugger = {
     log: DebugFn<void>;
 	err: DebugFn<void>;
@@ -98,7 +98,7 @@ export interface CallerDebugArgs {
 /**
  * Compiler/Parser Internals
  */
-export type ABT_Binding<T> = ( chunk: string ) => T;
+export type ABT_Binding<T> = (chunk: string) => T;
 export type AST_MAP = {
     partials: Token[];
     keys: Token[];
@@ -137,7 +137,7 @@ export type HTMLChunk = {
     needsRehydrate: boolean;
 }
 export type HTMLChunkRenderArgs = [name: string, data ?: object];
-export type HTMLChunkRenderFN = ( ...HTMLChunkRenderArgs ) => HTMLPage;
+export type HTMLChunkRenderFN = (...HTMLChunkRenderArgs) => HTMLPage;
 
 export interface HTMLChunkLoader {
     ctx: LoaderContext;

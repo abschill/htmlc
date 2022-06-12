@@ -11,8 +11,8 @@ import {
 export function ensureOutPath (
     outPath: string
 ): void {
-    return existsSync( outPath ) ?
-    null : mkdirSync( outPath );
+    return existsSync(outPath) ?
+    null : mkdirSync(outPath);
 }
 
 export function pathify (
@@ -20,7 +20,7 @@ export function pathify (
     contextPath: string
 ): string {
     const toName = `${template.name}.html`;
-    return path.resolve( path.resolve( process.cwd(), contextPath ), toName );
+    return path.resolve(path.resolve(process.cwd(), contextPath), toName);
 }
 
 export function __write (
@@ -29,6 +29,6 @@ export function __write (
         toWrite: string
     }
 ): number {
-    writeFileSync( args.toName, args.toWrite );
+    writeFileSync(args.toName, args.toWrite);
     return 0;
 }

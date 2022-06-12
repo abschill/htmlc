@@ -1,5 +1,5 @@
 {
-    "page_title":"My Blog",
+    "page_title": "My Blog",
     "page_description": "Cool Description",
     "styles": [
         "https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css",

@@ -27,8 +27,8 @@ const demoChunks = [
 function createPath(
 	path: string
 ): void {
-	log( `Creating Directory at ${path}` );
-	mkdirSync( path );
+	log(`Creating Directory at ${path}`);
+	mkdirSync(path);
 }
 /**
  * @function quickstart
@@ -38,33 +38,33 @@ function createPath(
 */
 export function quickstart() {
 	const { pathRoot, partials, templates } = __DEFAULTS__;
-	const joinedRoot = join( process.cwd(), pathRoot );
-	const joinedPartials = join( joinedRoot, partials );
-	const joinedTemplates = join( joinedRoot, templates );
-	if( !existsSync( joinedRoot ) ) createPath( joinedRoot );
-	if( !existsSync( joinedPartials ) ) createPath( joinedPartials );
-	if( !existsSync( joinedTemplates ) ) createPath( joinedTemplates );
+	const joinedRoot = join(process.cwd(), pathRoot);
+	const joinedPartials = join(joinedRoot, partials);
+	const joinedTemplates = join(joinedRoot, templates);
+	if(!existsSync(joinedRoot)) createPath(joinedRoot);
+	if(!existsSync(joinedPartials)) createPath(joinedPartials);
+	if(!existsSync(joinedTemplates)) createPath(joinedTemplates);
 
-	demoChunks.forEach( chunk => {
-		if( chunk.type === 'partial' ) {
-			const partial = resolve( joinedPartials, chunk.filename );
-			if( !existsSync( partial ) ) writeFileSync( partial, chunk.content );
+	demoChunks.forEach(chunk => {
+		if(chunk.type === 'partial') {
+			const partial = resolve(joinedPartials, chunk.filename);
+			if(!existsSync(partial)) writeFileSync(partial, chunk.content);
 		}
 		else {
-			const template = resolve( joinedTemplates, chunk.filename );
-			if( !existsSync( template ) ) writeFileSync( template, chunk.content );
+			const template = resolve(joinedTemplates, chunk.filename);
+			if(!existsSync(template)) writeFileSync(template, chunk.content);
 		}
-	} );
+	});
 
-	const configFile = resolve( process.cwd(), 'hcl-config.js' );
+	const configFile = resolve(process.cwd(), 'hcl-config.js');
 
-	if( !existsSync( configFile ) ) {
-		const jsonString = JSON.stringify( FULL_DEFAULTS, null,  4 );
+	if(!existsSync(configFile)) {
+		const jsonString = JSON.stringify(FULL_DEFAULTS, null,  4);
 		const moduleString = `module.exports = ${jsonString}`;
-		writeFileSync( configFile, moduleString );
+		writeFileSync(configFile, moduleString);
 	}
 
-	log( 'Done.' );
+	log('Done.');
 }
 
 quickstart();

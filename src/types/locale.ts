@@ -738,7 +738,7 @@ export function toLocale(
     try {
         return Locale[`${input}`];
     }
-    catch( e ) {
+    catch(e) {
         return Locale.en;
     }
 }

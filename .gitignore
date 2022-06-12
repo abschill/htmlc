@@ -10,3 +10,6 @@ static-paths.js
 hcl.log
 *.lock
 .internal
+nyc_output
+pkg_cache
+coverage

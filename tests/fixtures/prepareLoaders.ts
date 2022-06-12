@@ -1,20 +1,20 @@
-import { createLoader } from '../../src/loader';
-const barebones_Loader = createLoader();
+import { useLoader } from '../../src';
+const barebones_Loader = useLoader();
 import defaultPartialData from './partialData.json';
 import defaultTemplateData from './templateData.json';
 import customTemplate from './customTemplate';
 import customPartial from './customPartial.json';
 
-const defaultLoader = createLoader( {
+const defaultLoader = useLoader({
     pathRoot: 'test-pkg/def',
     templates: 'templates',
     partialInput: defaultPartialData,
     templateInput: defaultTemplateData
-} );
+});
 
-const defaultHome = defaultLoader.template( 'home' );
+const defaultHome = defaultLoader.template('home');
 
-const highLoad_Loader = createLoader( {
+const highLoad_Loader = useLoader({
     pathRoot: 'test-pkg/big-bertha',
     templates: 'templates',
     partials: 'partials',
@@ -27,9 +27,9 @@ const highLoad_Loader = createLoader( {
         generic_page_content: 'Generic Page Content'
     },
     discoverPaths: true
-} );
+});
 
-const highLoadChunk0 = highLoad_Loader.template( 'chonk', {
+const highLoadChunk0 = highLoad_Loader.template('chonk', {
     heading: 'Hello World',
     chonk: 'chonk',
     chonk1: 'chonk1',
@@ -40,32 +40,32 @@ const highLoadChunk0 = highLoad_Loader.template( 'chonk', {
     chonk6: 'chonk6',
     chonk7: 'chonk7',
     chonk8: 'chonk8'
-} );
+});
 
-const custom_Loader0 = createLoader( {
+const custom_Loader0 = useLoader({
     pathRoot: 'test-pkg/custom',
     partials: 'layout',
     templates: 'pages',
     partialInput: customPartial
-} );
+});
 
-const custom_Loader1 = createLoader( {
+const custom_Loader1 = useLoader({
     pathRoot: 'test-pkg/custom',
     partials: 'layout',
     templates: 'pages',
     partialInput: customPartial,
     templateInput: customTemplate
-} );
+});
 
-const custom_Loader2 = createLoader( {
+const custom_Loader2 = useLoader({
     pathRoot: 'test-pkg/custom',
     partials: 'layout',
     templates: 'pages',
     partialInput: {},
     templateInput: {}
-} );
+});
 
-const nestedLoader = createLoader( {
+const nestedLoader = useLoader({
     pathRoot: 'test-pkg/nested_loopobject',
     partials: 'partials',
     templates: 'templates',
@@ -82,13 +82,14 @@ const nestedLoader = createLoader( {
             }
         }
     }
-} );
+});
 
-const nestedHome = nestedLoader.template( 'home' );
+const nestedHome = nestedLoader.template('home');
 
-const alt_loader = createLoader( {
+const alt_loader = useLoader({
 	pathRoot: 'test-pkg/alt-ext'
-} );
+});
+
 export {
 	alt_loader,
 	barebones_Loader,

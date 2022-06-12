@@ -18,7 +18,7 @@ module.exports = {
 	'rules': {
 		'space-in-parens': [
 			'warn',
-			'always'
+			'never'
 		],
 		'quotes': [
 			'warn',
