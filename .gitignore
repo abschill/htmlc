@@ -13,3 +13,4 @@ hcl.log
 nyc_output
 pkg_cache
 coverage
+pkg-cache
