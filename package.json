@@ -3,7 +3,7 @@
   "version": "0.7.0",
   "description": "Lightweight SSR/SSG Template Engine for Node",
   "homepage": "https://html-chunk-loader.vercel.app/",
-  "main": "index.js",
+  "main": "lib/index.js",
   "bin": {
     "ssg": "lib/cli/ssg/index.js",
     "quickstart": "lib/cli/quickstart/index.js",

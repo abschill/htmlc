@@ -8,13 +8,14 @@ import {
 import {
 	mask as ParserMask,
 	tokenize,
-	Util,
 	hasSymbols,
 	Constants
 } from './parser';
+import {
+	useInlineScope,
+	useLoopOpenScope
+} from './parser/util';
 import { cleanHTML } from '../util/html';
-import { useInlineScope } from './parser/util';
-const { useLoopOpenScope } = Util;
 
 function replaceIteratorKey(
     chunk: string,
@@ -22,15 +23,15 @@ function replaceIteratorKey(
     input: object
 ): string {
     const raw = loop.raw;
-    const outStack = [];
+    const out = [];
     const matcher = input[loop.name];
     matcher.forEach((entry: string | object) => {
         const mask = raw.split(useLoopOpenScope(loop.name)).pop().split(Constants.AST_CLOSE_LOOP_SCOPE).shift().trim();
-        if(mask.includes(Constants.AST_KEYSELF)) return outStack.push(mask.replace(Constants.AST_KEYSELF, <string>entry));
+        if(mask.includes(Constants.AST_KEYSELF)) return out.push(mask.replace(Constants.AST_KEYSELF, <string>entry));
         // if the array iterator has {foo} and {bar}, the input will be { foo: 'foo', bar: 'bar' }
-        outStack.push(ParserMask(mask, <object>entry));
+        out.push(ParserMask(mask, <object>entry));
     });
-    return chunk.replace(loop.raw, outStack.join(''));
+    return chunk.replace(loop.raw, out.join(''));
 }
 
 function matchWithSubkey(
@@ -38,10 +39,10 @@ function matchWithSubkey(
     splitKeyName: string[]
 ) {
     if(splitKeyName.length === 2) {
-        const rootAncestor = splitKeyName[0];
-        const tailValue = splitKeyName[splitKeyName.length-1];
-        const childValue = input[rootAncestor][tailValue];
-        return childValue;
+        const root = splitKeyName[0];
+        const tail = splitKeyName[splitKeyName.length-1];
+        const child = input[root][tail];
+        return child;
     }
     if(splitKeyName.length > 2) {
         return splitKeyName.reduce((o,i)=> o[i], input);
@@ -58,8 +59,8 @@ function replaceKeyValue(
 		const value = input[key.name];
         return chunk.replace(key.raw, value);
     }
-    const splitterBase = key.name.split('.');
-    const matcher = matchWithSubkey(input, splitterBase);
+    const splitter = key.name.split('.');
+    const matcher = matchWithSubkey(input, splitter);
     if(!matcher) return chunk.replace(key.raw, '');
     return chunk.replace(key.raw, matcher);
 }
@@ -78,9 +79,9 @@ function render(
             chunk = chunk.replace(signature, p.renderedChunk ?? p.rawFile);
         }
     }
-    const newTokens = tokenize(chunk);
-    newTokens.keys.forEach(key => chunk = replaceKeyValue(chunk, key, input));
-    newTokens.loops.forEach(loop => chunk = replaceIteratorKey(chunk, loop, input));
+    const nTokens = tokenize(chunk);
+    nTokens.keys.forEach(key => chunk = replaceKeyValue(chunk, key, input));
+    nTokens.loops.forEach(loop => chunk = replaceIteratorKey(chunk, loop, input));
     return cleanHTML(chunk, ctx.config.intlCode ?? Locale.en_US);
 }
 

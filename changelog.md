@@ -3,7 +3,8 @@
 - createLoader -> useLoader
 - change ts entry point to base instead of `/lib/loader` after the import path.
 - add test coverage
--
+- better error handling for default loader with unresolved config setup
+- `findPartials` -> `usePartials` & `findTemplates` -> `useTemplates`
 ## 0.6.16
 
 ## 05/08/2022
