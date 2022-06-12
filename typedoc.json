@@ -1,8 +1,10 @@
 {
     "entryPoints": [
-        "./src/loader/index.ts"
+        "./src/index.ts",
+		"./src/types/index.ts"
     ],
     "darkHighlightTheme": "dark-plus",
     "out": "docs/typedoc",
-    "includeVersion": true
+    "includeVersion": true,
+	"excludeInternal": true
 }

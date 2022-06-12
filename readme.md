@@ -13,25 +13,38 @@ A ```Chunk``` is either a template or a partial, and a ```Page``` is the compile
 
 Data can be iterated over, or directly inserted by name into a template which is loaded from the initialized loader object, which will be the default export when using commonjs
 
+## installation
+
+```
+npm i html-chunk-loader
+```
+
+```
+yarn add html-chunk-loader
+```
+
 ## Import Paths
 
 ### CommonJS
 
 ```js
-const createLoader = require('html-chunk-loader');
+const { useLoader } = require('html-chunk-loader');
 ```
 
 ### Typescript / ES6+
 
-To import the correct module in ES6/Typescript, make sure to import from the path as follows
-
 ```ts
-import { createLoader } from 'html-chunk-loader/lib/loader';
-//for the above module's typed return
-import { HTMLChunkLoader } from 'html-chunk-loader/lib/types';
+import { useLoader } from 'html-chunk-loader';
 ```
 
-[API Reference](https://html-chunk-loader.vercel.app/)
+## command line compiler
+```
+npx -p html-chunk-loader ssg
+```
+
+run through npx to compile static context in the current path. learn more in the examples
+
+[API Reference](https://htmlc.abschill.com/)
 
 [Example Repos](https://github.com/abschill/html-chunk-loader-examples)
 

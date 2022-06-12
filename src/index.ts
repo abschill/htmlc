@@ -2,11 +2,12 @@
  * @module Loader
  *  @example Calling the imported Loader module factory function
  * ```javascript
- * const myLoader = createLoader( { pathRoot: 'views', templates: 'pages', partials: 'partials' } );
+ * import { useLoader } from 'html-chunk-loader'
+ * const myLoader = useLoader();
  * ```
  * @example Render templates by name from the loader, and optionally apply / override data from the constructor
      * ```javascript
-     * myLoader.template( 'home', { ...homeData } );
+     * myLoader.template('home', { ...homeData } );
      * ```
  */
  import {
@@ -25,25 +26,13 @@ import { watch } from 'fs';
 import { createDebugger } from './util/debugger';
 import { compile } from './compiler';
 import { DEBUG_DEFAULTS, DEBUG_BOOLTRUE } from './util';
-
-/**
- *
- * @deprecated
- * @description old name of entry point
- */
-export function createLoader (
-    u_config ?: USSROptions
-): HTMLChunkLoader {
-    return useLoader(u_config);
-}
-
 /**
  * @function useLoader factory function for Loader
  * @description Rendering Context for templates
  * @returns Loader from config options
  * @param config user config options
  */
-export function useLoader(
+ export function useLoader(
 	config ?: USSROptions
 ): HTMLChunkLoader {
 	const hcl_config: SSROptions = useSSRConfig(config);
@@ -98,3 +87,16 @@ export function useLoader(
 
     return {ctx, template};
 }
+
+/**
+ * @internal
+ * @private
+ * @deprecated
+ * @description old name of entry point
+ */
+export function createLoader (
+    u_config ?: USSROptions
+): HTMLChunkLoader {
+    return useLoader(u_config);
+}
+

@@ -2,8 +2,13 @@
   "name": "html-chunk-loader",
   "version": "0.7.0",
   "description": "Lightweight SSR/SSG Template Engine for Node",
-  "homepage": "https://html-chunk-loader.vercel.app/",
+  "homepage": "https://htmlc.abschill.com/",
   "main": "lib/index.js",
+  "exports": {
+	".": "./lib/index.js",
+	"./compiler": "./lib/compiler/index.js",
+	"./types": "./lib/types/index.js"
+  },
   "bin": {
     "ssg": "lib/cli/ssg/index.js",
     "quickstart": "lib/cli/quickstart/index.js",
@@ -21,9 +26,6 @@
     "test:ssg": "node lib/cli/ssg/index.js",
 	"lint:src": "eslint --fix src/**/*"
   },
-  "files": [
-    "lib/**/*"
-  ],
   "keywords": [
     "html",
     "ssr",

@@ -1,16 +1,15 @@
 /**
- * Config Related Types
+ * @module Types
+ * @public
  */
-export type Defaulted<T> = Readonly<Required<T>>;
-
-export interface CompilerArgs {
-    templateName: string;
+ export interface HTMLChunkLoader {
     ctx: LoaderContext;
-    callData ?: object;
-    debugger ?: Debugger;
+    template: HTMLChunkRenderFN;
 }
-export type ConfigStringType = 'ssr' | 'ssg';
-export type ConfigType = SSROptions | SSGOptions;
+export type LoaderContext = {
+    config: SSROptions;
+    chunks: HTMLChunk[];
+};
 // cleaned ssg cli optoins
 export type SSGOptions = Defaulted<USSGOptions>;
 // cleaned arguments submitted to Loader constructor, defaulted if nonexistent
@@ -28,13 +27,31 @@ export type UGlobalOptions = {
     debug ?: UUDebugConfig;
 	experimentalExtensions ?: boolean;
 }
-
+export type UUDebugConfig = boolean | UDebugConfig;
+export interface UDebugConfig {
+    logFile ?: string; // file to log to
+    logMode ?: LogMode; // mode for logger to run in (must be verbose with logFile)
+    logStrategy ?: LogStrategy; // strategy for writing logs
+}
+export type DebugConfig = Defaulted<UDebugConfig>;
 export type GlobalOptions = Defaulted<UGlobalOptions>;
-
 // optional arguments for the createLoader factory function exclusively
 export interface USSROptions extends UGlobalOptions {
     watch ?: boolean; // watches files at runtime - default false
 }
+export type LogMode = 'silent' | 'verbose' | 'considerate';
+// the method by which the debugger will process logging
+export type LogStrategy = 'none' | 'fs' | 'stdout' | 'both';
+
+export interface CallerDebugArgs {
+    errorSuppression: boolean;
+    logMode: LogMode;
+    logStrategy: LogStrategy;
+    debugger: Debugger;
+}
+
+export type ConfigType = SSROptions | SSGOptions;
+
 // ssg cli options
 export interface USSGOptions extends UGlobalOptions {
     outPath ?: string; //default public
@@ -43,6 +60,20 @@ export interface USSGOptions extends UGlobalOptions {
 }
 
 export type AnyLoadConfig = GlobalOptions | UGlobalOptions | USSGOptions | USSROptions | SSROptions | SSGOptions;
+export type Defaulted<T> = Readonly<Required<T>>;
+/**
+ * @internal
+ * @private
+ * internal types - no need to expose to typedoc
+ *
+*/
+export interface CompilerArgs {
+    templateName: string;
+    ctx: LoaderContext;
+    callData ?: object;
+    debugger ?: Debugger;
+}
+export type ConfigStringType = 'ssr' | 'ssg';
 
 /**
  * Debug Types
@@ -53,8 +84,6 @@ export type Debugger = {
     log: DebugFn<void>;
 	err: DebugFn<void>;
 }
-
-export type DebugConfig = Defaulted<UDebugConfig>;
 
 export enum DebugEventPhase {
 	UNSPECIFIED = -1,
@@ -70,31 +99,12 @@ export enum DebugEventStatus {
 	CRITICAL = 2
 }
 
-export interface UDebugConfig {
-    logFile ?: string; // file to log to
-    logMode ?: LogMode; // mode for logger to run in (must be verbose with logFile)
-    logStrategy ?: LogStrategy; // strategy for writing logs
-}
-export type UUDebugConfig = boolean | UDebugConfig;
-
 export type DebugEventSignature = 'parser:tokenize' | 'file:change' | 'watch:init' | 'loader:init' | 'compiler:resolutions' | 'partial:load' | 'template:load';
 export type DebugEventType = {
 	phase: DebugEventPhase;
 	signature: DebugEventSignature;
 	fatal: boolean;
 }
-
-export type LogMode = 'silent' | 'verbose' | 'considerate';
-// the method by which the debugger will process logging
-export type LogStrategy = 'none' | 'fs' | 'stdout' | 'both';
-
-export interface CallerDebugArgs {
-    errorSuppression: boolean;
-    logMode: LogMode;
-    logStrategy: LogStrategy;
-    debugger: Debugger;
-}
-
 /**
  * Compiler/Parser Internals
  */
@@ -139,14 +149,7 @@ export type HTMLChunk = {
 export type HTMLChunkRenderArgs = [name: string, data ?: object];
 export type HTMLChunkRenderFN = (...HTMLChunkRenderArgs) => HTMLPage;
 
-export interface HTMLChunkLoader {
-    ctx: LoaderContext;
-    template: HTMLChunkRenderFN;
-}
-export type LoaderContext = {
-    config: SSROptions;
-    chunks: HTMLChunk[];
-};
+
 
 export interface MapWithPartial {
     partialInput: object;
