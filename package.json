@@ -1,14 +1,17 @@
 {
   "name": "html-chunk-loader",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Lightweight SSR/SSG Template Engine for Node",
   "homepage": "https://htmlc.abschill.com/",
   "main": "lib/index.js",
   "exports": {
-	".": "./lib/index.js",
-	"./compiler": "./lib/compiler/index.js",
-	"./types": "./lib/types/index.js"
+    ".": "./lib/index.js",
+    "./compiler": "./lib/compiler/index.js",
+    "./types": "./lib/types/index.js"
   },
+  "files": [
+	"lib/**/*"
+  ],
   "bin": "lib/cli/index.js",
   "scripts": {
     "build": "tsc",
@@ -20,7 +23,7 @@
     "docs": "typedoc",
     "preparePublish": "python scripts/refresh-build.py",
     "test:ssg": "node lib/cli/ssg/index.js",
-	"lint:src": "eslint --fix src/**/*"
+    "lint:src": "eslint --fix src/**/*"
   },
   "keywords": [
     "html",
