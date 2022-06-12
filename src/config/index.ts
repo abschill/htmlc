@@ -16,8 +16,8 @@ import {
 	DebugConfig
 } from '../types';
 import {
-	findPartials,
-	findTemplates,
+	usePartials,
+	useTemplates,
 	__DEFAULTS__,
 	DEBUG_BOOLTRUE,
 	DEBUG_DEFAULTS,
@@ -98,8 +98,8 @@ export function useSSGConfig (
     config: SSROptions | USSROptions
 ): LoaderContext {
     const hydrated = useSSRConfig(config);
-    const partials = findPartials(hydrated);
-    const templates = findTemplates(hydrated);
+    const partials = usePartials(hydrated);
+    const templates = useTemplates(hydrated);
     return (partials && templates) ? {
         config: hydrated,
         chunks: [...partials, ...templates]

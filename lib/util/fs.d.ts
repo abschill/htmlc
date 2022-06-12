@@ -1,5 +1,5 @@
+import { ChunkableSplitData } from '../types';
 import { HTMLChunk, HTMLChunkType, SSROptions } from '../types';
-import { ChunkableSplitData } from '../types/index';
 export declare const __WIN__ = "\\";
 export declare const __BSD__ = "/";
 export declare const ALLOWED_EXTENSIONS: string[];
@@ -10,5 +10,5 @@ export declare function fileMap(path: string, splitter: string[], basename: stri
 export declare function createFileMap(filepath: string, basepath: string, type: HTMLChunkType): HTMLChunk;
 export declare function readValidFSTree(dir: string): string[];
 export declare const mapPathList: (paths: string[], base: string, type: HTMLChunkType) => HTMLChunk[];
-export declare function findPartials({ partials, pathRoot, discoverPaths, experimentalExtensions }: SSROptions): HTMLChunk[] | null;
-export declare function findTemplates({ templates, pathRoot, discoverPaths, experimentalExtensions }: SSROptions): HTMLChunk[] | null;
+export declare function usePartials({ partials, pathRoot, discoverPaths, experimentalExtensions }: SSROptions): HTMLChunk[] | null;
+export declare function useTemplates({ templates, pathRoot, discoverPaths, experimentalExtensions }: SSROptions): HTMLChunk[] | null;

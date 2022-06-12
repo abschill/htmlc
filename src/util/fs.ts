@@ -1,6 +1,9 @@
 /**
  * @module fs internal file handling
  */
+import { __DEFAULTS__ } from '.';
+import { ChunkableSplitData } from '../types';
+import { FG_COLOR_ESCAPES } from '.';
 import {
 	HTMLChunk,
 	HTMLChunkType,
@@ -9,15 +12,14 @@ import {
 import {
 	readdirSync,
 	readFileSync,
-	statSync
+	statSync,
+	existsSync
 } from 'fs';
 import {
 	join,
 	resolve
 } from 'path';
 
-import { __DEFAULTS__ } from '.';
-import { ChunkableSplitData } from '../types/index';
 export const __WIN__ = '\\';
 export const __BSD__ = '/';
 
@@ -119,24 +121,40 @@ export const mapPathList = (
 ): HTMLChunk [] => paths.map((file) => createFileMap(file, base, type));
 
 
-export function findPartials({
+export function usePartials({
 	partials = __DEFAULTS__.partials,
 	pathRoot = __DEFAULTS__.pathRoot,
 	discoverPaths = __DEFAULTS__.discoverPaths,
 	experimentalExtensions = false
 }: SSROptions): HTMLChunk[] | null {
+	if(!existsSync(join(process.cwd(), pathRoot))) {
+		console.error(FG_COLOR_ESCAPES.red, 'path root doesnt exist: ', `${process.cwd()}/${pathRoot}`);
+		process.exit(1);
+	}
 	const root = join(process.cwd(), pathRoot, partials);
+	if(!existsSync(root)) {
+		console.error(FG_COLOR_ESCAPES.red, 'path root doesnt exist: ', `${root}`);
+		process.exit(1);
+	}
 	if(!discoverPaths) return validFileList(root, experimentalExtensions).map(file => createFileMap(file, partials, 'partial'));
 	return mapPathList(readValidFSTree(root), partials, 'partial');
 }
 
-export function findTemplates({
+export function useTemplates({
 	templates = __DEFAULTS__.templates,
 	pathRoot = __DEFAULTS__.pathRoot,
 	discoverPaths = __DEFAULTS__.discoverPaths,
 	experimentalExtensions = false
 }: SSROptions): HTMLChunk[] | null {
+	if(!existsSync(join(process.cwd(), pathRoot))) {
+		console.error(FG_COLOR_ESCAPES.red, 'path root doesnt exist: ', `${process.cwd()}/${pathRoot}`);
+		process.exit(1);
+	}
 	const root = join(process.cwd(), pathRoot, templates);
+	if(!existsSync(root)) {
+		console.error(FG_COLOR_ESCAPES.red, 'path root doesnt exist: ', `${root}`);
+		process.exit(1);
+	}
 	if(!discoverPaths) return validFileList(root, experimentalExtensions).map((file) => createFileMap(file, templates, 'template'));
 	return mapPathList(readValidFSTree(root), templates, 'template');
 }
