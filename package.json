@@ -10,7 +10,7 @@
     "./types": "./lib/types/index.js"
   },
   "files": [
-	"lib/**/*"
+    "lib/**/*"
   ],
   "bin": "lib/cli/index.js",
   "scripts": {
