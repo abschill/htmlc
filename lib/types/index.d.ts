@@ -1,12 +1,11 @@
-export declare type Defaulted<T> = Readonly<Required<T>>;
-export interface CompilerArgs {
-    templateName: string;
+export interface HTMLChunkLoader {
     ctx: LoaderContext;
-    callData?: object;
-    debugger?: Debugger;
+    template: HTMLChunkRenderFN;
 }
-export declare type ConfigStringType = 'ssr' | 'ssg';
-export declare type ConfigType = SSROptions | SSGOptions;
+export declare type LoaderContext = {
+    config: SSROptions;
+    chunks: HTMLChunk[];
+};
 export declare type SSGOptions = Defaulted<USSGOptions>;
 export declare type SSROptions = Defaulted<USSROptions>;
 export declare type UGlobalOptions = {
@@ -21,23 +20,46 @@ export declare type UGlobalOptions = {
     debug?: UUDebugConfig;
     experimentalExtensions?: boolean;
 };
+export declare type UUDebugConfig = boolean | UDebugConfig;
+export interface UDebugConfig {
+    logFile?: string;
+    logMode?: LogMode;
+    logStrategy?: LogStrategy;
+}
+export declare type DebugConfig = Defaulted<UDebugConfig>;
 export declare type GlobalOptions = Defaulted<UGlobalOptions>;
 export interface USSROptions extends UGlobalOptions {
     watch?: boolean;
 }
+export declare type LogMode = 'silent' | 'verbose' | 'considerate';
+export declare type LogStrategy = 'none' | 'fs' | 'stdout' | 'both';
+export interface CallerDebugArgs {
+    errorSuppression: boolean;
+    logMode: LogMode;
+    logStrategy: LogStrategy;
+    debugger: Debugger;
+}
+export declare type ConfigType = SSROptions | SSGOptions;
 export interface USSGOptions extends UGlobalOptions {
     outPath?: string;
     loaderFile?: string;
     cleanup?: boolean;
 }
 export declare type AnyLoadConfig = GlobalOptions | UGlobalOptions | USSGOptions | USSROptions | SSROptions | SSGOptions;
+export declare type Defaulted<T> = Readonly<Required<T>>;
+export interface CompilerArgs {
+    templateName: string;
+    ctx: LoaderContext;
+    callData?: object;
+    debugger?: Debugger;
+}
+export declare type ConfigStringType = 'ssr' | 'ssg';
 export declare type DebugLogArgs = [eventSignature: DebugEventSignature, data: unknown];
 export declare type DebugFn<T> = (...DebugLogArgs: any[]) => T;
 export declare type Debugger = {
     log: DebugFn<void>;
     err: DebugFn<void>;
 };
-export declare type DebugConfig = Defaulted<UDebugConfig>;
 export declare enum DebugEventPhase {
     UNSPECIFIED = -1,
     RUNTIME_INIT = 0,
@@ -50,26 +72,12 @@ export declare enum DebugEventStatus {
     DEFAULT = 1,
     CRITICAL = 2
 }
-export interface UDebugConfig {
-    logFile?: string;
-    logMode?: LogMode;
-    logStrategy?: LogStrategy;
-}
-export declare type UUDebugConfig = boolean | UDebugConfig;
 export declare type DebugEventSignature = 'parser:tokenize' | 'file:change' | 'watch:init' | 'loader:init' | 'compiler:resolutions' | 'partial:load' | 'template:load';
 export declare type DebugEventType = {
     phase: DebugEventPhase;
     signature: DebugEventSignature;
     fatal: boolean;
 };
-export declare type LogMode = 'silent' | 'verbose' | 'considerate';
-export declare type LogStrategy = 'none' | 'fs' | 'stdout' | 'both';
-export interface CallerDebugArgs {
-    errorSuppression: boolean;
-    logMode: LogMode;
-    logStrategy: LogStrategy;
-    debugger: Debugger;
-}
 export declare type ABT_Binding<T> = (chunk: string) => T;
 export declare type AST_MAP = {
     partials: Token[];
@@ -106,14 +114,6 @@ export declare type HTMLChunk = {
 };
 export declare type HTMLChunkRenderArgs = [name: string, data?: object];
 export declare type HTMLChunkRenderFN = (...HTMLChunkRenderArgs: any[]) => HTMLPage;
-export interface HTMLChunkLoader {
-    ctx: LoaderContext;
-    template: HTMLChunkRenderFN;
-}
-export declare type LoaderContext = {
-    config: SSROptions;
-    chunks: HTMLChunk[];
-};
 export interface MapWithPartial {
     partialInput: object;
 }

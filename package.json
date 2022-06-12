@@ -9,11 +9,7 @@
 	"./compiler": "./lib/compiler/index.js",
 	"./types": "./lib/types/index.js"
   },
-  "bin": {
-    "ssg": "lib/cli/ssg/index.js",
-    "quickstart": "lib/cli/quickstart/index.js",
-    "find-config": "lib/cli/find-config/index.js"
-  },
+  "bin": "lib/cli/index.js",
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",

@@ -34,7 +34,7 @@ function createPath(
  * @function quickstart
  * @description command line interface for quickstart template
  * @example
- * ```npx -p html-chunk-loader quickstart```
+ * ```npx html-chunk-loader quickstart```
 */
 export function quickstart() {
 	const { pathRoot, partials, templates } = __DEFAULTS__;
@@ -67,4 +67,3 @@ export function quickstart() {
 	log('Done.');
 }
 
-quickstart();

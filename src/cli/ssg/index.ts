@@ -12,7 +12,7 @@ import util from 'util';
  * @function ssg
  * @description command line interface for ssg templates
  * @example
- * ```npx -p html-chunk-loader ssg```
+ * ```npx html-chunk-loader ssg```
 */
 export function ssg():
 void {
@@ -35,5 +35,3 @@ void {
         console.warn(e);
     }
 }
-
-ssg();

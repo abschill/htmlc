@@ -5,6 +5,7 @@
 - add test coverage
 - better error handling for default loader with unresolved config setup
 - `findPartials` -> `usePartials` & `findTemplates` -> `useTemplates`
+- update CLI to no longer use the -p flag for running command line
 ## 0.6.16
 
 ## 05/08/2022
