@@ -65,12 +65,23 @@ function replaceKeyValue(
     return chunk.replace(key.raw, matcher);
 }
 
-function render(
-    ctx: LoaderContext,
-    data: object,
-    chunk: string
+export function render(
+    chunk: string,
+	input: object,
+	intlCode ?: string
 ): string {
-    const { config, chunks } = ctx;
+    const nTokens = tokenize(chunk);
+    nTokens.keys.forEach(key => chunk = replaceKeyValue(chunk, key, input));
+    nTokens.loops.forEach(loop => chunk = replaceIteratorKey(chunk, loop, input));
+    return cleanHTML(chunk, intlCode ?? Locale.en_US);
+}
+
+export function useRenderContext(
+	ctx: LoaderContext,
+	data: object,
+	chunk: string
+): string {
+	const { config, chunks } = ctx;
     const input = { ...config.partialInput, ...config.templateInput, ...data };
     const partials = chunks.filter(chunk => chunk.type === 'partial');
     for(const p of partials) {
@@ -79,10 +90,7 @@ function render(
             chunk = chunk.replace(signature, p.renderedChunk ?? p.rawFile);
         }
     }
-    const nTokens = tokenize(chunk);
-    nTokens.keys.forEach(key => chunk = replaceKeyValue(chunk, key, input));
-    nTokens.loops.forEach(loop => chunk = replaceIteratorKey(chunk, loop, input));
-    return cleanHTML(chunk, ctx.config.intlCode ?? Locale.en_US);
+	return render(chunk, input, ctx.config.intlCode);
 }
 
 const useRegistryChunk = (
@@ -99,5 +107,5 @@ export function compile(
     const toParse = hasSymbols(match.rawFile);
     // nothing to compile
     if(!toParse) return match.rawFile;
-    return render(args.ctx, args.callData, match.rawFile);
+    return useRenderContext(args.ctx, args.callData, match.rawFile);
 }

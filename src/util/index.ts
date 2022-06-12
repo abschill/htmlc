@@ -8,6 +8,7 @@ import {
     GlobalOptions,
     toLocale
 } from '../types';
+
 export const DEBUG_DEFAULTS:
 DebugConfig = {
     logMode: <LogMode>'silent',

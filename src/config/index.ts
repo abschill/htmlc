@@ -23,7 +23,8 @@ import {
 	DEBUG_DEFAULTS,
 	SSR_DEFAULTS,
 	SSG_DEFAULTS,
-	wrap
+	wrap,
+	FG_COLOR_ESCAPES
 } from '../util';
 
 export function genTypedFallbacks (
@@ -53,7 +54,8 @@ export function tryHCL (
 			return genTypedFallbacks(type, require(jsonPath)[`${sig}`]);
 		}
 		else {
-			throw new Error('Config Path Error');
+			console.error(FG_COLOR_ESCAPES.red, 'path root doesnt exist: ', `${process.cwd()}/${jsonPath} or ${process.cwd()}/${jsPath}`);
+			process.exit(1);
 		}
 	}
 }
