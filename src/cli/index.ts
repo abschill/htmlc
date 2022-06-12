@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { findConfigCLI } from './find-config';
 import { quickstart } from './quickstart';
 import { ssg } from './ssg';
