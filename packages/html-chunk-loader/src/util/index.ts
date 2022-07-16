@@ -7,7 +7,7 @@ import {
     LogStrategy,
     GlobalOptions,
     toLocale
-} from '../types';
+} from 'htmlc-types';
 
 export const DEBUG_DEFAULTS:
 DebugConfig = {

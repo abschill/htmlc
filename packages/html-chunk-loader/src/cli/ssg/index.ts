@@ -4,7 +4,7 @@ import {
     pathify,
     __write
 } from './tools';
-import { SSGOptions } from '../../types';
+import { SSGOptions } from 'htmlc-types';
 import { useLoader } from '../..';
 import { useSSGConfig } from '../../config';
 import util from 'util';

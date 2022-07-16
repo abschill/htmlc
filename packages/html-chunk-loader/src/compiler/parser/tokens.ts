@@ -12,7 +12,7 @@ import {
     AST_PARTIAL_REGGIE,
     AST_LOOP_OPEN_REGGIE,
 } from './constants';
-import { ABT_Binding } from '../../types';
+import { ABT_Binding } from 'htmlc-types';
 
 const hasLoop = (
     chunk: string

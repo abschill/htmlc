@@ -3,8 +3,8 @@ import {
     Token,
     LoaderContext,
     HTMLChunk,
-    Locale
-} from '../types';
+	Locale
+} from 'htmlc-types';
 import {
 	mask as ParserMask,
 	tokenize,

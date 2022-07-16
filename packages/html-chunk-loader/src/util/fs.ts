@@ -2,13 +2,13 @@
  * @module fs internal file handling
  */
 import { __DEFAULTS__ } from '.';
-import { ChunkableSplitData } from '../types';
-import { FG_COLOR_ESCAPES } from '.';
+import { color } from 'terminal-color';
 import {
+	ChunkableSplitData,
 	HTMLChunk,
 	HTMLChunkType,
 	SSROptions
-} from '../types';
+} from 'htmlc-types';
 import {
 	readdirSync,
 	readFileSync,
@@ -128,12 +128,12 @@ export function usePartials({
 	experimentalExtensions = false
 }: SSROptions): HTMLChunk[] | null {
 	if(!existsSync(join(process.cwd(), pathRoot))) {
-		console.error(FG_COLOR_ESCAPES.red, 'path root doesnt exist: ', `${process.cwd()}/${pathRoot}`);
+		console.error(color.fg.red('path root doesnt exist: '), `${process.cwd()}/${pathRoot}`);
 		process.exit(1);
 	}
 	const root = join(process.cwd(), pathRoot, partials);
 	if(!existsSync(root)) {
-		console.error(FG_COLOR_ESCAPES.red, 'path root doesnt exist: ', `${root}`);
+		console.error(color.fg.red('path root doesnt exist: '), `${root}`);
 		process.exit(1);
 	}
 	if(!discoverPaths) return validFileList(root, experimentalExtensions).map(file => createFileMap(file, partials, 'partial'));
@@ -147,12 +147,12 @@ export function useTemplates({
 	experimentalExtensions = false
 }: SSROptions): HTMLChunk[] | null {
 	if(!existsSync(join(process.cwd(), pathRoot))) {
-		console.error(FG_COLOR_ESCAPES.red, 'path root doesnt exist: ', `${process.cwd()}/${pathRoot}`);
+		console.error(color.fg.red('path root doesnt exist: '), `${process.cwd()}/${pathRoot}`);
 		process.exit(1);
 	}
 	const root = join(process.cwd(), pathRoot, templates);
 	if(!existsSync(root)) {
-		console.error(FG_COLOR_ESCAPES.red, 'path root doesnt exist: ', `${root}`);
+		console.error(color.fg.red('path root doesnt exist: '), `${root}`);
 		process.exit(1);
 	}
 	if(!discoverPaths) return validFileList(root, experimentalExtensions).map((file) => createFileMap(file, templates, 'template'));

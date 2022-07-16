@@ -14,7 +14,7 @@ import {
 import {
     Token, AST_MAP,
 	ParsedKey
-} from '../../types';
+} from 'htmlc-types';
 
 /**
 * @constant EMPTY_MAP The initial reducer input for tokenize function

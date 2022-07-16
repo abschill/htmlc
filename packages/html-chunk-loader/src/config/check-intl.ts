@@ -1,8 +1,8 @@
 import {
-    toLocale,
-    AnyLoadConfig,
-    Locale
-} from '../types';
+	toLocale,
+	Locale,
+    AnyLoadConfig
+} from 'htmlc-types';
 const { warn } = console;
 
 export function checkIntlCode (

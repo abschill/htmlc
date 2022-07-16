@@ -4,6 +4,7 @@
  */
 import { resolve } from 'path';
 import { existsSync } from 'fs';
+import { color } from 'terminal-color';
 import {
 	SSROptions,
 	USSROptions,
@@ -14,7 +15,7 @@ import {
 	LoaderContext,
 	UUDebugConfig,
 	DebugConfig
-} from '../types';
+} from 'htmlc-types';
 import {
 	usePartials,
 	useTemplates,
@@ -23,8 +24,7 @@ import {
 	DEBUG_DEFAULTS,
 	SSR_DEFAULTS,
 	SSG_DEFAULTS,
-	wrap,
-	FG_COLOR_ESCAPES
+	wrap
 } from '../util';
 
 export function genTypedFallbacks (
@@ -54,7 +54,7 @@ export function tryHCL (
 			return genTypedFallbacks(type, require(jsonPath)[`${sig}`]);
 		}
 		else {
-			console.error(FG_COLOR_ESCAPES.red, 'path root doesnt exist: ', `${process.cwd()}/${jsonPath} or ${process.cwd()}/${jsPath}`);
+			console.error(color.fg.red('path root doesnt exist: '), `${process.cwd()}/${jsonPath} or ${process.cwd()}/${jsPath}`);
 			process.exit(1);
 		}
 	}

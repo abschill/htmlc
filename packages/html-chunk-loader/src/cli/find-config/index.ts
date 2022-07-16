@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { __DEFAULTS__ } from '../../util';
 import { useConfig } from '../../config';
-import { ConfigStringType } from '../../types';
+import { ConfigStringType } from 'htmlc-types';
 /**
  * @function findConfig
  * @description command line interface for ssg templates

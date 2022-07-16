@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.compile = exports.useRenderContext = exports.render = void 0;
-const types_1 = require("../types");
+const htmlc_types_1 = require("htmlc-types");
 const parser_1 = require("./parser");
 const util_1 = require("./parser/util");
 const html_1 = require("../util/html");
@@ -44,7 +44,7 @@ function render(chunk, input, intlCode) {
     const nTokens = (0, parser_1.tokenize)(chunk);
     nTokens.keys.forEach(key => chunk = replaceKeyValue(chunk, key, input));
     nTokens.loops.forEach(loop => chunk = replaceIteratorKey(chunk, loop, input));
-    return (0, html_1.cleanHTML)(chunk, intlCode !== null && intlCode !== void 0 ? intlCode : types_1.Locale.en_US);
+    return (0, html_1.cleanHTML)(chunk, intlCode !== null && intlCode !== void 0 ? intlCode : htmlc_types_1.Locale.en_US);
 }
 exports.render = render;
 function useRenderContext(ctx, data, chunk) {

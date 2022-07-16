@@ -1,12 +1,11 @@
+import { color } from 'terminal-color';
+import { useDebug } from '../config';
 import {
 	SSROptions,
 	SSGOptions,
 	DebugEventSignature,
-} from '../types';
-import {
-	FG_COLOR_ESCAPES,
-} from '.';
-import { useDebug } from '../config';
+} from 'htmlc-types';
+
 const _ = console.log;
 export function createDebugger (
 	options: SSROptions | SSGOptions
@@ -19,13 +18,13 @@ export function createDebugger (
 	if(config.logMode === 'silent' || config.logMode === 'considerate') {
 		return;
 	}
-	_(FG_COLOR_ESCAPES.blue, 'html-chunk-loader:');
-	_(FG_COLOR_ESCAPES.green, 'debug enabled');
+	_(color.fg.blue('html-chunk-loader:'));
+	_(color.fg.green('debug enabled'));
 	function log (
 		event_signature: DebugEventSignature,
 		data: object | string,
 	) {
-		_(FG_COLOR_ESCAPES.blue, 'hcl_debug::event_signature: ', FG_COLOR_ESCAPES.white.replace('%s', ''), event_signature);
+		_(color.fg.blue('htmlc::event_signature: '), event_signature);
 		_(data);
 	}
 
@@ -33,7 +32,7 @@ export function createDebugger (
 		event_signature: DebugEventSignature,
 		data: object | string
 	) {
-		_(FG_COLOR_ESCAPES.red, 'hcl_debug::event_signature: ', FG_COLOR_ESCAPES.white.replace('%s', ''), event_signature);
+		_(color.fg.red('htmlc::event_signature: '), event_signature);
 
 		_(data);
 	}

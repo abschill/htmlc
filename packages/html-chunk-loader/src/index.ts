@@ -17,7 +17,7 @@
     SSROptions,
     HTMLPage,
     Debugger
-} from './types';
+} from 'htmlc-types';
 import {
 	hydrateRuntimeConfig,
 	useSSRConfig

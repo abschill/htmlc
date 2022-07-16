@@ -1,4 +1,4 @@
-import { ABT_Binding } from '../../types';
+import { ABT_Binding } from 'htmlc-types';
 declare const ABT: ParsableToken[];
 export default ABT;
 export declare type ParsableToken = {

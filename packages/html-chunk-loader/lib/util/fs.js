@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useTemplates = exports.usePartials = exports.mapPathList = exports.readValidFSTree = exports.createFileMap = exports.fileMap = exports.mapPath = exports.validFileList = exports.hasValidExtension = exports.ALLOWED_EXTENSIONS = exports.__BSD__ = exports.__WIN__ = void 0;
 const _1 = require(".");
-const _2 = require(".");
 const fs_1 = require("fs");
 const path_1 = require("path");
 exports.__WIN__ = '\\';
@@ -73,12 +72,12 @@ const mapPathList = (paths, base, type) => paths.map((file) => createFileMap(fil
 exports.mapPathList = mapPathList;
 function usePartials({ partials = _1.__DEFAULTS__.partials, pathRoot = _1.__DEFAULTS__.pathRoot, discoverPaths = _1.__DEFAULTS__.discoverPaths, experimentalExtensions = false }) {
     if (!(0, fs_1.existsSync)((0, path_1.join)(process.cwd(), pathRoot))) {
-        console.error(_2.FG_COLOR_ESCAPES.red, 'path root doesnt exist: ', `${process.cwd()}/${pathRoot}`);
+        console.error(_1.FG_COLOR_ESCAPES.red, 'path root doesnt exist: ', `${process.cwd()}/${pathRoot}`);
         process.exit(1);
     }
     const root = (0, path_1.join)(process.cwd(), pathRoot, partials);
     if (!(0, fs_1.existsSync)(root)) {
-        console.error(_2.FG_COLOR_ESCAPES.red, 'path root doesnt exist: ', `${root}`);
+        console.error(_1.FG_COLOR_ESCAPES.red, 'path root doesnt exist: ', `${root}`);
         process.exit(1);
     }
     if (!discoverPaths)
@@ -88,12 +87,12 @@ function usePartials({ partials = _1.__DEFAULTS__.partials, pathRoot = _1.__DEFA
 exports.usePartials = usePartials;
 function useTemplates({ templates = _1.__DEFAULTS__.templates, pathRoot = _1.__DEFAULTS__.pathRoot, discoverPaths = _1.__DEFAULTS__.discoverPaths, experimentalExtensions = false }) {
     if (!(0, fs_1.existsSync)((0, path_1.join)(process.cwd(), pathRoot))) {
-        console.error(_2.FG_COLOR_ESCAPES.red, 'path root doesnt exist: ', `${process.cwd()}/${pathRoot}`);
+        console.error(_1.FG_COLOR_ESCAPES.red, 'path root doesnt exist: ', `${process.cwd()}/${pathRoot}`);
         process.exit(1);
     }
     const root = (0, path_1.join)(process.cwd(), pathRoot, templates);
     if (!(0, fs_1.existsSync)(root)) {
-        console.error(_2.FG_COLOR_ESCAPES.red, 'path root doesnt exist: ', `${root}`);
+        console.error(_1.FG_COLOR_ESCAPES.red, 'path root doesnt exist: ', `${root}`);
         process.exit(1);
     }
     if (!discoverPaths)

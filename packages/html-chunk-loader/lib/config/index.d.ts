@@ -1,4 +1,4 @@
-import { SSROptions, USSROptions, USSGOptions, SSGOptions, ConfigStringType, ConfigType, LoaderContext, UUDebugConfig, DebugConfig } from '../types';
+import { SSROptions, USSROptions, USSGOptions, SSGOptions, ConfigStringType, ConfigType, LoaderContext, UUDebugConfig, DebugConfig } from 'htmlc-types';
 export declare function genTypedFallbacks(type: ConfigStringType, args: ConfigType): ConfigType;
 export declare function useConfig(type: ConfigStringType): ConfigType;
 export declare function tryHCL(type: ConfigStringType): ConfigType;

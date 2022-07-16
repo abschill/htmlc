@@ -1,5 +1,4 @@
-import { ChunkableSplitData } from '../types';
-import { HTMLChunk, HTMLChunkType, SSROptions } from '../types';
+import { ChunkableSplitData, HTMLChunk, HTMLChunkType, SSROptions } from 'htmlc-types';
 export declare const __WIN__ = "\\";
 export declare const __BSD__ = "/";
 export declare const ALLOWED_EXTENSIONS: string[];

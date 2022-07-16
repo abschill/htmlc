@@ -15,7 +15,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FULL_DEFAULTS = exports.SSG_DEFAULTS = exports.SSR_DEFAULTS = exports.__DEFAULTS__ = exports.DEBUG_BOOLTRUE = exports.DEBUG_DEFAULTS = void 0;
-const types_1 = require("../types");
+const htmlc_types_1 = require("htmlc-types");
 exports.DEBUG_DEFAULTS = {
     logMode: 'silent',
     logStrategy: 'silent',
@@ -33,7 +33,7 @@ exports.__DEFAULTS__ = {
     templateInput: {},
     partialInput: {},
     discoverPaths: true,
-    intlCode: (0, types_1.toLocale)('en'),
+    intlCode: (0, htmlc_types_1.toLocale)('en'),
     errorSuppression: false,
     experimentalExtensions: false,
     debug: exports.DEBUG_DEFAULTS
