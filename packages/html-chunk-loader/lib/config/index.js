@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.useDebug = exports.hydrateRuntimeConfig = exports.useSSGConfig = exports.useSSRConfig = exports.tryPackage = exports.tryHCL = exports.useConfig = exports.genTypedFallbacks = void 0;
 const path_1 = require("path");
 const fs_1 = require("fs");
+const terminal_color_1 = require("terminal-color");
 const util_1 = require("../util");
 function genTypedFallbacks(type, args) {
     return type === 'ssg' ? Object.assign(Object.assign({}, util_1.SSG_DEFAULTS), args) : Object.assign(Object.assign({}, util_1.SSR_DEFAULTS), args);
@@ -24,7 +25,7 @@ function tryHCL(type) {
             return genTypedFallbacks(type, require(jsonPath)[`${sig}`]);
         }
         else {
-            console.error(util_1.FG_COLOR_ESCAPES.red, 'path root doesnt exist: ', `${process.cwd()}/${jsonPath} or ${process.cwd()}/${jsPath}`);
+            console.error(terminal_color_1.color.fg.red('path root doesnt exist: '), `${process.cwd()}/${jsonPath} or ${process.cwd()}/${jsPath}`);
             process.exit(1);
         }
     }

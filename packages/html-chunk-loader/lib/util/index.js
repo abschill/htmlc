@@ -45,7 +45,6 @@ exports.FULL_DEFAULTS = {
     ssg_config: exports.SSG_DEFAULTS,
     fallbacks: {}
 };
-__exportStar(require("./color-escape"), exports);
 __exportStar(require("./fs"), exports);
 __exportStar(require("./html"), exports);
 __exportStar(require("./event-map"), exports);

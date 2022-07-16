@@ -9,7 +9,6 @@ export declare const FULL_DEFAULTS: {
     ssg_config: Readonly<Required<import("htmlc-types").USSGOptions>>;
     fallbacks: {};
 };
-export * from './color-escape';
 export * from './fs';
 export * from './html';
 export * from './event-map';

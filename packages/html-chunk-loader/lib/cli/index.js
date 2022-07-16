@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const find_config_1 = require("./find-config");
 const quickstart_1 = require("./quickstart");
 const ssg_1 = require("./ssg");
-const util_1 = require("../util");
+const terminal_color_1 = require("terminal-color");
 switch (process.argv[2]) {
     case 'quickstart':
         (0, quickstart_1.quickstart)();
@@ -19,7 +19,7 @@ switch (process.argv[2]) {
         (0, find_config_1.findConfigCLI)('ssr');
         break;
     default:
-        console.log(util_1.FG_COLOR_ESCAPES.red, 'no command entered: ["locate-config", "quickstart", "ssg"]');
+        console.log(terminal_color_1.color.fg.red('no command entered: ["locate-config", "quickstart", "ssg"]'));
         break;
 }
 //# sourceMappingURL=index.js.map

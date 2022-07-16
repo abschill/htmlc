@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createDebugger = void 0;
-const _1 = require(".");
+const terminal_color_1 = require("terminal-color");
 const config_1 = require("../config");
 const _ = console.log;
 function createDebugger(options) {
@@ -12,14 +12,14 @@ function createDebugger(options) {
     if (config.logMode === 'silent' || config.logMode === 'considerate') {
         return;
     }
-    _(_1.FG_COLOR_ESCAPES.blue, 'html-chunk-loader:');
-    _(_1.FG_COLOR_ESCAPES.green, 'debug enabled');
+    _(terminal_color_1.color.fg.blue('html-chunk-loader:'));
+    _(terminal_color_1.color.fg.green('debug enabled'));
     function log(event_signature, data) {
-        _(_1.FG_COLOR_ESCAPES.blue, 'hcl_debug::event_signature: ', _1.FG_COLOR_ESCAPES.white.replace('%s', ''), event_signature);
+        _(terminal_color_1.color.fg.blue('htmlc::event_signature: '), event_signature);
         _(data);
     }
     function err(event_signature, data) {
-        _(_1.FG_COLOR_ESCAPES.red, 'hcl_debug::event_signature: ', _1.FG_COLOR_ESCAPES.white.replace('%s', ''), event_signature);
+        _(terminal_color_1.color.fg.red('htmlc::event_signature: '), event_signature);
         _(data);
     }
     return { log, err };
