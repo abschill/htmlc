@@ -1,6 +1,6 @@
 {
 	"name": "html-chunk-loader",
-	"version": "0.7.7",
+	"version": "0.7.8",
 	"description": "Lightweight SSR/SSG Template Engine for Node",
 	"homepage": "https://htmlc.abschill.com/",
 	"main": "lib/index.js",

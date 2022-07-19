@@ -77,12 +77,17 @@ import { DEBUG_DEFAULTS, DEBUG_BOOLTRUE } from './util';
     function template (
         name: string, data ?: object
     ): HTMLPage {
-        return compile({
-            templateName: name,
-            ctx: ctx,
-            callData: data,
-            debugger: dbg
-        });
+		try {
+			return compile({
+				templateName: name,
+				ctx: ctx,
+				callData: data,
+				debugger: dbg
+			});
+		}
+		catch(e) {
+			return `HTMLC Render Error: ${JSON.stringify(e)}`
+		}
     }
 
     return {ctx, template};

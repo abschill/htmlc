@@ -32,12 +32,17 @@ function useLoader(config) {
         });
     }
     function template(name, data) {
-        return (0, htmlc_compiler_1.compile)({
-            templateName: name,
-            ctx: ctx,
-            callData: data,
-            debugger: dbg
-        });
+        try {
+            return (0, htmlc_compiler_1.compile)({
+                templateName: name,
+                ctx: ctx,
+                callData: data,
+                debugger: dbg
+            });
+        }
+        catch (e) {
+            return `HTMLC Render Error: ${JSON.stringify(e)}`;
+        }
     }
     return { ctx, template };
 }
