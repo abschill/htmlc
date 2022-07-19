@@ -1,0 +1,17 @@
+node_modules
+dist
+examples/**/node_modules
+public
+public/**/*
+gitignore.*
+static-paths.js
+.idea
+.husky
+hcl.log
+*.lock
+.internal
+nyc_output
+pkg_cache
+coverage
+pkg-cache
+lib

@@ -4,7 +4,7 @@ exports.createLoader = exports.useLoader = void 0;
 const config_1 = require("./config");
 const fs_1 = require("fs");
 const debugger_1 = require("./util/debugger");
-const compiler_1 = require("./compiler");
+const htmlc_compiler_1 = require("htmlc-compiler");
 const util_1 = require("./util");
 function useLoader(config) {
     const hcl_config = (0, config_1.useSSRConfig)(config);
@@ -32,7 +32,7 @@ function useLoader(config) {
         });
     }
     function template(name, data) {
-        return (0, compiler_1.compile)({
+        return (0, htmlc_compiler_1.compile)({
             templateName: name,
             ctx: ctx,
             callData: data,

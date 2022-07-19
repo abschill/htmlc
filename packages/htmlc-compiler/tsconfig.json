@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"declaration": true,
+		"rootDir": "./src",
+		"baseUrl": "./src",
+		"outDir": "./lib",
+		"moduleResolution": "node",
+        "resolveJsonModule": true,
+		"esModuleInterop": true,
+	},
+	"include": [
+		"./src/**/*"
+	]
+}

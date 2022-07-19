@@ -1,0 +1,28 @@
+{
+	"name": "htmlc-compiler",
+	"version": "0.1.0",
+
+	"scripts": {
+		"build": "tsc",
+		"dev": "tsc -w"
+	},
+	"dependencies": {
+		"htmlc-types": "^0.1.6"
+	},
+	"devDependencies": {
+		"typescript": "^4.4.2"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/webpuppy/htmlc"
+	},
+	"author": "abschill",
+	"license": "ISC",
+	"files": [
+		"lib/**/*"
+	],
+	"types": "./lib/index.d.ts",
+	"exports": {
+		".": "./lib/index.js"
+	}
+}

@@ -1,5 +1,5 @@
 import { useLoader } from '../src';
-import { tokenize } from '../src/compiler/parser';
+import { tokenize } from 'htmlc-compiler/lib/parser';
 import templateInput from './fixtures/templateData.json';
 const myLoader = useLoader({
     pathRoot: 'test-pkg/custom',

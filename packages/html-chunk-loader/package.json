@@ -1,13 +1,11 @@
 {
 	"name": "html-chunk-loader",
-	"version": "0.7.6",
+	"version": "0.7.7",
 	"description": "Lightweight SSR/SSG Template Engine for Node",
 	"homepage": "https://htmlc.abschill.com/",
 	"main": "lib/index.js",
 	"exports": {
-		".": "./lib/index.js",
-		"./compiler": "./lib/compiler/index.js",
-		"./types": "./lib/types/index.js"
+		".": "./lib/index.js"
 	},
 	"files": [
 		"lib/**/*"
@@ -73,6 +71,7 @@
 		}
 	},
 	"dependencies": {
+		"htmlc-compiler": "^0.1.0",
 		"htmlc-types": "^0.1.6",
 		"terminal-color": "^0.2.0"
 	}
