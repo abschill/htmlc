@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-import { __DEFAULTS__ } from '../../util';
-import { useConfig } from '../../config';
+import { __DEFAULTS__, useConfig } from 'htmlc-config';
 import { ConfigStringType } from 'htmlc-types';
 /**
  * @function findConfig

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { __DEFAULTS__, FULL_DEFAULTS } from '../../util';
+import { __DEFAULTS__, FULL_DEFAULTS } from 'htmlc-config';
 import {
 	existsSync,
 	mkdirSync,

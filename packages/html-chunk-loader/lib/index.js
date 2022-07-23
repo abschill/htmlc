@@ -5,16 +5,16 @@ const config_1 = require("./config");
 const fs_1 = require("fs");
 const debugger_1 = require("./util/debugger");
 const htmlc_compiler_1 = require("htmlc-compiler");
-const util_1 = require("./util");
+const htmlc_config_1 = require("htmlc-config");
 function useLoader(config) {
     const hcl_config = (0, config_1.useSSRConfig)(config);
     let dbg = null;
     if (typeof hcl_config.debug === 'boolean' && hcl_config.debug === true) {
-        const o = Object.assign(Object.assign({}, hcl_config), { debug: util_1.DEBUG_BOOLTRUE });
+        const o = Object.assign(Object.assign({}, hcl_config), { debug: htmlc_config_1.DEBUG_BOOLTRUE });
         dbg = (0, debugger_1.createDebugger)(o);
     }
     else if (!hcl_config.debug || typeof hcl_config.debug === 'object') {
-        dbg = (0, debugger_1.createDebugger)(Object.assign({ debug: util_1.DEBUG_DEFAULTS }, hcl_config));
+        dbg = (0, debugger_1.createDebugger)(Object.assign({ debug: htmlc_config_1.DEBUG_DEFAULTS }, hcl_config));
     }
     let ctx = (0, config_1.hydrateRuntimeConfig)(hcl_config);
     if (ctx.config.watch) {

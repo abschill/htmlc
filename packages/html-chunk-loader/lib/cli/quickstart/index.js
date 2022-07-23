@@ -2,7 +2,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.quickstart = void 0;
-const util_1 = require("../../util");
+const htmlc_config_1 = require("htmlc-config");
 const fs_1 = require("fs");
 const path_1 = require("path");
 const { log } = console;
@@ -23,7 +23,7 @@ function createPath(path) {
     (0, fs_1.mkdirSync)(path);
 }
 function quickstart() {
-    const { pathRoot, partials, templates } = util_1.__DEFAULTS__;
+    const { pathRoot, partials, templates } = htmlc_config_1.__DEFAULTS__;
     const joinedRoot = (0, path_1.join)(process.cwd(), pathRoot);
     const joinedPartials = (0, path_1.join)(joinedRoot, partials);
     const joinedTemplates = (0, path_1.join)(joinedRoot, templates);
@@ -47,7 +47,7 @@ function quickstart() {
     });
     const configFile = (0, path_1.resolve)(process.cwd(), 'hcl-config.js');
     if (!(0, fs_1.existsSync)(configFile)) {
-        const jsonString = JSON.stringify(util_1.FULL_DEFAULTS, null, 4);
+        const jsonString = JSON.stringify(htmlc_config_1.FULL_DEFAULTS, null, 4);
         const moduleString = `module.exports = ${jsonString}`;
         (0, fs_1.writeFileSync)(configFile, moduleString);
     }

@@ -1,11 +1,14 @@
 {
-	"name": "htmlc-types",
-	"version": "0.1.7",
+	"name": "htmlc-config",
+	"version": "0.1.0",
 
 	"scripts": {
 		"build": "tsc",
 		"dev": "tsc -w",
 		"lint": "prettier --write ./src"
+	},
+	"dependencies": {
+		"htmlc-types": "^0.1.6"
 	},
 	"devDependencies": {
 		"typescript": "^4.4.2"

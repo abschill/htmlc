@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useTemplates = exports.usePartials = exports.mapPathList = exports.readValidFSTree = exports.createFileMap = exports.fileMap = exports.mapPath = exports.validFileList = exports.hasValidExtension = exports.ALLOWED_EXTENSIONS = exports.__BSD__ = exports.__WIN__ = void 0;
-const _1 = require(".");
+const htmlc_config_1 = require("htmlc-config");
 const terminal_color_1 = require("terminal-color");
 const fs_1 = require("fs");
 const path_1 = require("path");
@@ -71,7 +71,7 @@ function readValidFSTree(dir) {
 exports.readValidFSTree = readValidFSTree;
 const mapPathList = (paths, base, type) => paths.map((file) => createFileMap(file, base, type));
 exports.mapPathList = mapPathList;
-function usePartials({ partials = _1.__DEFAULTS__.partials, pathRoot = _1.__DEFAULTS__.pathRoot, discoverPaths = _1.__DEFAULTS__.discoverPaths, experimentalExtensions = false }) {
+function usePartials({ partials = htmlc_config_1.__DEFAULTS__.partials, pathRoot = htmlc_config_1.__DEFAULTS__.pathRoot, discoverPaths = htmlc_config_1.__DEFAULTS__.discoverPaths, experimentalExtensions = false }) {
     if (!(0, fs_1.existsSync)((0, path_1.join)(process.cwd(), pathRoot))) {
         console.error(terminal_color_1.color.fg.red('path root doesnt exist: '), `${process.cwd()}/${pathRoot}`);
         process.exit(1);
@@ -86,7 +86,7 @@ function usePartials({ partials = _1.__DEFAULTS__.partials, pathRoot = _1.__DEFA
     return (0, exports.mapPathList)(readValidFSTree(root), partials, 'partial');
 }
 exports.usePartials = usePartials;
-function useTemplates({ templates = _1.__DEFAULTS__.templates, pathRoot = _1.__DEFAULTS__.pathRoot, discoverPaths = _1.__DEFAULTS__.discoverPaths, experimentalExtensions = false }) {
+function useTemplates({ templates = htmlc_config_1.__DEFAULTS__.templates, pathRoot = htmlc_config_1.__DEFAULTS__.pathRoot, discoverPaths = htmlc_config_1.__DEFAULTS__.discoverPaths, experimentalExtensions = false }) {
     if (!(0, fs_1.existsSync)((0, path_1.join)(process.cwd(), pathRoot))) {
         console.error(terminal_color_1.color.fg.red('path root doesnt exist: '), `${process.cwd()}/${pathRoot}`);
         process.exit(1);

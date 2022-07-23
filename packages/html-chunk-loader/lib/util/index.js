@@ -14,39 +14,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FULL_DEFAULTS = exports.SSG_DEFAULTS = exports.SSR_DEFAULTS = exports.__DEFAULTS__ = exports.DEBUG_BOOLTRUE = exports.DEBUG_DEFAULTS = void 0;
-const htmlc_types_1 = require("htmlc-types");
-exports.DEBUG_DEFAULTS = {
-    logMode: 'silent',
-    logStrategy: 'silent',
-    logFile: null
-};
-exports.DEBUG_BOOLTRUE = {
-    logMode: 'verbose',
-    logStrategy: 'stdout',
-    logFile: null
-};
-exports.__DEFAULTS__ = {
-    pathRoot: 'views',
-    templates: 'pages',
-    partials: 'partials',
-    templateInput: {},
-    partialInput: {},
-    discoverPaths: true,
-    intlCode: (0, htmlc_types_1.toLocale)('en'),
-    errorSuppression: false,
-    experimentalExtensions: false,
-    debug: exports.DEBUG_DEFAULTS
-};
-exports.SSR_DEFAULTS = Object.assign(Object.assign({}, exports.__DEFAULTS__), { watch: false });
-exports.SSG_DEFAULTS = Object.assign(Object.assign({}, exports.__DEFAULTS__), { outPath: 'public', loaderFile: 'hcl-config.js', cleanup: true });
-exports.FULL_DEFAULTS = {
-    ssr_config: exports.SSR_DEFAULTS,
-    ssg_config: exports.SSG_DEFAULTS,
-    fallbacks: {}
-};
 __exportStar(require("./fs"), exports);
 __exportStar(require("./html"), exports);
 __exportStar(require("./event-map"), exports);
-__exportStar(require("./wrap-fn"), exports);
 //# sourceMappingURL=index.js.map

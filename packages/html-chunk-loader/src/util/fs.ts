@@ -1,7 +1,7 @@
 /**
  * @module fs internal file handling
  */
-import { __DEFAULTS__ } from '.';
+import { __DEFAULTS__ } from 'htmlc-config';
 import { color } from 'terminal-color';
 import {
 	ChunkableSplitData,

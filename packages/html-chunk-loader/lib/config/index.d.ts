@@ -1,9 +1,3 @@
-import { SSROptions, USSROptions, USSGOptions, SSGOptions, ConfigStringType, ConfigType, LoaderContext, UUDebugConfig, DebugConfig } from 'htmlc-types';
-export declare function genTypedFallbacks(type: ConfigStringType, args: ConfigType): ConfigType;
-export declare function useConfig(type: ConfigStringType): ConfigType;
-export declare function tryHCL(type: ConfigStringType): ConfigType;
-export declare function tryPackage(type: ConfigStringType): ConfigType;
-export declare function useSSRConfig(conf?: USSROptions): SSROptions;
-export declare function useSSGConfig(conf?: USSGOptions): SSGOptions;
+import { SSROptions, USSROptions, LoaderContext } from 'htmlc-types';
 export declare function hydrateRuntimeConfig(config: SSROptions | USSROptions): LoaderContext;
-export declare function useDebug(opt: UUDebugConfig): DebugConfig;
+export * from 'htmlc-config';

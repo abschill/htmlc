@@ -25,7 +25,7 @@ import {
 import { watch } from 'fs';
 import { createDebugger } from './util/debugger';
 import { compile } from 'htmlc-compiler';
-import { DEBUG_DEFAULTS, DEBUG_BOOLTRUE } from './util';
+import { DEBUG_DEFAULTS, DEBUG_BOOLTRUE } from 'htmlc-config';
 /**
  * @function useLoader factory function for Loader
  * @description Rendering Context for templates

@@ -1,67 +1,24 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.useDebug = exports.hydrateRuntimeConfig = exports.useSSGConfig = exports.useSSRConfig = exports.tryPackage = exports.tryHCL = exports.useConfig = exports.genTypedFallbacks = void 0;
-const path_1 = require("path");
-const fs_1 = require("fs");
-const terminal_color_1 = require("terminal-color");
+exports.hydrateRuntimeConfig = void 0;
+const htmlc_config_1 = require("htmlc-config");
 const util_1 = require("../util");
-function genTypedFallbacks(type, args) {
-    return type === 'ssg' ? Object.assign(Object.assign({}, util_1.SSG_DEFAULTS), args) : Object.assign(Object.assign({}, util_1.SSR_DEFAULTS), args);
-}
-exports.genTypedFallbacks = genTypedFallbacks;
-function useConfig(type) {
-    return (0, util_1.wrap)(() => tryHCL(type), () => tryPackage(type));
-}
-exports.useConfig = useConfig;
-function tryHCL(type) {
-    const sig = `${type}_config`;
-    const jsPath = (0, path_1.resolve)(process.cwd(), 'hcl-config.js');
-    if ((0, fs_1.existsSync)(jsPath)) {
-        return genTypedFallbacks(type, require(jsPath)[`${sig}`]);
-    }
-    else {
-        const jsonPath = (0, path_1.resolve)(process.cwd(), 'hcl-config.json');
-        if ((0, fs_1.existsSync)(jsonPath)) {
-            return genTypedFallbacks(type, require(jsonPath)[`${sig}`]);
-        }
-        else {
-            console.error(terminal_color_1.color.fg.red('path root doesnt exist: '), `${process.cwd()}/${jsonPath} or ${process.cwd()}/${jsPath}`);
-            process.exit(1);
-        }
-    }
-}
-exports.tryHCL = tryHCL;
-function tryPackage(type) {
-    try {
-        const { hcl_config } = require((0, path_1.resolve)(process.cwd(), 'package.json'));
-        if (!hcl_config.ssr_config) {
-            return util_1.SSR_DEFAULTS;
-        }
-        return type === 'ssr' ? useSSRConfig(hcl_config.ssr_config) : useSSGConfig(hcl_config.ssg_config);
-    }
-    catch (e) {
-        return type === 'ssr' ? util_1.SSR_DEFAULTS : util_1.SSR_DEFAULTS;
-    }
-}
-exports.tryPackage = tryPackage;
-function useSSRConfig(conf) {
-    if (!conf)
-        return useConfig('ssr');
-    if (Object.keys(conf) === Object.keys(util_1.SSR_DEFAULTS))
-        return conf;
-    return Object.assign(Object.assign({}, util_1.SSR_DEFAULTS), conf);
-}
-exports.useSSRConfig = useSSRConfig;
-function useSSGConfig(conf) {
-    if (!conf)
-        return useConfig('ssg');
-    if (Object.keys(conf) === Object.keys(util_1.SSG_DEFAULTS))
-        return conf;
-    return Object.assign(Object.assign({}, util_1.SSG_DEFAULTS), conf);
-}
-exports.useSSGConfig = useSSGConfig;
 function hydrateRuntimeConfig(config) {
-    const hydrated = useSSRConfig(config);
+    const hydrated = (0, htmlc_config_1.useSSRConfig)(config);
     const partials = (0, util_1.usePartials)(hydrated);
     const templates = (0, util_1.useTemplates)(hydrated);
     return (partials && templates) ? {
@@ -73,10 +30,5 @@ function hydrateRuntimeConfig(config) {
     };
 }
 exports.hydrateRuntimeConfig = hydrateRuntimeConfig;
-function useDebug(opt) {
-    if (typeof opt === 'boolean')
-        return opt === true ? util_1.DEBUG_BOOLTRUE : util_1.DEBUG_DEFAULTS;
-    return Object.assign(Object.assign({}, util_1.DEBUG_DEFAULTS), opt);
-}
-exports.useDebug = useDebug;
+__exportStar(require("htmlc-config"), exports);
 //# sourceMappingURL=index.js.map

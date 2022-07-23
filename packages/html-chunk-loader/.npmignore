@@ -20,3 +20,4 @@ scripts/*
 nyc_output
 pkg_cache
 coverage
+tests

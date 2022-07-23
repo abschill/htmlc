@@ -1,3 +1,1 @@
-const { toLocale } = require('./lib');
-
-console.log(toLocale('en'));
+module.exports = require('./lib');

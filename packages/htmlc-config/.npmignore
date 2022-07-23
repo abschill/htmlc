@@ -1,0 +1,8 @@
+.prettierignore
+.prettierrc
+.eslintrc
+.eslintignore
+.editorconfig
+.nycrc.json
+tsconfig.json
+yarn.lock
