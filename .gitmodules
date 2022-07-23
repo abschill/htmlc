@@ -1,0 +1,3 @@
+[submodule "packages/htmlc-vscode"]
+	path = packages/htmlc-vscode
+	url = git@github.com:abschill/htmlc-tools-vscode.git
