@@ -18,13 +18,13 @@ function useLoader(config) {
     }
     let ctx = (0, config_1.hydrateRuntimeConfig)(hcl_config);
     if (ctx.config.watch) {
-        ctx.chunks.forEach(file => {
+        ctx.chunks.forEach((file) => {
             (0, fs_1.watch)(file.path, (eventType, filename) => {
                 if (eventType === 'change') {
-                    if (ctx.config.debug === true
-                        || ctx.config.debug
-                            && (typeof ctx.config.debug !== 'boolean'
-                                && ctx.config.debug.logMode !== 'silent'))
+                    if (ctx.config.debug === true ||
+                        (ctx.config.debug &&
+                            typeof ctx.config.debug !== 'boolean' &&
+                            ctx.config.debug.logMode !== 'silent'))
                         dbg.log('file:change', `Chunk Updated at: ${filename}`);
                     ctx = (0, config_1.hydrateRuntimeConfig)(hcl_config);
                 }
@@ -37,7 +37,7 @@ function useLoader(config) {
                 templateName: name,
                 ctx: ctx,
                 callData: data,
-                debugger: dbg
+                debugger: dbg,
             });
         }
         catch (e) {

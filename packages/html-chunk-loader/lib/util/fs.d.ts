@@ -9,5 +9,5 @@ export declare function fileMap(path: string, splitter: string[], basename: stri
 export declare function createFileMap(filepath: string, basepath: string, type: HTMLChunkType): HTMLChunk;
 export declare function readValidFSTree(dir: string): string[];
 export declare const mapPathList: (paths: string[], base: string, type: HTMLChunkType) => HTMLChunk[];
-export declare function usePartials({ partials, pathRoot, discoverPaths, experimentalExtensions }: SSROptions): HTMLChunk[] | null;
-export declare function useTemplates({ templates, pathRoot, discoverPaths, experimentalExtensions }: SSROptions): HTMLChunk[] | null;
+export declare function usePartials({ partials, pathRoot, discoverPaths, experimentalExtensions, }: SSROptions): HTMLChunk[] | null;
+export declare function useTemplates({ templates, pathRoot, discoverPaths, experimentalExtensions, }: SSROptions): HTMLChunk[] | null;

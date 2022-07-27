@@ -5,37 +5,37 @@ exports.HCL_EVENT_MAP = [
     {
         phase: 0,
         signature: 'loader:init',
-        fatal: true
+        fatal: true,
     },
     {
         phase: 0,
         signature: 'watch:init',
-        fatal: false
+        fatal: false,
     },
     {
         phase: -1,
         signature: 'file:change',
-        fatal: false
+        fatal: false,
     },
     {
         phase: 1,
         signature: 'parser:tokenize',
-        fatal: true
+        fatal: true,
     },
     {
         phase: 2,
         signature: 'partial:load',
-        fatal: false
+        fatal: false,
     },
     {
         phase: 3,
         signature: 'template:load',
-        fatal: true
+        fatal: true,
     },
     {
         phase: 2,
         signature: 'compiler:resolutions',
-        fatal: true
-    }
+        fatal: true,
+    },
 ];
 //# sourceMappingURL=event-map.js.map

@@ -1,9 +1,9 @@
 {
 	"name": "htmlc-compiler",
-	"version": "0.1.1",
+	"version": "0.1.2",
 
 	"scripts": {
-		"build": "tsc",
+		"build": "yarn lint && tsc",
 		"dev": "tsc -w",
 		"lint": "prettier --write ./src"
 	},

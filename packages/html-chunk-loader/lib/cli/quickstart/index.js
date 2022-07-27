@@ -10,13 +10,13 @@ const demoChunks = [
     {
         type: 'partial',
         filename: 'head.html',
-        content: '<head><title>Hello World</title></head>'
+        content: '<head><title>Hello World</title></head>',
     },
     {
         type: 'template',
         filename: 'home.html',
-        content: '<!--@partial=head--><main><h1>My HTML Template</h1></main>'
-    }
+        content: '<!--@partial=head--><main><h1>My HTML Template</h1></main>',
+    },
 ];
 function createPath(path) {
     log(`Creating Directory at ${path}`);
@@ -33,7 +33,7 @@ function quickstart() {
         createPath(joinedPartials);
     if (!(0, fs_1.existsSync)(joinedTemplates))
         createPath(joinedTemplates);
-    demoChunks.forEach(chunk => {
+    demoChunks.forEach((chunk) => {
         if (chunk.type === 'partial') {
             const partial = (0, path_1.resolve)(joinedPartials, chunk.filename);
             if (!(0, fs_1.existsSync)(partial))

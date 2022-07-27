@@ -7,20 +7,17 @@ const fs_1 = require("fs");
 const path_1 = require("path");
 exports.__WIN__ = '\\';
 exports.__BSD__ = '/';
-exports.ALLOWED_EXTENSIONS = [
-    '.html',
-    '.htmlc',
-    '.chtml',
-    '.chunk'
-];
+exports.ALLOWED_EXTENSIONS = ['.html', '.htmlc', '.chtml', '.chunk'];
 const hasValidExtension = (filename, isExperimental) => {
-    return isExperimental ? exports.ALLOWED_EXTENSIONS.filter(ext => filename.includes(ext)).length > 0 : filename.includes(exports.ALLOWED_EXTENSIONS[0]);
+    return isExperimental
+        ? exports.ALLOWED_EXTENSIONS.filter((ext) => filename.includes(ext)).length > 0
+        : filename.includes(exports.ALLOWED_EXTENSIONS[0]);
 };
 exports.hasValidExtension = hasValidExtension;
 function validFileList(dir, isExp) {
     return (0, fs_1.readdirSync)(dir)
-        .filter(x => (0, fs_1.statSync)((0, path_1.join)(dir, x)).isFile() && (0, exports.hasValidExtension)(x, isExp))
-        .map(x => (0, path_1.resolve)(dir, x));
+        .filter((x) => (0, fs_1.statSync)((0, path_1.join)(dir, x)).isFile() && (0, exports.hasValidExtension)(x, isExp))
+        .map((x) => (0, path_1.resolve)(dir, x));
 }
 exports.validFileList = validFileList;
 function mapPath(splitter, basename, sysSplit) {
@@ -48,7 +45,7 @@ function fileMap(path, splitter, basename, type) {
         isCached: false,
         renderedChunk: null,
         hasChildNodes: false,
-        needsRehydrate: false
+        needsRehydrate: false,
     };
     if (splitter.length === 2) {
         return Object.assign(Object.assign({}, data), { name: name[0], extension: name[1] });
@@ -63,15 +60,19 @@ function createFileMap(filepath, basepath, type) {
 }
 exports.createFileMap = createFileMap;
 function readValidFSTree(dir) {
-    return (0, fs_1.readdirSync)(dir).map(file => {
+    return (0, fs_1.readdirSync)(dir)
+        .map((file) => {
         const filepath = (0, path_1.join)(dir, file);
-        return (0, fs_1.statSync)(filepath).isDirectory() ? readValidFSTree(filepath) : filepath;
-    }).flat();
+        return (0, fs_1.statSync)(filepath).isDirectory()
+            ? readValidFSTree(filepath)
+            : filepath;
+    })
+        .flat();
 }
 exports.readValidFSTree = readValidFSTree;
 const mapPathList = (paths, base, type) => paths.map((file) => createFileMap(file, base, type));
 exports.mapPathList = mapPathList;
-function usePartials({ partials = htmlc_config_1.__DEFAULTS__.partials, pathRoot = htmlc_config_1.__DEFAULTS__.pathRoot, discoverPaths = htmlc_config_1.__DEFAULTS__.discoverPaths, experimentalExtensions = false }) {
+function usePartials({ partials = htmlc_config_1.__DEFAULTS__.partials, pathRoot = htmlc_config_1.__DEFAULTS__.pathRoot, discoverPaths = htmlc_config_1.__DEFAULTS__.discoverPaths, experimentalExtensions = false, }) {
     if (!(0, fs_1.existsSync)((0, path_1.join)(process.cwd(), pathRoot))) {
         console.error(terminal_color_1.color.fg.red('path root doesnt exist: '), `${process.cwd()}/${pathRoot}`);
         process.exit(1);
@@ -82,11 +83,11 @@ function usePartials({ partials = htmlc_config_1.__DEFAULTS__.partials, pathRoot
         process.exit(1);
     }
     if (!discoverPaths)
-        return validFileList(root, experimentalExtensions).map(file => createFileMap(file, partials, 'partial'));
+        return validFileList(root, experimentalExtensions).map((file) => createFileMap(file, partials, 'partial'));
     return (0, exports.mapPathList)(readValidFSTree(root), partials, 'partial');
 }
 exports.usePartials = usePartials;
-function useTemplates({ templates = htmlc_config_1.__DEFAULTS__.templates, pathRoot = htmlc_config_1.__DEFAULTS__.pathRoot, discoverPaths = htmlc_config_1.__DEFAULTS__.discoverPaths, experimentalExtensions = false }) {
+function useTemplates({ templates = htmlc_config_1.__DEFAULTS__.templates, pathRoot = htmlc_config_1.__DEFAULTS__.pathRoot, discoverPaths = htmlc_config_1.__DEFAULTS__.discoverPaths, experimentalExtensions = false, }) {
     if (!(0, fs_1.existsSync)((0, path_1.join)(process.cwd(), pathRoot))) {
         console.error(terminal_color_1.color.fg.red('path root doesnt exist: '), `${process.cwd()}/${pathRoot}`);
         process.exit(1);

@@ -15,13 +15,16 @@ function ssg() {
     (0, tools_1.ensureOutPath)(static_config.outPath);
     try {
         const ctx = (0, __1.useLoader)(static_config);
-        ctx.ctx.chunks.filter(chunk => chunk.type === 'template').forEach(template => {
+        ctx.ctx.chunks
+            .filter((chunk) => chunk.type === 'template')
+            .forEach((template) => {
             const fileData = {
                 toName: (0, tools_1.pathify)(template, static_config.outPath),
-                toWrite: ctx.template(template.name)
+                toWrite: ctx.template(template.name),
             };
             (0, tools_1.__write)(fileData);
-            process.stdout.write(util_1.default.format('\x1b[32m%s ✓ \x1b[0m\n', 'Files Written') + '\n');
+            process.stdout.write(util_1.default.format('\x1b[32m%s ✓ \x1b[0m\n', 'Files Written') +
+                '\n');
             return;
         });
     }

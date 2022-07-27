@@ -9,13 +9,18 @@ export const AST_KNC = ')';
 export const AST_TNO = '{';
 export const AST_TNC = '}';
 export const AST_KEYSELF = `${AST_TNO}${SELF}${AST_TNC}`;
-export const AST_RENDER_SIGNATURE = `${AST_DT}render`;
-export const AST_PARTIAL_SIGNATURE = `${AST_DT}partial`;
-export const AST_LOOP_SIGNATURE = `${AST_DT}loop`;
-export const AST_PARTIAL_REGGIE = /<!--@partial=\w+[\w|\d|/\\]*-->/gi;
-export const AST_RENDER_REGGIE = /<!--@render=\w+.?[\w|\d|.]+-->/gi;
 export const AST_LOOP_OPEN_REGGIE = /<!--@loop\(\w+\){/gi;
-export const AST_OPEN_SCOPE = '<!--';
-export const AST_CLOSE_SCOPE = '-->';
-export const AST_CLOSE_LOOP_SCOPE = AST_TNC + AST_CLOSE_SCOPE;
-export const AST_NESTED_KEYPARSE = /{\w+.?[\w|\d]*}/gi;
+export const HTMLCParserConstants = {
+	DIRECTIVE_TOKEN: '@',
+	ASSIGN_TOKEN: '=',
+	THIS_TOKEN: '_',
+	KEY_SIGNATURE: '@render',
+	KEY_REGGIE: /<!--@render=\w+.?[\w|\d|.]+-->/gi,
+	HTML_COMMENT_OPEN: '<!--',
+	HTML_COMMENT_CLOSE: '-->',
+	NESTED_KEY_REGGIE: /{\w+.?[\w|\d]*}/gi,
+	PARTIAL_SIGNATURE: '@partial',
+	PARTIAL_REGGIE: /<!--@partial=\w+[\w|\d|/\\]*-->/gi,
+	LOOP_SIGNATURE: '@loop',
+	LOOP_OPEN_REGGIE: /<!--@loop\(\w+\){/gi,
+};

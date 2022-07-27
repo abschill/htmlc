@@ -1,14 +1,7 @@
-import {
-    AST_OPEN_SCOPE,
-    AST_CLOSE_SCOPE,
-    AST_LOOP_SIGNATURE,
-	AST_TNO,
-	AST_KNO,
-	AST_KNC
-} from './constants';
+import { HTMLCParserConstants, AST_TNO, AST_KNO, AST_KNC } from './constants';
 
 export const useInlineScope = (input: string): string =>
-`${AST_OPEN_SCOPE}${input}${AST_CLOSE_SCOPE}`;
+	`${HTMLCParserConstants.HTML_COMMENT_OPEN}${input}${HTMLCParserConstants.HTML_COMMENT_CLOSE}`;
 
 export const useLoopOpenScope = (name: string): string =>
-`${AST_OPEN_SCOPE}${AST_LOOP_SIGNATURE}${AST_KNO}${name}${AST_KNC}${AST_TNO}`;
+	`${HTMLCParserConstants.HTML_COMMENT_OPEN}${HTMLCParserConstants.LOOP_SIGNATURE}${AST_KNO}${name}${AST_KNC}${AST_TNO}`;

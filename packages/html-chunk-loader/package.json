@@ -1,6 +1,6 @@
 {
 	"name": "html-chunk-loader",
-	"version": "0.7.9",
+	"version": "0.7.11",
 	"description": "Lightweight SSR/SSG Template Engine for Node",
 	"homepage": "https://htmlc.abschill.com/",
 	"main": "lib/index.js",
@@ -12,12 +12,12 @@
 	],
 	"bin": "lib/cli/index.js",
 	"scripts": {
-		"build": "tsc",
+		"build": "yarn lint:src && tsc",
 		"dev": "tsc --watch",
 		"test": "jest --coverage",
 		"preparePublish": "python scripts/refresh-build.py",
 		"test:ssg": "node lib/cli/ssg/index.js",
-		"lint:src": "eslint --fix src/**/*"
+		"lint:src": "prettier --write ./src"
 	},
 	"keywords": [
 		"html",
@@ -71,7 +71,7 @@
 		}
 	},
 	"dependencies": {
-		"htmlc-compiler": "^0.1.0",
+		"htmlc-compiler": "^0.1.2",
 		"htmlc-config": "^0.1.0",
 		"htmlc-types": "^0.1.6",
 		"terminal-color": "^0.2.0"

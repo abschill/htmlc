@@ -7,8 +7,7 @@ exports.__write = exports.pathify = exports.ensureOutPath = void 0;
 const fs_1 = require("fs");
 const path_1 = __importDefault(require("path"));
 function ensureOutPath(outPath) {
-    return (0, fs_1.existsSync)(outPath) ?
-        null : (0, fs_1.mkdirSync)(outPath);
+    return (0, fs_1.existsSync)(outPath) ? null : (0, fs_1.mkdirSync)(outPath);
 }
 exports.ensureOutPath = ensureOutPath;
 function pathify(template, contextPath) {

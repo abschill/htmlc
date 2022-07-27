@@ -21,13 +21,15 @@ function hydrateRuntimeConfig(config) {
     const hydrated = (0, htmlc_config_1.useSSRConfig)(config);
     const partials = (0, util_1.usePartials)(hydrated);
     const templates = (0, util_1.useTemplates)(hydrated);
-    return (partials && templates) ? {
-        config: hydrated,
-        chunks: [...partials, ...templates]
-    } : {
-        config: hydrated,
-        chunks: []
-    };
+    return partials && templates
+        ? {
+            config: hydrated,
+            chunks: [...partials, ...templates],
+        }
+        : {
+            config: hydrated,
+            chunks: [],
+        };
 }
 exports.hydrateRuntimeConfig = hydrateRuntimeConfig;
 __exportStar(require("htmlc-config"), exports);

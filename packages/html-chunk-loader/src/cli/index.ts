@@ -4,7 +4,7 @@ import { quickstart } from './quickstart';
 import { ssg } from './ssg';
 import { color } from 'terminal-color';
 
-switch(process.argv[2]) {
+switch (process.argv[2]) {
 	case 'quickstart':
 		quickstart();
 		break;
@@ -18,6 +18,10 @@ switch(process.argv[2]) {
 		findConfigCLI('ssr');
 		break;
 	default:
-		console.log(color.fg.red('no command entered: ["locate-config", "quickstart", "ssg"]'));
+		console.log(
+			color.fg.red(
+				'no command entered: ["locate-config", "quickstart", "ssg"]'
+			)
+		);
 		break;
 }
