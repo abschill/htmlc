@@ -1,6 +1,13 @@
 import { defaultLoader as i, defaultPartialData, defaultTemplateData } from './fixtures/prepareLoaders';
+import { render } from 'htmlc-compiler';
 
 describe('Internal Config Testing', () => {
+
+	it('renders generic properly', () => {
+		const res = render('<h1><!--@render=test--></h1>', { test: 'foobar' });
+		expect(res).toMatch('<h1>foobar</h1>');
+	});
+
 	it('loads context', () => {
 		expect(i.ctx).toBeDefined();
 		expect(i.ctx.config).toBeDefined();
