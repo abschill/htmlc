@@ -1,0 +1,60 @@
+{
+	"name": "@htmlc/core",
+	"version": "0.0.1",
+	"description": "the next generation of html-chunk-loader",
+	"author": {
+		"url": "https://blog.abschill.com",
+		"email": "dev3141592@gmail.com",
+		"name": "abschill"
+	},
+	"private": false,
+	"contributors": [
+		{
+			"url": "https://blog.abschill.com",
+			"email": "dev3141592@gmail.com",
+			"name": "abschill"
+		}
+	],
+	"homepage": "https://htmlc.webpuppy.io",
+	"exports": {
+		".": "./lib/index.js"
+	},
+	"files": [
+		"lib/**/*"
+	],
+	"main": "./lib/index.js",
+	"bin": "lib/cli/index.js",
+	"scripts": {
+		"build": "yarn lint:src && tsc",
+		"dev": "tsc --watch",
+		"test": "jest --coverage",
+		"test:ssg": "node lib/cli/ssg/index.js",
+		"lint:src": "prettier --write ./src"
+	},
+	"license": "ISC",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/webpuppy/htmlc"
+	},
+	"devDependencies": {
+		"@types/jest": "^27.0.1",
+		"@typescript-eslint/eslint-plugin": "^5.15.0",
+		"@typescript-eslint/parser": "^5.15.0",
+		"eslint": "^8.11.0",
+		"jest": "^27.1.0",
+		"nyc": "^15.1.0",
+		"ts-jest": "^27.0.5",
+		"typescript": "^4.4.2"
+	},
+	"dependencies": {
+		"htmlc-compiler": "^0.1.2",
+		"htmlc-config": "^0.1.0",
+		"htmlc-types": "^0.1.6",
+		"terminal-color": "^0.2.0"
+	},
+	"prettier": {
+		"tabWidth": 4,
+		"semi": true,
+		"singleQuote": true
+	}
+}
