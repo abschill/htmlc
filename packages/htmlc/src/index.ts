@@ -10,55 +10,81 @@
  * myLoader.template('home', { ...homeData } );
  * ```
  */
-import {
-	HTMLChunkLoader,
-	USSROptions,
-	LoaderContext,
-	SSROptions,
-	HTMLPage,
-	Debugger,
-} from 'htmlc-types';
-import { hydrateRuntimeConfig, useSSRConfig } from './config';
-import { watch } from 'fs';
-import { createDebugger } from './util/debugger';
-import { compile } from 'htmlc-compiler';
-import { DEBUG_DEFAULTS, DEBUG_BOOLTRUE } from 'htmlc-config';
-/**
- * @function useLoader factory function for Loader
- * @description Rendering Context for templates
- * @returns Loader from config options
- * @param config user config options
- */
-export function useLoader(config?: USSROptions): HTMLChunkLoader {
-	const hcl_config: SSROptions = useSSRConfig(config);
-	let dbg: Debugger = null;
+import { readValidFSTree } from './util';
+import { readdirSync, readFileSync } from 'node:fs';
+import { resolve, join } from 'node:path';
+import { compile, render } from 'htmlc-compiler';
+import { AST_MAP } from 'htmlc-types';
 
-	//i think next y version we will either fix this or remove the boolean option bc its getting annoying lol
-	if (typeof hcl_config.debug === 'boolean' && hcl_config.debug === true) {
-		const o = { ...hcl_config, debug: DEBUG_BOOLTRUE };
-		dbg = createDebugger(o);
-	} else if (!hcl_config.debug || typeof hcl_config.debug === 'object') {
-		dbg = createDebugger({ debug: DEBUG_DEFAULTS, ...hcl_config });
-	}
+export type HTMLCLoaderOptions = {
+	chunks?: string; // directory to look for relative to process.cwd() default: views
+	partials?: string;
+	pages?: string;
+	preloads?: object; // constructor fallback for partial variables - default {}
+};
 
-	let ctx: LoaderContext = hydrateRuntimeConfig(hcl_config);
-	if (ctx.config.watch) {
-		ctx.chunks.forEach((file) => {
-			watch(file.path, (eventType, filename) => {
-				if (eventType === 'change') {
-					if (
-						ctx.config.debug === true ||
-						(ctx.config.debug &&
-							typeof ctx.config.debug !== 'boolean' &&
-							ctx.config.debug.logMode !== 'silent')
-					)
-						dbg.log('file:change', `Chunk Updated at: ${filename}`);
-					ctx = hydrateRuntimeConfig(hcl_config);
-				}
-			});
+export type PreparedHTMLChunkData = {
+	name: string;
+	path: string;
+	raw: string;
+};
+
+export type RenderedHTMLChunkData = PreparedHTMLChunkData & {
+	render: string;
+};
+
+export const DefaultConfig: Required<HTMLCLoaderOptions> = {
+	chunks: 'views',
+	partials: 'partials',
+	pages: 'pages',
+	preloads: {},
+};
+
+export function useConfig(
+	root: string,
+	options: HTMLCLoaderOptions
+): Required<HTMLCLoaderOptions> {
+	const match = readdirSync(root).filter((file) => file === 'htmlc.json');
+	if (match.length === 0) return { ...DefaultConfig, ...options };
+	const file = readFileSync(resolve(root, match[0]));
+	const config = JSON.parse(file.toString());
+	return <Required<HTMLCLoaderOptions>>{
+		...DefaultConfig,
+		...config,
+		...options,
+	};
+}
+
+export function prepareChunks(raw: string[]): PreparedHTMLChunkData[] {
+	const prepared: PreparedHTMLChunkData[] = [];
+	for (const page of raw) {
+		const content = readFileSync(page).toString();
+		const name = page.split('/').pop().split('.').shift();
+		prepared.push({
+			name,
+			path: page,
+			raw: content
 		});
 	}
+	return prepared;
+}
 
+/**
+ * @function useLoader factory function for Loader
+ * Rendering Context for templates
+ * @returns Loader from config options
+ */
+export function useLoader(options?: HTMLCLoaderOptions) {
+	const cwd = process.cwd();
+	const config = useConfig(cwd, options ?? {});
+	const rawChunks = readValidFSTree(config.chunks);
+	const rawPartials = readValidFSTree(join(config.chunks, config.partials));
+	const rawPages = readValidFSTree(join(config.chunks, config.pages));
+
+	const chunkData = {
+		pages: prepareChunks(rawPages),
+		partials: prepareChunks(rawPartials),
+	};
 	/**
 	 * @function template
 	 * Name of Template to Load
@@ -71,28 +97,25 @@ export function useLoader(config?: USSROptions): HTMLChunkLoader {
 	 * @param name
 	 * @param data
 	 */
-	function template(name: string, data?: object): HTMLPage {
-		try {
-			return compile({
-				templateName: name,
-				ctx: ctx,
-				callData: data,
-				debugger: dbg,
-			});
-		} catch (e) {
-			return `HTMLC Render Error: ${JSON.stringify(e)}`;
-		}
-	}
+	// function template(name: string, data?: object): HTMLPage {
+	// 	try {
+	// 		return compile({
+	// 			templateName: name,
+	// 			ctx: ctx,
+	// 			callData: data,
+	// 		});
+	// 	} catch (e) {
+	// 		return `HTMLC Render Error: ${JSON.stringify(e)}`;
+	// 	}
+	// }
 
-	return { ctx, template };
-}
-
-/**
- * @internal
- * @private
- * @deprecated
- * @description old name of entry point
- */
-export function createLoader(u_config?: USSROptions): HTMLChunkLoader {
-	return useLoader(u_config);
+	return {
+		config,
+		_basePath: cwd,
+		_chunkData: chunkData,
+		_rawChunks: rawChunks,
+		_rawPartials: rawPartials,
+		_rawPages: rawPages,
+		_ffOptions: options,
+	};
 }

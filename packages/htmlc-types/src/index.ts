@@ -149,8 +149,6 @@ export type HTMLChunk = {
 export type HTMLChunkRenderArgs = [name: string, data ?: object];
 export type HTMLChunkRenderFN = (...HTMLChunkRenderArgs) => HTMLPage;
 
-
-
 export interface MapWithPartial {
     partialInput: object;
 }
@@ -170,3 +168,4 @@ export interface ProcessCache {
     timeStamp : Date; //calculated at runtime
     isClean ?: boolean; //default null
 }
+

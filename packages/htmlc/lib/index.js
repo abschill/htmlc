@@ -1,54 +1,59 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createLoader = exports.useLoader = void 0;
-const config_1 = require("./config");
-const fs_1 = require("fs");
-const debugger_1 = require("./util/debugger");
-const htmlc_compiler_1 = require("htmlc-compiler");
-const htmlc_config_1 = require("htmlc-config");
-function useLoader(config) {
-    const hcl_config = (0, config_1.useSSRConfig)(config);
-    let dbg = null;
-    if (typeof hcl_config.debug === 'boolean' && hcl_config.debug === true) {
-        const o = Object.assign(Object.assign({}, hcl_config), { debug: htmlc_config_1.DEBUG_BOOLTRUE });
-        dbg = (0, debugger_1.createDebugger)(o);
-    }
-    else if (!hcl_config.debug || typeof hcl_config.debug === 'object') {
-        dbg = (0, debugger_1.createDebugger)(Object.assign({ debug: htmlc_config_1.DEBUG_DEFAULTS }, hcl_config));
-    }
-    let ctx = (0, config_1.hydrateRuntimeConfig)(hcl_config);
-    if (ctx.config.watch) {
-        ctx.chunks.forEach((file) => {
-            (0, fs_1.watch)(file.path, (eventType, filename) => {
-                if (eventType === 'change') {
-                    if (ctx.config.debug === true ||
-                        (ctx.config.debug &&
-                            typeof ctx.config.debug !== 'boolean' &&
-                            ctx.config.debug.logMode !== 'silent'))
-                        dbg.log('file:change', `Chunk Updated at: ${filename}`);
-                    ctx = (0, config_1.hydrateRuntimeConfig)(hcl_config);
-                }
-            });
+exports.useLoader = exports.prepareChunks = exports.useConfig = exports.DefaultConfig = void 0;
+const util_1 = require("./util");
+const node_fs_1 = require("node:fs");
+const node_path_1 = require("node:path");
+const index_1 = require("htmlc-compiler/lib/parser/index");
+exports.DefaultConfig = {
+    chunks: 'views',
+    partials: 'partials',
+    pages: 'pages',
+    preloads: {},
+};
+function useConfig(root, options) {
+    const match = (0, node_fs_1.readdirSync)(root).filter((file) => file === 'htmlc.json');
+    if (match.length === 0)
+        return Object.assign(Object.assign({}, exports.DefaultConfig), options);
+    const file = (0, node_fs_1.readFileSync)((0, node_path_1.resolve)(root, match[0]));
+    const config = JSON.parse(file.toString());
+    return Object.assign(Object.assign(Object.assign({}, exports.DefaultConfig), config), options);
+}
+exports.useConfig = useConfig;
+function prepareChunks(raw) {
+    const prepared = [];
+    for (const page of raw) {
+        const content = (0, node_fs_1.readFileSync)(page).toString();
+        const name = page.split('/').pop().split('.').shift();
+        prepared.push({
+            name,
+            path: page,
+            raw: content,
+            _tokens: (0, index_1.tokenize)(content),
         });
     }
-    function template(name, data) {
-        try {
-            return (0, htmlc_compiler_1.compile)({
-                templateName: name,
-                ctx: ctx,
-                callData: data,
-                debugger: dbg,
-            });
-        }
-        catch (e) {
-            return `HTMLC Render Error: ${JSON.stringify(e)}`;
-        }
-    }
-    return { ctx, template };
+    return prepared;
+}
+exports.prepareChunks = prepareChunks;
+function useLoader(options) {
+    const cwd = process.cwd();
+    const config = useConfig(cwd, options !== null && options !== void 0 ? options : {});
+    const rawChunks = (0, util_1.readValidFSTree)(config.chunks);
+    const rawPartials = (0, util_1.readValidFSTree)((0, node_path_1.join)(config.chunks, config.partials));
+    const rawPages = (0, util_1.readValidFSTree)((0, node_path_1.join)(config.chunks, config.pages));
+    const chunkData = {
+        pages: prepareChunks(rawPages),
+        partials: prepareChunks(rawPartials),
+    };
+    return {
+        config,
+        _basePath: cwd,
+        _chunkData: chunkData,
+        _rawChunks: rawChunks,
+        _rawPartials: rawPartials,
+        _rawPages: rawPages,
+        _ffOptions: options,
+    };
 }
 exports.useLoader = useLoader;
-function createLoader(u_config) {
-    return useLoader(u_config);
-}
-exports.createLoader = createLoader;
 //# sourceMappingURL=index.js.map
